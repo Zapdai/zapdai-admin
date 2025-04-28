@@ -1,8 +1,11 @@
 .ng-container{
     display: flex;
+    height: 100vh;
     aside{
-        height: 100vh;
+
+
     }
+    
     .ng-main{
         flex: 1;
         .area-main{

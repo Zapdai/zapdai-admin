@@ -1,129 +1,119 @@
-   
+   .area-menu {
+       height: 90vh;
 
-.area-menu{
-    height: 100vh;
+      
+       .btn {
+           display: flex;
+           align-items: end;
+           justify-content: end;
 
-   .ng-logo{
-    height:3.5em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
+           mat-icon {
+               cursor: pointer;
+               font-size: 15px;
+               margin-top: 2px;
+           }
+       }
+
+       .menu-area {
+           overflow: auto;
+           scrollbar-width: thin;
+           scrollbar-color: #505861 #f2f2f2;
+           color: #79717A;
+           height: 100vh;
+           padding-bottom: 10px;
+
+           .active-page {
+               background-color: #99c8ee;
+
+           }
+
+           .active-page:hover {
+               color: #f37a5f;
+           }
+
+           ul {
+               display: flex;
+               flex-direction: column;
+
+
+
+               li {
+
+
+                   padding: 6px 1em;
+                   display: flex;
+                   align-items: center;
+                   line-height: 1.5em;
+                   cursor: pointer;
+                   margin-right: 5px;
+                   color: #000;
+
+                   .icon {
+                       height: 100%;
+                       text-align: center;
+                       color: var(--color-header);
+                       font-size: 20px;
+                       padding: 0.1em 0;
+                       margin: 0;
+
+                   }
+
+                   .icone-name {
+                       display: flex;
+                       align-items: center;
+                       justify-content: space-between;
+
+                       .text-left {
+                           color: var(--color-header);
+                           font-size: 14px;
+                           margin-left: 10px;
+                           font-weight: 600;
+                           text-align: center;
+                       }
+                   }
+               }
+
+
+               li:hover {
+                   background-color: rgba(255, 255, 255, 0.2);
+
+               }
+
+               .sub-menu {
+                   margin-left: 25px;
+                   margin-right: 10px;
+                   display: flex;
+                   align-items: center;
+                   gap: 5px;
+                   padding: 0 5px;
+                   line-height: 1.5em;
+                   color: var(--cor-text-prinpipal);
+                   cursor: pointer;
+
+                   .icone-sub {
+                       height: 100%;
+                       font-size: 12px;
+                       text-align: center;
+                   }
+
+                   input {
+                       width: 12px;
+                       height: 12px;
+                   }
+
+                   span {
+                       font-size: 13px;
+                       text-align: center;
+                   }
+               }
+
+               .sub-menu:hover {
+                   color: rgb(151, 87, 44);
+
+               }
+           }
+       }
+
+
+
    }
-    .btn{
-        display: flex;
-        align-items: end;
-        justify-content: end;  
-        mat-icon {
-           cursor: pointer;
-           font-size: 15px;
-           margin-top: 2px;
-        
-        }
-    }
-    .menu {
-        box-sizing: border-box;
-        .menu-area {
-            overflow-y: auto;
-            height: 100vh;
-            color: #79717A;
-            scrollbar-width: thin;
-            scrollbar-color: #3b82f6 #1e2a38;
-
-            .active-page {
-                background-color: #90caf9;
-
-            }
-
-            .active-page:hover {
-                color: #f37a5f;
-            }
-
-            ul {
-                display: flex;
-                flex-direction: column;
-
-
-
-                li {
-
-
-                    padding: 6px 1em;
-                    display: flex;
-                    align-items: center;
-                    line-height: 1.5em;
-                    cursor: pointer;
-                    margin-right: 5px;
-                    color: #000;
-
-                    .icon {
-                        height: 100%;
-                        text-align: center;
-                        color:var( --color-header);
-                        font-size: 20px;
-                        padding: 0.1em 0;
-                        margin: 0;
-
-                    }
-
-                    .icone-name {
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-
-                        .text-left {
-                            color: var(--color-header);
-                            font-size: 14px;
-                            margin-left: 10px;
-                            font-weight: 600;
-                            text-align: center;
-                        }
-                    }
-                }
-
-
-                li:hover {
-                    background-color: rgba(255, 255, 255, 0.2);
-
-                }
-
-                .sub-menu {
-                    margin-left: 25px;
-                    margin-right: 10px;
-                    display: flex;
-                    align-items: center;
-                    position: relative;
-                    z-index: 9999;
-                    gap: 5px;
-                    padding: 0 5px;
-                    line-height: 1.5em;
-                    color: var(--cor-text-prinpipal);
-                    cursor: pointer;
-
-                    .icone-sub {
-                        height: 100%;
-                        font-size: 12px;
-                        text-align: center;
-                    }
-
-                    input {
-                        width: 12px;
-                        height: 12px;
-                    }
-
-                    span {
-                        font-size: 13px;
-                        text-align: center;
-                    }
-                }
-
-                .sub-menu:hover {
-                    color: rgb(151, 87, 44);
-
-                }
-            }
-        }
-
-
-    }
-}

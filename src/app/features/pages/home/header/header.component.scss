@@ -1,32 +1,25 @@
 .ng-header{
     box-sizing: 0px  0x 0px 1px;
-    padding: 20px 24px;
     display: flex;
-    justify-content:end;
+    justify-content:space-between;
+    padding: 10px 10px;
     align-items: center;
-    .app-menu{
-        // text-decoration: none;
-        // font-size:1em;
-        // color: var(--color-header);
-        // font-weight: 500;
-        color: var(--color-header);
-        font-size: 15px;
-        margin-left: 10px;
-        font-weight: 600;
-        text-align: center;
-        text-decoration: none;
+    height: 40pxpx;
+    .ng-logo{
+            width:140px;
+            height: 40px;
+            background-size: contain;
+            background-image: url("/logo.png");
+            padding: 20px 5px;
+            background-repeat: no-repeat;
+            margin-left: 20px;
+        
+    }
 
-    }
-    .menu-opt{
-        display: flex;
-        mat-icon p{
-            padding: 10px;
-        }
-    }
     .ng-perfil{
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 10px;
         .ng-perfil-name{
             font-size: 12px;
         }
