@@ -4,9 +4,9 @@
         <button ></button>
     </section>
     <section class="ng-form" >
-       <form action="">
-          <input type="text" class="ng-input" placeholder="Buscar...">
-          <button class="btn" >Buscar</button>
+       <form action="" [formGroup]="grupo">
+          <input type="text" class="ng-input" formControlName="name" placeholder="Buscar...">
+          <button class="btn" (click)="pegarvalor()" >Buscar</button>
        </form>
     </section>
     <section class="ng-perfil">

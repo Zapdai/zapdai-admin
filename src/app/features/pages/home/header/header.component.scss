@@ -24,13 +24,13 @@
     .ng-form form{
         display: flex;
         .ng-input{
-            width: 350px;
+            width: 450px;
             padding: 5px;
+            outline: none;
         }
         .btn{
             padding:0 5px;
             font-size: 12px;
-            color: var(--color-header);
         }
     }
     .ng-perfil{
