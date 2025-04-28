@@ -2,18 +2,36 @@
     box-sizing: 0px  0x 0px 1px;
     display: flex;
     justify-content:space-between;
-    padding: 10px 10px;
+    padding: 10px 5px;
     align-items: center;
     // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
     .ng-logo{
-            width:140px;
+            width:160px;
             height: 40px;
             background-size: contain;
             background-image: url("/logo.png");
-            padding: 20px 5px;
+            padding: 18px 2px;
             background-repeat: no-repeat;
-            margin-left: 20px;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            .icon{
+                text-align: center;
+            }
+    }
+    .ng-form form{
+        display: flex;
+        .ng-input{
+            width: 350px;
+            padding: 5px;
+        }
+        .btn{
+            padding:0 5px;
+            font-size: 12px;
+            color: var(--color-header);
+        }
     }
     .ng-perfil{
         display: flex;

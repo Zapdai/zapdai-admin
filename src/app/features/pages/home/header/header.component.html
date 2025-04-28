@@ -1,16 +1,14 @@
 <header class="ng-header">
     <section class="ng-logo">
-        
-     </section>
-        <!-- @for (item of menuIten; track $index) {
-            <section class="menu-opt">
-                <a [routerLink]="item.rotas"  class="app-menu">{{item.name}}</a>
-                <mat-icon><span class="material-symbols-outlined">
-                     {{item.icone}}
-                    </span>
-                </mat-icon>
-            </section>
-        } -->
+        <mat-icon (click)="exibir()"  class="icon">☰</mat-icon>
+        <button ></button>
+    </section>
+    <section class="ng-form" >
+       <form action="">
+          <input type="text" class="ng-input" placeholder="Buscar...">
+          <button class="btn" >Buscar</button>
+       </form>
+    </section>
     <section class="ng-perfil">
         <mat-icon (click)="light()">
             light_mode

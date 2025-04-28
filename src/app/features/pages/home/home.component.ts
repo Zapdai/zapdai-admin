@@ -12,4 +12,10 @@ import { footerComponent } from "./foother/footer.component";
     imports:[headerComponent,menuDropComponent,RouterOutlet,footerComponent]
 })
 export class homeComponent{
+    ativa = false;
+
+    ativo(){
+        this.ativa = !this.ativa;
+    }
+
 }

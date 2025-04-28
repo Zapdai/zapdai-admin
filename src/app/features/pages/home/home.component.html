@@ -1,7 +1,7 @@
-<app-header></app-header>
+<app-header (ativaMenu)="ativo()" ></app-header>
  <main class="ng-container">
     <aside>
-        <app-menu-dropdown></app-menu-dropdown>
+        <app-menu-dropdown [desabled]="ativa"></app-menu-dropdown>
     </aside>
     <section class="ng-main">
         <div class="area-main">

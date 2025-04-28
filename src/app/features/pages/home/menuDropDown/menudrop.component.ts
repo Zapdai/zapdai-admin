@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 
@@ -11,6 +11,7 @@ import { Router, RouterLink, RouterLinkActive } from "@angular/router";
     imports:[MatIconModule, RouterLink, RouterLinkActive,CommonModule,MatIconModule]
 })
 export class menuDropComponent{
+     @Output() sm = new EventEmitter;
     menuIten = [
         {
             id: 1,
@@ -33,9 +34,9 @@ export class menuDropComponent{
 
         {
             id: 3,
-            name: "Agendamentos",
-            icone: "edit_calendar",
-            rotas: "/dashboard/agendamentos",
+            name: "Produtos",
+            icone: "menu_book",
+            rotas: "/home/produtos",
             menuItens: false,
             iconeItem: false,
             children: []

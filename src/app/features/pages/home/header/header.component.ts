@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 import {MatIconModule} from '@angular/material/icon';
 @Component({
     selector:"app-header",
@@ -9,6 +9,7 @@ import {MatIconModule} from '@angular/material/icon';
     imports:[MatIconModule,CommonModule]
 })
 export class headerComponent{
+    @Output() ativaMenu = new EventEmitter;
     setIcon(mudaIcon: boolean) {
         if (mudaIcon) {
             return "keyboard_arrow_down"
@@ -20,77 +21,7 @@ export class headerComponent{
     light(){
         alert("Clicou")
     }
-
-    menuIten = [
-        {
-            id: 1,
-            name: "Home",
-            icone: "",
-            rotas: "/dashboard/painel",
-            menuItens: false,
-            iconeItem: false,
-            children: []
-        },
-        {
-            id: 2,
-            name: "Planos",
-            icone: "",
-            rotas: "/dashboard/cadastro",
-            menuItens: false,
-            iconeItem: false,
-            children: []
-        },
-
-        {
-            id: 3,
-            name: "API",
-            icone: "",
-            rotas: "/dashboard/agendamentos",
-            menuItens: false,
-            iconeItem: false,
-            children: []
-        },
-        {
-            id: 4,
-            name: "Integraçao",
-            icone: "keyboard_arrow_down",
-            menuItens: false,
-            iconeItem: true,
-            children: [
-                {
-                    name: "Contas a Pagar",
-                },
-                {
-                    name: "Contas a Pagar"
-                },
-                {
-                    name: "Boletos"
-                }
-
-            ]
-        },
-        {
-            id: 5,
-            name: "Configuraçao",
-            icone: " keyboard_arrow_down",
-            menuItens: false,
-            iconeItem: true,
-            children: [
-                {
-                    name: "Contas a Pagar",
-                    rota: "/dashboard/contas/pagar"
-                },
-                {
-                    name: "Contas a Receber",
-                    rota: "/dashboard/contas/receber"
-                },
-                {
-                    name: "Boletos",
-                    rota: "/dashboard/contas/boletos"
-                }
-
-
-            ]
-        }
-    ]
+exibir(){
+    this.ativaMenu.emit()
+}
 }
