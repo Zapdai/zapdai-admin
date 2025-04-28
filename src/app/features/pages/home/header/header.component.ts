@@ -17,6 +17,9 @@ export class headerComponent{
         }
 
     }
+    light(){
+        alert("Clicou")
+    }
 
     menuIten = [
         {

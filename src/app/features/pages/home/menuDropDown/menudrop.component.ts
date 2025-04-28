@@ -25,7 +25,7 @@ export class menuDropComponent{
             id: 2,
             name: "Clientes",
             icone: "groups",
-            rotas: "/dashboard/cadastro",
+            rotas: "/home/clientes",
             menuItens: false,
             iconeItem: false,
             children: []

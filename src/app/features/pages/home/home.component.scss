@@ -2,15 +2,16 @@
     display: flex;
     height: 100vh;
     aside{
-
+       overflow: hidden;
 
     }
     
     .ng-main{
         flex: 1;
         .area-main{
-            background-color: #888;
+            background-color: #f2f2f2;
             height: 100vh;
+            padding: 5px;
 
         }
     }

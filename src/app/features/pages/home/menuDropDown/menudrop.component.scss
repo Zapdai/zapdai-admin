@@ -1,6 +1,6 @@
    .area-menu {
-       height: 90vh;
-
+       height: 100vh;
+       overflow: hidden;
       
        .btn {
            display: flex;
@@ -15,12 +15,13 @@
        }
 
        .menu-area {
-           overflow: auto;
-           scrollbar-width: thin;
-           scrollbar-color: #505861 #f2f2f2;
+        //    overflow: auto;
+        //    scrollbar-width: thin;
+        //    scrollbar-color: #505861 #f2f2f2;
            color: #79717A;
            height: 100vh;
-           padding-bottom: 10px;
+           padding-bottom: 10px 0;
+           padding: 10px 0;
 
            .active-page {
                background-color: #99c8ee;
