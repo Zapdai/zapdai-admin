@@ -14,6 +14,15 @@ export class menuDropComponent{
      @Output() sm = new EventEmitter;
     menuIten = [
         {
+            id: 0,
+            name: "Home",
+            icone: "home",
+            rotas: "/home",
+            menuItens: false,
+            iconeItem: false,
+            children: []
+        },
+        {
             id: 1,
             name: "Dashboard",
             icone: "bar_chart_4_bars",
