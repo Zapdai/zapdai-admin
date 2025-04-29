@@ -6,7 +6,10 @@
     </section>
     <section class="ng-form" >
        <form action="" [formGroup]="grupo" (submit)="pegarvalor()">
-          <input type="search" class="ng-input" formControlName="name" placeholder="Buscar...">
+          <div class="search">
+            <input type="search" class="ng-input" formControlName="name" placeholder="Buscar...">
+            <mat-icon>search</mat-icon>
+          </div>
        </form>
     </section>
    @if (usuario) {

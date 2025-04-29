@@ -1,3 +1,23 @@
+.main{
+    overflow: auto;
+    height: 100vh;
+    scrollbar-width: thin;
 .ng-categoria{
-    padding:0 25px;
+    display: flex;
+    flex-direction: column;
+    padding:10px 25px;
+    flex: 1;
+    .container-area{
+        .ng-itens{
+            display: flex;
+            flex-wrap: nowrap;
+            width: 100%;
+            padding:8px 156px;
+            align-items: center;
+            justify-content: space-between;
+    
+        }
+    }
+    
+}
 }

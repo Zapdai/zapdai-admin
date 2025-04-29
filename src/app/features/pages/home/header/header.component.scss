@@ -1,70 +1,83 @@
-.categoria{
-    background-color:#026E81;
-    padding: 0 40px;
-    margin-bottom: 25px;
-    form input{
-        border-radius: 5px;
-        height: 35px;
-        border: 1px solid #f2f2f2;
-    }
-    .ng-checkout{
-        display: flex;
-        align-items: center;
-        justify-content: end;
-        margin-right: 1.3em;
-        cursor: pointer;
-        .mat-icon{
-            color: #fff;
-        }
-        button{
-            margin-left: 100px;
-            background-color:#FF9933 ;
-            padding: 5px 20px;
-            border: 0;
+@media screen and (min-width:700px) {
+    .categoria{
+        background-color:#026E81;
+        padding: 0 40px;
+        margin-bottom: 5px;
+        form input{
             border-radius: 5px;
+            height: 35px;
+            border: 1px solid #f2f2f2;
         }
-    }
-}
-.ng-header{
-    box-sizing: 0px  0x 0px 1px;
-    display: flex;
-    justify-content:space-between;
-    padding: 10px 5px;
-    align-items: center;
-
-    .ng-logo{
-            width:160px;
-            height: 40px;
-            background-size: contain;
-            background-image: url("/logo.png");
-            padding: 18px 2px;
-            background-repeat: no-repeat;
-            margin-left: 10px;
+        .ng-checkout{
             display: flex;
             align-items: center;
             justify-content: end;
-            .icon{
-                text-align: center;
+            margin-right: 1.3em;
+            cursor: pointer;
+            .mat-icon{
+                color: #fff;
             }
-    }
-    .ng-form form{
-        display: flex;
-        .ng-input{
-            width: 450px;
-            padding: 5px;
-            outline: none;
-        }
-        .btn{
-            padding:0 5px;
-            font-size: 12px;
+            button{
+                margin-left: 100px;
+                background-color:#FF9933 ;
+                padding: 5px 20px;
+                border: 0;
+                border-radius: 5px;
+            }
         }
     }
-    .ng-perfil{
+    .ng-header{
+        box-sizing: 0px  0x 0px 1px;
         display: flex;
+        justify-content:space-between;
+        padding: 10px 5px;
         align-items: center;
-        gap: 10px;
-        .ng-perfil-name{
-            font-size: 12px;
+    
+        .ng-logo{
+                width:160px;
+                height: 40px;
+                background-size: contain;
+                background-image: url("/logo.png");
+                padding: 18px 2px;
+                background-repeat: no-repeat;
+                margin-left: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: end;
+                .icon{
+                    text-align: center;
+                }
+        }
+        .ng-form form{
+            display: flex;
+            .search{
+                width: 550px;
+                display: flex;
+                align-items: center;
+                background-color: #ffffff;
+                padding: 0 10px;
+                border-radius: 5px;
+                .ng-input{
+                    flex: 1;
+                    padding: 5px;
+                    outline: none;
+                    border: 0;
+                }
+                mat-icon{
+                    padding: 0 2px;
+                    cursor: pointer;
+                }
+            }
+            
+        }
+        .ng-perfil{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            .ng-perfil-name{
+                font-size: 12px;
+            }
         }
     }
+    
 }
