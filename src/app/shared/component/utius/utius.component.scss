@@ -1,0 +1,14 @@
+.banner{
+    display: flex;
+    flex-direction: column;
+    margin: 3px;
+    width:200px;
+    height:270px;
+    border-radius: 3px;
+    figure img{
+        width: 200px;
+        height: 150px;
+        flex: 0 0 auto;
+        object-fit: cover;
+    }
+}
