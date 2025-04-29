@@ -1,13 +1,15 @@
-<header class="ng-header">
+<header class="ng-header" [ngClass]="categoria">
     <section class="ng-logo">
-        <mat-icon (click)="exibir()"  class="icon">☰</mat-icon>
+        @if (usuario) {
+            <mat-icon (click)="exibir()"  class="icon">☰</mat-icon>
+        }
     </section>
     <section class="ng-form" >
-       <form action="" [formGroup]="grupo">
-          <input type="text" class="ng-input" formControlName="name" placeholder="Buscar...">
-          <button class="btn" (click)="pegarvalor()" >Buscar</button>
+       <form action="" [formGroup]="grupo" (submit)="pegarvalor()">
+          <input type="search" class="ng-input" formControlName="name" placeholder="Buscar...">
        </form>
     </section>
+   @if (usuario) {
     <section class="ng-perfil">
         <mat-icon (click)="light()">
             light_mode
@@ -18,4 +20,15 @@
          </mat-icon>
         <!-- <img src="#" alt="Imagem perfil"> -->
     </section>
+   }
+    @if (carrinho) {
+        <section class="ng-checkout" >
+            <mat-icon (click)="light()">
+                shopping_cart
+            </mat-icon>
+         <button>
+            Login
+         </button>
+        </section>
+    }
 </header>

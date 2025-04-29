@@ -1,3 +1,30 @@
+.categoria{
+    background-color:#026E81;
+    padding: 0 40px;
+    margin-bottom: 25px;
+    form input{
+        border-radius: 5px;
+        height: 35px;
+        border: 1px solid #f2f2f2;
+    }
+    .ng-checkout{
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        margin-right: 1.3em;
+        cursor: pointer;
+        .mat-icon{
+            color: #fff;
+        }
+        button{
+            margin-left: 100px;
+            background-color:#FF9933 ;
+            padding: 5px 20px;
+            border: 0;
+            border-radius: 5px;
+        }
+    }
+}
 .ng-header{
     box-sizing: 0px  0x 0px 1px;
     display: flex;

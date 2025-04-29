@@ -1,4 +1,4 @@
-<app-header (ativaMenu)="ativo()" ></app-header>
+<app-header [usuario]="true" (ativaMenu)="ativo()" ></app-header>
  <main class="ng-container">
     <aside>
         <app-menu-dropdown [desabled]="ativa"></app-menu-dropdown>

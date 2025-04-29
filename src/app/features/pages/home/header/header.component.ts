@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -13,6 +13,9 @@ import {MatInputModule} from '@angular/material/input';
     imports:[MatIconModule,CommonModule,MatIconModule,ReactiveFormsModule]
 })
 export class headerComponent{
+    @Input() categoria?:string;
+    @Input() usuario = false;
+    @Input() carrinho = false;
     grupo = new FormGroup({
         name:new FormControl("")
     })

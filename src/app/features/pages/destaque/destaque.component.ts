@@ -4,7 +4,7 @@ import { UtiusComponent } from "../../../shared/component/utius/utius.component"
 import { CarrosselComponent } from "../../../shared/component/carrossel/carrossel.component";
 
 @Component({
-    selector:"",
+    selector:"app-destaque",
     standalone:true,
     imports:[ModalComponent,UtiusComponent,CarrosselComponent],
     templateUrl:"./destaque.component.html",
