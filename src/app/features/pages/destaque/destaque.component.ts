@@ -1,11 +1,12 @@
 import { Component, ElementRef, ViewChild } from "@angular/core";
 import { ModalComponent } from "../../../shared/component/modal/modal.component";
 import { UtiusComponent } from "../../../shared/component/utius/utius.component";
+import { CarrosselComponent } from "../../../shared/component/carrossel/carrossel.component";
 
 @Component({
     selector:"",
     standalone:true,
-    imports:[ModalComponent,UtiusComponent],
+    imports:[ModalComponent,UtiusComponent,CarrosselComponent],
     templateUrl:"./destaque.component.html",
     styleUrl:"./destaque.component.scss"
 })
@@ -23,5 +24,5 @@ rolarEsquerda(){
         behavior: 'smooth'
     })
 }
-imagem = "https://img.freepik.com/fotos-premium/hamburguer-em-fundo-de-madeira-alimentos-pouco-saudaveis-feito-por-iainteligencia-artificial_41969-12355.jpg"
+imagem = "https://img.freepik.com/fotos-premium/hamburguer-em-fundo-de-madeira-alimentos-pouco-saudaveis-feito-por-iainteligencia-artificial_41969-12355.jpgs"
 }
