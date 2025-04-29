@@ -17,7 +17,7 @@ export class menuDropComponent{
             id: 0,
             name: "Home",
             icone: "home",
-            rotas: "/home",
+            rotas: "/home/destaque",
             menuItens: false,
             iconeItem: false,
             children: []

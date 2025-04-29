@@ -7,9 +7,9 @@ import { DestaqueComponent } from "./pages/destaque/destaque.component";
 
 export const routes:Routes = [
     {
-        path:"home", component:homeComponent,title:"Tela home" ,children:[
+        path:"", component:homeComponent,title:"Tela home" ,children:[
             {
-               path:"",component:DestaqueComponent
+               path:"destaque",component:DestaqueComponent
             },
             {
                 path:"dashboard",component:dashBoard,title:"Dashboard"

@@ -1,9 +1,7 @@
 .figure {
     margin: 0;
-    width: calc(100vw - 185px);
     padding: 0;
     overflow: hidden;
-    background-color: #eee3bb;
 
     .slide_area {
         width: 400%;
@@ -16,7 +14,7 @@
         .slide {
             width: 25%;
             height: 250px;
-            transition: 0.2s;
+            transition: 0.8s;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -45,7 +43,7 @@
                     font-size: 2em;
                     font-weight: bold;
                     text-transform: uppercase;
-                    color: #B08E13;
+                    color: #b8b4a6;
                     margin: 0;
                     padding: 0;
                 }
@@ -54,7 +52,6 @@
                     width: 100%;
                     font-size: 1em;
                     padding: 5px;
-                    font-family: var(--fonte-segundaria);
                     text-transform: uppercase;
                     word-wrap: break-word;
                     font-weight: bold;
@@ -66,7 +63,6 @@
                     word-wrap: break-word;
                     margin-top: 0;
                     padding: 5px;
-                    font-family: var(--fonte-segundaria);
                     color: #ccc5d3;
 
                 }

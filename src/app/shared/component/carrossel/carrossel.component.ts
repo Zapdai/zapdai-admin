@@ -19,13 +19,14 @@ export class CarrosselComponent implements AfterViewInit, OnDestroy {
   constructor(@Inject(PLATFORM_ID) private plataformaId: object) { }
 
   ngAfterViewInit(): void {
-    const mudarImagem = () => {
       if (isPlatformBrowser(this.plataformaId)) {
-        this.nextImg();
+        this.numero = 1;
+        this.intervalId = setInterval(()=>{
+          this.nextImg();
+        }, 4000); // A cada 2 segundos
+
       }
-      this.intervalId = setTimeout(mudarImagem, 20000); // A cada 2 segundos
-    };
-    mudarImagem();
+   
 
   }
   nextImg() {

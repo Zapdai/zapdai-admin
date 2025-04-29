@@ -24,5 +24,5 @@ rolarEsquerda(){
         behavior: 'smooth'
     })
 }
-imagem = "https://img.freepik.com/fotos-premium/hamburguer-em-fundo-de-madeira-alimentos-pouco-saudaveis-feito-por-iainteligencia-artificial_41969-12355.jpgs"
+imagem = ""
 }
