@@ -169,7 +169,7 @@ export class menuDropComponent{
             id: 10,
             name: "Pedidos",
             icone: "shopping_cart",
-            rotas: "/dashboard/anotacoes",
+            rotas: "/home/pedidos",
             menuItens: false,
             iconeItem: false,
             children: []

@@ -4,6 +4,7 @@ import { dashBoard } from "./pages/dashboard/dashboard.component";
 import { ClientesComponentes } from "./pages/clientes/clientes.componentes";
 import { ProdutosComponentes } from "./pages/produtos/produtos.componentes";
 import { DestaqueComponent } from "./pages/destaque/destaque.component";
+import { pedidosComponent } from "./pages/pedidos/pedidos.component";
 
 export const routes:Routes = [
     {
@@ -19,6 +20,9 @@ export const routes:Routes = [
             },
             {
                 path:"produtos",component:ProdutosComponentes,title:"Produtos"
+            },
+            {
+                path:"pedidos",component:pedidosComponent,title:"Pedidos"
             }
         ]
     }

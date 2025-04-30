@@ -6,7 +6,6 @@
         form input{
             border-radius: 5px;
             height: 35px;
-            border: 1px solid #f2f2f2;
         }
         .ng-checkout{
             display: flex;
@@ -46,6 +45,8 @@
                 justify-content: end;
                 .icon{
                     text-align: center;
+                    cursor: pointer;
+
                 }
         }
         .ng-form form{
@@ -55,8 +56,9 @@
                 display: flex;
                 align-items: center;
                 background-color: #ffffff;
-                padding: 0 10px;
+                padding: 5px 10px;
                 border-radius: 5px;
+                border: 1px solid #cac9c9;
                 .ng-input{
                     flex: 1;
                     padding: 5px;

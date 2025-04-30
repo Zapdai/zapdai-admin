@@ -1,0 +1,13 @@
+<div class="app-search">
+    <fieldset>
+        <legend>Pesquisar pedidos</legend>
+        <input type="text">
+    </fieldset>
+   
+
+    <button mat-flat-button type="primary">Buscar</button>
+     <form action="" [formGroup]="form" (ngSubmit)="pegaValor()">
+        <input type="text" placeholder="Busc" formControlName="busca">
+     </form>
+
+</div>

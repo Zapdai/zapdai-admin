@@ -1,50 +1,13 @@
 <app-modal>
   <app-carrossel></app-carrossel>
-
-</app-modal>
 <app-modal>
-    <div class="titulo">
-        <span>Mais procurados</span>
-    </div>
-    <div class="carrossel-container">
-      <div class="botoes bn">
-        <button (click)="rolarDireita()"><</button>
-      </div>
-  
-      <div class="scroll-container" #scrollContainer>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-      </div>
-  
-      <div class="botoes bn">
-        <button class="btn" (click)="rolarEsquerda()">></button>
-      </div>
-    </div>
-</app-modal>
-
-   
-<!-- <app-modal>
-    <div class="titulo">
-        <span>Empresa</span>
-    </div>
-    <div class="wp">
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-    
-      </div>
-</app-modal> -->
+<div class="ng-itens">
+  <app-opcoes-categoria></app-opcoes-categoria>
+  <app-opcoes-categoria></app-opcoes-categoria>
+  <app-opcoes-categoria></app-opcoes-categoria>
+  <app-opcoes-categoria></app-opcoes-categoria>
+  <app-opcoes-categoria></app-opcoes-categoria>
 
 
-  
+</div>
+<app-mais-postados title="Mais procurados"></app-mais-postados>

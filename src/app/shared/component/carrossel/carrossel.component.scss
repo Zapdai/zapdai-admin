@@ -14,7 +14,7 @@
         .slide {
             width: 25%;
             height: 250px;
-            transition: 0.8s;
+            transition: all 2s ease-in;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -81,10 +81,13 @@
         #radio3:checked~.first {
             margin-left: -50%;
         }
+        #radio4:checked~.first {
+            margin-left: -75%;
+        }
 
         .slide_checked {
             position: absolute;
-            width: 80%;
+            width: 18%;
             height: 30px;
             margin-top: 220px;
             display: flex;
@@ -93,10 +96,10 @@
         }
 
         .slide_checked div {
-            width: 15px;
-            height: 15px;
+            width: 8px;
+            height: 8px;
             border-radius: 15px;
-            border: 2px solid blue;
+            border: 1px solid blue;
         }
 
         .slide_checked div:not(:first-child) {
@@ -106,7 +109,6 @@
     }
 
     .slide_radio {
-        position: absolute;
         width: 80%;
         height: 30px;
         display: flex;
@@ -115,10 +117,10 @@
         margin-top: -30px;
 
         .radio_name1 {
-            width: 15px;
-            height: 15px;
+            width: 8px;
+            height: 8px;
             border-radius: 15px;
-            border: 2px solid #888;
+            border: 1px solid #888;
             cursor: pointer;
 
         }
@@ -146,7 +148,9 @@
 #radio3:checked~.slide_checked .checked3 {
     background-color: rgb(51, 50, 50);
 }
-
+#radio4:checked~.slide_checked .checked4 {
+    background-color: rgb(51, 50, 50);
+}
 @media screen and (max-width:900px) {
     .figure {
         display: none;

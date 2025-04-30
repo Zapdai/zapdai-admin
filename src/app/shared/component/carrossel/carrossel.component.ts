@@ -29,7 +29,7 @@ export class CarrosselComponent implements AfterViewInit, OnDestroy {
   }
   nextImg() {
     this.numero++;
-    if (this.numero > 3) {
+    if (this.numero > 4) {
       this.numero = 1;
     }
     const radio = document.getElementById("radio" + this.numero) as HTMLInputElement;
