@@ -1,13 +1,14 @@
-<div class="app-search">
-    <fieldset>
+<div class="app-search" id="meuContainer ">
+    <fieldset class="fieldset">
         <legend>Pesquisar pedidos</legend>
-        <input type="text">
+        <input type="search" class="ng-form" >
     </fieldset>
-   
-
-    <button mat-flat-button type="primary">Buscar</button>
-     <form action="" [formGroup]="form" (ngSubmit)="pegaValor()">
-        <input type="text" placeholder="Busc" formControlName="busca">
-     </form>
+    <select class="ng-select">
+        <option >Selecione</option>
+    </select>
+     <button class="ng-busca">
+        Em andamento
+     </button>
+     <button class="ng-pedidos">Novo</button>
 
 </div>

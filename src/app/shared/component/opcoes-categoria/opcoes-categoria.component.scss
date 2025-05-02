@@ -5,10 +5,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding:15px 5px ;
+    padding:5px 5px ;
     .ng-logo-item {
-        width: 1.8em;
-        height: 1.8em;
+        width: 2em;
+        height: 2em;
         border-radius: 0.5em;
         object-fit: cover;
         background-size: cover;
@@ -26,7 +26,7 @@
 
     .titulo {
         color: var(--color-header);
-        padding:8px 0;
+        padding:5px 0;
         font-size: 12px;
     }
 

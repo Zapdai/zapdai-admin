@@ -1,27 +1,29 @@
 <div class="main">
-    <app-header [carrinho]="true" categoria="categoria"></app-header>
-<div class="ng-categoria">
-    <section class="container-area">
-        <div>
-            <app-carrossel></app-carrossel>
+    <app-header [carrinho]="true" class="s" categoria="categoria"></app-header>
+    <div class="ng-categoria">
+        <section class="container-area">
+            <div class="carrossel">
+                <app-carrossel></app-carrossel>
+            </div>
+            <div class="ng-itens">
+                <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
+                <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
+                <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
+                <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
+                <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
+                <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
+                <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
+                <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
+
+            </div>
+        </section>
+        <div class="propaganda">
+            <app-mais-postados titulo="Em destaque"></app-mais-postados>
+            <app-mais-postados titulo="Mais procurados"></app-mais-postados>
+            <app-mais-postados titulo="Promocão"></app-mais-postados>
+            <app-mais-postados titulo="Esgotado"></app-mais-postados>
         </div>
-        <div class="ng-itens">
-            <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
-            <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
-            <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
-            <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
-            <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
-            <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
-            <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
-            <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
-
-        </div>
-    </section>
-    <app-mais-postados titulo="Mais procurados"></app-mais-postados>
-    <app-mais-postados titulo="Em destaque"></app-mais-postados>
-    <app-mais-postados titulo="Promocão"></app-mais-postados>
-    <app-mais-postados titulo="Esgotado"></app-mais-postados>
 
 
-</div>
+    </div>
 </div>

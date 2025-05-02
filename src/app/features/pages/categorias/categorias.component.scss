@@ -1,22 +1,28 @@
 .main{
+    background-color: #F2F2F2;
     overflow: auto;
     height: 100vh;
     scrollbar-width: thin;
 .ng-categoria{
     display: flex;
     flex-direction: column;
-    padding:10px 25px;
     flex: 1;
     .container-area{
+        background-color: #FFFFFF;
+        margin-bottom: 20px;
+        padding:10px 25px;
         .ng-itens{
             display: flex;
             flex-wrap: nowrap;
             width: 100%;
-            padding:8px 156px;
+            margin-top: 20px;
+            padding:2px 156px;
             align-items: center;
-            justify-content: space-between;
-    
+            justify-content: space-between;    
         }
+    }
+    .propaganda{
+        margin: auto 56px;
     }
     
 }

@@ -32,14 +32,18 @@ export class CarrosselComponent implements AfterViewInit, OnDestroy {
     if (this.numero > 4) {
       this.numero = 1;
     }
-    const radio = document.getElementById("radio" + this.numero) as HTMLInputElement;
-    if (radio) {
-      radio.checked = true;
+    if(isPlatformBrowser(this.id)){
+      const radio = document.getElementById("radio" + this.numero) as HTMLInputElement;
+      if (radio) {
+        radio.checked = true;
+      }
     }
+    
   }
 
   ngOnDestroy(): void {
     clearInterval(this.intervalId);
+    
   }
 
 

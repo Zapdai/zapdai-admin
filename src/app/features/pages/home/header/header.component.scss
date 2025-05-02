@@ -2,10 +2,14 @@
     .categoria{
         background-color:#026E81;
         padding: 0 40px;
-        margin-bottom: 5px;
         form input{
             border-radius: 5px;
             height: 35px;
+        }
+        .search{
+            .icone:active{
+                transform: scale(0.92);
+            }
         }
         .ng-checkout{
             display: flex;
@@ -17,11 +21,30 @@
                 color: #fff;
             }
             button{
-                margin-left: 100px;
+                margin-left: 10px;
                 background-color:#FF9933 ;
                 padding: 5px 20px;
                 border: 0;
                 border-radius: 5px;
+                cursor: pointer;
+
+            }
+            button:active{
+                transform: scale(0.92);
+            }
+            .btn1{
+                background-color:#FF9933 ;
+            }
+            .btn2{
+                background-color:#f7f5f4 ;
+            }
+            .btn1:hover{
+                background-color: #928c45;
+                color: #FFF;
+            }
+            .btn2:hover{
+                background-color: #b5f1ff;
+                color: #0f0f0f;
             }
         }
     }

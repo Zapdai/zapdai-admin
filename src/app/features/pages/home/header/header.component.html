@@ -1,37 +1,42 @@
 <header class="ng-header" [ngClass]="categoria">
     <section class="ng-logo">
         @if (usuario) {
-            <mat-icon (click)="exibir()"  class="icon">menu</mat-icon>
+        <mat-icon (click)="exibir()" class="icon">menu</mat-icon>
         }
     </section>
-    <section class="ng-form" >
-       <form action="" [formGroup]="grupo" (submit)="pegarvalor()">
-          <div class="search">
-            <input type="search" class="ng-input" formControlName="name" placeholder="Buscar...">
-            <mat-icon>search</mat-icon>
-          </div>
-       </form>
+    <section class="ng-form">
+        <form action="" [formGroup]="grupo" (submit)="pegarvalor()">
+            <div class="search">
+                <input type="search" class="ng-input" formControlName="name" placeholder="Buscar...">
+                <mat-icon class="icone">search</mat-icon>
+            </div>
+        </form>
     </section>
-   @if (usuario) {
+    @if (usuario) {
     <section class="ng-perfil">
         <mat-icon (click)="light()">
             light_mode
         </mat-icon>
         <small class="ng-perfil-name">Olá Elivandro</small>
-         <mat-icon>
-            person
-         </mat-icon>
+        <mat-menu>
+            <mat-icon>
+                person
+            </mat-icon>
+        </mat-menu>
         <!-- <img src="#" alt="Imagem perfil"> -->
     </section>
-   }
+    }
     @if (carrinho) {
-        <section class="ng-checkout" >
-            <mat-icon (click)="light()">
-                shopping_cart
-            </mat-icon>
-         <button>
+    <section class="ng-checkout">
+        <mat-icon (click)="light()">
+            shopping_cart
+        </mat-icon>
+        <button ngClass="btn1">
             Login
-         </button>
-        </section>
+        </button>
+        <button ngClass="btn2" (click)="pageSignup()">
+            Signin
+        </button>
+    </section>
     }
 </header>

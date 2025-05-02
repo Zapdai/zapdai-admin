@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { searchComponent } from "../../../shared/component/search/search.component";
+import { tableComponent } from "../../../shared/component/table/table.component";
 
 
 @Component ({
@@ -7,7 +8,7 @@ import { searchComponent } from "../../../shared/component/search/search.compone
     standalone: true,
     templateUrl: './pedidos.component.html',
     styleUrl: './pedidos.component.scss',
-    imports: [searchComponent]
+    imports: [searchComponent,tableComponent]
 })
 
 export class pedidosComponent {}

@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from "@angular/core";
+import { Component } from "@angular/core";
 import { ModalComponent } from "../../../shared/component/modal/modal.component";
 import { UtiusComponent } from "../../../shared/component/utius/utius.component";
 import { CarrosselComponent } from "../../../shared/component/carrossel/carrossel.component";
@@ -8,9 +8,8 @@ import { MaisPostadosComponent } from "../../../shared/component/mais-postados/m
 @Component({
     selector:"app-destaque",
     standalone:true,
-    imports:[ModalComponent,UtiusComponent,CarrosselComponent,OpcoesCategoriaComponent,MaisPostadosComponent],
+    imports:[ModalComponent,CarrosselComponent,OpcoesCategoriaComponent,MaisPostadosComponent],
     templateUrl:"./destaque.component.html",
     styleUrl:"./destaque.component.scss"
 })
-export class DestaqueComponent{
-}
+export class DestaqueComponent{}
