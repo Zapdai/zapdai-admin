@@ -1,52 +1,59 @@
 <div class="ng-form">
-    <div #slide1 class="ng-form-n1">
+    <section>
+        <div class="figure">
+            <div class="slide_area" #elemento>
+                <div #slide class="slide">
+                    <div #slide1 class="ng-form-n1">
             
-        <section class="ng-title">
-            <h4>Cadastrar minha conta </h4>
-        </section>
-        <fieldset class="ng-fieldset" >
-            <legend>Nome Completo</legend>
-            <input type="text" class="ng-input" placeholder="Nome Completo..." >
-        </fieldset>
-        
-        <fieldset class="ng-fieldset" >
-            <legend>Número de telefone</legend>
-            <input type="text" class="ng-input" placeholder="Nº de telefone..." >
-        </fieldset>
-        
-        <fieldset class="ng-fieldset" >
-            <legend>Email</legend>
-            <input type="email" class="ng-input" placeholder="Email" >
-        </fieldset>
-
-        <button class="ng-btn ng-btn-proximo" (click)="btnProximo()" >Proximo</button>
-    </div>
-        
-    <div #slide2 class="ng-form-n1">
+                        <section class="ng-title">
+                            <h4>Cadastrar minha conta </h4>
+                        </section>
+                        <fieldset class="ng-fieldset" >
+                            <legend>Nome Completo</legend>
+                            <input type="text" class="ng-input" placeholder="Nome Completo..." >
+                        </fieldset>
+                        
+                        <fieldset class="ng-fieldset" >
+                            <legend>Número de telefone</legend>
+                            <input type="text" class="ng-input" placeholder="Nº de telefone..." >
+                        </fieldset>
+                        
+                        <fieldset class="ng-fieldset" >
+                            <legend>Email</legend>
+                            <input type="email" class="ng-input" placeholder="Email" >
+                        </fieldset>
+                
+                        <button class="ng-btn ng-btn-proximo" (click)="btnProximo()" >Proximo</button>
+                    </div>
+                </div>
+                <div #slide class="slide area2">
+                    <div #slide2 class="ng-form-n1">
             
-        <section class="ng-title">
-            <h4>conta </h4>
-        </section>
-        <fieldset class="ng-fieldset" >
-            <legend>CPF</legend>
-            <input type="text" class="ng-input" placeholder="Nome Completo..." >
-        </fieldset>
-        
-        <fieldset class="ng-fieldset" >
-            <legend>Senha</legend>
-            <input type="text" class="ng-input" placeholder="Nº de telefone..." >
-        </fieldset>
-        
-        <fieldset class="ng-fieldset" >
-            <legend>Confirme a senha</legend>
-            <input type="email" class="ng-input" placeholder="Email" >
-        </fieldset>
-
-        <section class="ng-section-btn">
-            <button class="ng-btn ng-btn-proximo" (click)="btnVoltar()">Voltar</button>
-            <button class="ng-btn ng-btn-cadastrar">Cadastrar</button>
-        </section>
-    </div>
-
-
+                        <section class="ng-title">
+                            <h4>conta </h4>
+                        </section>
+                        <fieldset class="ng-fieldset" >
+                            <legend>CPF</legend>
+                            <input type="text" class="ng-input" placeholder="Nome Completo..." >
+                        </fieldset>
+                        
+                        <fieldset class="ng-fieldset" >
+                            <legend>Senha</legend>
+                            <input type="text" class="ng-input" placeholder="Nº de telefone..." >
+                        </fieldset>
+                        
+                        <fieldset class="ng-fieldset" >
+                            <legend>Confirme a senha</legend>
+                            <input type="email" class="ng-input" placeholder="Email" >
+                        </fieldset>
+                
+                        <section class="ng-section-btn">
+                            <button class="ng-btn ng-btn-proximo" (click)="btnVoltar()">Voltar</button>
+                            <button class="ng-btn ng-btn-cadastrar">Cadastrar</button>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>

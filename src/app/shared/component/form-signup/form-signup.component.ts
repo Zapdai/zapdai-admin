@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, ElementRef, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
@@ -10,7 +10,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   styleUrl: './form-signup.component.scss'
 })
 export class FormSignupComponent {
-  @ViewChild('slide1') elemento1!: ElementRef
+  @ViewChild('slide', { static: true }) elemento!: ElementRef
   @ViewChild('slide2') elemento2!: ElementRef
 
 
@@ -18,14 +18,14 @@ export class FormSignupComponent {
   oculta = true;
 
   btnProximo(){
-    this.elemento1.nativeElement.style.display = 'none';
-    this.elemento2.nativeElement.style.display = 'block';
   
+    this.elemento.nativeElement.classList.add("first")
+
   }
 
   btnVoltar(){
-    this.elemento1.nativeElement.style.display = 'block';
-    this.elemento2.nativeElement.style.display = 'none';
+   
+  }
+  
   }
 
-}
