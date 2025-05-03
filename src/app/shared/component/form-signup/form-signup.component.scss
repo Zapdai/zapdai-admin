@@ -1,9 +1,9 @@
 .ng-form {
     display: flex;
     justify-content: center;
-    height: 400px;
-    margin-bottom: 20px;
-    background-color: green;
+    align-items: center;
+    width: 450px;
+    height: 100%;
     overflow: hidden;
 
 
@@ -15,23 +15,26 @@
         .slide_area {
             width: 400%;
             display: flex;
+            form{}
 
 
             .slide {
                 width: 25%;
-                transition: all 1s ease-in;
+                transition: all 0.5s ease-in;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                padding: 30px;
 
                 .ng-form-n1 {
                     display: flex;
                     justify-content: center;
                     align-items: center;   
-                    flex-direction: column;          
-                     width: 100%;
-                    padding: 0 56px;
-                    background-color: yellow;
+                    flex-direction: column; 
+                    .ng-data{
+                        display: flex;
+                        gap: 7px;
+                    }
                     .ng-title {
                         text-align: center;
                         color: #ddd;
@@ -138,9 +141,4 @@
 
 .first {
     margin-left: -25%;
-}
-
-.ng-form-n2 {
-    transition: opacity 5s ease-in-out;
-    background-color: green;
 }

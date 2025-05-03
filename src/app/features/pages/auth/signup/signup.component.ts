@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
     standalone:true,
     templateUrl:"./signup.component.html",
     styleUrl:"./signup.component.scss",
-    imports: [formModalComponent, footerComponent, FormSignupComponent]
+    imports: [footerComponent, FormSignupComponent]
 })
 export class SignupComponent{
     

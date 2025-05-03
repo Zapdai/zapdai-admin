@@ -33,25 +33,20 @@ export class AuthInterceptors implements HttpInterceptor {
 
         }
         if(error.status === 400){
-          /*this.snackBar.openSnackBar(error.error.msg);*/
-          alert('Error msg')
+          this.dialog.openSnackBar(error?.error.erro)
 
         }
         if (error.status === 501) {
-          //this.snackBar.openSnackBar("Erro 501 serviço em manutenção");
-          alert('Erro 501 serviço em manutenção')
+          this.dialog.openSnackBar(error?.error.erro)
         }
         else if (error.status === 502) {
-          //this.snackBar.openSnackBar("Erro 502 Bad Gateway");
-          alert('Erro 502 Bad Gateway')          
+          this.dialog.openSnackBar(error?.error.erro)
         }
         else if (error.status === 503) {
-          //this.snackBar.openSnackBar("Erro 503 serviço indisponivel");
-          alert('Erro 503 serviço indisponivel')          
+          this.dialog.openSnackBar(error?.error.erro)
         }
         else if (error.status === 504) {
-          //this.snackBar.openSnackBar("Gateway Timeout: Erro 504 serviço em manutenção");
-          alert('Gateway Timeout: Erro 504 serviço em manutenção')          
+          this.dialog.openSnackBar(error?.error.erro)
         }
         return throwError(error.message);
       })

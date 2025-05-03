@@ -35,12 +35,16 @@ export class FormLoginComponent {
       }
       return dataName
   }
-
+perfil = "admin"
   btn (){
       this.auth.login(this.data()).subscribe(item=>{
           if(item.authToken !== null){
-              this.authService.saveToken(item.authToken)
+            this.authService.saveToken(item.authToken)
+            if(this.perfil.includes("admin")){
               this.router.navigateByUrl('/home')
+            }else if(this.perfil.includes("user")){
+              this.router.navigateByUrl('/categorias')
+            }      
           }
       })
   }
