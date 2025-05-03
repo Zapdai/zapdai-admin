@@ -15,9 +15,6 @@ export class apiAuthService {
     }
     login (data:any):Observable <any> {
         console.log(data)
-        return this.http.post<any>(this.apiKey, data, {
-            headers: {
-              'Content-Type': 'application/json'
-            }}).pipe()
+        return this.http.post<any>(this.apiKey, data).pipe()
     }
 }

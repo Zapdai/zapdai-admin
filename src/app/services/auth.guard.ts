@@ -5,10 +5,11 @@ import { AuthService } from "./auth.service";
 export const authGuardian:CanActivateChildFn = (route)=>{
      const token = Inject(AuthService);
      const rotas = Inject(Router);
-     if(token?.isLogued()){
+     if(token!.PossuiToken()){
         return true;
         
      }else{
+         rotas.navigate(['/categorias'])
         return false;
      }
 }

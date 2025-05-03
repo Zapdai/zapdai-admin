@@ -7,7 +7,7 @@ import {loadingGuard } from './services/loading/loading.guard';
 
 export const routes: Routes = [
     {
-        path:"",redirectTo:"/home/destaque",pathMatch:"full",
+        path:"",redirectTo:"/home",pathMatch:"full",
     },
     {
         path:"",loadChildren:()=>import("./features/features.routes").then(rota=>rota.routes),canActivate:[authGuardian]

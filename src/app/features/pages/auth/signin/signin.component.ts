@@ -5,6 +5,7 @@ import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { apiAuthService } from "../../../../services/apiAuth.service";
 import { Router } from "@angular/router";
 import { loadingService } from "../../../../services/loading/loading.service";
+import { AuthService } from "../../../../services/auth.service";
 
 @Component ({
     selector:'',
@@ -15,7 +16,7 @@ import { loadingService } from "../../../../services/loading/loading.service";
 })
 
 export class SigninComponent {
-    constructor (public service:loginFormService, private auth:apiAuthService, private router:Router, private activeRoute:loadingService){
+    constructor (public service:loginFormService, private auth:apiAuthService, private router:Router, private activeRoute:loadingService, private authService:AuthService){
     }
 
     select <T> (name:string){
@@ -30,14 +31,17 @@ export class SigninComponent {
     data ():any {
         const dataName = {
             email: this.select('email').value,
-            senha: this.select('senha').value
+            password: this.select('password').value
         }
         return dataName
     }
 
     btn (){
         this.auth.login(this.data()).subscribe(item=>{
-            console.log('Meu token ' + item.authToken)
+            if(item.authToken !== null){
+                this.authService.saveToken(item.authToken)
+                this.router.navigateByUrl('/categorias')
+            }
         })
     }
 

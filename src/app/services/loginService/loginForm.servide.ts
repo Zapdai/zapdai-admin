@@ -8,7 +8,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 export class loginFormService {
     groupform = new FormGroup ({
         email: new FormControl (''),
-        senha: new FormControl ('')
+        password: new FormControl ('')
     }) 
 
     
