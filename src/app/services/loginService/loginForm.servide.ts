@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 @Injectable ({
     providedIn:'root'
@@ -7,8 +7,8 @@ import { FormControl, FormGroup } from "@angular/forms";
 
 export class loginFormService {
     groupform = new FormGroup ({
-        email: new FormControl (''),
-        password: new FormControl ('')
+        email: new FormControl ('', [Validators.required, Validators.email]),
+        password: new FormControl ('', [Validators.required, Validators.minLength(8)])
     }) 
 
     

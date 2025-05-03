@@ -6,13 +6,14 @@ import { apiAuthService } from "../../../../services/apiAuth.service";
 import { Router } from "@angular/router";
 import { loadingService } from "../../../../services/loading/loading.service";
 import { AuthService } from "../../../../services/auth.service";
+import { footerComponent } from "../../home/foother/footer.component";
 
 @Component ({
     selector:'',
     standalone: true,
     templateUrl:'./signin.component.html',
     styleUrl:'./signin.component.scss',
-    imports:[CommonModule,ReactiveFormsModule]
+    imports:[CommonModule,ReactiveFormsModule, footerComponent]
 })
 
 export class SigninComponent {
@@ -40,7 +41,7 @@ export class SigninComponent {
         this.auth.login(this.data()).subscribe(item=>{
             if(item.authToken !== null){
                 this.authService.saveToken(item.authToken)
-                this.router.navigateByUrl('/categorias')
+                this.router.navigateByUrl('/home')
             }
         })
     }
@@ -70,4 +71,13 @@ pageSignup(){
         });
       }, 0);
 }
+
+isRequiredEmail(){
+    return this.service.groupform.get('email')?.errors?.['required'] && this.service.groupform.get('email')?.touched
+}
+
+isRequiredPassword(){
+    return this.service.groupform.get('password')?.errors?.['required'] && this.service.groupform.get('password')?.touched
+}
+
 }

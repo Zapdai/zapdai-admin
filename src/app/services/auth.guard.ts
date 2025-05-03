@@ -9,7 +9,7 @@ export const authGuardian:CanActivateChildFn = (route)=>{
         return true;
         
      }else{
-         rotas.navigate(['/categorias'])
+        rotas.navigate(['/categorias'])
         return false;
      }
 }
