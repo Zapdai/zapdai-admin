@@ -1,0 +1,19 @@
+.ng-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    flex-direction: column;
+    gap: 10px;
+
+    
+    .ng-logo {
+        width: 150px;
+        height: 55px;
+        padding: 5px;
+        background-image: url('/logo.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        cursor: pointer;
+    }
+}

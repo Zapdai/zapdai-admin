@@ -1,0 +1,26 @@
+<form action="" class="ng-form" [formGroup]="service.groupform">
+    <section class="ng-title">
+        <h4>Acessar minha conta </h4>
+    </section>
+    <fieldset class="ng-fieldset" [ngClass]="{'mudaCor':isRequiredEmail()}">
+        <legend>Email</legend>
+        <input type="email" class="ng-input" placeholder="Email..." formControlName="email" >
+    </fieldset>
+    @if (isRequiredEmail()) {
+        <small class="ng-error">Informe o email</small>
+    }
+
+    <fieldset class="ng-fieldset">
+        <legend>Senha</legend>
+        <input type="password" class="ng-input" placeholder="Senha..." formControlName="password" >
+    </fieldset>
+    @if (isRequiredPassword()) {
+        <div class="ng-error">Informe o senha</div>
+    }
+
+
+    <button class="ng-btn" (click)="btn()" [disabled]="!this.service.groupform.valid">Login</button>
+    <span class="ng-text">Esqueceu sua senha?</span>
+    <button class="ng-btn ng-btn-signup" (click)="pageSignup()">Criar conta</button>
+
+</form>
