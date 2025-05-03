@@ -7,17 +7,19 @@ import { Router } from "@angular/router";
 import { loadingService } from "../../../../services/loading/loading.service";
 import { AuthService } from "../../../../services/auth.service";
 import { footerComponent } from "../../home/foother/footer.component";
+import { SnackService } from "../../../../services/snackBar/snack.service";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component ({
     selector:'',
     standalone: true,
     templateUrl:'./signin.component.html',
     styleUrl:'./signin.component.scss',
-    imports:[CommonModule,ReactiveFormsModule, footerComponent]
+    imports:[CommonModule,ReactiveFormsModule, footerComponent,MatSnackBarModule]
 })
 
 export class SigninComponent {
-    constructor (public service:loginFormService, private auth:apiAuthService, private router:Router, private activeRoute:loadingService, private authService:AuthService){
+    constructor (public service:loginFormService, private auth:apiAuthService, private router:Router, private activeRoute:loadingService, private authService:AuthService,private snack:SnackService){
     }
 
     select <T> (name:string){

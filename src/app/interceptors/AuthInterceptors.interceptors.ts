@@ -5,10 +5,11 @@ import { Injectable } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { AuthService } from "../services/auth.service";
+import { SnackService } from "../services/snackBar/snack.service";
 
 @Injectable()
 export class AuthInterceptors implements HttpInterceptor {
-  constructor(private auth: AuthService, private router: Router, private dialog: MatDialog) { }
+  constructor(private auth: AuthService, private router: Router, private dialog: SnackService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     /*if (this.auth.PossuiToken() && !request.url.includes('/refreshToken')) {
@@ -28,7 +29,8 @@ export class AuthInterceptors implements HttpInterceptor {
               // this.dialog.open(ConfirmComponent);
         }*/
         if (error.status === 401) {
-        alert(error?.error.erro)
+        this.dialog.openSnackBar(error?.error.erro)
+
         }
         if(error.status === 400){
           /*this.snackBar.openSnackBar(error.error.msg);*/

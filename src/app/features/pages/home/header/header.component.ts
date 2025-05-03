@@ -5,6 +5,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import { Router } from "@angular/router";
 import { loadingService } from "../../../../services/loading/loading.service";
+import { SnackService } from "../../../../services/snackBar/snack.service";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -12,7 +14,7 @@ import { loadingService } from "../../../../services/loading/loading.service";
     templateUrl:"./header.component.html",
     styleUrl:"./header.component.scss",
     standalone:true,
-    imports:[MatIconModule,CommonModule,MatIconModule,ReactiveFormsModule,MatMenuModule]
+    imports:[MatIconModule,CommonModule,MatIconModule,ReactiveFormsModule,MatMenuModule,MatSnackBarModule]
 })
 export class headerComponent{
     @Input() categoria?:string;
@@ -22,8 +24,9 @@ export class headerComponent{
         name:new FormControl("")
     })
     @Output() ativaMenu = new EventEmitter;
-    constructor(private router:Router,private activeRouter:loadingService){}
+    constructor(private router:Router,private activeRouter:loadingService,private snack:SnackService){}
     setIcon(mudaIcon: boolean) {
+        this.snack.openSnackBar("deu certo")
         if (mudaIcon) {
             return "keyboard_arrow_down"
         } else {
