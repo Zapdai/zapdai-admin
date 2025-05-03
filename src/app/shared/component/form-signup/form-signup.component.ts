@@ -41,7 +41,7 @@ export class FormSignupComponent {
 
   data(){
     const data = {
-      name:this.select("nome").value,
+      name:this.select("name").value,
       phoneNumer: this.select("telefone").value,
       cpf: this.select("cpf").value,
       dataNascimento: this.select("datNascimento").value,
@@ -51,6 +51,7 @@ export class FormSignupComponent {
       endereco:{}
 
     }
+    return data
   }
   cadastro(){
    console.log("Minhas datas "+this.data())

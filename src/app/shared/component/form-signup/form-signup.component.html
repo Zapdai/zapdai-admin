@@ -3,77 +3,83 @@
         <div class="figure">
             <app-formModal>
                 <form action="" [formGroup]="form.groupform">
-                <div class="slide_area" #elemento>
-                   
-                    <div #slide class="slide">
-                        <div #slide1 class="ng-form-n1">
-                
-                            <section class="ng-title">
-                                <h4>Cadastrar minha conta </h4>
-                            </section>
-                            <fieldset class="ng-fieldset" >
-                                <legend>Nome Completo</legend>
-                                <input type="text" class="ng-input" placeholder="Nome Completo..." formControlName="name">
-                            </fieldset>
-                            
-                            <fieldset class="ng-fieldset" >
-                                <legend>Número de telefone</legend>
-                                <input type="text" class="ng-input" placeholder="Nº de telefone..."  formControlName="telefone">
-                            </fieldset>
-                            
-                            <fieldset class="ng-fieldset" >
-                                <legend>Email</legend>
-                                <input type="email" class="ng-input" placeholder="Email"  formControlName="email" >
-                            </fieldset>
-                    
-                            <button class="ng-btn ng-btn-proximo" (click)="btnProximo()" >Proximo</button>
-                        </div>
-                    </div>
-                    <div #slide class="slide">
-                        <div #slide2 class="ng-form-n1">
-                
-                            <section class="ng-title">
-                                <h4>Conta </h4>
-                            </section>
+                    <div class="slide_area" #elemento>
 
-                          <div class="ng-data">
-                            <fieldset class="ng-fieldset" >
-                                <legend>Sexo</legend>
-                               <select formControlName="sexo" id=""  class="ng-input">
-                                 <option [value]="">selecione..</option>
-                                 <option value="m">Masculino</option>
-                               </select>
-                            </fieldset>
-                            <fieldset class="ng-fieldset" >
-                                <legend>Data nascimento</legend>
-                                <input type="date" class="ng-input" placeholder="Nome Completo..."  formControlName="dataNascimento">
-                            </fieldset>
-                          </div>
+                        <div #slide class="slide">
+                            <div #slide1 class="ng-form-n1">
 
-                            <fieldset class="ng-fieldset" >
-                                <legend>CPF</legend>
-                                <input type="text" class="ng-input" placeholder="Nome Completo..."  formControlName="cpf">
-                            </fieldset>
-                            
-                            <fieldset class="ng-fieldset" >
-                                <legend>Senha</legend>
-                                <input type="text" class="ng-input" placeholder="Nº de telefone..."  formControlName="password" >
-                            </fieldset>
-                            
-                            <fieldset class="ng-fieldset" >
-                                <legend>Confirme a senha</legend>
-                                <input type="email" class="ng-input" placeholder="Email"  formControlName="repeteSenha" >
-                            </fieldset>
-                    
-                            <section class="ng-section-btn">
-                                <button class="ng-btn ng-btn-proximo" (click)="btnVoltar()">Voltar</button>
-                                <button class="ng-btn ng-btn-cadastrar"  (click)="cadastro()">Cadastrar</button>
-                            </section>
+                                <section class="ng-title">
+                                    <h4>Cadastrar minha conta </h4>
+                                </section>
+                                <fieldset class="ng-fieldset">
+                                    <legend>Nome Completo</legend>
+                                    <input type="text" class="ng-input" placeholder="Nome Completo..."
+                                        formControlName="name">
+                                </fieldset>
+
+                                <fieldset class="ng-fieldset">
+                                    <legend>Número de telefone</legend>
+                                    <input type="text" class="ng-input" placeholder="Nº de telefone..."
+                                        formControlName="telefone">
+                                </fieldset>
+
+                                <fieldset class="ng-fieldset">
+                                    <legend>Email</legend>
+                                    <input type="email" class="ng-input" placeholder="Email" formControlName="email">
+                                </fieldset>
+
+                                <button class="ng-btn ng-btn-proximo" (click)="btnProximo()">Proximo</button>
+                            </div>
                         </div>
+                        <div #slide class="slide">
+                            <div #slide2 class="ng-form-n1">
+
+                                <section class="ng-title">
+                                    <h4>Conta </h4>
+                                </section>
+
+                                <div class="ng-data">
+                                    <fieldset class="ng-fieldset">
+                                        <legend>Sexo</legend>
+                                        <select formControlName="sexo" id="" class="ng-input">
+                                            <option [value]="">selecione..</option>
+                                            <option value="m">Masculino</option>
+                                        </select>
+                                    </fieldset>
+                                    <fieldset class="ng-fieldset">
+                                        <legend>Data nascimento</legend>
+                                        <input type="date" class="ng-input" placeholder="Nome Completo..."
+                                            formControlName="dataNascimento">
+                                    </fieldset>
+                                </div>
+
+                                <fieldset class="ng-fieldset">
+                                    <legend>CPF</legend>
+                                    <input type="text" class="ng-input" placeholder="Nome Completo..."
+                                        formControlName="cpf">
+                                </fieldset>
+
+                                <fieldset class="ng-fieldset">
+                                    <legend>Senha</legend>
+                                    <input type="text" class="ng-input" placeholder="Nº de telefone..."
+                                        formControlName="password">
+                                </fieldset>
+
+                                <fieldset class="ng-fieldset">
+                                    <legend>Confirme a senha</legend>
+                                    <input type="email" class="ng-input" placeholder="Email"
+                                        formControlName="repeteSenha">
+                                </fieldset>
+
+                                <section class="ng-section-btn">
+                                    <button class="ng-btn ng-btn-proximo" (click)="btnVoltar()">Voltar</button>
+                                    <button class="ng-btn ng-btn-cadastrar" (click)="cadastro()">Cadastrar</button>
+                                </section>
+                            </div>
+                        </div>
+
                     </div>
-               
-                </div>
-            </form>
+                </form>
             </app-formModal>
         </div>
     </section>
