@@ -28,9 +28,7 @@ export class AuthInterceptors implements HttpInterceptor {
               // this.dialog.open(ConfirmComponent);
         }*/
         if (error.status === 401) {
-          this.router.navigate(["/cards"]);
-          this.auth.RemoveToken();
-          //this.auth.RemoveRefreshToken();
+        alert(error?.error.erro)
         }
         if(error.status === 400){
           /*this.snackBar.openSnackBar(error.error.msg);*/
