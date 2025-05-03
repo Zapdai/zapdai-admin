@@ -1,0 +1,21 @@
+<div class="ng-main">
+    <img src="dfds.png" alt="Logo" class="ng-logo" (click)="pageCategorias()">
+    <form action="" class="ng-form" [formGroup]="service.groupform">
+        <section class="ng-title">
+            <span>Acessar minha conta </span>
+            <h2>ZAPDAI</h2>
+        </section>
+        <fieldset class="ng-fieldset">
+            <legend>Email</legend>
+            <input type="email" class="ng-input" placeholder="Email..." formControlName="email" >
+        </fieldset>
+        <fieldset class="ng-fieldset">
+            <legend>Senha</legend>
+            <input type="password" class="ng-input" placeholder="Senha..." formControlName="senha" >
+        </fieldset>
+        <button class="ng-btn" (click)="btn()">Login</button>
+        <span class="ng-text">Esqueceu sua senha?</span>
+        <button class="ng-btn ng-btn-signup" (click)="pageSignup()">Criar conta</button>
+
+    </form>
+</div>

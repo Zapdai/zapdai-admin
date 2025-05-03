@@ -51,4 +51,16 @@ pageSignup(){
         });
       }, 0);
 }
+
+pageSignin(){
+    this.activeRouter.activeLoading()
+    setTimeout(() => {
+        this.router.navigateByUrl('/loading', { skipLocationChange: true}).then(()=>{
+            setTimeout(() => {
+                this.router.navigate(['/auth/signin'])
+            }, 1000);
+        })
+        
+    }, 0);
+}
 }

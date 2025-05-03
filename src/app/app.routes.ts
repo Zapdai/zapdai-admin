@@ -13,7 +13,7 @@ export const routes: Routes = [
         path:"",loadChildren:()=>import("./features/features.routes").then(rota=>rota.routes),canActivate:[authGuardian]
     },
     {
-       path:"auth",loadChildren:()=>import("./features/pages/auth.component.ts/auth.routes").then(e=>e.routes)
+       path:"auth",loadChildren:()=>import("./features/pages/auth/auth.routes").then(e=>e.routes)
     },
     {
         path:"categorias",component:CategoriasComponent
