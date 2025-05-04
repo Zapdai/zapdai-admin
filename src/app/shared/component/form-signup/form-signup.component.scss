@@ -15,8 +15,6 @@
         .slide_area {
             width: 400%;
             display: flex;
-            form{}
-
 
             .slide {
                 width: 25%;
@@ -38,7 +36,7 @@
                     .ng-title {
                         text-align: center;
                         color: #ddd;
-                        margin-bottom: 20px;
+                        margin-bottom: 10px;
     
                     }
     
@@ -97,7 +95,7 @@
                         font-family: var(--font-family);
                         font-size: 14px;
                         font-weight: 500;
-                        background-color: #eee;
+                        
                         color: #592d74;
                         margin-top: 20px;
     
@@ -138,7 +136,11 @@
 
 
 }
-
+.show{
+    width: 25%;
+    padding: 30px;
+}
 .first {
+    padding: 30px;
     margin-left: -25%;
 }
