@@ -20,8 +20,8 @@
     }
 
     .ng-fieldset {
-        width: 350px;
-        padding: 7px;
+        width: 245px;
+        padding: 2px;
         border-radius: 5px;
         margin-top: 20px;
         
@@ -40,6 +40,14 @@
             height: 20px;
             font-size: 12px;
             color: #eee;
+        }
+        .ng-password-btn{
+            display: flex;
+            padding: 2px;
+            mat-icon{
+            cursor: pointer;
+            transform: scale(0.0.97);
+            }
         }
 
 
@@ -63,7 +71,6 @@
         font-family: var(--font-family);
         font-size: 14px;
         font-weight: 500;
-        background-color: #eee;
         color: #592d74;
         margin-top: 20px;
 
@@ -85,7 +92,27 @@
     .ng-btn-signup {
         height: 25px;
         border-radius: 10px;
-        background-color: #bbb;
+        background-color: #fff;
         margin-top: 20px;
+    }
+}
+@media screen and (min-width:475px){
+    .ng-form {
+        .ng-fieldset {
+            width: 350px;
+            padding: 7px;
+            border-radius: 5px;
+            margin-top: 20px;
+            
+    
+            .ng-input {
+                width: 100%;
+                font-size: 12px;
+            }
+            
+
+
+        }
+    
     }
 }

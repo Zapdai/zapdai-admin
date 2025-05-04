@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -8,17 +8,22 @@ import { AuthService } from '../../../services/auth.service';
 import { loadingService } from '../../../services/loading/loading.service';
 import { loginFormService } from '../../../services/loginService/loginForm.servide';
 import { SnackService } from '../../../services/snackBar/snack.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-form-login',
-  imports:[CommonModule,ReactiveFormsModule,MatSnackBarModule],
+  imports:[CommonModule,ReactiveFormsModule,MatSnackBarModule,MatIconModule,MatButtonModule],
   templateUrl: './form-login.component.html',
   styleUrl: './form-login.component.scss'
 })
 export class FormLoginComponent {
+  @ViewChild("form1",{static:true}) form1!:ElementRef
+  @ViewChild("form2",{static:true}) form2!:ElementRef
   constructor (public service:loginFormService, private auth:apiAuthService, private router:Router, private activeRoute:loadingService, private authService:AuthService,private snack:SnackService){
   }
-
+  ativo = false;
+  icon:"visibility"|"visibility_off" = "visibility"
   select <T> (name:string){
       const form = this.service.groupform.get(name)
 
@@ -35,6 +40,12 @@ export class FormLoginComponent {
       }
       return dataName
   }
+
+  mudaCompo(event:any){
+     if(event){
+      event.focus()
+     }
+  }
 perfil = "admin"
   btn (){
       this.auth.login(this.data()).subscribe(item=>{
@@ -48,7 +59,15 @@ perfil = "admin"
           }
       })
   }
-
+visible(){
+  if(this.icon==="visibility"){
+    this.icon =  "visibility_off"
+    this.ativo = true;
+  }else{
+    this.icon="visibility"
+    this.ativo = false;
+  }
+}
 
   pageSignup(){
     this.activeRoute.activeLoading()

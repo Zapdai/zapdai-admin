@@ -5,6 +5,7 @@ import { ClientesComponentes } from "./pages/clientes/clientes.componentes";
 import { ProdutosComponentes } from "./pages/produtos/produtos.componentes";
 import { DestaqueComponent } from "./pages/destaque/destaque.component";
 import { pedidosComponent } from "./pages/pedidos/pedidos.component";
+import { authGuardian } from "../services/auth.guard";
 
 export const routes:Routes = [
     {
@@ -25,5 +26,7 @@ export const routes:Routes = [
                 path:"pedidos",component:pedidosComponent,title:"Pedidos"
             }
         ]
+        ,
+        canActivate:[authGuardian]
     }
 ];

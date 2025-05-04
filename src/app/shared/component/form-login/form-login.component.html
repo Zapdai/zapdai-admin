@@ -1,10 +1,11 @@
-<form action="" class="ng-form" [formGroup]="service.groupform">
+<form action="" class="ng-form" [formGroup]="service.groupform" autocomplete="username">
     <section class="ng-title">
         <h4>Acessar minha conta </h4>
     </section>
     <fieldset class="ng-fieldset" [ngClass]="{'mudaCor':isRequiredEmail()}">
         <legend>Email</legend>
-        <input type="email" class="ng-input" placeholder="Email..." formControlName="email" >
+            <input type="email" autofocus="on" #form1 (keydown.enter)="mudaCompo(form2)"   autocomplete="username" class="ng-input" placeholder="Email..." formControlName="email" >
+
     </fieldset>
     @if (isRequiredEmail()) {
         <small class="ng-error">Informe o email</small>
@@ -12,15 +13,19 @@
 
     <fieldset class="ng-fieldset">
         <legend>Senha</legend>
-        <input type="password" class="ng-input" placeholder="Senha..." formControlName="password" >
+        <div class="ng-password-btn">
+            <input [type]="ativo?'text':'password'" #form2 autocomplete="new-password" class="ng-input" placeholder="Senha..." formControlName="password" >
+            <mat-icon (click)="visible()">{{icon}}</mat-icon>
+
+        </div>
     </fieldset>
     @if (isRequiredPassword()) {
         <div class="ng-error">Informe o senha</div>
     }
 
 
-    <button class="ng-btn" (click)="btn()" [disabled]="!this.service.groupform.valid">Login</button>
+    <button  mat-flat-button color="secundary" class="ng-btn" (click)="btn()" [disabled]="!this.service.groupform.valid">Login</button>
     <span class="ng-text">Esqueceu sua senha?</span>
-    <button class="ng-btn ng-btn-signup" (click)="pageSignup()">Criar conta</button>
+    <button class="ng-btn ng-btn-signup" mat-flat-button color="secundary" (click)="pageSignup()">Criar conta</button>
 
 </form>

@@ -5,8 +5,13 @@ import { inject } from "@angular/core";
 export const authGuardian:CanActivateChildFn = (route)=>{
      const token = inject(AuthService);
      const rotas = inject(Router);
+     const tokeperfil = "admin";
      if(token!.PossuiToken()){
-        return true;
+      const perfil = route.data['acess'] as string[]
+        if(perfil.some(itens=>tokeperfil.includes(itens))){
+         return true;
+        }
+        return false;
         
      }else{
         rotas.navigate(['/categorias'])

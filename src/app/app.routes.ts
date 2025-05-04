@@ -10,7 +10,7 @@ export const routes: Routes = [
         path:"",redirectTo:"/home",pathMatch:"full",
     },
     {
-        path:"",loadChildren:()=>import("./features/features.routes").then(rota=>rota.routes),canActivate:[authGuardian]
+        path:"",loadChildren:()=>import("./features/features.routes").then(rota=>rota.routes), data:{acess:["admin"]}
     },
     {
        path:"auth",loadChildren:()=>import("./features/pages/auth/auth.routes").then(e=>e.routes)
