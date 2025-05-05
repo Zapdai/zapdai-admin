@@ -7,7 +7,7 @@ import {loadingGuard } from './services/loading/loading.guard';
 
 export const routes: Routes = [
     {
-        path:"",redirectTo:"/home",pathMatch:"full",
+        path:"",redirectTo:"/categorias",pathMatch:"full",
     },
     {
         path:"",loadChildren:()=>import("./features/features.routes").then(rota=>rota.routes), data:{acess:["ROLE_ADMIN","MODERATOR"]}
