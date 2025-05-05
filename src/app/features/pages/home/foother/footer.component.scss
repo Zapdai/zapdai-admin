@@ -10,6 +10,11 @@
     padding: 30px 170px;
     gap: 20px;
     background-color: #0a1630;
+    a{
+        color: #FFFF;
+        text-decoration: none;
+        cursor: pointer;
+    }
     .ng-footer-small{
         font-size: 12px;
         color: var(--color-header);

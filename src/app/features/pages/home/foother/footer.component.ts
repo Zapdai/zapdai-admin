@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { loadingService } from "../../../../services/loading/loading.service";
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { CommonModule } from "@angular/common";
 
 @Component({
@@ -8,7 +8,7 @@ import { CommonModule } from "@angular/common";
     standalone:true,
     templateUrl:"./footer.component.html",
     styleUrl:"./footer.component.scss",
-    imports:[CommonModule]
+    imports:[CommonModule,RouterLink]
 })
 export class footerComponent{
     
