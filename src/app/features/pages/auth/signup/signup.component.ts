@@ -1,6 +1,4 @@
 import { Component } from "@angular/core";
-import { formModalComponent } from "../../../../shared/component/formModel/formModal.component";
-import { footerComponent } from "../../home/foother/footer.component";
 import { FormSignupComponent } from "../../../../shared/component/form-signup/form-signup.component";
 import { loadingService } from "../../../../services/loading/loading.service";
 import { Router } from "@angular/router";
@@ -15,7 +13,7 @@ import { PageContainerComponent } from "../../../../shared/component/page-contai
     standalone:true,
     templateUrl:"./signup.component.html",
     styleUrl:"./signup.component.scss",
-    imports: [footerComponent, FormSignupComponent, PageContainerComponent]
+    imports: [FormSignupComponent, PageContainerComponent]
 })
 export class SignupComponent{
     
