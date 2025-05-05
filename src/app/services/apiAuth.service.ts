@@ -9,7 +9,7 @@ import { cadastro } from "../shared/core/types/cadastro";
 })
 
 export class apiAuthService {
-    apiKey = 'https://zapdaiback.onrender.com/zapdai/v1/usuario'
+    apiKey = 'https://zapdai-zmo0.onrender.com/zapdai/v1/usuario'
 
     constructor (private http:HttpClient) {
         

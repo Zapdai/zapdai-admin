@@ -1,7 +1,12 @@
+.ng-footer-color {
+    background-color: green;
+    padding: 35px;
+}
+
 .ng-footer{
     display: flex;
     flex-direction: column;
-    width: 100vw;
+    width: 100%;
     padding: 30px 170px;
     gap: 20px;
     background-color: #0a1630;

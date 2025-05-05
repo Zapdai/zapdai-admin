@@ -1,17 +1,21 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { loadingService } from "../../../../services/loading/loading.service";
 import { Router } from "@angular/router";
+import { CommonModule } from "@angular/common";
 
 @Component({
     selector:"app-footer",
     standalone:true,
     templateUrl:"./footer.component.html",
     styleUrl:"./footer.component.scss",
-    imports:[]
+    imports:[CommonModule]
 })
 export class footerComponent{
     
     constructor(private router:Router,private activeRouter:loadingService){}
+
+    @Input() footerActive = false
+    @Input() color?: string;
 
     pageSignup(){
         this.activeRouter.activeLoading()
