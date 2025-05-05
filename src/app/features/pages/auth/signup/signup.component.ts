@@ -8,13 +8,14 @@ import { apiAuthService } from "../../../../services/apiAuth.service";
 import { cadastro } from "../../../../shared/core/types/cadastro";
 import { SnackService } from "../../../../services/snackBar/snack.service";
 import { registroForm } from "../../../../services/singNupForm/registroForm.servide";
+import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
 
 @Component({
     selector:"app-registro",
     standalone:true,
     templateUrl:"./signup.component.html",
     styleUrl:"./signup.component.scss",
-    imports: [footerComponent, FormSignupComponent]
+    imports: [footerComponent, FormSignupComponent, PageContainerComponent]
 })
 export class SignupComponent{
     

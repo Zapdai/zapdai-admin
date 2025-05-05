@@ -5,10 +5,12 @@ import { CarrosselComponent } from '../../../shared/component/carrossel/carrosse
 import { OpcoesCategoriaComponent } from '../../../shared/component/opcoes-categoria/opcoes-categoria.component';
 import { ModalComponent } from '../../../shared/component/modal/modal.component';
 import { MaisPostadosComponent } from '../../../shared/component/mais-postados/mais-postados.component';
+import { PageContainerComponent } from "../../../shared/component/page-container/page-container.component";
+import { footerComponent } from "../home/foother/footer.component";
 
 @Component({
   selector: 'app-categorias',
-  imports: [headerComponent,OpcoesCategoriaComponent,CarrosselComponent,MaisPostadosComponent],
+  imports: [headerComponent, OpcoesCategoriaComponent, CarrosselComponent, MaisPostadosComponent, PageContainerComponent, footerComponent],
   templateUrl: './categorias.component.html',
   styleUrl: './categorias.component.scss'
 })

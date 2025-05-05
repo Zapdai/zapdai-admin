@@ -1,13 +1,109 @@
 .ng-footer{
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px 0;
-    bottom: 0;
-    width: 100%;
+    flex-direction: column;
+    width: 100vw;
+    padding: 30px 170px;
+    gap: 20px;
+    background-color: #0a1630;
     .ng-footer-small{
         font-size: 12px;
         color: var(--color-header);
         text-align: center;
     }
+    .ng-header-footer {
+        display: flex;
+        justify-content: space-between;
+
+        .ng-logo {
+            width: 150px;
+            height: 55px;
+            padding: 5px;
+            background-image: url('/logo.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            cursor: pointer;
+        }
+    }
+
+    section {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+
+        .btn-footer {
+            height: 40px;
+            background-color: #FF9D24;
+            border: none;
+            padding: 0 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .ng-column-footer {
+            display: flex;
+            justify-content: flex-start;
+            flex-direction: column;
+            color: #bbb;
+            gap: 15px;
+            font-size: 14px;
+
+            .ng-icon-social-media {
+                display: flex;
+                justify-content: end;
+                flex-direction: row;
+                width: 100%;
+                gap: 5px;
+
+                .ng-img-socialMedia {
+                    width: 30px;
+                    height: 30px;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    cursor: pointer;
+                }
+
+            }
+
+            .ng-signup{
+                display: flex;
+                align-items: flex-end;
+                justify-content: end;
+                cursor: pointer;
+                .mat-icon{
+                    color: #fff;
+                }
+                button{
+                    margin-left: 10px;
+                    padding: 5px 20px;
+                    border: 0;
+                    border-radius: 5px;
+                    cursor: pointer;
+    
+                }
+                button:active{
+                    transform: scale(0.92);
+                }
+                .btn1{
+                    background-color:#FF9933 ;
+                }
+                .btn2{
+                    background-color:#f7f5f4 ;
+                }
+                .btn1:hover{
+                    background-color: #928c45;
+                    color: #FFF;
+                }
+                .btn2:hover{
+                    background-color: #b5f1ff;
+                    color: #0f0f0f;
+                }
+            }            
+
+        }
+    }
+    
+}
+.ng-column-footer3 {
+    align-items: end;
 }

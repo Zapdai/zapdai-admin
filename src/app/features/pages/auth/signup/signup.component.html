@@ -1,5 +1,7 @@
-<div class="ng-main">
-    <div class="ng-logo" (click)="pageCategorias()"></div>
-    <app-form-signup (registroBtn)="enviar($event)"></app-form-signup>
+<app-page-container>
+    <div class="ng-main">
+        <div class="ng-logo" (click)="pageCategorias()"></div>
+        <app-form-signup (registroBtn)="enviar($event)"></app-form-signup>
+    </div>
     <app-footer></app-footer>
-</div>
+</app-page-container>

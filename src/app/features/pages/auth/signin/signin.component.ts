@@ -7,13 +7,14 @@ import { FormLoginComponent } from "../../../../shared/component/form-login/form
 import { formModalComponent } from "../../../../shared/component/formModel/formModal.component";
 import { Router } from "@angular/router";
 import { loadingService } from "../../../../services/loading/loading.service";
+import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
 
 @Component ({
     selector:'',
     standalone: true,
     templateUrl:'./signin.component.html',
     styleUrl:'./signin.component.scss',
-    imports: [CommonModule, ReactiveFormsModule, footerComponent, MatSnackBarModule, FormLoginComponent, formModalComponent]
+    imports: [CommonModule, ReactiveFormsModule, footerComponent, MatSnackBarModule, FormLoginComponent, formModalComponent, PageContainerComponent]
 })
 
 export class SigninComponent {
