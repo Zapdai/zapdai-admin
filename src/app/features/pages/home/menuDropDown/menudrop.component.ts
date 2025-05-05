@@ -17,7 +17,7 @@ export class menuDropComponent{
             id: 0,
             name: "Home",
             icone: "home",
-            rotas: "/home",
+            rotas: "/admin",
             menuItens: false,
             iconeItem: false,
             children: []
@@ -26,7 +26,7 @@ export class menuDropComponent{
             id: 1,
             name: "Dashboard",
             icone: "bar_chart_4_bars",
-            rotas: "/home/dashboard",
+            rotas: "/admin/dashboard",
             menuItens: false,
             iconeItem: false,
             children: []
@@ -35,7 +35,7 @@ export class menuDropComponent{
             id: 2,
             name: "Clientes",
             icone: "groups",
-            rotas: "/home/clientes",
+            rotas: "/admin/clientes",
             menuItens: false,
             iconeItem: false,
             children: []
@@ -45,7 +45,7 @@ export class menuDropComponent{
             id: 3,
             name: "Produtos",
             icone: "menu_book",
-            rotas: "/home/produtos",
+            rotas: "/admin/produtos",
             menuItens: false,
             iconeItem: false,
             children: []
@@ -142,7 +142,7 @@ export class menuDropComponent{
             id: 7,
             name: "Tarefas",
             icone: "today",
-            rotas: "/dashboard/tarefas",
+            rotas: "/admin/tarefas",
             menuItens: false,
             iconeItem: false,
             children: []
@@ -151,7 +151,7 @@ export class menuDropComponent{
             id: 8,
             name: "Ações",
             icone: "pending_actions",
-            rotas: "/dashboard/acoes",
+            rotas: "/admin/acoes",
             menuItens: false,
             iconeItem: false,
             children: []
@@ -160,7 +160,7 @@ export class menuDropComponent{
             id: 9,
             name: "Anotaçoes",
             icone: "assignment",
-            rotas: "/dashboard/anotacoes",
+            rotas: "/admin/anotacoes",
             menuItens: false,
             iconeItem: false,
             children: []
@@ -169,7 +169,7 @@ export class menuDropComponent{
             id: 10,
             name: "Pedidos",
             icone: "shopping_cart",
-            rotas: "/home/pedidos",
+            rotas: "/admin/pedidos",
             menuItens: false,
             iconeItem: false,
             children: []
@@ -178,7 +178,7 @@ export class menuDropComponent{
             id: 11,
             name: "Entregadores",
             icone: "local_shipping",
-            rotas: "/dashboard/anotacoes",
+            rotas: "/admin/anotacoes",
             menuItens: false,
             iconeItem: false,
             children: []

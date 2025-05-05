@@ -7,16 +7,16 @@ import {loadingGuard } from './services/loading/loading.guard';
 
 export const routes: Routes = [
     {
-        path:"",redirectTo:"/categorias",pathMatch:"full",
+        path:"",redirectTo:"/home",pathMatch:"full",
     },
     {
-        path:"",loadChildren:()=>import("./features/features.routes").then(rota=>rota.routes), data:{acess:["ROLE_ADMIN","MODERATOR"]}
+        path:"admin",loadChildren:()=>import("./features/features.routes").then(rota=>rota.routes), data:{acess:["ROLE_ADMIN","MODERATOR"]}
     },
     {
        path:"auth",loadChildren:()=>import("./features/pages/auth/auth.routes").then(e=>e.routes)
     },
     {
-        path:"categorias",component:CategoriasComponent
+        path:"home",component:CategoriasComponent
     },
     {
         path:"loading",component:LoadingComponent,canActivate:[loadingGuard]

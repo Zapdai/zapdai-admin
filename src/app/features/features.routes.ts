@@ -9,7 +9,7 @@ import { authGuardian } from "../services/auth.guard";
 
 export const routes:Routes = [
     {
-        path:"home", component:homeComponent,title:"Tela home" ,children:[
+        path:"", component:homeComponent,title:"Tela admin" ,children:[
             {
                path:"",component:DestaqueComponent
             },
