@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { formModalComponent } from '../formModel/formModal.component';
@@ -14,6 +14,7 @@ import { SnackService } from '../../../services/snackBar/snack.service';
   styleUrl: './form-signup.component.scss'
 })
 export class FormSignupComponent {
+  @Output() registroBtn = new EventEmitter()
   @ViewChild('slide', { static: true }) elemento!: ElementRef
   @ViewChild('slide1', { static: true }) elemento1!: ElementRef
   @ViewChild('slide2', { static: true }) elemento2!: ElementRef
@@ -96,7 +97,7 @@ export class FormSignupComponent {
 
   data(): cadastro {
     const data: cadastro = {
-      name: this.select("name").value,
+      nome: this.select("name").value,
       phoneNumer: this.select("telefone").value,
       cpf: this.select("cpf").value,
       dataNascimento: this.select("dataNascimento").value,
@@ -112,7 +113,7 @@ export class FormSignupComponent {
       const password = this.select("password").value;
       const repetepassword = this.select("repeteSenha").value;
       if (password === repetepassword) {
-        this.snak.openSnackBar("Salvo no bando, em tratamento")
+        this.registroBtn.emit(this.data())
       } else {
         this.snak.openSnackBar("Senhas não conferem")
       }

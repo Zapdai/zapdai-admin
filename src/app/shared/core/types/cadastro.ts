@@ -1,5 +1,5 @@
 export interface cadastro{
-    name:string ,
+    nome:string ,
     phoneNumer:string,
     sexo:string,
     email:string ,

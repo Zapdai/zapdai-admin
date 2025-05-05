@@ -28,11 +28,15 @@ export class AuthInterceptors implements HttpInterceptor {
 
               // this.dialog.open(ConfirmComponent);
         }*/
+        if (error.status === 400) {
+                this.dialog.openSnackBar(error?.error.erro)
+        
+          }
         if (error.status === 401) {
         this.dialog.openSnackBar(error?.error.erro)
 
         }
-        if(error.status === 400){
+        if(error.status === 403){
           this.dialog.openSnackBar(error?.error.erro)
 
         }

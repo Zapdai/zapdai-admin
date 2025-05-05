@@ -4,6 +4,10 @@ import { footerComponent } from "../../home/foother/footer.component";
 import { FormSignupComponent } from "../../../../shared/component/form-signup/form-signup.component";
 import { loadingService } from "../../../../services/loading/loading.service";
 import { Router } from "@angular/router";
+import { apiAuthService } from "../../../../services/apiAuth.service";
+import { cadastro } from "../../../../shared/core/types/cadastro";
+import { SnackService } from "../../../../services/snackBar/snack.service";
+import { registroForm } from "../../../../services/singNupForm/registroForm.servide";
 
 @Component({
     selector:"app-registro",
@@ -14,7 +18,7 @@ import { Router } from "@angular/router";
 })
 export class SignupComponent{
     
-    constructor ( private router:Router, private activeRoute:loadingService){
+    constructor ( private router:Router, private activeRoute:loadingService,public auth:apiAuthService,private snack:SnackService,private form:registroForm){
     }
 
     pageCategorias(){
@@ -27,5 +31,20 @@ export class SignupComponent{
             })
             
         }, 0);
+      }
+
+     // precisa ser feito mais um Slider para validaçao de Codigo enviado ao email
+      enviar(event:cadastro){
+        if(event!=null){
+           this.auth.signup(event).subscribe((e:any)=>{
+               const msg:any =JSON.stringify(e)
+             if(e?.OK){
+                this.snack.openSnackBar(e?.OK);
+                this.form.groupform.reset();
+                this.router.navigate(['/auth/signin']);
+             }
+           })
+        }
+
       }
 }
