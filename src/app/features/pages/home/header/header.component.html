@@ -4,6 +4,12 @@
         <mat-icon (click)="exibir()" class="icon">menu</mat-icon>
         }
     </section>
+    <button (click)="ativoModal()">teste</button>
+    @if (ativo) {
+        <app-aside-modal (emitModal)="ativoModal()">
+            ijoisjvoisjoeiaj
+        </app-aside-modal>
+    }
     <section class="ng-form">
         <form action="" [formGroup]="grupo" (submit)="pegarvalor()">
             <div class="search">

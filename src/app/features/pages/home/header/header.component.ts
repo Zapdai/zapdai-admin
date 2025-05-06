@@ -7,6 +7,7 @@ import { Router } from "@angular/router";
 import { loadingService } from "../../../../services/loading/loading.service";
 import { SnackService } from "../../../../services/snackBar/snack.service";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AsideComponent } from "../../../../shared/component/aside-modal/aside-modal.component";
 
 
 @Component({
@@ -14,7 +15,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     templateUrl:"./header.component.html",
     styleUrl:"./header.component.scss",
     standalone:true,
-    imports:[MatIconModule,CommonModule,MatIconModule,ReactiveFormsModule,MatMenuModule,MatSnackBarModule]
+    imports:[MatIconModule
+        ,CommonModule,
+        MatIconModule,ReactiveFormsModule,MatMenuModule,MatSnackBarModule,
+        AsideComponent
+    ]
 })
 export class headerComponent{
     @Input() categoria?:string;
@@ -23,6 +28,7 @@ export class headerComponent{
     grupo = new FormGroup({
         name:new FormControl("")
     })
+    ativo = false;
     @Output() ativaMenu = new EventEmitter;
     constructor(private router:Router,private activeRouter:loadingService,private snack:SnackService){}
     setIcon(mudaIcon: boolean) {
@@ -88,5 +94,8 @@ pagePlanos(){
         })
         
     }, 0);
+}
+ativoModal(){
+    this.ativo = !this.ativo;
 }
 }
