@@ -44,6 +44,18 @@ export class headerComponent{
 exibir(){
     this.ativaMenu.emit()
 }
+
+pageHome(){
+    this.activeRouter.activeLoading()
+    setTimeout(() => {
+        this.router.navigateByUrl('/loading', { skipLocationChange: true}).then(()=>{
+            setTimeout(() => {
+                this.router.navigate(['/home'])
+            }, 1000);
+        })
+        
+    }, 0);
+}
 pageSignup(){
     this.activeRouter.activeLoading()
     setTimeout(() => {
@@ -61,6 +73,17 @@ pageSignin(){
         this.router.navigateByUrl('/loading', { skipLocationChange: true}).then(()=>{
             setTimeout(() => {
                 this.router.navigate(['/auth/signin'])
+            }, 1000);
+        })
+        
+    }, 0);
+}
+pagePlanos(){
+    this.activeRouter.activeLoading()
+    setTimeout(() => {
+        this.router.navigateByUrl('/loading', { skipLocationChange: true}).then(()=>{
+            setTimeout(() => {
+                this.router.navigate(['/planos'])
             }, 1000);
         })
         

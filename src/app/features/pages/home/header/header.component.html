@@ -1,5 +1,5 @@
 <header class="ng-header" [ngClass]="categoria">
-    <section class="ng-logo">
+    <section class="ng-logo" (click)="pageHome()">
         @if (usuario) {
         <mat-icon (click)="exibir()" class="icon">menu</mat-icon>
         }
@@ -27,6 +27,7 @@
     }
     @if (carrinho) {
     <section class="ng-checkout">
+        <div class="ng-btn-empresas" (click)="pagePlanos()">Zapdai Empresas</div>
         <mat-icon (click)="light()">
             shopping_cart
         </mat-icon>

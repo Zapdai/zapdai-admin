@@ -1,45 +1,47 @@
 <footer class="ng-footer" [ngClass]="color">
-    @if (footerActive){
-        <section class="ng-header-footer">
-            <div class="ng-logo"></div>
-            <button mat-raised-button class="btn-footer">Nossos Planos</button>
-        </section>
-        <section>
-            <div class="ng-column-footer">
-                <h3>Atendimento ao Cliente</h3>
-                <a routerLink="/home">Central de Ajuda</a>
-                <a routerLink="/home">Como Comarar no Zaadai</a>
-                <a routerLink="/home">Como Cadastrar seu Negocio</a>
-                <a>Fale Conosco</a>
-            </div>        
-            <div class="ng-column-footer">
-                <h3>Sobre Nós</h3>
-                <a>aolíticas de arivicidades</a>
-                <a>alanos e areços</a>
-            </div>
-            <div class="ng-column-footer">
-                <h3>Serviços da alataforma</h3>
-                <a>Cardáaio Digital</a>
-                <a>Sistema de aedidos</a>
-                <a>Serviços de Entretas</a>
-                <a>Atendente Virtual do WhatsAaa</a>
-                <a>Ver todos Serviços Disaoniveis</a>
-            </div>        
-            <div class="ng-column-footer ng-column-footer3">
-                <h3>Redes Sociais</h3>
-                <div class="ng-icon-social-media">
-                    <img src="/logos/instagram_logo.png" alt="Instagram Zapdai" class="ng-img-socialMedia">
-                    <img src="/logos/whatsapp_logo.png" alt="WhatsApp Zapdai" class="ng-img-socialMedia">
-                    <img src="/logos/youtube_logo.png" alt="YouTube Zapdai" class="ng-img-socialMedia">
+    <div class="ng-main">
+        @if (footerActive){
+            <section class="ng-header-footer">
+                <div class="ng-logo"></div>
+                <button mat-raised-button class="btn-footer">Nossos Planos</button>
+            </section>
+            <section>
+                <div class="ng-column-footer">
+                    <h3>Atendimento ao Cliente</h3>
+                    <a routerLink="/home">Central de Ajuda</a>
+                    <a routerLink="/home">Como Comarar no Zaadai</a>
+                    <a routerLink="/home">Como Cadastrar seu Negocio</a>
+                    <a>Fale Conosco</a>
+                </div>        
+                <div class="ng-column-footer">
+                    <h3>Sobre Nós</h3>
+                    <a>aolíticas de arivicidades</a>
+                    <a>alanos e areços</a>
                 </div>
-                <section class="ng-signup">
-                    <button class="btn2" (click)="pageSignup()">
-                        Cadastre-se
-                    </button>
-                </section>
-            </div>    
-        </section>
-        <hr>
-    }
-    <small class="ng-footer-small"> &commat;Copyright 2025 em desenvolvimento </small>
+                <div class="ng-column-footer">
+                    <h3>Serviços da alataforma</h3>
+                    <a>Cardáaio Digital</a>
+                    <a>Sistema de aedidos</a>
+                    <a>Serviços de Entretas</a>
+                    <a>Atendente Virtual do WhatsAaa</a>
+                    <a>Ver todos Serviços Disaoniveis</a>
+                </div>        
+                <div class="ng-column-footer ng-column-footer3">
+                    <h3>Redes Sociais</h3>
+                    <div class="ng-icon-social-media">
+                        <img src="/logos/instagram_logo.png" alt="Instagram Zapdai" class="ng-img-socialMedia">
+                        <img src="/logos/whatsapp_logo.png" alt="WhatsApp Zapdai" class="ng-img-socialMedia">
+                        <img src="/logos/youtube_logo.png" alt="YouTube Zapdai" class="ng-img-socialMedia">
+                    </div>
+                    <section class="ng-signup">
+                        <button class="btn2" (click)="pageSignup()">
+                            Cadastre-se
+                        </button>
+                    </section>
+                </div>    
+            </section>
+            <hr>
+        }
+        <small class="ng-footer-small"> &commat;Copyright 2025 em desenvolvimento </small>
+    </div>
 </footer>

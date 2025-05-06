@@ -4,6 +4,7 @@ import { authGuardian } from './services/auth.guard';
 import { NotFoundComponent } from './features/pages/404/notFound.component';
 import { LoadingComponent } from './features/pages/loading/loading.component';
 import {loadingGuard } from './services/loading/loading.guard';
+import { PlanosComponent } from './features/pages/planos/planos.component';
 
 export const routes: Routes = [
     {
@@ -20,6 +21,9 @@ export const routes: Routes = [
     },
     {
         path:"loading",component:LoadingComponent,canActivate:[loadingGuard]
+    },    
+    {
+        path:"planos",component:PlanosComponent
     },
     {
         path:"**",component:NotFoundComponent, title:"404 Error"

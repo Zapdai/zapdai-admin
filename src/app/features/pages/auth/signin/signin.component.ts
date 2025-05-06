@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ReactiveFormsModule } from "@angular/forms";
-import { footerComponent } from "../../home/foother/footer.component";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormLoginComponent } from "../../../../shared/component/form-login/form-login.component";
 import { formModalComponent } from "../../../../shared/component/formModel/formModal.component";
@@ -14,7 +13,7 @@ import { PageContainerComponent } from "../../../../shared/component/page-contai
     standalone: true,
     templateUrl:'./signin.component.html',
     styleUrl:'./signin.component.scss',
-    imports: [CommonModule, ReactiveFormsModule, footerComponent, MatSnackBarModule, FormLoginComponent, formModalComponent, PageContainerComponent]
+    imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule, FormLoginComponent, formModalComponent, PageContainerComponent]
 })
 
 export class SigninComponent {
@@ -27,10 +26,10 @@ export class SigninComponent {
         setTimeout(() => {
             this.router.navigateByUrl('/loading', { skipLocationChange: true}).then(()=>{
                 setTimeout(() => {
-                    this.router.navigate(['/categorias'])
+                    this.router.navigate(['/home'])
                 }, 1000);
             })
             
         }, 0);
-      }
+    }
 }

@@ -15,10 +15,23 @@
             display: flex;
             align-items: center;
             justify-content: end;
+            height: 100%;
             margin-right: 1.3em;
+            gap: 0 15px;
             cursor: pointer;
             .mat-icon{
                 color: #fff;
+            }
+            .ng-btn-empresas {
+                width: 160px;
+                height: 100%;
+                font-size: 16px;
+                align-content: center;
+                text-align: center;
+                color: #ddd;
+                cursor: pointer;
+            }.ng-btn-empresas:hover {
+                background-color: #192c57;
             }
             button{
                 margin-left: 10px;
@@ -52,7 +65,7 @@
         box-sizing: 0px  0x 0px 1px;
         display: flex;
         justify-content:space-between;
-        padding: 10px 5px;
+        height: 55px;
         align-items: center;
     
         .ng-logo{
@@ -66,6 +79,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: end;
+                cursor: pointer;
                 .icon{
                     text-align: center;
                     cursor: pointer;
@@ -75,7 +89,7 @@
         .ng-form form{
             display: flex;
             .search{
-                width: 550px;
+                width: 400px;
                 display: flex;
                 align-items: center;
                 background-color: #ffffff;
