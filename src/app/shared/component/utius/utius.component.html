@@ -2,9 +2,18 @@
     <figure class="img">
         <img [src]="imagem" alt="">
     </figure>
-    <span>Etiqueta Colorida </span>
-    <div>
-        <small>120$ </small>
-        <small>120$ </small>
+    <div class="ng-infor"></div>
+    <span class="ng-descricao">{{titulo}}</span>
+    <div class="ng-infor">
+        <div class="ng-infor-price">
+            <span>R$</span>
+            <small>17.80 no pix </small>
+        </div>
+        <div class="ng-infor-cred">
+            <small>Ou até 3x no cartão </small>
+        </div>
+    </div>
+    <div class="ng-btn">
+        <button mat-raised-button class="btn">Comprar</button>
     </div>
 </div>

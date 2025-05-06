@@ -1,25 +1,26 @@
 <app-modal>
-    <div class="titulo">
-        <span>{{titulo}}</span>
+  <div class="titulo">
+    <span>{{titulo}}</span>
+  </div>
+  <div class="carrossel-container">
+    <div class="botoes bn">
+      <button (click)="rolarDireita()">
+        </button>
     </div>
-    <div class="carrossel-container">
-      <div class="botoes bn">
-        <button (click)="rolarDireita()"><</button>
-      </div>
-  
-      <div class="scroll-container" #scrollContainer>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-        <app-utius [imagem]="imagem"></app-utius>
-      </div>
-  
-      <div class="botoes bn">
-        <button class="btn" (click)="rolarEsquerda()">></button>
-      </div>
+
+    <div class="scroll-container" #scrollContainer>
+      <app-utius [titulo]="titulo2" [imagem]="imagem"></app-utius>
+      <app-utius [titulo]="titulo3" [imagem]="imagem"></app-utius>
+      <app-utius [titulo]="titulo4" [imagem]="imagem"></app-utius>
+      <app-utius [titulo]="titulo5" [imagem]="imagem"></app-utius>
+      <app-utius [titulo]="titulo6" [imagem]="imagem"></app-utius>
+      <app-utius [titulo]="titulo2" [imagem]="imagem"></app-utius>
+      <app-utius [titulo]="titulo5" [imagem]="imagem"></app-utius>
+      <app-utius [titulo]="titulo3" [imagem]="imagem"></app-utius>
     </div>
+
+    <div class="botoes bn">
+      <button class="btn" (click)="rolarEsquerda()">></button>
+    </div>
+  </div>
 </app-modal>

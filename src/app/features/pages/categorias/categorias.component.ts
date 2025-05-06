@@ -15,5 +15,7 @@ import { footerComponent } from "../home/foother/footer.component";
   styleUrl: './categorias.component.scss'
 })
 export class CategoriasComponent {
-  img = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIPos0lHAdWx4H3yvlwjB9VARehWHZz39s7Q&s"
+  img = "https://cdn.casaeculinaria.com/wp-content/uploads/2023/04/05163949/Hamburguer-artesanal.webp"
+  img2 = "https://www.mundoboaforma.com.br/wp-content/uploads/2020/10/Hamburguer.jpg"
+
 }

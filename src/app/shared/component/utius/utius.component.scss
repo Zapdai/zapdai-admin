@@ -1,10 +1,21 @@
 .banner{
     display: flex;
     flex-direction: column;
-    margin: 3px;
-    width:200px;
-    height:270px;
+    align-items: center;
+    width:220px;
+    height:300px;
+    padding:  5px;
     border-radius: 3px;
+    border: 1px solid #e0e0e0;
+    .ng-descricao{
+        width: 100%;
+        font-family: var(--font-family);
+        word-spacing: normal;
+        word-wrap: break-word;
+        font-size: 12px;
+        padding: 5px 4px;
+        font-weight: 350;
+    }
     cursor: pointer;
     figure img{
         width: 200px;
@@ -12,4 +23,62 @@
         flex: 0 0 auto;
         object-fit: cover;
     }
+    .ng-infor{
+        width: 100%;
+        padding: 0px 4px;
+        .ng-infor-price{
+            text-align: start;
+            span{
+                text-align: start;
+                color:blue ;
+                font-weight: bold;
+                font-family: var(--font-family);
+                font-size: 15px;
+                font-weight: 500;
+                color:blue ;
+            }
+            small{
+                font-family: var(--font-family);
+                font-size: 14px;
+                font-weight: 400;
+                color:blue ;
+
+            }
+        }
+        .ng-infor-cred{
+            small{
+                font-family: var(--font-family);
+                font-size: 12px;
+                font-weight: 400;
+                color:#525151;
+
+            }
+        }
+    }
+    position: relative;
+    .ng-btn{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        right: 1px;
+        padding: 5px 0;
+        bottom: 0;
+        position: absolute;
+        .btn{
+            width: 92%;
+            padding: 7px 0;
+            transition: background-color 0.1s ease;
+            background-color: #0f7ff7;
+            color: #e0e0e0;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+          }
+    }
 }
+.banner:hover {
+    transform: translateY(-1px); 
+    background-color: rgba(240, 240, 240, 0.3);
+  }
