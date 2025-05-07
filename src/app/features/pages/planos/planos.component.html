@@ -5,7 +5,7 @@
             <section>
                 <app-banner [img]="img"></app-banner>
                 <h3 class="ng-title">Conheça Nossos Planos</h3>
-                <div class="ng-container-planos">
+                <div class="ng-container-planos" >
                     <div class="ng-plano">
                         <h3>Zapdai Start</h3>
                         <p>Para quem busca uma solução eficiente para gestão de pedidos e atendimento</p>
@@ -24,7 +24,7 @@
                             <li>Gerenciamento de Pedidos</li>
                             <li>Gerenciamento de entregadores</li>
                         </ul>
-                        <button class="ng-btn-cadastrar">Cadastrar Agora</button>
+                        <button (click)="ativaModal()" class="ng-btn-cadastrar">Cadastrar Agora</button>
                     </div>
                     <div class="ng-plano">
                         <h3>Zapdai Pleno (Reconmendado)</h3>
@@ -44,7 +44,8 @@
                             <li>Gerenciamento de Pedidos</li>
                             <li>Gerenciamento de entregadores</li>
                         </ul>
-                        <button class="ng-btn-cadastrar">Cadastrar Agora</button>
+                        <button class="ng-btn-cadastrar" >Cadastrar Agora</button>
+                         
                     </div>
                     <div class="ng-plano">
                         <h3>Zapdai Premium</h3>
@@ -70,5 +71,12 @@
             </section>
         </div>
     </div>
-    <app-footer [footerActive]="true"></app-footer>
+    @if (ativ) {
+        <app-aside-modal (emitModal)="ativaModal()">
+            <app-checkout></app-checkout>
+        </app-aside-modal>
+    }
+    <app-footer [footerActive]="true">
+       
+    </app-footer>
 </app-page-container>
