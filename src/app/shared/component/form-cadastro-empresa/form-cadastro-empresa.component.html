@@ -1,0 +1,124 @@
+<ng-content>
+    <div class="ng-form">
+        <section>
+            <div class="figure">
+                <form action="" (submit)="evitaSubmit($event)">
+                    <div class="slide_area" #elemento>
+
+                        <div #slide class="slide" >
+                            <div #slide1 class="ng-form-n1">
+
+                                <section class="ng-title">
+                                    <h4>Cadastrar minha conta </h4>
+                                </section>
+                                <fieldset class="ng-fieldset">
+                                    <legend>Nome Completo</legend>
+                                    <input type="text" class="ng-input" placeholder="Nome Completo..." #form1 autofocus="on" (keydown.enter)="mudarCampo(form2)">
+                                </fieldset>
+
+                                <fieldset class="ng-fieldset">
+                                    <legend>Número de telefone</legend>
+                                    <input type="text" class="ng-input" placeholder="Nº de telefone..." #form2  (keydown.enter)="mudarCampo(form3)">
+                                </fieldset>
+
+                                <fieldset class="ng-fieldset">
+                                    <legend>Email</legend>
+                                    <input type="email" class="ng-input" placeholder="Email" #form3 (keydown.enter)="MudaProximo()" >
+                                </fieldset>
+                                
+                                <button type="button" mat-raised-button class="ng-btn ng-btn-proximo" (click)="btnProximo()">Proximo</button>
+
+                                
+                            </div>
+                        </div>
+                        <div #slide class="slide">
+                            <div #slide2 class="ng-form-n1">
+
+                                <section class="ng-title">
+                                    <h4>Conta </h4>
+                                </section>
+
+                                <div class="ng-data">
+                                    <fieldset class="ng-fieldset">
+                                        <legend>Sexo</legend>
+                                        <select id="" class="ng-input">
+                                            <option [value]="">selecione..</option>
+                                            <option value="m">Masculino</option>
+                                        </select>
+                                    </fieldset>
+                                    <fieldset class="ng-fieldset">
+                                        <legend>Data nascimento</legend>
+                                        <input type="date" class="ng-input" placeholder="Nome Completo...">
+                                    </fieldset>
+                                </div>
+
+                                <fieldset class="ng-fieldset">
+                                    <legend>CPF</legend>
+                                    <input type="text" class="ng-input" autofocus="on"  #formSlide2_1 (keydown.enter)="enterSlide2(formSlide2_2)" placeholder="Nome Completo...">
+                                </fieldset>
+
+                                <fieldset class="ng-fieldset">
+                                    <legend>Senha</legend>
+                                    <input type="text" class="ng-input" #formSlide2_2 placeholder="Nº de telefone..." (keydown.enter)="enterSlide2(formSlide2_3)">
+                                </fieldset>
+
+                                <fieldset class="ng-fieldset">
+                                    <legend>Confirme a senha</legend>
+                                    <input type="email" class="ng-input" #formSlide2_3 placeholder="Confirme senha">
+                                </fieldset>
+
+                                <section class="ng-section-btn">
+                                    <button type="button" class="ng-btn ng-btn-proximo" (click)="btnVoltar()">Voltar</button>
+                                    <button type="button" class="ng-btn ng-btn-cadastrar"  mat-raised-button (click)="btnProximo()">Proximo</button>
+                                </section>
+                            </div>
+                        </div>
+                        <div #slide class="slide">
+                            <div #slide3 class="ng-form-n1">
+
+                                <section class="ng-title">
+                                    <h4>Conta </h4>
+                                </section>
+
+                                <div class="ng-data">
+                                    <fieldset class="ng-fieldset">
+                                        <legend>Sexo</legend>
+                                        <select id="" class="ng-input">
+                                            <option [value]="">selecione..</option>
+                                            <option value="m">Masculino</option>
+                                        </select>
+                                    </fieldset>
+                                    <fieldset class="ng-fieldset">
+                                        <legend>Data nascimento</legend>
+                                        <input type="date" class="ng-input" placeholder="Nome Completo...">
+                                    </fieldset>
+                                </div>
+
+                                <fieldset class="ng-fieldset">
+                                    <legend>CPF</legend>
+                                    <input type="text" class="ng-input" autofocus="on"  #formSlide2_1 (keydown.enter)="enterSlide2(formSlide2_2)" placeholder="Nome Completo...">
+                                </fieldset>
+
+                                <fieldset class="ng-fieldset">
+                                    <legend>Senha</legend>
+                                    <input type="text" class="ng-input" #formSlide2_2 placeholder="Nº de telefone..." (keydown.enter)="enterSlide2(formSlide2_3)">
+                                </fieldset>
+
+                                <fieldset class="ng-fieldset">
+                                    <legend>Confirme a senha</legend>
+                                    <input type="email" class="ng-input" #formSlide2_3 placeholder="Confirme senha">
+                                </fieldset>
+
+                                <section class="ng-section-btn">
+                                    <button type="button" class="ng-btn ng-btn-proximo" (click)="btnVoltar()">Voltar</button>
+                                    <button type="button" class="ng-btn ng-btn-cadastrar"  mat-raised-button >Cadastrar</button>
+                                </section>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</ng-content>

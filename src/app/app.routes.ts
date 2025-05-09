@@ -23,7 +23,7 @@ export const routes: Routes = [
         path:"loading",component:LoadingComponent,canActivate:[loadingGuard]
     },    
     {
-        path:"planos",component:PlanosComponent
+        path:"planos",loadChildren:()=>import("./features/pages/planos/planos.routes").then(route=>route.routes)
     },
     {
         path:"**",component:NotFoundComponent, title:"404 Error"

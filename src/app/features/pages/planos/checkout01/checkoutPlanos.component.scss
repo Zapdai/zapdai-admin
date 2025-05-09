@@ -1,0 +1,111 @@
+.main {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 30px 0;
+    background-color: #F2F2F2;
+
+    .ng-checkout {
+        display: flex;
+        justify-content: space-around;
+        gap: 0 40px;
+        width: 70%;
+
+        .ng-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            flex: 2;
+            gap: 20px;
+            border-left: 1px solid #ccc;
+
+            .ng-subContainer {
+                display: flex;
+                flex-direction: column;
+                padding: 15px;
+                font-size: 14px;
+                
+                h4 {
+                    margin-bottom: 25px;
+                }
+
+                /// Formulario e Input estilizado ------------------------------------------------------------///
+                .form-field {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    margin-bottom: 1rem;
+                    font-size: 12px;
+                    gap: 5px 0;
+
+                    .ng-cont {
+                        display: flex;
+                        width: 100%;
+                        gap: 0 15px;
+
+                        .ng-checkbox {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            flex: 1;
+
+                            label {
+                                display: flex;
+                                gap: 0 5px;
+                            }
+                        }
+
+                        .ng-input-cpf {
+                            flex: 4;
+                        }
+                    }
+                  
+                }
+                  
+                  .input-full-width {
+                    width: 100%;
+                    padding: 6px;
+                    border: 1px solid #ccc;
+                    border-radius: 6px;
+                    font-size: 16px;
+                  }
+                  
+                  .input-full-width:focus {
+                    border-color: #41b44a;
+                    outline: none;
+                  }
+                  
+                  .error {
+                    color: rgb(184, 40, 40);
+                    font-size: 12px;
+                    margin-top: 4px;
+                  }
+                  ///-----------------------------------------------------------------------------///
+                
+                
+                .ng-cont-img {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    width: 100%;
+                    gap: 15px;
+                    section {
+                        width: 70%;
+                    }
+                    .bandeira-icon {
+                        width: 4rem;
+                        height: 1.5rem;
+                        margin-top: 8px;
+                    }
+                  
+                }
+            }
+
+        }
+
+        .ng-my-order {
+            flex: 1;
+            border-right: 1px solid #ccc;
+        }
+    }
+}

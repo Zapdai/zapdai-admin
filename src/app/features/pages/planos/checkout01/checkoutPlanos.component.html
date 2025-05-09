@@ -1,0 +1,148 @@
+<app-page-container>
+    <div class="main">
+        <div class="ng-checkout">
+            <section class="ng-container ng-payment">
+                <div class="ng-subContainer">
+                    <h4>Informações Pessoais</h4>
+                    <form class="ng-form1" [formGroup]="form.checkoutForm">
+                        <div class="form-field">
+                            <label for="Nome Completo">Nome Completo</label>
+                            <input
+                              type="text"
+                              id="NomeCompleto"
+                              formControlName="NomeCompleto"
+                              placeholder="Informe seu Nome..."
+                              class="input-full-width"
+                            />
+                            <div class="error" *ngIf="isRequired('email')">
+                              Por favor, insira seu nome completo.
+                            </div>
+                        </div>  
+                        <div class="form-field">
+                            <label for="email">Email</label>
+                            <input
+                              type="email"
+                              id="email"
+                              formControlName="email"
+                              placeholder="Ex. pat@example.com"
+                              class="input-full-width"
+                            />
+                            <div class="error" *ngIf="isRequired('email')">
+                              Por favor, insira um email válido.
+                            </div>
+                        </div>  
+                        <div class="form-field">
+                            <label for="cpfCnpj">CPF / CNPJ</label>
+                            <section class="ng-cont">
+                                <div class="ng-checkbox">
+                                    <label>
+                                    <input
+                                        selected
+                                        type="checkbox"
+                                        [checked]="selected === 'cpf'"
+                                        (change)="selecionar('cpf')"
+                                    />
+                                    CPF
+                                    </label>
+                                    <label>
+                                    <input
+                                        type="checkbox"
+                                        [checked]="selected === 'cnpj'"
+                                        (change)="selecionar('cnpj')"
+                                    />
+                                    CNPJ
+                                    </label>
+                                </div>
+                                <div class="ng-input-cpf">
+                                    <input
+                                        [(ngModel)]="valor"
+                                        [mask]="selected === 'cpf' ? '000.000.000-00' : '00.000.000/0000-00'"
+                                        type="text"
+                                        placeholder="Digite CPF ou CNPJ"
+                                        class="input-full-width"
+                                    />
+                                
+                                    <div class="error" *ngIf="isRequired(selected)">
+                                        Por favor, insira um CPF ou CNPJ válido.
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </form>
+                </div>
+                <div class="ng-subContainer">
+                    <h4>Informações de Pagamento</h4>
+                    <form class="ng-form2" [formGroup]="form.checkoutForm">                        
+                        <div class="form-field ng-cont-img">
+                            <section class="ng-cont-card2">
+                                <label for="Número do Cartão">Número do Cartão</label>
+                                <input
+                                type="number"
+                                id="cardNumber"
+                                formControlName="cardNumber"
+                                placeholder="0000 0000 0000 0000"
+                                class="input-full-width"
+                                mask="0000000000000000"
+                                (input)="onInputCardNumber($event)"
+                                />
+                                <div class="error" *ngIf="isRequired('cardNumber')">
+                                Por favor, informe o Número do Cartão.
+                                </div>
+                            </section>
+                            <!-- Exibe o ícone da bandeira -->
+                            <img
+                            *ngIf="bandeira"
+                            [src]="'bandeirasCard/' + bandeira + '.png'"
+                            [alt]="bandeira"
+                            class="bandeira-icon"
+                            />
+                        </div> 
+                        <section class="ng-cont-card2">
+                            <div class="form-field">
+                                <label for="Data de vencimento">Data de vencimento</label>
+                                <input
+                                  type="text"
+                                  id="mesAno"
+                                  formControlName="mesAno"
+                                  placeholder="00/0000"
+                                  class="input-full-width"
+                                  mask="00/0000"
+                                />
+                                <div class="error" *ngIf="isRequired('mesAno')">
+                                  Data de vencimento inválida!
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label for="CVV">CVV</label>
+                                <input
+                                  type="number"
+                                  id="cvv"
+                                  formControlName="cvv"
+                                  placeholder="000"
+                                  class="input-full-width"
+                                  mask="000"
+                                />
+                                <div class="error" *ngIf="isRequired('cvv')">
+                                  Por favor, insira seu nome completo.
+                                </div>
+                            </div>      
+                        </section>     
+                      </form>
+                </div>
+            </section>
+            <section class="ng-container ng-my-order">
+                <div class="ng-subContainer">
+                    <h4>Resumo da Compra</h4>
+                </div>
+                <div>
+                    <h4></h4>
+                </div>
+            </section>
+        </div>
+    </div>
+    @if (ativ) {
+        <app-aside-modal (emitModal)="ativaModal()">
+            <app-checkout></app-checkout>
+        </app-aside-modal>
+    }
+</app-page-container>
