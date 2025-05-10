@@ -99,14 +99,15 @@
                         <!-- Conteúdo das abas -->
                         <div class="tab-content" *ngIf="activeTab === 'credito'">
                           <div class="ng-metodoPagamento">
-                            <form class="ng-form2" [formGroup]="form.checkoutForm">                        
+                            <form class="ng-form2" id="form-card">       
+                                <input type="hidden" id="cardholderName" data-checkout="cardholderName" [value]="this.form.checkoutForm.get('NomeCompleto')">                 
                                 <div class="form-field ng-cont-img">
                                     <section class="ng-cont-card1">
                                         <label for="Número do Cartão">Número do Cartão</label>
                                         <input
                                         type="number"
                                         id="cardNumber"
-                                        formControlName="cardNumber"
+                                        data-checkout="cardNumber"
                                         placeholder="0000 0000 0000 0000"
                                         class="input-full-width"
                                         mask="0000000000000000"
@@ -126,25 +127,39 @@
                                 </div> 
                                 <section class="ng-cont-card2">
                                     <div class="form-field">
-                                        <label for="Data de vencimento">Data de vencimento</label>
+                                        <label for="mes">Mês</label>
                                         <input
                                           type="text"
-                                          id="mesAno"
-                                          formControlName="mesAno"
-                                          placeholder="00/0000"
+                                          id="cardExpirationMonth"
+                                          data-checkout="cardExpirationMonth"
+                                          placeholder="00"
                                           class="input-full-width"
-                                          mask="00/0000"
+                                          mask="00"
                                         />
                                         <div class="error" *ngIf="isRequired('mesAno')">
-                                          Data de vencimento inválida!
+                                          Informe o Mês!
                                         </div>
                                     </div>
                                     <div class="form-field">
-                                        <label for="CVV">CVV</label>
+                                        <label for="ano">Ano</label>
+                                        <input
+                                          type="text"
+                                          id="cardExpirationYear"
+                                          data-checkout="cardExpirationYear"
+                                          placeholder="0000"
+                                          class="input-full-width"
+                                          mask="0000"
+                                        />
+                                        <div class="error" *ngIf="isRequired('mesAno')">
+                                            Informe o Ano!
+                                        </div>
+                                    </div>
+                                    <div class="form-field">
+                                        <label for="cc">CVV</label>
                                         <input
                                           type="number"
-                                          id="cvv"
-                                          formControlName="cvv"
+                                          id="securityCode"
+                                          data-checkout="securityCode"
                                           placeholder="000"
                                           class="input-full-width"
                                           mask="000"
@@ -160,14 +175,14 @@
                       
                         <div class="tab-content" *ngIf="activeTab === 'debito'">
                             <div class="ng-metodoPagamento">
-                                <form class="ng-form2" [formGroup]="form.checkoutForm">                        
+                                <form class="ng-form2">                        
                                     <div class="form-field ng-cont-img">
                                         <section class="ng-cont-card1">
                                             <label for="Número do Cartão">Número do Cartão</label>
                                             <input
                                             type="number"
                                             id="cardNumber"
-                                            formControlName="cardNumber"
+                                            data-checkout="cardNumber"
                                             placeholder="0000 0000 0000 0000"
                                             class="input-full-width"
                                             mask="0000000000000000"
@@ -187,14 +202,28 @@
                                     </div> 
                                     <section class="ng-cont-card2">
                                         <div class="form-field">
-                                            <label for="Data de vencimento">Data de vencimento</label>
+                                            <label for="mes">Mês</label>
                                             <input
                                               type="text"
-                                              id="mesAno"
-                                              formControlName="mesAno"
-                                              placeholder="00/0000"
+                                              id="cardExpirationMonth"
+                                              data-checkout="cardExpirationMonth"
+                                              placeholder="00"
                                               class="input-full-width"
-                                              mask="00/0000"
+                                              mask="00"
+                                            />
+                                            <div class="error" *ngIf="isRequired('mesAno')">
+                                              Data de vencimento inválida!
+                                            </div>
+                                        </div>
+                                        <div class="form-field">
+                                            <label for="Ano">Ano</label>
+                                            <input
+                                              type="text"
+                                              id="cardExpirationYear"
+                                              data-checkout="cardExpirationYear"
+                                              placeholder="0000"
+                                              class="input-full-width"
+                                              mask="0000"
                                             />
                                             <div class="error" *ngIf="isRequired('mesAno')">
                                               Data de vencimento inválida!
@@ -204,8 +233,8 @@
                                             <label for="CVV">CVV</label>
                                             <input
                                               type="number"
-                                              id="cvv"
-                                              formControlName="cvv"
+                                              id="securityCode"
+                                              data-checkout="securityCode"
                                               placeholder="000"
                                               class="input-full-width"
                                               mask="000"

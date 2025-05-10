@@ -13,6 +13,10 @@ import { apiPaymentsService } from '../../../../services/checkoutForm/apiPayment
 import { PixPaymentRespons } from '../../../../shared/core/types/paymentPagamentopix';
 import { CheckoutPixComponent } from '../../../../shared/component/checkout/checkoutPix.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { environment } from '../../../../../environments/environment';
+
+declare var MercadoPago: any;
+
 @Component({
   selector: 'app-checkoutPlanos',
   imports: [
@@ -32,9 +36,11 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   templateUrl: './checkoutPlanos.component.html',
   styleUrl: './checkoutPlanos.component.scss'
 })
-export class checkoutPlanosComponent {
+export class checkoutPlanosComponent implements OnInit {
   spinner = false;
   response!:PixPaymentRespons;
+  mercadoPago: any;
+
   constructor( public form: CheckoutFormService, public payment: apiPaymentsService){}
  
   img = "/banners/banner-checkout01.png"
@@ -45,6 +51,9 @@ export class checkoutPlanosComponent {
   primeiroNome: string = '';
   sobrenome: string = '';
 
+  ngOnInit(): void {
+    this.mercadoPago = this.mercadoPago = new MercadoPago(environment.PublicKey_MercadoPago)
+  }
 
   ativaModal(){
     this.ativo = false;
@@ -91,6 +100,22 @@ export class checkoutPlanosComponent {
   onInputCardNumber(event: Event): void {
     const value = (event.target as HTMLInputElement).value || '';
     this.bandeira = this.identificarBandeira(value);
+  }
+
+  gerarCardToken() {
+    const form = document.getElementById('form-card') as HTMLFormElement;
+
+    this.mercadoPago.createCardToken(form)
+      .then((response: any) => {
+        if (response.id) {
+          const cardToken = response.id;
+          console.log('Token do Cartão:', cardToken);
+          // Agora você pode enviar esse token para sua API
+        }
+      })
+      .catch((error: any) => {
+        console.error('Erro ao gerar token do cartão:', error);
+      });
   }
   
 
@@ -148,7 +173,7 @@ export class checkoutPlanosComponent {
   
   pagarCredito() {
     console.log('Processando pagamento com cartão de crédito...');
-    // aqui você pode validar o formulário e enviar os dados
+    this.gerarCardToken()
   }
   
   pagarDebito() {

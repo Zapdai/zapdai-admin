@@ -1,21 +1,18 @@
 export interface PagamentoPix {
-    "paymentMethodId": string,
-    "transactionAmount": number,
-    "description": string,
-    "payer":{
-       "email": string,
-       "first_name": string,
-       "last_name": string,
-       "identification":{
-          "number": string,
-          "type": string
-       }
-    }
+    paymentMethodId: string,
+    transactionAmount: number,
+    description: string,
+    payer: payer
 }
 
-export interface NossosPlanos {
-   id: number;
-   nome: string;
-   preco: string;
-   imagem: string;
- }
+interface payer {
+   email: string,
+   first_name: string,
+   last_name: string,
+   identification: identification
+}
+
+interface identification {
+   number: string,
+   type: string
+}
