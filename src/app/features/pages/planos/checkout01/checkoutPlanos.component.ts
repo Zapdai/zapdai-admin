@@ -3,7 +3,7 @@ import { PageContainerComponent } from "../../../../shared/component/page-contai
 import { footerComponent } from "../../home/foother/footer.component";
 import {MatListModule} from '@angular/material/list';
 import { AsideComponent } from '../../../../shared/component/aside-modal/aside-modal.component';
-import { CheckoutComponent } from '../../../../shared/component/checkout/checout.component';
+import { CheckoutComponent } from '../../../../shared/component/checkout/checkout.component';
 import {MatInputModule} from '@angular/material/input';
 import { CheckoutFormService } from '../../../../services/checkoutForm/checkoutForm.service';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -12,6 +12,7 @@ import { NgxMaskDirective } from 'ngx-mask';
 import { MatIconModule } from '@angular/material/icon';
 import { PagamentoPix } from '../../../../shared/core/types/pagamento';
 import { apiPaymentsService } from '../../../../services/checkoutForm/apiPayments.service';
+import { PixPaymentRespons } from '../../../../shared/core/types/paymentPagamentopix';
 
 @Component({
   selector: 'app-checkoutPlanos',
@@ -25,14 +26,15 @@ import { apiPaymentsService } from '../../../../services/checkoutForm/apiPayment
     CommonModule, 
     NgxMaskDirective, 
     FormsModule,
-    MatIconModule
+    MatIconModule,
+    
   ],
   templateUrl: './checkoutPlanos.component.html',
   styleUrl: './checkoutPlanos.component.scss'
 })
 export class checkoutPlanosComponent {
   @Output() finalizaPagamentoBtn = new EventEmitter()
-
+  response!:PixPaymentRespons;
   constructor( public form: CheckoutFormService, public payment: apiPaymentsService){}
 
   img = "/banners/banner-checkout01.png"
@@ -167,7 +169,7 @@ export class checkoutPlanosComponent {
   pagarPix() {
     this.payment.pagamentoPix(this.data()).subscribe((e:any)=>{
       const msg: any = JSON.stringify(e)
-      return console.log(e)
+      this.response = e;
     })
     console.log(this.data())
   }

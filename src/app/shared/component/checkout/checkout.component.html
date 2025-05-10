@@ -1,6 +1,8 @@
 <div class="ng-main">
     <h3>Realize seu pagamento Pix</h3>
-    <img  class="ng-img" src="qrCodeTest.png"/>
+    <qrcode [qrdata]="qr.qrCodeLink" [width]="200" [errorCorrectionLevel]="'M'"></qrcode>
+    <h2>{{qr.qrCodeLink}}</h2>
     <button class="ng-btn">Copie a chave PIX</button>
     <img src="pagamentos/compra_segura_mercado_pago.png" alt="Pagamento seguro Mercado Pago" class="img-compra-segura">
 </div>
+
