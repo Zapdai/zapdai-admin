@@ -12,7 +12,7 @@ import { PagamentoPix } from '../../../../shared/core/types/pagamento';
 import { apiPaymentsService } from '../../../../services/checkoutForm/apiPayments.service';
 import { PixPaymentRespons } from '../../../../shared/core/types/paymentPagamentopix';
 import { CheckoutPixComponent } from '../../../../shared/component/checkout/checkoutPix.component';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-checkoutPlanos',
   imports: [
@@ -26,15 +26,17 @@ import { CheckoutPixComponent } from '../../../../shared/component/checkout/chec
     NgxMaskDirective, 
     FormsModule,
     MatIconModule,
+    MatProgressSpinnerModule
     
   ],
   templateUrl: './checkoutPlanos.component.html',
   styleUrl: './checkoutPlanos.component.scss'
 })
 export class checkoutPlanosComponent {
+  spinner = false;
   response!:PixPaymentRespons;
   constructor( public form: CheckoutFormService, public payment: apiPaymentsService){}
-
+ 
   img = "/banners/banner-checkout01.png"
   ativo = false;  
   activeTab: 'credito' | 'debito' | 'pix' = 'credito';
@@ -45,7 +47,7 @@ export class checkoutPlanosComponent {
 
 
   ativaModal(){
-    this.ativo = !this.ativo;
+    this.ativo = false;
   }
 
   mudaCompo(event:any){
@@ -111,7 +113,7 @@ export class checkoutPlanosComponent {
 
     const data: PagamentoPix = {
       "paymentMethodId": this.activeTab,
-      "transactionAmount": 197.00,
+      "transactionAmount": 1.00,
       "description": "Plano Pleno - Zapdai",
       "payer":{
         "email": this.select("email").value,
@@ -155,9 +157,13 @@ export class checkoutPlanosComponent {
   }
   
   pagarPix() {
+    this.spinner = true;
+    this.ativo = false;
     this.payment.pagamentoPix(this.data()).subscribe((e:any)=>{
       const msg: any = JSON.stringify(e)
+      this.spinner = false;
       this.response = e;
+      this.ativo = true;
     })
     this.ativaModal()
     console.log(this.data())

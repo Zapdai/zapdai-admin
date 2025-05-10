@@ -222,6 +222,9 @@
                         <div class="tab-content" *ngIf="activeTab === 'pix'">
                             <div class="ng-contPix">
                                 <h3>O QR Code do seu pagamento pix será gerado ao clicar em FINALIZAR PAGAMENTO!</h3>
+                                @if (spinner) {
+                                    <mat-spinner></mat-spinner>
+                                }
                             </div>
                         </div>
                       

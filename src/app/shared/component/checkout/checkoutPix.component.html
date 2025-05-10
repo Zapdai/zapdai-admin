@@ -1,8 +1,13 @@
 <div class="ng-main" *ngIf="qr?.qrCodeLink">
-    <h3>Realize seu pagamento Pix</h3>
+    <h3>PIX disponível para pagamento!</h3>
+    <h2>Faça o pagamento do PIX abaixo para finalizar o seu pedido:</h2>
     <qrcode [qrdata]="qr.qrCodeLink" [width]="200" [errorCorrectionLevel]="'M'"></qrcode>
-    <h2>{{qr.qrCodeLink}}</h2>
-    <button class="ng-btn">Copie a chave PIX</button>
-    <img src="pagamentos/compra_segura_mercado_pago.png" alt="Pagamento seguro Mercado Pago" class="img-compra-segura">
+    <div class="ng-key">
+        <h2 >{{cortarTexto(qr.qrCodeLink,45)}}</h2>
+    </div>
+    <button mat-raised-button [disabled]="btnActive" color="primary" class="ng-btn" (click)="colcarTexto(qr.qrCodeLink)">
+        {{titule}} <mat-icon>content_copy</mat-icon>
+    </button>
+    <div class="img-compra-segura"></div>
 </div>
 

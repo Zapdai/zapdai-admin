@@ -94,11 +94,13 @@
 
                         .ng-contPix {
                             display: flex;
+                            flex-direction: column;
                             justify-content: center;
-                            text-align: center;
+                            align-items: center;
                             width: 100%;
                             font-weight: 600;
                             color: rgb(201, 12, 12);
+                            gap: 20px 0;
                         }
                         
                         .ng-cont-card2 {
