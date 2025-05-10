@@ -8,7 +8,7 @@ import { Router, RouterLink, RouterLinkActive } from "@angular/router";
     templateUrl:"./menudrop.component.html",
     styleUrl:"./menudrop.component.scss",
     standalone:true,
-    imports:[MatIconModule, RouterLink, RouterLinkActive,CommonModule,MatIconModule]
+    imports:[MatIconModule, RouterLink, RouterLinkActive,CommonModule]
 })
 export class menuDropComponent{
      @Output() sm = new EventEmitter;

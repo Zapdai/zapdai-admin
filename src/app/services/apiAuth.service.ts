@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { cadastro } from "../shared/core/types/cadastro";
+import { environment } from "../../environments/environment";
 
 @Injectable ({
     providedIn: 'root',
@@ -9,15 +10,15 @@ import { cadastro } from "../shared/core/types/cadastro";
 })
 
 export class apiAuthService {
-    apiKey = 'https://zapdai-zmo0.onrender.com/zapdai/v1/usuario'
+    private apiUrl: string = environment.apiUrl
 
     constructor (private http:HttpClient) {
         
     }
     login (data:any):Observable <any> {
-        return this.http.post<any>(`${this.apiKey}/auth`, data).pipe()
+        return this.http.post<any>(`${this.apiUrl}/zapdai/v1/usuario/auth`, data).pipe()
     }
     signup (data:any):Observable <cadastro> {
-        return this.http.post<cadastro>(`${this.apiKey}/registro`, data).pipe()
+        return this.http.post<cadastro>(`${this.apiUrl}/zapdai/v1/usuario/registro`, data).pipe()
     }
 }

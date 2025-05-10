@@ -3,7 +3,8 @@ import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { formModalComponent } from '../formModel/formModal.component';
-import { MatButtonModule } from '@angular/material/button'; import { registroForm } from '../../../services/singNupForm/registroForm.servide';
+import { MatButtonModule } from '@angular/material/button'; 
+import { registroForm } from '../../../services/singNupForm/registroForm.servide';
 import { cadastro } from '../../core/types/cadastro';
 import { SnackService } from '../../../services/snackBar/snack.service';
 

@@ -8,6 +8,12 @@ import { validaToken } from "../validaToken/validaToken.service";
 
 export class CheckoutFormService {
     checkoutForm = new FormGroup({
-        email: new FormControl("",[Validators.email, Validators.required])
+        NomeCompleto: new FormControl("",Validators.required),
+        email: new FormControl("",[Validators.email, Validators.required]),
+        typeCpfCnpj: new FormControl("",Validators.required),
+        cpfCnpj: new FormControl("",Validators.required),
+        cardNumber: new FormControl("",Validators.required),
+        mesAno: new FormControl("",Validators.required),
+        cvv: new FormControl("",Validators.required),
     })
 }

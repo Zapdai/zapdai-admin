@@ -9,18 +9,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
     .modal{
-        width: 30%;
-        background-color:#FFFF;
-        border:1px solid #999;
+        width: 40%;
         border-radius: 5px;
         padding: 8px 10px;
-        box-sizing: border-box;
         .ng-btn{
             display: flex;
             width: 100%;
             justify-content: end;
+            color: #ddd;
+            font-size: 32px;
+            font-weight: 700;
         }
     }
 

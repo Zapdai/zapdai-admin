@@ -14,20 +14,19 @@
         .ng-container {
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            height: 90vh;
             flex: 2;
             gap: 20px;
-            border-left: 1px solid #ccc;
+            border: 1px solid #ccc;
+            border-radius: 10px;
 
             .ng-subContainer {
                 display: flex;
                 flex-direction: column;
                 padding: 15px;
                 font-size: 14px;
+                gap: 30px 0;
                 
-                h4 {
-                    margin-bottom: 25px;
-                }
 
                 /// Formulario e Input estilizado ------------------------------------------------------------///
                 .form-field {
@@ -58,11 +57,63 @@
                         .ng-input-cpf {
                             flex: 4;
                         }
+
                     }
+
+                    .ng-contPagamento {
+                        justify-content: space-between;
+
+                        .ng-metodoPagamento {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            flex: 1;
+                            text-align: center;
+                            font-size: 14;
+                            cursor: pointer;
+                            font-weight: bold;
+                            padding: 10px 20px;
+                            border-radius: 10px;
+                            gap: 2px;
+                            background-color: #dddddd;
+                        }
+
+                    }
+
+                    
+                    .tab.active {
+                        background-color: #eee;
+                        color: #41b44a;
+                        border: 2px solid #41b44a;
+                      }
+                      
+                      .tab-content {
+                        background-color: #f5f5f5;
+                        padding: 15px 0;
+                        border-radius: 10px;
+
+                        .ng-contPix {
+                            display: flex;
+                            justify-content: center;
+                            text-align: center;
+                            width: 100%;
+                            font-weight: 600;
+                            color: rgb(201, 12, 12);
+                        }
+                        
+                        .ng-cont-card2 {
+                            width: 100%;
+                            display: flex;
+                            gap: 0 10px;   
+    
+                        }                      
+                    }
+
+
                   
                 }
                   
-                  .input-full-width {
+                .input-full-width {
                     width: 100%;
                     padding: 6px;
                     border: 1px solid #ccc;
@@ -98,6 +149,56 @@
                         margin-top: 8px;
                     }
                   
+                }
+            }
+
+            .ng-my-orderContainer {
+                .ng-itemCompra {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 2px solid #ccc;
+                    border-radius: 10px;
+                    padding: 10px;
+                    gap: 0 20px;
+
+                    img {
+                        flex: 1;
+                        width: 1.5rem;
+                        height: 1.5rem;
+                        object-fit: cover;
+                        background-size: cover;
+                    }
+
+                    div {                        
+                        flex: 3;
+                        font-size: 12px;
+                    }
+                }
+
+                .valores {
+                    display: flex;
+                    gap: 0 10px;
+                    font-size: 12px;
+                }
+
+                .btn-pagamento {
+                    width: 100%;
+                    height: 40px;
+                    background-color: #41b44a;
+                    color: #fff;
+                    font-weight: 600;
+                    border-radius: 10px;
+                    border: none;
+                    box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.2);
+                }
+
+                .btn-pagamento:hover {                        
+                    background-color: #73ca7b;
+                }
+
+                .btn-pagamento:active {
+                    transform: scale(0.97);
                 }
             }
 
