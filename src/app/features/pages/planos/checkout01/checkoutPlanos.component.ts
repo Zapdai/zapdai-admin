@@ -1,9 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
-import { footerComponent } from "../../home/foother/footer.component";
 import {MatListModule} from '@angular/material/list';
 import { AsideComponent } from '../../../../shared/component/aside-modal/aside-modal.component';
-import { CheckoutComponent } from '../../../../shared/component/checkout/checkout.component';
 import {MatInputModule} from '@angular/material/input';
 import { CheckoutFormService } from '../../../../services/checkoutForm/checkoutForm.service';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { PagamentoPix } from '../../../../shared/core/types/pagamento';
 import { apiPaymentsService } from '../../../../services/checkoutForm/apiPayments.service';
 import { PixPaymentRespons } from '../../../../shared/core/types/paymentPagamentopix';
+import { CheckoutPixComponent } from '../../../../shared/component/checkout/checkoutPix.component';
 
 @Component({
   selector: 'app-checkoutPlanos',
@@ -20,7 +19,7 @@ import { PixPaymentRespons } from '../../../../shared/core/types/paymentPagament
     PageContainerComponent, 
     MatListModule,
     AsideComponent,
-    CheckoutComponent, 
+    CheckoutPixComponent, 
     MatInputModule, 
     ReactiveFormsModule, 
     CommonModule, 
@@ -33,7 +32,6 @@ import { PixPaymentRespons } from '../../../../shared/core/types/paymentPagament
   styleUrl: './checkoutPlanos.component.scss'
 })
 export class checkoutPlanosComponent {
-  @Output() finalizaPagamentoBtn = new EventEmitter()
   response!:PixPaymentRespons;
   constructor( public form: CheckoutFormService, public payment: apiPaymentsService){}
 
@@ -105,16 +103,6 @@ export class checkoutPlanosComponent {
   }
 
 
-
-  separarNome(nomeCompleto: string): { primeiroNome: string, sobrenome: string } {
-    const partes = nomeCompleto.split(' '); // Divide o nome completo em partes
-    const primeiroNome = partes[0]; // O primeiro nome é sempre o primeiro item
-    const sobrenome = partes.slice(1).join(' '); // O sobrenome é o restante
-  
-    return { primeiroNome, sobrenome };
-  }
-
-
   data(): PagamentoPix {
     const nomeCompleto = this.select("NomeCompleto").value || '';
     const partes = nomeCompleto.trim().split(' ');
@@ -171,6 +159,7 @@ export class checkoutPlanosComponent {
       const msg: any = JSON.stringify(e)
       this.response = e;
     })
+    this.ativaModal()
     console.log(this.data())
   }
 }

@@ -4,13 +4,13 @@ import { footerComponent } from "../../home/foother/footer.component";
 import { BannerComponent } from "../../../../shared/component/banner/banner.component";
 import {MatListModule} from '@angular/material/list';
 import { AsideComponent } from '../../../../shared/component/aside-modal/aside-modal.component';
-import { CheckoutComponent } from '../../../../shared/component/checkout/checkout.component';
 import { Router, RouterOutlet } from '@angular/router';
 import { loadingService } from '../../../../services/loading/loading.service';
+import { formModalComponent } from "../../../../shared/component/formModel/formModal.component";
 
 @Component({
   selector: 'app-homePlanos',
-  imports: [ PageContainerComponent, footerComponent, BannerComponent, MatListModule, AsideComponent, CheckoutComponent],
+  imports: [PageContainerComponent, footerComponent, BannerComponent, MatListModule, AsideComponent, formModalComponent],
   templateUrl: './homePlanos.component.html',
   styleUrl: './homePlanos.component.scss'
 })

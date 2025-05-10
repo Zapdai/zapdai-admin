@@ -1,4 +1,4 @@
-<div class="ng-main">
+<div class="ng-main" *ngIf="qr?.qrCodeLink">
     <h3>Realize seu pagamento Pix</h3>
     <qrcode [qrdata]="qr.qrCodeLink" [width]="200" [errorCorrectionLevel]="'M'"></qrcode>
     <h2>{{qr.qrCodeLink}}</h2>

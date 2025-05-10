@@ -12,3 +12,10 @@ export interface PagamentoPix {
        }
     }
 }
+
+export interface NossosPlanos {
+   id: number;
+   nome: string;
+   preco: string;
+   imagem: string;
+ }

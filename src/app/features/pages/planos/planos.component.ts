@@ -4,7 +4,7 @@ import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-planos',
-  imports: [ RouterOutlet, MatListModule, RouterOutlet],
+  imports: [RouterOutlet, MatListModule, RouterOutlet],
   templateUrl: './planos.component.html',
   styleUrl: './planos.component.scss'
 })

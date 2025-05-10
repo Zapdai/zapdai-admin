@@ -222,7 +222,6 @@
                         <div class="tab-content" *ngIf="activeTab === 'pix'">
                             <div class="ng-contPix">
                                 <h3>O QR Code do seu pagamento pix será gerado ao clicar em FINALIZAR PAGAMENTO!</h3>
-                                <app-checkout [qr]="response"></app-checkout>
                             </div>
                         </div>
                       
@@ -262,7 +261,7 @@
     </div>
     @if (ativo) {
         <app-aside-modal (emitModal)="ativaModal()">
-            <app-checkout></app-checkout>
+            <app-checkoutPix [qr]="response"></app-checkoutPix>
         </app-aside-modal>
     }
 </app-page-container>

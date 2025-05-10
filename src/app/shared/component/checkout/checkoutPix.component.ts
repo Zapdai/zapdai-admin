@@ -2,18 +2,21 @@ import { AfterViewInit, Component, Input } from "@angular/core";
 import { PageContainerComponent } from "../page-container/page-container.component";
 import { PixPaymentRespons } from "../../core/types/paymentPagamentopix";
 import {QRCodeComponent  } from 'angularx-qrcode';
+import { CommonModule } from "@angular/common";
 
 declare var MercadoPago: any;
 
     @Component({
-        selector:"app-checkout",
+        selector:"app-checkoutPix",
         standalone:true,
-        imports: [QRCodeComponent],
-        templateUrl:"./checkout.component.html",
-        styleUrl:"checkout.component.scss"
+        imports: [QRCodeComponent, CommonModule],
+        templateUrl:"./checkoutPix.component.html",
+        styleUrl:"checkoutPix.component.scss"
     })
-    export class CheckoutComponent implements AfterViewInit {
-        @Input() qr!:PixPaymentRespons;
+    export class CheckoutPixComponent implements AfterViewInit {
+        @Input() qr: PixPaymentRespons = {
+            qrCodeLink: ''
+        }
      ngAfterViewInit(): void {
        
      }
