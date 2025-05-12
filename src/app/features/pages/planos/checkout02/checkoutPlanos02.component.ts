@@ -165,13 +165,6 @@ export class CheckoutPlanos02Component implements AfterViewInit{
           "number": this.select("cpfCnpj").value,
           "type": this.selected
         }
-      },
-      "itens": {
-        "id": 2,
-        "title": "Plano Pleno",
-        "description": "Plano Pleno - Zapdai",
-        "quantity": 1,
-        "price": 1
       }
     };
     return data;
@@ -218,6 +211,13 @@ export class CheckoutPlanos02Component implements AfterViewInit{
           type: this.selected,
           number: this.select("cpfCnpj").value,
         },
+        "itens": {
+          "id": 2,
+          "title": "Plano Pleno",
+          "description": "Plano Pleno - Zapdai",
+          "quantity": 1,
+          "price": 1
+        }
       },
     };
   
