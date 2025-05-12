@@ -20,7 +20,7 @@ export class HomePlanosComponent {
   ativ = false;
 
   ativaModal(){
-    this.ativ = !this.ativ;
+    this.router.navigateByUrl("/planos/payment")
   }
   
   pageCheckout(){

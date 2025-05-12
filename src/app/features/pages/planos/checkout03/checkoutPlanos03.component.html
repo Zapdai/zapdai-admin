@@ -1,0 +1,228 @@
+<app-page-container>
+    <div class="main">
+        <form class="main" [formGroup]="form.checkoutForm" id="form-checkout">
+            <div class="ng-checkout">
+                    <section class="ng-container ng-payment">
+                        <div class="ng-subContainer">
+                            <h4>Informações Pessoais</h4>
+                            <div class="form-field">
+                                <label for="Nome Completo">Nome Completo</label>
+                                <input
+                                type="text"
+                                id="NomeCompleto"
+                                formControlName="NomeCompleto"
+                                placeholder="Informe seu Nome..."
+                                class="input-full-width"
+                                />
+                                <div class="error" *ngIf="isRequired('email')">
+                                Por favor, insira seu nome completo.
+                                </div>
+                            </div>  
+                            <div class="form-field">
+                                <label for="email">Email</label>
+                                <input
+                                type="email"
+                                id="email"
+                                formControlName="email"
+                                placeholder="Ex. pat@example.com"
+                                class="input-full-width"
+                                />
+                                <div class="error" *ngIf="isRequired('email')">
+                                Por favor, insira um email válido.
+                                </div>
+                            </div>  
+                            <div class="form-field">
+                                <label for="cpfCnpj">CPF / CNPJ</label>
+                                <section class="ng-cont">
+                                    <div class="ng-checkbox">
+                                        <label>
+                                        <input
+                                            selected
+                                            type="checkbox"
+                                            [checked]="selected === 'cpf'"
+                                            (change)="selecionar('cpf')"
+                                        />
+                                        CPF
+                                        </label>
+                                        <label>
+                                        <input
+                                            type="checkbox"
+                                            [checked]="selected === 'cnpj'"
+                                            (change)="selecionar('cnpj')"
+                                        />
+                                        CNPJ
+                                        </label>
+                                    </div>
+                                    <div class="ng-input-cpf">
+                                        <input
+                                            formControlName="cpfCnpj"
+                                            [mask]="selected === 'cpf' ? '000.000.000-00' : '00.000.000/0000-00'"
+                                            type="text"
+                                            placeholder="Digite CPF ou CNPJ"
+                                            class="input-full-width"
+                                        />
+                                    
+                                        <div class="error" *ngIf="isRequired(selected)">
+                                            Por favor, insira um CPF ou CNPJ válido.
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="ng-subContainer">
+                            <h4>Métodos de Pagamento</h4>
+                            <div class="form-field">
+                                <section class="ng-cont ng-contPagamento">
+                                    <div class="ng-metodoPagamento tab" 
+                                    [class.active]="activeTab === 'credito'"
+                                    (click)="activeTab = 'credito'">
+                                        <mat-icon class="icon">credit_card</mat-icon>
+                                        <p>Cartão de Crédito</p>
+                                    </div>
+                                    <div class="ng-metodoPagamento tab" 
+                                    [class.active]="activeTab === 'debito'"
+                                    (click)="activeTab = 'debito'">
+                                        <mat-icon class="icon">credit_card</mat-icon>
+                                        <p>Cartão de Débito</p>
+                                    </div>
+                                    <div class="ng-metodoPagamento tab" 
+                                    [class.active]="activeTab === 'pix'"
+                                    (click)="activeTab = 'pix'">
+                                        <img
+                                            src="logos/logoPix.png"
+                                            alt="bandeira"
+                                            class="ng-metodoPagamento"
+                                        />
+                                    </div>
+                                </section>
+                                <!-- Conteúdo das abas -->
+                                <form class="ng-form2" id="form-checkout">    
+                                    <div class="tab-content" *ngIf="activeTab === 'credito'">
+                                    <div class="ng-metodoPagamento">   
+                                            <div id="paymentBrick_container"></div>
+                                    </div>
+                                    </div>                            
+                                    <div class="tab-content" *ngIf="activeTab === 'debito'">
+                                        <div class="ng-metodoPagamento">               
+                                                <div class="form-field ng-cont-img">
+                                                    <section class="ng-cont-card1">
+                                                        <label for="Número do Cartão">Número do Cartão</label>
+                                                        <input
+                                                        type="number"
+                                                        id="cardNumber"
+                                                        data-checkout="cardNumber"
+                                                        placeholder="0000 0000 0000 0000"
+                                                        class="input-full-width"
+                                                        mask="0000000000000000"
+                                                        (input)="onInputCardNumber($event)"
+                                                        />
+                                                        <div class="error" *ngIf="isRequired('cardNumber')">
+                                                        Por favor, informe o Número do Cartão.
+                                                        </div>
+                                                    </section>
+                                                    <!-- Exibe o ícone da bandeira -->
+                                                    <img
+                                                    *ngIf="bandeira"
+                                                    [src]="'bandeirasCard/' + bandeira + '.png'"
+                                                    [alt]="bandeira"
+                                                    class="bandeira-icon"
+                                                    />
+                                                </div> 
+                                                <section class="ng-cont-card2">
+                                                    <div class="form-field">
+                                                        <label for="mes">Mês</label>
+                                                        <input
+                                                        type="text"
+                                                        id="cardExpirationMonth"
+                                                        data-checkout="cardExpirationMonth"
+                                                        placeholder="00"
+                                                        class="input-full-width"
+                                                        mask="00"
+                                                        />
+                                                        <div class="error" *ngIf="isRequired('mesAno')">
+                                                        Data de vencimento inválida!
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-field">
+                                                        <label for="Ano">Ano</label>
+                                                        <input
+                                                        type="text"
+                                                        id="cardExpirationYear"
+                                                        data-checkout="cardExpirationYear"
+                                                        placeholder="0000"
+                                                        class="input-full-width"
+                                                        mask="0000"
+                                                        />
+                                                        <div class="error" *ngIf="isRequired('mesAno')">
+                                                        Data de vencimento inválida!
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-field">
+                                                        <label for="CVV">CVV</label>
+                                                        <input
+                                                        type="number"
+                                                        id="securityCode"
+                                                        data-checkout="securityCode"
+                                                        placeholder="000"
+                                                        class="input-full-width"
+                                                        mask="000"
+                                                        />
+                                                        <div class="error" *ngIf="isRequired('cvv')">
+                                                        Por favor, insira o CVV.
+                                                        </div>
+                                                    </div>      
+                                                </section>     
+                                        </div>
+                                    </div>
+                                </form>
+                            
+                                <div class="tab-content" *ngIf="activeTab === 'pix'">
+                                    <div class="ng-contPix">
+                                        <h3>O QR Code do seu pagamento pix será gerado ao clicar em FINALIZAR PAGAMENTO!</h3>
+                                        @if (spinner) {
+                                            <mat-spinner></mat-spinner>
+                                        }
+                                    </div>
+                                </div>
+                            
+                                
+                            </div>
+                        </div>
+                        
+                    </section>
+                    <section class="ng-container ng-my-order">
+                        <div class="ng-subContainer ng-my-orderContainer">
+                            <h4>Resumo da Compra</h4>
+                            <section class="ng-itemCompra">
+                                <img src="logo.png" alt="Zapdai">
+                                <div>
+                                    <h3>Plano Pleno</h3>
+                                    <p>R$ 197,00</p>
+                                </div>
+                            </section>
+                            <div class="valores">
+                                <h4>Desconto:</h4>
+                                <p>R$ 0,00</p>
+                            </div>
+                            <div class="valores">
+                                <h4>Valor Total:</h4>
+                                <p>R$ 197,00</p>
+                            </div>
+                            <hr>
+                            <img src="pagamentos/compra_segura_mercado_pago.png" alt="Pagamento seguro Mercado Pago" class="img-compra-segura">
+                            <button class="btn-pagamento" type="submit" (click)="finalizarPagamento()">Finalizar Pagamento</button>
+                            
+                        </div>
+                        <div>
+                            <h4></h4>
+                        </div>
+                    </section>
+            </div>
+        </form>
+    </div>
+    @if (ativo) {
+        <app-aside-modal (emitModal)="ativaModal()">
+            <app-checkoutPix [qr]="response"></app-checkoutPix>
+        </app-aside-modal>
+    }
+</app-page-container>
