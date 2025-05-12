@@ -1,4 +1,4 @@
-import {  AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
 import { MatListModule } from '@angular/material/list';
 import { AsideComponent } from '../../../../shared/component/aside-modal/aside-modal.component';
@@ -35,12 +35,11 @@ declare var MercadoPago: any;
   templateUrl: './checkoutPlanos02.component.html',
   styleUrls: ['./checkoutPlanos02.component.scss']
 })
-export class CheckoutPlanos02Component implements AfterViewInit {
+export class CheckoutPlanos02Component implements AfterViewInit{
   spinner = false;
   response!: PixPaymentRespons;
   cardFormInstance: any;
   pagamentoData: any;
-  mp: any;
   constructor(public form: CheckoutFormService, public payment: apiPaymentsService) {}
 
 
@@ -51,10 +50,46 @@ export class CheckoutPlanos02Component implements AfterViewInit {
   NomeCompleto: string = '';
   primeiroNome: string = '';
   sobrenome: string = '';
-   
 
-  ngAfterViewInit(): void {
-    this.mp = new MercadoPago(environment.PublicKey_MercadoPago); 
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      const mp = new MercadoPago(environment.PublicKey_MercadoPago);
+  
+      this.cardFormInstance = mp.cardForm({
+        amount: '1',
+        form: {
+          id: 'form-checkout',
+          cardholderName: { id: 'form-checkout__cardholderName', placeholder: 'Nome no cartão' },
+          cardholderEmail: { id: 'form-checkout__cardholderEmail', placeholder: 'E-mail' },
+          cardNumber: { id: 'form-checkout__cardNumber', placeholder: 'Número do cartão' },
+          expirationMonth: { id: 'form-checkout__expirationMonth', placeholder: 'MM' },
+          expirationYear: { id: 'form-checkout__expirationYear', placeholder: 'AAAA' },
+          securityCode: { id: 'form-checkout__securityCode', placeholder: 'CVV' },
+          installments: { id: 'form-checkout__installments', placeholder: 'Parcelas' },
+          issuer: { id: 'form-checkout__issuer', placeholder: 'Banco emissor' }
+        },
+        callbacks: {
+          onFormMounted: function (error: any) {
+            if (error) {
+              console.warn('Erro ao montar o form:', error);
+              return;
+            }
+            console.log("Form montado com sucesso");
+          },
+          onSubmit: (event: any) => {
+            event.preventDefault();
+            const formData = this.cardFormInstance.getCardFormData();
+            if (!formData.token) {
+              console.error("Token não gerado. Verifique os dados do cartão.", formData);
+            } else {
+              console.log("Token gerado com sucesso:", formData.token);
+              this.pagarCredito(formData)
+            }
+          }
+        }
+      });
+    }, 1000);
   }
   
   
@@ -147,7 +182,6 @@ export class CheckoutPlanos02Component implements AfterViewInit {
   finalizarPagamento() {
     switch (this.activeTab) {
       case 'credito':
-        this.pagarCredito();
         break;
       case 'debito':
         this.pagarDebito();
@@ -157,12 +191,48 @@ export class CheckoutPlanos02Component implements AfterViewInit {
         break;
       default:
         console.warn('Método de pagamento não selecionado.');
-    }
+    } 
   }
 
-  pagarCredito() {
-    this.apiGeraTokenCard()
-    console.log(this.apiGeraTokenCard())
+  pagarCredito(formData: any) {
+  
+    const token = formData.token;
+    const issuerId = formData.issuerId;
+    const payment_method_id = formData.paymentMethodId;
+    const email = formData.cardholderEmail;
+    const amount = 1;
+  
+    if (!token) {
+      console.error('Token não gerado. Verifique os dados do cartão.', formData);
+      return;
+    }
+  
+    const paymentData = {
+      token: token,
+      issuerId: issuerId,
+      payment_method_id: payment_method_id,
+      transaction_amount: amount,
+      installments: Number(formData.installments),
+      description: "Plano Pleno - Zapdai",
+      payer: {
+        email: email,
+        identification: {
+          type: formData.identificationType,
+          number: formData.identificationNumber,
+        },
+      },
+    };
+  
+    // Chamada para a sua API backend para processar o pagamento
+    this.payment.pagarComCartao(paymentData).subscribe(
+      (res) => {
+        console.log('Pagamento processado com sucesso:', res, paymentData);
+        // Aqui você pode redirecionar, exibir confirmação etc.
+      },
+      (err) => {
+        console.error('Erro ao processar pagamento:', err);
+      }
+    );
   }
   
 
@@ -182,85 +252,6 @@ export class CheckoutPlanos02Component implements AfterViewInit {
     });
     this.ativaModal();
     console.log(this.data());
-  }
-
-
-  apiGeraTokenCard(){
-    setTimeout(() => {
-  
-      this.cardFormInstance = this.mp.cardForm({
-        amount: '1',
-        form: {
-          id: 'form-checkout',
-          cardholderName: { id: 'form-checkout__cardholderName', placeholder: 'Nome no cartão' },
-          cardholderEmail: { id: 'form-checkout__cardholderEmail', placeholder: 'E-mail' },
-          cardNumber: { id: 'form-checkout__cardNumber', placeholder: 'Número do cartão' },
-          expirationMonth: { id: 'form-checkout__expirationMonth', placeholder: 'MM' },
-          expirationYear: { id: 'form-checkout__expirationYear', placeholder: 'AAAA' },
-          securityCode: { id: 'form-checkout__securityCode', placeholder: 'CVV' },
-          installments: { id: 'form-checkout__installments', placeholder: 'Parcelas' },
-          issuer: { id: 'form-checkout__issuer', placeholder: 'Banco emissor' }
-        },
-        callbacks: {
-          onFormMounted: function (error: any) {
-            if (error) {
-              console.warn('Erro ao montar o form:', error);
-              return;
-            }
-            console.log("Form montado com sucesso");
-          },
-          onSubmit: (event: any) => {
-            event.preventDefault();
-            const formData = this.cardFormInstance.getCardFormData();
-            if (!formData.token) {
-              console.error("Token não gerado. Verifique os dados do cartão.", formData);
-            } else {
-              console.log("Token gerado com sucesso:", formData.token);
-
-              const token = formData.token;
-              const issuerId = formData.issuerId;
-              const payment_method_id = formData.paymentMethodId;
-              const email = formData.cardholderEmail;
-              const amount = 1;
-            
-              if (!token) {
-                console.error('Token não gerado. Verifique os dados do cartão.', formData);
-                return;
-              }
-            
-              const paymentData = {
-                token: token,
-                issuerId: issuerId,
-                payment_method_id: payment_method_id,
-                transaction_amount: 1,
-                installments: Number(formData.installments),
-                description: "Plano Pleno - Zapdai",
-                payer: {
-                  email: email,
-                  identification: {
-                    type: formData.identificationType,
-                    number: formData.identificationNumber,
-                  },
-                },
-              };
-            
-              // Chamada para a sua API backend para processar o pagamento
-              this.payment.pagarComCartao(paymentData).subscribe(
-                (res) => {
-                  console.log('Pagamento processado com sucesso:', res, paymentData);
-                  // Aqui você pode redirecionar, exibir confirmação etc.
-                },
-                (err) => {
-                  console.error('Erro ao processar pagamento:', err);
-                }
-              );
-
-
-            }
-          }
-        }
-      });
-    }, 1000);
   }
 
 
