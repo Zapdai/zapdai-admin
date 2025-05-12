@@ -80,12 +80,9 @@ export class CheckoutPlanos02Component implements AfterViewInit{
           onSubmit: (event: any) => {
             event.preventDefault();
             const formData = this.cardFormInstance.getCardFormData();
-            if (!formData.token) {
-              console.error("Token não gerado. Verifique os dados do cartão.", formData);
-            } else {
-              console.log("Token gerado com sucesso:", formData);
+        
               this.pagarCredito(formData)
-            }
+            
           }
         }
       });
@@ -169,6 +166,7 @@ export class CheckoutPlanos02Component implements AfterViewInit{
     };
     return data;
   }
+  
 
   finalizarPagamento() {
     switch (this.activeTab) {
@@ -186,27 +184,21 @@ export class CheckoutPlanos02Component implements AfterViewInit{
   }
 
   pagarCredito(formData: any) {
-  
-    const token = formData.token;
-    const issuerId = formData.issuerId;
-    const payment_method_id = formData.paymentMethodId;
-    const email = formData.cardholderEmail;
-    const amount = 1;
-  
-    if (!token) {
+
+    if (!formData.token) {
       console.error('Token não gerado. Verifique os dados do cartão.', formData);
       return;
     }
   
     const paymentData = {
-      token: token,
-      issuerId: issuerId,
-      payment_method_id: payment_method_id,
-      transaction_amount: formData.amount,
+      token: formData.token,
+      issuerId: formData.issuerId,
+      paymentMethodId: formData.paymentMethodId,
+      transactionAmount: formData.amount,
       installments: formData.installments,
       description: "Plano Pleno - Zapdai",
       payer: {
-        email: email,
+        email: formData.cardholderEmail,
         identification: {
           type: this.selected,
           number: this.select("cpfCnpj").value,
@@ -220,8 +212,6 @@ export class CheckoutPlanos02Component implements AfterViewInit{
         }
       },
     };
-    console.log(paymentData);
-    // Chamada para a sua API backend para processar o pagamento
     this.payment.pagarComCartao(paymentData).subscribe((res) => {
         console.log('Pagamento processado com sucesso:', res);
         // Aqui você pode redirecionar, exibir confirmação etc.

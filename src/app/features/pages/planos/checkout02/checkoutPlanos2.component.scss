@@ -1,0 +1,232 @@
+.main {
+    display: flex;
+    justify-content: center;
+    background-color: #F2F2F2;
+    .ng-checkout {
+        display: flex;
+        justify-content: space-around;
+        gap: 0 40px;
+        width: 70%;
+
+        .ng-container {
+            display: flex;
+            flex-direction: column;
+            flex: 2;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #41b44a;
+            .ng-subContainer2 {
+                display: flex;
+                flex-direction: column;
+                font-size: 14px;
+                margin-top: 29px;
+                height: 100vh;
+
+                
+
+                /// Formulario e Input estilizado ------------------------------------------------------------///
+                .form-field {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    margin-bottom: 1rem;
+                    font-size: 12px;
+                    gap: 5px 0;
+                }
+                }
+            .ng-subContainer {
+                display: flex;
+                flex-direction: column;
+                padding: 15px;
+                font-size: 14px;
+                gap: 30px 0;
+                margin-top: 60px;
+                
+
+                /// Formulario e Input estilizado ------------------------------------------------------------///
+                .form-field {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    margin-bottom: 1rem;
+                    font-size: 12px;
+                    gap: 5px 0;
+
+                    .ng-cont {
+                        display: flex;
+                        width: 100%;
+                        gap: 0 15px;
+
+                        .ng-checkbox {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            flex: 1;
+
+                            label {
+                                display: flex;
+                                gap: 0 5px;
+                            }
+                        }
+
+                        .ng-input-cpf {
+                            flex: 4;
+                        }
+
+                    }
+
+                    .ng-contPagamento {
+                        justify-content: space-between;
+
+                        .ng-metodoPagamento {
+                            width: 100%;
+
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            text-align: center;
+                            font-size: 14;
+                            cursor: pointer;
+                            font-weight: bold;
+                            padding: 5px 20px;
+                            border-radius: 10px;
+                            gap: 2px;
+                            background-color: #dddddd;
+                        }
+
+                    }
+
+                    
+                    .tab.active {
+                        background-color: #eee;
+                        color: #41b44a;
+                        border: 2px solid #41b44a;
+                      }
+                      
+                      .tab-content {
+                        background-color: #f5f5f5;
+                        border-radius: 10px;
+                        margin-top: 25px;
+
+                        .ng-contPix {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                            width: 100%;
+                            font-weight: 600;
+                            color: rgb(201, 12, 12);
+                            gap: 10px 0;
+                        }
+                        
+                        .ng-cont-card2 {
+                            width: 100%;
+                            display: flex;
+                            gap: 0 10px;   
+    
+                        }                      
+                    }
+
+
+                  
+                }
+                  
+                .input-full-width {
+                    width: 100%;
+                    padding: 6px;
+                    border: 1px solid #ccc;
+                    border-radius: 6px;
+                    font-size: 16px;
+                  }
+                  
+                  .input-full-width:focus {
+                    border-color: #41b44a;
+                    outline: none;
+                  }
+                  
+                  .error {
+                    color: rgb(184, 40, 40);
+                    font-size: 12px;
+                    margin-top: 4px;
+                  }
+                  ///-----------------------------------------------------------------------------///
+                
+                
+                .ng-cont-img {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    width: 100%;
+                    gap: 15px;
+                    section {
+                        width: 70%;
+                    }
+                    .bandeira-icon {
+                        width: 4rem;
+                        height: 1.5rem;
+                        margin-top: 8px;
+                    }
+                  
+                }
+            }
+
+            .ng-my-orderContainer {
+                .ng-itemCompra {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 2px solid #ccc;
+                    border-radius: 10px;
+                    padding: 10px;
+                    gap: 0 20px;
+
+                    img {
+                        flex: 1;
+                        width: 1.5rem;
+                        height: 1.5rem;
+                        object-fit: cover;
+                        background-size: cover;
+                    }
+
+                    div {                        
+                        flex: 3;
+                        font-size: 12px;
+                    }
+                }
+
+                .valores {
+                    display: flex;
+                    gap: 0 10px;
+                    font-size: 12px;
+                }
+
+                .btn-pagamento {
+                    width: 100%;
+                    height: 40px;
+                    background-color: #41b44a;
+                    color: #fff;
+                    font-weight: 600;
+                    border-radius: 10px;
+                    border: none;
+                    box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.2);
+                }
+
+                .btn-pagamento:hover {                        
+                    background-color: #73ca7b;
+                }
+
+                .btn-pagamento:active {
+                    transform: scale(0.97);
+                }
+                
+
+            }
+
+        }
+
+        .ng-my-order {
+            flex: 1;
+            border-right: 1px solid #ccc;
+        }
+    }
+}

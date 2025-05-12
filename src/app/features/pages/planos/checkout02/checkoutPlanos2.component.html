@@ -1,0 +1,65 @@
+<app-page-container>
+    <div class="main">
+        <div class="ng-checkout">
+            <section class="ng-containert">
+                    <app-form></app-form>                   
+                <div class="ng-subContainer2">
+                    <h4>Métodos de Pagamento</h4>
+                    <div class="form-field" >
+                      
+                        <!-- Conteúdo das abas -->
+                        <div class="tab-content">
+                           
+                                 <app-mercadopago (dataEmite)="ativaModal($event)"></app-mercadopago>
+
+                            
+                        </div>
+                    
+                        <!-- <div class="tab-content" *ngIf="activeTab === 'pix'">
+                            <div class="ng-contPix">
+                                <h3>O QR Code do seu pagamento pix será gerado ao clicar em FINALIZAR PAGAMENTO!</h3>
+                                @if (spinner) {
+                                    <mat-spinner></mat-spinner>
+                                }
+                            </div>
+                        </div>
+                       -->
+                        
+                    </div>
+                </div>
+                
+            </section>
+            <section class="ng-container ng-my-order">
+                <div class="ng-subContainer ng-my-orderContainer">
+                    <h4>Resumo da Compra</h4>
+                    <section class="ng-itemCompra">
+                        <img src="logo.png" alt="Zapdai">
+                        <div>
+                            <h3>Plano Pleno</h3>
+                            <p>R$ 197,00</p>
+                        </div>
+                    </section>
+                    <div class="valores">
+                        <h4>Desconto:</h4>
+                        <p>R$ 0,00</p>
+                    </div>
+                    <div class="valores">
+                        <h4>Valor Total:</h4>
+                        <p>R$ 197,00</p>
+                    </div>
+                    <hr>
+                    <img src="pagamentos/compra_segura_mercado_pago.png" alt="Pagamento seguro Mercado Pago" class="img-compra-segura">
+                    
+                </div>
+                <div>
+                    <h4></h4>
+                </div>
+            </section>
+        </div>
+    </div>
+    @if (ativo) {
+        <app-aside-modal (emitModal)="ativoE()">
+            <app-checkoutPix [qr]="response"></app-checkoutPix>
+        </app-aside-modal>
+    }
+</app-page-container>
