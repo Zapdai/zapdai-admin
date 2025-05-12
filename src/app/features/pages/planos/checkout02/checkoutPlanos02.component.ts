@@ -83,7 +83,7 @@ export class CheckoutPlanos02Component implements AfterViewInit{
             if (!formData.token) {
               console.error("Token não gerado. Verifique os dados do cartão.", formData);
             } else {
-              console.log("Token gerado com sucesso:", formData.token);
+              console.log("Token gerado com sucesso:", formData);
               this.pagarCredito(formData)
             }
           }
