@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import {  AfterViewInit, Component } from '@angular/core';
 import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
 import { MatListModule } from '@angular/material/list';
 import { AsideComponent } from '../../../../shared/component/aside-modal/aside-modal.component';
@@ -35,11 +35,12 @@ declare var MercadoPago: any;
   templateUrl: './checkoutPlanos02.component.html',
   styleUrls: ['./checkoutPlanos02.component.scss']
 })
-export class CheckoutPlanos02Component implements AfterViewInit{
+export class CheckoutPlanos02Component implements AfterViewInit {
   spinner = false;
   response!: PixPaymentRespons;
   cardFormInstance: any;
   pagamentoData: any;
+  mp: any;
   constructor(public form: CheckoutFormService, public payment: apiPaymentsService) {}
 
 
@@ -50,10 +51,10 @@ export class CheckoutPlanos02Component implements AfterViewInit{
   NomeCompleto: string = '';
   primeiroNome: string = '';
   sobrenome: string = '';
+   
 
-
-  ngAfterViewInit() {
-    const mp = new MercadoPago(environment.PublicKey_MercadoPago);    
+  ngAfterViewInit(): void {
+    this.mp = new MercadoPago(environment.PublicKey_MercadoPago); 
   }
   
   
@@ -186,7 +187,7 @@ export class CheckoutPlanos02Component implements AfterViewInit{
   apiGeraTokenCard(){
     setTimeout(() => {
   
-      this.cardFormInstance = mp.cardForm({
+      this.cardFormInstance = this.mp.cardForm({
         amount: '1',
         form: {
           id: 'form-checkout',
