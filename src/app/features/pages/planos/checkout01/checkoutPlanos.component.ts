@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
 import {MatListModule} from '@angular/material/list';
 import { AsideComponent } from '../../../../shared/component/aside-modal/aside-modal.component';
@@ -8,35 +8,34 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxMaskDirective } from 'ngx-mask';
 import { MatIconModule } from '@angular/material/icon';
-import { PagamentoPix } from '../../../../shared/core/types/pagamento';
+import { Pagamento } from '../../../../shared/core/types/pagamento';
 import { apiPaymentsService } from '../../../../services/checkoutForm/apiPayments.service';
 import { PixPaymentRespons } from '../../../../shared/core/types/paymentPagamentopix';
 import { CheckoutPixComponent } from '../../../../shared/component/checkout/checkoutPix.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { environment } from '../../../../../environments/environment';
+import { PaymentMPComponent } from "../../../../shared/component/paymentMP/paymentMP.component";
 
-declare var MercadoPago: any;
 
 @Component({
   selector: 'app-checkoutPlanos',
   imports: [
-    PageContainerComponent, 
+    PageContainerComponent,
     MatListModule,
     AsideComponent,
-    CheckoutPixComponent, 
-    MatInputModule, 
-    ReactiveFormsModule, 
-    CommonModule, 
-    NgxMaskDirective, 
+    CheckoutPixComponent,
+    MatInputModule,
+    ReactiveFormsModule,
+    CommonModule,
+    NgxMaskDirective,
     FormsModule,
     MatIconModule,
-    MatProgressSpinnerModule
-    
-  ],
+    MatProgressSpinnerModule,
+    PaymentMPComponent
+],
   templateUrl: './checkoutPlanos.component.html',
   styleUrl: './checkoutPlanos.component.scss'
 })
-export class checkoutPlanosComponent implements OnInit {
+export class checkoutPlanosComponent {
   spinner = false;
   response!:PixPaymentRespons;
   mercadoPago: any;
@@ -50,10 +49,6 @@ export class checkoutPlanosComponent implements OnInit {
   NomeCompleto: string = '';
   primeiroNome: string = '';
   sobrenome: string = '';
-
-  ngOnInit(): void {
-    this.mercadoPago = this.mercadoPago = new MercadoPago(environment.PublicKey_MercadoPago)
-  }
 
   ativaModal(){
     this.ativo = false;
@@ -74,52 +69,6 @@ export class checkoutPlanosComponent implements OnInit {
     this.selected = opcao;
   }
 
-
-  bandeira: string = '';
-  identificarBandeira(numero: string): string {
-    numero = numero.replace(/\D/g, '');
-  
-    const bandeiras: { [key: string]: RegExp } = {
-      visa: /^4[0-9]{12}(?:[0-9]{3})?$/,
-      master: /^5[1-5][0-9]{14}$/,
-      amex: /^3[47][0-9]{13}$/,
-      elo: /^(4011|4312|4389|4514|4576|5041|6277|6362|650|6516|6550)/,
-      hipercard: /^(38|60)/,
-    };
-  
-    for (const bandeira in bandeiras) {
-      if (bandeiras[bandeira].test(numero)) {
-        return bandeira;
-      }
-    }
-  
-    return '';
-  }
-  
-
-  onInputCardNumber(event: Event): void {
-    const value = (event.target as HTMLInputElement).value || '';
-    this.bandeira = this.identificarBandeira(value);
-  }
-
-  gerarCardToken() {
-    const form = document.getElementById('form-card') as HTMLFormElement;
-
-    this.mercadoPago.createCardToken(form)
-      .then((response: any) => {
-        if (response.id) {
-          const cardToken = response.id;
-          console.log('Token do Cartão:', cardToken);
-          // Agora você pode enviar esse token para sua API
-        }
-      })
-      .catch((error: any) => {
-        console.error('Erro ao gerar token do cartão:', error);
-      });
-  }
-  
-
-
   select<T>(nome: string) {
     const data = this.form.checkoutForm?.get(nome)
 
@@ -130,13 +79,13 @@ export class checkoutPlanosComponent implements OnInit {
   }
 
 
-  data(): PagamentoPix {
+  data(): Pagamento {
     const nomeCompleto = this.select("NomeCompleto").value || '';
     const partes = nomeCompleto.trim().split(' ');
     const primeiroNome = partes[0] || '';
     const sobrenome = partes.slice(1).join(' ') || '';
 
-    const data: PagamentoPix = {
+    const data: Pagamento = {
       "paymentMethodId": this.activeTab,
       "transactionAmount": 1.00,
       "description": "Plano Pleno - Zapdai",
@@ -173,7 +122,6 @@ export class checkoutPlanosComponent implements OnInit {
   
   pagarCredito() {
     console.log('Processando pagamento com cartão de crédito...');
-    this.gerarCardToken()
   }
   
   pagarDebito() {

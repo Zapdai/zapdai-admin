@@ -7,13 +7,15 @@
 
     .ng-checkout {
         display: flex;
-        justify-content: space-around;
+        align-items: center;
+        justify-content: center;
         gap: 0 40px;
         width: 70%;
 
         .ng-container {
             display: flex;
             flex-direction: column;
+            height: 90vh;
             flex: 2;
             gap: 20px;
             border: 1px solid #ccc;
@@ -59,6 +61,59 @@
 
                     }
 
+                    .ng-contPagamento {
+                        justify-content: space-between;
+
+                        .ng-metodoPagamento {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            flex: 1;
+                            text-align: center;
+                            font-size: 14;
+                            cursor: pointer;
+                            font-weight: bold;
+                            padding: 10px 20px;
+                            border-radius: 10px;
+                            gap: 2px;
+                            background-color: #dddddd;
+                        }
+
+                    }
+
+                    
+                    .tab.active {
+                        background-color: #eee;
+                        color: #41b44a;
+                        border: 2px solid #41b44a;
+                      }
+                      
+                      .tab-content {
+                        background-color: #f5f5f5;
+                        padding: 15px 0;
+                        border-radius: 10px;
+
+                        .ng-contPix {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                            width: 100%;
+                            font-weight: 600;
+                            color: rgb(201, 12, 12);
+                            gap: 20px 0;
+                        }
+                        
+                        .ng-cont-card2 {
+                            width: 100%;
+                            display: flex;
+                            gap: 0 10px;   
+    
+                        }                      
+                    }
+
+
+                  
                 }
                   
                 .input-full-width {
@@ -80,6 +135,24 @@
                     margin-top: 4px;
                   }
                   ///-----------------------------------------------------------------------------///
+                
+                
+                .ng-cont-img {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    width: 100%;
+                    gap: 15px;
+                    section {
+                        width: 70%;
+                    }
+                    .bandeira-icon {
+                        width: 4rem;
+                        height: 1.5rem;
+                        margin-top: 8px;
+                    }
+                  
+                }
             }
 
             .ng-my-orderContainer {

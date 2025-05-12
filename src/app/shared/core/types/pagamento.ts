@@ -1,8 +1,11 @@
-export interface PagamentoPix {
+export interface Pagamento {
+   token?: string,
+   issuerId?: string,
     paymentMethodId: string,
     transactionAmount: number,
     description: string,
-    payer: payer
+    payer: payer,
+    itens?: itens
 }
 
 interface payer {
@@ -15,4 +18,12 @@ interface payer {
 interface identification {
    number: string,
    type: string
+}
+
+interface itens {
+   id: number,
+   title: string,
+   description: string,
+   quantity: number,
+   price: number
 }
