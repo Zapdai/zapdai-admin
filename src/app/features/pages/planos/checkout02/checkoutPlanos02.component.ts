@@ -202,8 +202,8 @@ export class CheckoutPlanos02Component implements AfterViewInit{
       token: token,
       issuerId: issuerId,
       payment_method_id: payment_method_id,
-      transaction_amount: amount,
-      installments: Number(formData.installments),
+      transaction_amount: formData.amount,
+      installments: formData.installments,
       description: "Plano Pleno - Zapdai",
       payer: {
         email: email,
@@ -220,15 +220,11 @@ export class CheckoutPlanos02Component implements AfterViewInit{
         }
       },
     };
-  
+    console.log(paymentData);
     // Chamada para a sua API backend para processar o pagamento
-    this.payment.pagarComCartao(paymentData).subscribe(
-      (res) => {
-        console.log('Pagamento processado com sucesso:', res, paymentData);
+    this.payment.pagarComCartao(paymentData).subscribe((res) => {
+        console.log('Pagamento processado com sucesso:', res);
         // Aqui você pode redirecionar, exibir confirmação etc.
-      },
-      (err) => {
-        console.error('Erro ao processar pagamento:', err);
       }
     );
   }
