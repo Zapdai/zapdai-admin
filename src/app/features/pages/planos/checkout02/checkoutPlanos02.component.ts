@@ -161,7 +161,8 @@ export class CheckoutPlanos02Component implements AfterViewInit {
   }
 
   pagarCredito() {
-    
+    this.apiGeraTokenCard()
+    console.log(this.apiGeraTokenCard())
   }
   
 
