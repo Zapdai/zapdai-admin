@@ -154,8 +154,6 @@ export class CheckoutPlanos02Component implements AfterViewInit{
     const sobrenome = partes.slice(1).join(' ') || '';
 
     const data: Pagamento = {
-      "token": "",
-      "issuerId": "",
       "paymentMethodId": this.activeTab,
       "transactionAmount": 1,
       "description": "Plano Pleno - Zapdai",
@@ -217,8 +215,8 @@ export class CheckoutPlanos02Component implements AfterViewInit{
       payer: {
         email: email,
         identification: {
-          type: formData.identificationType,
-          number: formData.identificationNumber,
+          type: this.selected,
+          number: this.select("cpfCnpj").value,
         },
       },
     };
