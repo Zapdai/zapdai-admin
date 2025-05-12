@@ -1,0 +1,16 @@
+<div class="ng-box">
+    <div class="ng-plano">
+        <h3>{{itens?.title}}</h3>
+        <p>{{itens?.subDescricaoPermition}}</p>
+         @if (itens?.promocao=="") {
+             <h1>{{itens?.price}}</h1>
+         }@else {
+            <h1>{{itens?.promocao}}</h1>
+         }
+        <ul>
+            <li [style.white-space]="'pre-line'">{{ sanitizeDescription(itens?.description) }}</li>
+            
+        </ul>
+        <button (click)="ativaModal()" class="ng-btn-cadastrar">Cadastrar Agora</button>
+    </div>
+</div>

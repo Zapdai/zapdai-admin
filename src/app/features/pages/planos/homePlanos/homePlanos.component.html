@@ -8,8 +8,10 @@
                 <h3 class="ng-title">Conheça Nossos Planos</h3>
                 <p>Para quem busca uma solução eficiente para gestão de pedidos e atendimento. Para quem busca uma solução eficiente para gestão de pedidos e atendimento. Para quem busca uma solução eficiente para gestão de pedidos e atendimento.</p>
                 <div class="ng-container-planos" >
-                    <div class="ng-box">
-                        <div class="ng-plano">
+                   @for (item of data?.planos; track $index) {
+                    <app-planos-itens [itens]="item"></app-planos-itens>
+                   }
+                        <!-- <div class="ng-plano">
                             <h3>Zapdai Start</h3>
                             <p>Para quem busca uma solução eficiente para gestão.</p>
                             <h1>14 Dias Grátis</h1>
@@ -26,49 +28,8 @@
                                 <li>Cardápio Digital</li>
                             </ul>
                             <button (click)="ativaModal()" class="ng-btn-cadastrar">Cadastrar Agora</button>
-                        </div>
-                    </div>
-                    <div class="ng-box">
-                        <div class="ng-plano">
-                            <h3>Zapdai Pleno (Reconmendado)</h3>
-                            <p>Para quem busca uma solução eficiente para gestão.</p>
-                            <h1>R$ 197,00</h1>
-                            <ul>
-                                <li>Cardápio Digital</li>
-                                <li>Gerenciamento de Pedidos</li>
-                                <li>Gerenciamento de entregadores</li>
-                                <li>Cardápio Digital</li>
-                                <li>Gerenciamento de Pedidos</li>
-                                <li>Gerenciamento de entregadores</li>
-                                <li>Cardápio Digital</li>
-                                <li>Gerenciamento de Pedidos</li>
-                                <li>Gerenciamento de entregadores</li>
-                                <li>Cardápio Digital</li>
-                            </ul>
-                            <button class="ng-btn-cadastrar" (click)="pageCheckout()">Cadastrar Agora</button>
-                            
-                        </div>
-                    </div>
-                    <div class="ng-box">
-                        <div class="ng-plano">
-                            <h3>Zapdai Premium</h3>
-                            <p>Para quem busca uma solução eficiente para gestão.</p>
-                            <h1>R$ 347,00</h1>
-                            <ul class="ng-list">
-                                <li>Cardápio Digital</li>
-                                <li>Gerenciamento de Pedidos</li>
-                                <li>Gerenciamento de entregadores</li>
-                                <li>Cardápio Digital</li>
-                                <li>Gerenciamento de Pedidos</li>
-                                <li>Gerenciamento de entregadores</li>
-                                <li>Cardápio Digital</li>
-                                <li>Gerenciamento de Pedidos</li>
-                                <li>Gerenciamento de entregadores</li>
-                                <li>Cardápio Digital</li>
-                            </ul>
-                            <button class="ng-btn-cadastrar" (click)="pageCheckout02()">Cadastrar Agora</button>
-                        </div>
-                    </div>
+                        </div> -->
+                    
                 </div>
             </section>
         </div>
