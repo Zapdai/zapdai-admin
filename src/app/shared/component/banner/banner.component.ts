@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-banner',
@@ -8,4 +9,5 @@ import { Component, Input } from '@angular/core';
 })
 export class BannerComponent {
   @Input() img?:string
+  
 }

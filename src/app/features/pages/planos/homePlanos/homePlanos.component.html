@@ -8,27 +8,8 @@
                 <p class="ng-sutitulo">Para quem busca uma solução eficiente para  gestão de pedidos e atendimento. Para quem busca uma solução eficiente para <br>gestão de pedidos e atendimento. Para quem busca uma solução eficiente para gestão de pedidos e atendimento.</p>
                 <div class="ng-container-planos" >
                    @for (item of data?.planos; track $index) {
-                    <app-planos-itens [itens]="item"></app-planos-itens>
+                    <app-planos-itens [itens]="item" ></app-planos-itens>
                    }
-                        <!-- <div class="ng-plano">
-                            <h3>Zapdai Start</h3>
-                            <p>Para quem busca uma solução eficiente para gestão.</p>
-                            <h1>14 Dias Grátis</h1>
-                            <ul>
-                                <li>Cardápio Digital</li>
-                                <li>Gerenciamento de Pedidos</li>
-                                <li>Gerenciamento de entregadores</li>
-                                <li>Cardápio Digital</li>
-                                <li>Gerenciamento de Pedidos</li>
-                                <li>Gerenciamento de entregadores</li>
-                                <li>Cardápio Digital</li>
-                                <li>Gerenciamento de Pedidos</li>
-                                <li>Gerenciamento de entregadores</li>
-                                <li>Cardápio Digital</li>
-                            </ul>
-                            <button (click)="ativaModal()" class="ng-btn-cadastrar">Cadastrar Agora</button>
-                        </div> -->
-                    
                 </div>
             </section>
         </div>

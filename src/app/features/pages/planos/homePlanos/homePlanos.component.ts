@@ -44,7 +44,5 @@ export class HomePlanosComponent implements OnInit {
     this.router.navigate(['/planos/checkout'], { skipLocationChange: false })
   }
 
-  pageCheckout02(){
-    this.router.navigate(['/planos/checkout02'], { skipLocationChange: false })
-  }
+ 
 }

@@ -14,6 +14,7 @@ import { PixPaymentRespons } from '../../../../shared/core/types/paymentPagament
 import { CheckoutPixComponent } from '../../../../shared/component/checkout/checkoutPix.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { environment } from '../../../../../environments/environment';
+import { Router } from '@angular/router';
 
 declare var MercadoPago: any;
 
@@ -35,12 +36,30 @@ declare var MercadoPago: any;
   templateUrl: './checkoutPlanos02.component.html',
   styleUrls: ['./checkoutPlanos02.component.scss']
 })
-export class CheckoutPlanos02Component implements AfterViewInit{
+export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
   spinner = false;
   response!: PixPaymentRespons;
   cardFormInstance: any;
   pagamentoData: any;
-  constructor(public form: CheckoutFormService, public payment: apiPaymentsService) {}
+  constructor(public form: CheckoutFormService, public payment: apiPaymentsService,private router:Router) {
+   
+  }
+  datas!: any;
+  ngOnInit(): void {
+     const navigation = this.router.getCurrentNavigation();
+    this.datas = navigation?.extras?.state?.['data'];
+   if (this.datas) {
+      console.log('Dados recebidos:', this.data);
+    } else {
+      console.warn('Nenhum dado disponível na navegação.');
+      // fallback opcional
+      const saved = localStorage.getItem('checkoutData');
+      if (saved) {
+        this.data = JSON.parse(saved);
+        console.log('Dados restaurados do localStorage:', this.data);
+      }
+    }
+  }
 
 
   img = "/banners/banner-checkout01.png";
