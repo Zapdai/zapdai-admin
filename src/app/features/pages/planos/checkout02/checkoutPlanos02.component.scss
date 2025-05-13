@@ -2,12 +2,12 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    padding: 30px 0;
+    padding: 8px;
     background-color: #F2F2F2;
 
     .ng-checkout {
         display: flex;
-        align-items: center;
+        align-items: self-start;
         justify-content: center;
         gap: 0 40px;
         width: 70%;
@@ -15,18 +15,23 @@
         .ng-container {
             display: flex;
             flex-direction: column;
-            height: 90vh;
             flex: 2;
-            gap: 20px;
+            gap: 35px 0;
+            padding: 15px;
             border: 1px solid #ccc;
             border-radius: 10px;
 
             .ng-subContainer {
                 display: flex;
                 flex-direction: column;
-                padding: 15px;
                 font-size: 14px;
-                gap: 30px 0;
+                gap: 15px 0;
+
+                select {
+                    border: 1px solid #ccc;
+                    border-radius: 3px;
+                    padding: 4px;
+                }
                 
 
                 /// Formulario e Input estilizado ------------------------------------------------------------///
@@ -34,9 +39,9 @@
                     display: flex;
                     flex-direction: column;
                     width: 100%;
-                    margin-bottom: 1rem;
                     font-size: 12px;
-                    gap: 5px 0;
+                    gap: 2px;
+                    padding: 5px;
 
                     .ng-cont {
                         display: flex;
@@ -70,11 +75,11 @@
                             align-items: center;
                             flex: 1;
                             text-align: center;
-                            font-size: 14;
+                            font-size: 16;
                             cursor: pointer;
                             font-weight: bold;
-                            padding: 10px 20px;
-                            border-radius: 10px;
+                            padding: 4px 8px;
+                            border-radius: 8px;
                             gap: 2px;
                             background-color: #dddddd;
                         }
@@ -120,8 +125,8 @@
                     width: 100%;
                     padding: 6px;
                     border: 1px solid #ccc;
-                    border-radius: 6px;
-                    font-size: 16px;
+                    border-radius: 4px;
+                    font-size: 14px;
                   }
                   
                   .input-full-width:focus {
@@ -131,6 +136,7 @@
                   
                   .error {
                     color: rgb(184, 40, 40);
+                    border-color: rgb(184, 40, 40);
                     font-size: 12px;
                     margin-top: 4px;
                   }

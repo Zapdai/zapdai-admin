@@ -15,6 +15,8 @@ import { CheckoutPixComponent } from '../../../../shared/component/checkout/chec
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { environment } from '../../../../../environments/environment';
 import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+
 
 declare var MercadoPago: any;
 
@@ -31,7 +33,8 @@ declare var MercadoPago: any;
     NgxMaskDirective,
     FormsModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatButtonModule
   ],
   templateUrl: './checkoutPlanos02.component.html',
   styleUrls: ['./checkoutPlanos02.component.scss']
@@ -64,11 +67,13 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
 
   img = "/banners/banner-checkout01.png";
   ativo = false;
-  activeTab: 'credito' | 'debito' | 'pix' = 'credito';
+  activeTab: 'credito' | 'debito' | 'pix'  = 'credito';
   selected: 'cpf' | 'cnpj' = 'cpf';
   NomeCompleto: string = '';
   primeiroNome: string = '';
   sobrenome: string = '';
+
+
 
 
   ngAfterViewInit() {
@@ -125,8 +130,37 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
     return this.form.checkoutForm.get(nome)?.errors?.["required"] && this.form.checkoutForm.get(nome)?.touched;
   }
 
-  selecionar(opcao: 'cpf' | 'cnpj') {
-    this.selected = opcao;
+  isRequiredNext(): boolean {
+  const controls = this.form?.checkoutForm?.controls;
+
+  if (!controls) return false;
+
+  const isValid =
+    controls['NomeCompleto']?.valid &&
+    controls['email']?.valid &&
+    controls['cpfCnpj']?.valid;
+
+  return isValid;
+  }
+
+
+
+  isRequiredFinalizar(){
+    const NomeCompleto = this.form.checkoutForm.get('NomeCompleto')?.valid;
+    const email = this.form.checkoutForm.get('email')?.valid;
+    const cpfCnpj = this.form.checkoutForm.get('cpfCnpj')?.valid;
+    const cardNumber = this.form.checkoutForm.get('cardNumber')?.valid;
+    const mes = this.form.checkoutForm.get('mes')?.valid;
+    const ano = this.form.checkoutForm.get('ano')?.valid;
+    const cvv = this.form.checkoutForm.get('cvv')?.valid;
+
+    return !!(NomeCompleto && email && cpfCnpj && cardNumber && mes && ano && cvv)
+  }
+
+  selecionar(event: Event): void {
+  const target = event.target as HTMLSelectElement;
+  const opcao = target.value as 'cpf' | 'cnpj'; // forçando o tipo correto
+  this.selected = opcao;
   }
 
   bandeira: string = '';
