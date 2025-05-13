@@ -1,11 +1,20 @@
 .ng-banner {
     display: flex;
     width: 100%;
-    background-size: cover;
-    object-fit: cover;
-    img {
+    scrollbar-width: thin;
+    .ng-img {
         width: 100%;
-        height: 100vh;
-
+        height: 350px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        color: #FF9D24;
+        gap: 10px;
+        h1{
+            font-size: 52px;
+        }
+       
     }
+
 }

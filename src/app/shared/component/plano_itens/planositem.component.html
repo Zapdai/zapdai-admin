@@ -1,6 +1,9 @@
 <div class="ng-box">
     <div class="ng-plano">
-        <h3>{{itens?.title}}</h3>
+        <div class="ng-off">
+            <h3>{{itens?.title}}</h3>
+            <p>20%OFF</p>
+        </div>
         <p>{{itens?.subDescricaoPermition}}</p>
          @if (itens?.promocao=="") {
              <h1>{{itens?.price}}</h1>
