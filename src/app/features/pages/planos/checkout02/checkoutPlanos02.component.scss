@@ -21,9 +21,16 @@
                 gap: 15px 0;
 
                 select {
+                    background-color: #fff;
+                    color: #444;
                     border: 1px solid #ccc;
                     border-radius: 3px;
-                    padding: 4px;
+                    height: 35px;
+
+                    option {
+                        background-color: #fff;
+                        color: #888;
+                    }
                 }
                 
 
@@ -74,7 +81,7 @@
                             padding: 2px 4px;
                             border-radius: 4px;
                             gap: 2px;
-                            background-color: #dddddd;
+                            
                         }
 
                     }
@@ -87,9 +94,8 @@
                     }
                       
                     .tab-content {
-                    background-color: #f5f5f5;
+                    background-color: #fff;
                     padding: 20px 0;
-                    border-radius: 10px;
                     }
                     .ng-pagamento {
                         display: flex;
