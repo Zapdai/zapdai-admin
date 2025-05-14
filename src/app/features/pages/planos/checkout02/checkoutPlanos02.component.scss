@@ -1,7 +1,7 @@
 .main {
     display: flex;
     width: 100%;
-    background-color: #F2F2F2;
+    background-color: #fff;
 
     .ng-checkout {
         display: flex;
@@ -197,7 +197,6 @@
                     justify-content: center;
                     align-items: center;
                     flex-direction: column;
-                    border: 2px solid #ccc;
                     border-radius: 10px;
                     padding: 10px;
                     gap: 10px 0;
@@ -223,15 +222,11 @@
                 }
             }
         }
-
-        .ng-my-order {
-            flex: 1;
-            border-right: 1px solid #ccc;
-        }
     }
 }
 
 
+///---------------------------------------------------------------------------------------------------------///
 
 @media screen and (min-width: 1250px) {
     .main {
@@ -287,7 +282,6 @@
                     border-radius: 4px;
                     font-size: 14px;
                   }
-///-----------------------------------------------------------------------------///
                 
                 .ng-cont-img {
                     display: flex;
