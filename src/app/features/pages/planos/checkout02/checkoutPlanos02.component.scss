@@ -6,7 +6,7 @@
     .ng-checkout {
         display: flex;
         flex-direction:column-reverse;
-        gap: 10px 0;
+        gap: 20px 0;
         padding: 15px;
         .ng-container {
             display: flex;
@@ -18,14 +18,14 @@
                 display: flex;
                 flex-direction: column;
                 font-size: 14px;
-                gap: 15px 0;
+                gap: 20px 0;
 
                 select {
                     background-color: #fff;
                     color: #444;
                     border: 1px solid #ccc;
                     border-radius: 3px;
-                    height: 35px;
+                    height: 40px;
 
                     option {
                         background-color: #fff;
@@ -40,7 +40,7 @@
                     flex-direction: column;
                     width: 100%;
                     font-size: 12px;
-                    gap: 2px;
+                    gap: 3px;
                     padding: 0 5px;
 
                     .ng-cont {
@@ -130,6 +130,7 @@
                         border-radius: 10px;
                         border: none;
                         box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.2);
+                        margin-bottom: 20px;
                     }
 
                     .btn-pagamento:hover {                        
@@ -191,13 +192,14 @@
             display: flex;
             flex-direction: column;
             gap: 25px 0;
-            padding: 15px;
+            padding: 15px 0 ;
             border-radius: 10px;
 
             .ng-subContainer2 {
                 display: flex;
                 flex-direction: column;
-                gap: 15px 0;
+                gap: 25px 0;
+                font-size: 16px;
                 .ng-itemCompra {
                     display: flex;
                     justify-content: center;
