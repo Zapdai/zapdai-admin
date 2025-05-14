@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
 import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
 import { MatListModule } from '@angular/material/list';
 import { AsideComponent } from '../../../../shared/component/aside-modal/aside-modal.component';
@@ -43,7 +43,8 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
   spinner = false;
   response!: PixPaymentRespons;
   cardFormInstance: any;
-  pagamentoData: any;
+  pagamentoData: any;  
+  isSmallScreen: boolean = false;
   constructor(public form: CheckoutFormService, public payment: apiPaymentsService,private router:Router) {
    
   }
@@ -62,6 +63,9 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
         console.log('Dados restaurados do localStorage:', this.data);
       }
     }
+
+    
+    this.checkScreenWidth();
   }
 
 
@@ -73,7 +77,17 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
   primeiroNome: string = '';
   sobrenome: string = '';
 
+  setTab(novoTab: 'credito' | 'debito' | 'pix') {
+  if (this.activeTab !== novoTab) {
+    const mudouParaCredito = novoTab === 'credito' && this.activeTab !== 'credito';
 
+    this.activeTab = novoTab;
+
+    if (mudouParaCredito) {
+      window.location.reload();
+    }
+  }
+}
 
 
   ngAfterViewInit() {
@@ -145,16 +159,30 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
 
 
 
-  isRequiredFinalizar(){
+  isRequiredFinalizar() {
     const NomeCompleto = this.form.checkoutForm.get('NomeCompleto')?.valid;
     const email = this.form.checkoutForm.get('email')?.valid;
     const cpfCnpj = this.form.checkoutForm.get('cpfCnpj')?.valid;
+
+    if (this.activeTab === 'pix') {
+      return !!(NomeCompleto && email && cpfCnpj);
+    }
+
     const cardNumber = this.form.checkoutForm.get('cardNumber')?.valid;
     const mes = this.form.checkoutForm.get('mes')?.valid;
     const ano = this.form.checkoutForm.get('ano')?.valid;
     const cvv = this.form.checkoutForm.get('cvv')?.valid;
 
-    return !!(NomeCompleto && email && cpfCnpj && cardNumber && mes && ano && cvv)
+    return !!(NomeCompleto && email && cpfCnpj && cardNumber && mes && ano && cvv);
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.checkScreenWidth();
+  }
+
+  private checkScreenWidth() {
+    this.isSmallScreen = window.innerWidth <= 1250;
   }
 
   selecionar(event: Event): void {
