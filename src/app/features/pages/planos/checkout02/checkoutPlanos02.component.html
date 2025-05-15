@@ -64,7 +64,6 @@
                                 </div>
                             </section>
                             <!-- Conteúdo das abas -->
-                            <form class="ng-form2" [formGroup]="form.checkoutForm" id="form-checkout">
                                 <div class="tab-content" *ngIf="activeTab === 'credito'">
                                     <div class="ng-pagamento">
                                         <div class="form-field ng-cont-img">
@@ -140,8 +139,6 @@
                                         </section>
                                     </div>
                                 </div>
-                            </form>
-
                             <div class="tab-content" *ngIf="activeTab === 'pix'">
                                 <div class="ng-contPix">
                                     <h3>O QR Code do seu pagamento pix será gerado ao clicar em FINALIZAR PAGAMENTO!

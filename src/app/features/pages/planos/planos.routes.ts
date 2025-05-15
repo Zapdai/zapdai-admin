@@ -5,6 +5,7 @@ import { HomePlanosComponent } from "./homePlanos/homePlanos.component"
 import { authGuardian } from "../../../services/auth.guard"
 import { CheckoutPlanos02Component } from "./checkout02/checkoutPlanos02.component"
 import { CheckoutPlanos03Component } from "./checkout03/checkoutPlanos03.component"
+import { PosCheckoutComponent } from "./posCheckout/posCheckout.component"
 
 
 export const routes: Routes = [
@@ -21,8 +22,10 @@ export const routes: Routes = [
             },
             {
                 path:"payment",component:CheckoutPlanos03Component
+            },
+            {
+                path:"pos-checkout", component:PosCheckoutComponent, title: "Tela de Obrigado", canActivate:[authGuardian], data: { acess: ['ROLE_USER'] }
             }
-        ],
-        canActivate:[authGuardian]
+        ]
     }
 ]

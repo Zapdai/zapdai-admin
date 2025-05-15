@@ -22,4 +22,22 @@ export class AuthService{
     saveToken(token:string){
         localStorage.setItem('acessToken', token)
     }
+
+    getPerfis(): string[] {
+        const token = this.returnToken();
+        if (!token) return [];
+
+        try {
+            // Decodifica o token (JWT base64)
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            const roles = payload['roles'] || [];
+
+            // Garante que retorna um array de strings
+            return Array.isArray(roles) ? roles : [roles];
+        } catch (e) {
+            console.error('Erro ao decodificar o token:', e);
+            return [];
+        }
+    }
+
 }

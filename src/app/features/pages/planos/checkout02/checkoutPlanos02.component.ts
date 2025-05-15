@@ -16,6 +16,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { environment } from '../../../../../environments/environment';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { loadingService } from '../../../../services/loading/loading.service';
 
 
 declare var MercadoPago: any;
@@ -45,7 +46,7 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
   cardFormInstance: any;
   pagamentoData: any;  
   isSmallScreen: boolean = false;
-  constructor(public form: CheckoutFormService, public payment: apiPaymentsService,private router:Router) {
+  constructor(public form: CheckoutFormService, public payment: apiPaymentsService,private router:Router, private activeRoute:loadingService) {
    
   }
   datas!: any;
@@ -182,7 +183,7 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
   }
 
   private checkScreenWidth() {
-    this.isSmallScreen = window.innerWidth <= 1250;
+    this.isSmallScreen = window.innerWidth <= 1024;
   }
 
   selecionar(event: Event): void {
@@ -295,7 +296,18 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
     };
     this.payment.pagarComCartao(paymentData).subscribe((res) => {
         console.log('Pagamento processado com sucesso:', res);
-        // Aqui você pode redirecionar, exibir confirmação etc.
+        if(res.status === 'approved'){
+          this.activeRoute.activeLoading()
+          setTimeout(() => {
+              this.router.navigateByUrl('/loading', { skipLocationChange: true}).then(()=>{
+                  setTimeout(() => {
+                      this.router.navigate(['/planos/pos-checkout'])
+                  }, 1000);
+              })            
+          }, 0); 
+        } else {
+          console.log("Pagamento Rejeitado")
+        }   
       }
     );
   }
