@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { cadastroEmpresaForm } from '../../../services/cadastroEmpresa/cadastroEmpresa.servide';
 
 
 
@@ -19,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class FormCadastroEmpresaComponent {
   currentStep = 1;
 
-  constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) { }
+  constructor(public form: cadastroEmpresaForm, private cd: ChangeDetectorRef) { }
 
   next() {
       this.currentStep++;

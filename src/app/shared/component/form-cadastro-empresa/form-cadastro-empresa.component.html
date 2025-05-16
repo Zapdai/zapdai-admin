@@ -1,114 +1,125 @@
-<div class="container">
-    <h2>Cadastre sua Empresa</h2>
-    <div class="steps-indicator">
-        <div>
-            <div class="ng-cont">
-                <div class="ng-bola" [class.active]="currentStep >= 1">1</div>
+<div class="ng-main">
+    <div class="container">
+        <div class="ng-cont1">
+            <h2>Cadastre sua Empresa</h2>
+            <div class="steps-indicator">
+                <div>
+                    <div class="ng-cont">
+                        <div class="ng-bola" [class.active]="currentStep >= 1">1</div>
 
-                <div class="ng-hr" [class.active]="currentStep >= 2"></div>
-                <div class="ng-bola" [class.active]="currentStep >= 2">2</div>
+                        <div class="ng-hr" [class.active]="currentStep >= 2"></div>
+                        <div class="ng-bola" [class.active]="currentStep >= 2">2</div>
 
-                <div class="ng-hr" [class.active]="currentStep >= 3"></div>
-                <div class="ng-bola" [class.active]="currentStep >= 3">3</div>
+                        <div class="ng-hr" [class.active]="currentStep >= 3"></div>
+                        <div class="ng-bola" [class.active]="currentStep >= 3">3</div>
+                    </div>
+
+                </div>
+                <div>
+                    <p class="ng-p" [class.active]="currentStep >= 1">Informações Básicas</p>
+                    <p class="ng-p" [class.active]="currentStep >= 2">Endereço da Empresa</p>
+                    <p class="ng-p" [class.active]="currentStep >= 3">Finalizar Cadastro</p>
+                </div>
+            </div>
+        </div>
+
+        <form [formGroup]="form.empresaform">
+            <!-- Step 1 -->
+            <div *ngIf="currentStep === 1" class="form-step">
+                <fieldset class="ng-fieldset">
+                    <legend>Nome da Empresa</legend>
+                    <input type="text" class="ng-input" placeholder="Obs: Nome que vai aparecer para seus clientes"
+                        formControlName="nomeCompania">
+                </fieldset>
+
+                <fieldset class="ng-fieldset">
+                    <legend>Número de telefone</legend>
+                    <input type="text" class="ng-input" placeholder="Nº de telefone da Empresa"
+                        formControlName="numeroDeTelefone">
+                </fieldset>
+
+                <fieldset class="ng-fieldset">
+                    <legend>Email</legend>
+                    <input type="email" class="ng-input" placeholder="Email da Empresa" formControlName="email">
+                </fieldset>
             </div>
 
-        </div>
-        <div>
-            <p class="ng-p" [class.active]="currentStep >= 1">Informações Básicas</p>
-            <p class="ng-p" [class.active]="currentStep >= 2">Endereço da Empresa</p>
-            <p class="ng-p" [class.active]="currentStep >= 3">Finalizar Cadastro</p>
-        </div>
+            <!-- Step 2 -->
+            <div *ngIf="currentStep === 2" class="form-step">
+                <fieldset class="ng-fieldset">
+                    <legend>Estado</legend>
+                    <input type="email" autofocus="on" autocomplete="username" class="ng-input" placeholder="Estado...">
+
+                </fieldset>
+
+                <fieldset class="ng-fieldset">
+                    <legend>Cidade</legend>
+                    <div class="ng-password-btn">
+                        <input class="ng-input" placeholder="Cidade...">
+
+
+                    </div>
+                </fieldset>
+                <fieldset class="ng-fieldset">
+                    <legend>Bairro</legend>
+                    <div class="ng-password-btn">
+                        <input class="ng-input" placeholder="Bairro...">
+
+
+                    </div>
+                </fieldset>
+                <fieldset class="ng-fieldset">
+                    <legend>Rua</legend>
+                    <div class="ng-password-btn">
+                        <input class="ng-input" placeholder="Rua...">
+
+
+                    </div>
+                </fieldset><fieldset class="ng-fieldset">
+                    <legend>Nº da Casa/Apt</legend>
+                    <div class="ng-password-btn">
+                        <input class="ng-input" placeholder="Nº da Casa/Apt...">
+
+
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- Step 3 -->
+            <div *ngIf="currentStep === 3" class="form-step">
+                <fieldset class="ng-fieldset">
+                    <legend>CPF</legend>
+                    <div class="ng-password-btn">
+                        <input class="ng-input" placeholder="CPF...">
+
+
+                    </div>
+                </fieldset>
+                <fieldset class="ng-fieldset">
+                    <legend>Razão Social</legend>
+                    <div class="ng-password-btn">
+                        <input class="ng-input" placeholder="Razão Social...">
+
+
+                    </div>
+                </fieldset>
+                <fieldset class="ng-fieldset">
+                    <legend>CNPJ</legend>
+                    <div class="ng-password-btn">
+                        <input class="ng-input" placeholder="CNPJ...">
+
+
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="buttons">
+                <button mat-flat-button type="button" (click)="prev()" *ngIf="currentStep > 1"
+                    class="ng-btn">Voltar</button>
+                <button mat-flat-button type="button" (click)="next()" *ngIf="currentStep < 3"
+                    class="ng-btn">Próximo</button>
+                <button mat-flat-button type="submit" *ngIf="currentStep === 3" class="ng-btn">Cadastrar</button>
+            </div>
+        </form>
     </div>
-
-    <form >
-        <!-- Step 1 -->
-        <div *ngIf="currentStep === 1" formGroupName="step1" class="form-step">
-            <fieldset class="ng-fieldset">
-                <legend>Email</legend>
-                <input type="email" autofocus="on"autocomplete="username"
-                    class="ng-input" placeholder="Email..." >
-
-            </fieldset>
-
-            <fieldset class="ng-fieldset">
-                <legend>Senha</legend>
-                <div class="ng-password-btn">
-                    <input class="ng-input" placeholder="Senha...">
-                    
-
-                </div>
-            </fieldset>
-        </div>
-
-        <!-- Step 2 -->
-        <div *ngIf="currentStep === 2" class="form-step">
-            <fieldset class="ng-fieldset">
-                <legend>Email</legend>
-                <input type="email" autofocus="on"autocomplete="username"
-                    class="ng-input" placeholder="Email..." >
-
-            </fieldset>
-
-            <fieldset class="ng-fieldset">
-                <legend>Senha</legend>
-                <div class="ng-password-btn">
-                    <input class="ng-input" placeholder="Senha...">
-                    
-
-                </div>
-            </fieldset>
-            <fieldset class="ng-fieldset">
-                <legend>Senha</legend>
-                <div class="ng-password-btn">
-                    <input class="ng-input" placeholder="Senha...">
-                    
-
-                </div>
-            </fieldset>
-        </div>
-
-        <!-- Step 3 -->
-        <div *ngIf="currentStep === 3" class="form-step">
-            <fieldset class="ng-fieldset">
-                <legend>Email</legend>
-                <input type="email" autofocus="on"autocomplete="username"
-                    class="ng-input" placeholder="Email..." >
-
-            </fieldset>
-
-            <fieldset class="ng-fieldset">
-                <legend>Senha</legend>
-                <div class="ng-password-btn">
-                    <input class="ng-input" placeholder="Senha...">
-                    
-
-                </div>
-            </fieldset>
-            <fieldset class="ng-fieldset">
-                <legend>Senha</legend>
-                <div class="ng-password-btn">
-                    <input class="ng-input" placeholder="Senha...">
-                    
-
-                </div>
-            </fieldset>
-            <fieldset class="ng-fieldset">
-                <legend>Senha</legend>
-                <div class="ng-password-btn">
-                    <input class="ng-input" placeholder="Senha...">
-                    
-
-                </div>
-            </fieldset>
-
-        </div>
-
-        <div class="buttons">
-            <button mat-flat-button type="button" (click)="prev()" *ngIf="currentStep > 1"
-                class="ng-btn">Voltar</button>
-            <button mat-flat-button type="button" (click)="next()" *ngIf="currentStep < 3"
-                class="ng-btn">Próximo</button>
-            <button mat-flat-button type="submit" *ngIf="currentStep === 3" class="ng-btn">Cadastrar</button>
-        </div>
-    </form>
 </div>
