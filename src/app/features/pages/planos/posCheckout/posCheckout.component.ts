@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PageContainerComponent } from '../../../../shared/component/page-container/page-container.component';
 import { footerComponent } from '../../home/foother/footer.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-posCheckout',
@@ -10,9 +11,9 @@ import { footerComponent } from '../../home/foother/footer.component';
   styleUrls: ['./posCheckout.component.scss']
 })
 export class PosCheckoutComponent {
-  plano = 'Zapdai Pleno';
-  valor = 'R$ 147,00';
-  dataAtivacao = new Date().toLocaleDateString();
-  linkPainel = 'https://zapdai.com/admin';
-  linkSuporte = 'https://wa.me/SEUNUMEROAQUI';
+  
+  constructor (private router: Router){}
+  pageCadastroEmpresa(){
+    this.router.navigateByUrl('/planos/create-business', { skipLocationChange: false })
+  }
 }

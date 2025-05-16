@@ -22,6 +22,7 @@ export class FormLoginComponent {
   @ViewChild("form2",{static:true}) form2!:ElementRef
   constructor (public service:loginFormService, private auth:apiAuthService, private router:Router, private activeRoute:loadingService, private authService:AuthService,private snack:SnackService){
   }
+  
   ativo = false;
   icon:"visibility"|"visibility_off" = "visibility"
   select <T> (name:string){
@@ -47,18 +48,21 @@ export class FormLoginComponent {
      }
   }
 perfil = "admin"
-  btn (){
-      this.auth.login(this.data()).subscribe(item=>{
-          if(item.authToken !== null){
-            this.authService.saveToken(item.authToken)
-            if(this.perfil.includes("admin")){
-              this.router.navigateByUrl('/home')
-            }else if(this.perfil.includes("user")){
-              this.router.navigateByUrl('/categorias')
-            }      
-          }
-      })
+  btn() {
+    this.auth.login(this.data()).subscribe(item => {
+      if (item.authToken !== null) {
+        this.authService.saveToken(item.authToken);
+
+        // Recupera a URL salva (ou define '/' como padrão)
+        const returnUrl = localStorage.getItem('returnUrl') || '/';
+        localStorage.removeItem('returnUrl'); // limpa após usar
+
+        // Redireciona para a página original
+        this.router.navigateByUrl(returnUrl);
+      }
+    });
   }
+
 visible(){
   if(this.icon==="visibility"){
     this.icon =  "visibility_off"

@@ -6,6 +6,7 @@ import { authGuardian } from "../../../services/auth.guard"
 import { CheckoutPlanos02Component } from "./checkout02/checkoutPlanos02.component"
 import { CheckoutPlanos03Component } from "./checkout03/checkoutPlanos03.component"
 import { PosCheckoutComponent } from "./posCheckout/posCheckout.component"
+import { CadastroEmpresaComponent } from "./cadastro-empresa/cadastro-empresa.component"
 
 
 export const routes: Routes = [
@@ -18,13 +19,18 @@ export const routes: Routes = [
                 path:"checkout", component: checkoutPlanosComponent, title: "Tela de Checkout"
             },
             {
-                path:"checkout02", component: CheckoutPlanos02Component, title: "Tela de Checkout"
+                path:"checkout02", component: CheckoutPlanos02Component, title: "Tela de Checkout", canActivate:[authGuardian]
             },
             {
                 path:"payment",component:CheckoutPlanos03Component
             },
             {
-                path:"pos-checkout", component:PosCheckoutComponent, title: "Tela de Obrigado", canActivate:[authGuardian], data: { acess: ['ROLE_USER'] }
+                path:"pos-checkout", component:PosCheckoutComponent, title: "Tela de Obrigado", 
+                canActivate:[authGuardian], data: { acess: ['ROLE_USER'] }
+            },
+            {
+                path:"create-business", component:CadastroEmpresaComponent, title: "Tela Cadastro de Empresa", 
+                canActivate:[authGuardian], data: { acess: ['ROLE_USER'] }
             }
         ]
     }
