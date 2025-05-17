@@ -1,18 +1,18 @@
 export interface Pagamento {
    token?: string,
    issuerId?: string,
-    paymentMethodId: string,
-    transactionAmount: number,
-    description: string,
-    payer: payer
+   paymentMethodId: string,
+   transactionAmount: number,
+   description: string,
+   payer: payer,
+   itens?: [itens]
 }
 
 interface payer {
    email: string,
    first_name: string,
    last_name: string,
-   identification: identification,
-   itens?: itens
+   identification: identification
 }
 
 interface identification {

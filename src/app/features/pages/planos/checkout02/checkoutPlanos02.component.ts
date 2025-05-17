@@ -243,15 +243,15 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
         "identification": {
           "number": this.select("cpfCnpj").value,
           "type": this.selected
-        },
-        "itens": {
+        }
+      },
+        "itens": [{
           "id": 2,
           "title": "Plano Pleno",
           "description": "Plano Pleno - Zapdai",
           "quantity": 1,
           "price": 1
-        }
-      }
+        }]
     };
     return data;
   }
@@ -273,6 +273,10 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
   }
 
   pagarCredito(formData: any) {
+    const nomeCompleto = this.select("NomeCompleto").value || '';
+    const partes = nomeCompleto.trim().split(' ');
+    const primeiroNome = partes[0] || '';
+    const sobrenome = partes.slice(1).join(' ') || '';
 
     if (!formData.token) {
       console.error('Token não gerado. Verifique os dados do cartão.', formData);
@@ -288,18 +292,20 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
       description: "Plano Pleno - Zapdai",
       payer: {
         email: formData.cardholderEmail,
+        first_name: primeiroNome,
+        last_name: sobrenome,
         identification: {
           type: this.selected,
           number: this.select("cpfCnpj").value,
-        },
-        itens: {
+        }
+      },
+        itens: [{
           id: 2,
           title: "Plano Pleno",
           description: "Plano Pleno - Zapdai",
           quantity: 1,
           price: 1
-        }
-      },
+        }]
     };
     this.payment.pagarComCartao(paymentData).subscribe((res) => {
         console.log('Pagamento processado com sucesso:', res);
