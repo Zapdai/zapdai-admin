@@ -6,7 +6,7 @@ import { authGuardian } from "../../../services/auth.guard"
 import { CheckoutPlanos02Component } from "./checkout02/checkoutPlanos02.component"
 import { CheckoutPlanos03Component } from "./checkout03/checkoutPlanos03.component"
 import { PosCheckoutComponent } from "./posCheckout/posCheckout.component"
-import { CadastroEmpresaComponent } from "./cadastro-empresa/cadastro-empresa.component"
+import { CadastroEmpresaComponent } from "../cadastro-empresa/cadastro-empresa.component"
 
 
 export const routes: Routes = [

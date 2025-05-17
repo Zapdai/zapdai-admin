@@ -31,93 +31,103 @@
                     <input type="text" class="ng-input" placeholder="Obs: Nome que vai aparecer para seus clientes"
                         formControlName="nomeCompania">
                 </fieldset>
+                @if (isRequired('nomeCompania')) {
+                <small class="ng-error">Informe o Nome da Empresa</small>
+                }
 
                 <fieldset class="ng-fieldset">
                     <legend>Número de telefone</legend>
                     <input type="text" class="ng-input" placeholder="Nº de telefone da Empresa"
                         formControlName="numeroDeTelefone">
                 </fieldset>
+                @if (isRequired('numeroDeTelefone')) {
+                <small class="ng-error">Informe o Nº de telefone</small>
+                }
 
                 <fieldset class="ng-fieldset">
                     <legend>Email</legend>
                     <input type="email" class="ng-input" placeholder="Email da Empresa" formControlName="email">
                 </fieldset>
+                @if (isRequired('email')) {
+                <small class="ng-error">Informe o email</small>
+                }
             </div>
 
             <!-- Step 2 -->
             <div *ngIf="currentStep === 2" class="form-step">
-                <fieldset class="ng-fieldset">
-                    <legend>Estado</legend>
-                    <input type="email" autofocus="on" autocomplete="username" class="ng-input" placeholder="Estado...">
-
-                </fieldset>
-
-                <fieldset class="ng-fieldset">
-                    <legend>Cidade</legend>
-                    <div class="ng-password-btn">
-                        <input class="ng-input" placeholder="Cidade...">
-
-
+                <div class="ng-listForm">
+                    <div>
+                        <fieldset class="ng-fieldset">
+                            <legend>Estado</legend>
+                            <input type="email" class="ng-input" placeholder="Estado" formControlName="estado_sigla">
+                        </fieldset>
+                        @if (isRequired('estado_sigla')) {
+                        <small class="ng-error">Informe o Estado</small>
+                        }
                     </div>
-                </fieldset>
+                    <div>
+                        <fieldset class="ng-fieldset">
+                            <legend>Cidade</legend>
+                            <input class="ng-input" placeholder="Cidade" formControlName="cidade">
+                        </fieldset>
+                        @if (isRequired('cidade')) {
+                        <small class="ng-error">Informe a Cidade</small>
+                        }
+                    </div>
+                </div>
                 <fieldset class="ng-fieldset">
                     <legend>Bairro</legend>
-                    <div class="ng-password-btn">
-                        <input class="ng-input" placeholder="Bairro...">
-
-
-                    </div>
+                    <input class="ng-input" placeholder="Bairro" formControlName="bairro">
                 </fieldset>
+                @if (isRequired('bairro')) {
+                <small class="ng-error">Informe o Bairro</small>
+                }
                 <fieldset class="ng-fieldset">
                     <legend>Rua</legend>
-                    <div class="ng-password-btn">
-                        <input class="ng-input" placeholder="Rua...">
-
-
-                    </div>
-                </fieldset><fieldset class="ng-fieldset">
-                    <legend>Nº da Casa/Apt</legend>
-                    <div class="ng-password-btn">
-                        <input class="ng-input" placeholder="Nº da Casa/Apt...">
-
-
-                    </div>
+                    <input class="ng-input" placeholder="Rua" formControlName="rua">
                 </fieldset>
+                @if (isRequired('rua')) {
+                <small class="ng-error">Informe a Rua</small>
+                }
+                <fieldset class="ng-fieldset">
+                    <legend>Nº da Casa/Apt</legend>
+                    <input class="ng-input" placeholder="Nº da Casa/Apt" formControlName="numeroEndereco">
+                </fieldset>
+                @if (isRequired('numeroEndereco')) {
+                <small class="ng-error">Informe o Nº da Casa ou Apt</small>
+                }
             </div>
 
             <!-- Step 3 -->
             <div *ngIf="currentStep === 3" class="form-step">
                 <fieldset class="ng-fieldset">
                     <legend>CPF</legend>
-                    <div class="ng-password-btn">
-                        <input class="ng-input" placeholder="CPF...">
-
-
-                    </div>
+                    <input class="ng-input" placeholder="CPF" formControlName="cpfResposavel">
                 </fieldset>
+                @if (isRequired('cpfResposavel')) {
+                <small class="ng-error">Informe o CPF</small>
+                }
                 <fieldset class="ng-fieldset">
                     <legend>Razão Social</legend>
-                    <div class="ng-password-btn">
-                        <input class="ng-input" placeholder="Razão Social...">
-
-
-                    </div>
+                    <input class="ng-input" placeholder="Razão Social" formControlName="razaoSocial">
                 </fieldset>
+                @if (isRequired('razaoSocial')) {
+                <small class="ng-error">Informe a Razão Social</small>
+                }
                 <fieldset class="ng-fieldset">
                     <legend>CNPJ</legend>
-                    <div class="ng-password-btn">
-                        <input class="ng-input" placeholder="CNPJ...">
-
-
-                    </div>
+                    <input class="ng-input" placeholder="CNPJ" formControlName="cnpj">
                 </fieldset>
+                @if (isRequired('cnpj')) {
+                <small class="ng-error">Informe o CNPJ</small>
+                }
             </div>
 
             <div class="buttons">
                 <button mat-flat-button type="button" (click)="prev()" *ngIf="currentStep > 1"
                     class="ng-btn">Voltar</button>
-                <button mat-flat-button type="button" (click)="next()" *ngIf="currentStep < 3"
-                    class="ng-btn">Próximo</button>
+                <button mat-flat-button type="button" (click)="next()" *ngIf="currentStep < 3" class="ng-btn"
+                    [disabled]="!isCurrentStepValid()">Próximo</button>
                 <button mat-flat-button type="submit" *ngIf="currentStep === 3" class="ng-btn">Cadastrar</button>
             </div>
         </form>
