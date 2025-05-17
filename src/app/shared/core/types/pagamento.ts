@@ -4,15 +4,15 @@ export interface Pagamento {
     paymentMethodId: string,
     transactionAmount: number,
     description: string,
-    payer: payer,
-    itens?: itens
+    payer: payer
 }
 
 interface payer {
    email: string,
    first_name: string,
    last_name: string,
-   identification: identification
+   identification: identification,
+   itens?: itens
 }
 
 interface identification {

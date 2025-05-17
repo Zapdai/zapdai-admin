@@ -243,6 +243,13 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
         "identification": {
           "number": this.select("cpfCnpj").value,
           "type": this.selected
+        },
+        "itens": {
+          "id": 2,
+          "title": "Plano Pleno",
+          "description": "Plano Pleno - Zapdai",
+          "quantity": 1,
+          "price": 1
         }
       }
     };
@@ -285,17 +292,18 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
           type: this.selected,
           number: this.select("cpfCnpj").value,
         },
-        "itens": {
-          "id": 2,
-          "title": "Plano Pleno",
-          "description": "Plano Pleno - Zapdai",
-          "quantity": 1,
-          "price": 1
+        itens: {
+          id: 2,
+          title: "Plano Pleno",
+          description: "Plano Pleno - Zapdai",
+          quantity: 1,
+          price: 1
         }
       },
     };
     this.payment.pagarComCartao(paymentData).subscribe((res) => {
         console.log('Pagamento processado com sucesso:', res);
+        console.log(paymentData)
         if(res.status === 'approved'){
           this.activeRoute.activeLoading()
           setTimeout(() => {
