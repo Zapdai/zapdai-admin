@@ -58,6 +58,15 @@
                 <div class="ng-listForm">
                     <div>
                         <fieldset class="ng-fieldset">
+                            <legend>CEP</legend>
+                            <input class="ng-input" placeholder="CEP" formControlName="cep">
+                        </fieldset>
+                        @if (isRequired('cep')) {
+                            <small class="ng-error">Informe seu CEP</small>
+                        }
+                    </div>
+                    <div>
+                        <fieldset class="ng-fieldset">
                             <legend>Estado</legend>
                             <input type="email" class="ng-input" placeholder="Estado" formControlName="estado_sigla">
                         </fieldset>
@@ -65,6 +74,8 @@
                         <small class="ng-error">Informe o Estado</small>
                         }
                     </div>
+                </div> 
+                <div class="ng-listForm">
                     <div>
                         <fieldset class="ng-fieldset">
                             <legend>Cidade</legend>
@@ -74,14 +85,17 @@
                         <small class="ng-error">Informe a Cidade</small>
                         }
                     </div>
+                    <div>
+                        <fieldset class="ng-fieldset">
+                            <legend>Bairro</legend>
+                            <input class="ng-input" placeholder="Bairro" formControlName="bairro">
+                        </fieldset>
+                        @if (isRequired('bairro')) {
+                            <small class="ng-error">Informe o Bairro</small>
+                        }
+                    </div>
                 </div>
-                <fieldset class="ng-fieldset">
-                    <legend>Bairro</legend>
-                    <input class="ng-input" placeholder="Bairro" formControlName="bairro">
-                </fieldset>
-                @if (isRequired('bairro')) {
-                <small class="ng-error">Informe o Bairro</small>
-                }
+                
                 <fieldset class="ng-fieldset">
                     <legend>Rua</legend>
                     <input class="ng-input" placeholder="Rua" formControlName="rua">

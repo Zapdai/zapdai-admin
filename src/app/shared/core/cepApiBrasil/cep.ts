@@ -4,10 +4,10 @@ export interface cep {
     city: string,
     neighborhood: string,
     street: string,
-    service: string,
-    location: {
+    service?: string,
+    location?: {
         type: string,
-        coordinates: { }
+        coordinates: {}
     }
 }
 

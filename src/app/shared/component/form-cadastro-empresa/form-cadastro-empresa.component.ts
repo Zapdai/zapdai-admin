@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { cadastroEmpresaForm } from '../../../services/cadastroEmpresa/cadastroEmpresa.servide';
+import { cepApiBrasilService } from '../../../services/cepApiBrasil/cep.service';
 
 type EmpresaFormControls = keyof cadastroEmpresaForm['empresaform']['controls'];
 
@@ -15,17 +16,25 @@ type EmpresaFormControls = keyof cadastroEmpresaForm['empresaform']['controls'];
   templateUrl: './form-cadastro-empresa.component.html',
   styleUrls: ['./form-cadastro-empresa.component.scss']
 })
-export class FormCadastroEmpresaComponent {
+export class FormCadastroEmpresaComponent implements OnInit {
   currentStep = 1;
 
   constructor(
     public form: cadastroEmpresaForm,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    public cepApi: cepApiBrasilService
   ) {}
+  ngOnInit(): void {
+    this.form.empresaform.get('cep')?.valueChanges.subscribe((cep) => {
+      if (cep && cep.length === 8) {
+        this.buscarEnderecoPorCep(cep);
+      }
+    });
+  }
 
   stepFields: Record<number, EmpresaFormControls[]> = {
     1: ['nomeCompania', 'numeroDeTelefone', 'email'],
-    2: ['estado_sigla', 'cidade', 'bairro', 'rua', 'numeroEndereco'],
+    2: ['cep', 'estado_sigla', 'cidade', 'bairro', 'rua', 'numeroEndereco'],
     3: ['cpfResposavel', 'razaoSocial', 'cnpj']
   };
 
@@ -59,5 +68,19 @@ export class FormCadastroEmpresaComponent {
     if (this.currentStep > 1) {
       this.currentStep--;
     }
+  }
+
+  buscarEnderecoPorCep(cep: string) {
+    const sanitizedCep = cep.replace(/\D/g, '');
+    this.cepApi.consultarCep(sanitizedCep).subscribe((res: any) => {
+      if (!res.erro) {
+        this.form.empresaform.patchValue({
+          estado_sigla: res.state,
+          cidade: res.city,
+          bairro: res.neighborhood,
+          rua: res.street
+        });
+      }
+    });
   }
 }
