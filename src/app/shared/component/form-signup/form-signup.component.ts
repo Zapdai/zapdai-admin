@@ -7,10 +7,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { registroForm } from '../../../services/singNupForm/registroForm.servide';
 import { cadastro } from '../../core/types/cadastro';
 import { SnackService } from '../../../services/snackBar/snack.service';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-form-signup',
-  imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule, formModalComponent, MatButtonModule],
+  imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule, formModalComponent, MatButtonModule, NgxMaskDirective],
   templateUrl: './form-signup.component.html',
   styleUrl: './form-signup.component.scss'
 })

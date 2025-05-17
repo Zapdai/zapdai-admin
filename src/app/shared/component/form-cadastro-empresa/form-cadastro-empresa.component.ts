@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { cadastroEmpresaForm } from '../../../services/cadastroEmpresa/cadastroEmpresa.servide';
 import { cepApiBrasilService } from '../../../services/cepApiBrasil/cep.service';
+import { NgxMaskDirective } from 'ngx-mask';
 
 type EmpresaFormControls = keyof cadastroEmpresaForm['empresaform']['controls'];
 
 @Component({
   selector: 'app-form-cadastro-empresa',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatButtonModule],
+  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, NgxMaskDirective],
   templateUrl: './form-cadastro-empresa.component.html',
   styleUrls: ['./form-cadastro-empresa.component.scss']
 })

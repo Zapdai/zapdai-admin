@@ -30,7 +30,7 @@
                                 </select>
                                 <div class="ng-input-cpf">
                                     <input id="form-checkout__identificationNumber" formControlName="cpfCnpj"
-                                        [mask]="selected === 'cpf' ? '00000000000' : '00000000000000'" type="text"
+                                        [mask]="selected === 'cpf' ? '000.000.000-00' : '00.000.000/0000-00'" type="text"
                                         placeholder="Digite CPF ou CNPJ" class="input-full-width" />
 
                                     <div class="error" *ngIf="isRequired('cpfCnpj')">

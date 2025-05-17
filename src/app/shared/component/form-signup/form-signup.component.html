@@ -20,7 +20,8 @@
                                 <fieldset class="ng-fieldset">
                                     <legend>Número de telefone</legend>
                                     <input type="text" class="ng-input" placeholder="Nº de telefone..." #form2  (keydown.enter)="mudarCampo(form3)"
-                                        formControlName="telefone">
+                                        formControlName="telefone"
+                                        mask="(00) 00000-0000">
                                 </fieldset>
 
                                 <fieldset class="ng-fieldset">
@@ -44,8 +45,10 @@
                                     <fieldset class="ng-fieldset">
                                         <legend>Sexo</legend>
                                         <select formControlName="sexo" id="" class="ng-input">
-                                            <option [value]="">selecione..</option>
+                                            <option disabled selected value="">Selecione</option>
                                             <option value="m">Masculino</option>
+                                            <option value="f" >Feminino</option>
+                                            <option value="o" >Outros</option>
                                         </select>
                                     </fieldset>
                                     <fieldset class="ng-fieldset">
@@ -58,7 +61,8 @@
                                 <fieldset class="ng-fieldset">
                                     <legend>CPF</legend>
                                     <input type="text" class="ng-input" autofocus="on"  #formSlide2_1 (keydown.enter)="enterSlide2(formSlide2_2)" placeholder="Nome Completo..."
-                                        formControlName="cpf">
+                                        formControlName="cpf"
+                                        mask="000.000.000-00">
                                 </fieldset>
 
                                 <fieldset class="ng-fieldset">

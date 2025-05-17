@@ -38,7 +38,8 @@
                 <fieldset class="ng-fieldset">
                     <legend>Número de telefone</legend>
                     <input type="text" class="ng-input" placeholder="Nº de telefone da Empresa"
-                        formControlName="numeroDeTelefone">
+                        formControlName="numeroDeTelefone"
+                        mask="(00) 00000-0000">
                 </fieldset>
                 @if (isRequired('numeroDeTelefone')) {
                 <small class="ng-error">Informe o Nº de telefone</small>
@@ -59,7 +60,7 @@
                     <div>
                         <fieldset class="ng-fieldset">
                             <legend>CEP</legend>
-                            <input class="ng-input" placeholder="CEP" formControlName="cep">
+                            <input class="ng-input" placeholder="CEP" formControlName="cep" mask="00000-000">
                         </fieldset>
                         @if (isRequired('cep')) {
                             <small class="ng-error">Informe seu CEP</small>
@@ -116,7 +117,7 @@
             <div *ngIf="currentStep === 3" class="form-step">
                 <fieldset class="ng-fieldset">
                     <legend>CPF</legend>
-                    <input class="ng-input" placeholder="CPF" formControlName="cpfResposavel">
+                    <input class="ng-input" placeholder="CPF" formControlName="cpfResposavel" mask="000.000.000-00">
                 </fieldset>
                 @if (isRequired('cpfResposavel')) {
                 <small class="ng-error">Informe o CPF</small>
@@ -130,7 +131,7 @@
                 }
                 <fieldset class="ng-fieldset">
                     <legend>CNPJ</legend>
-                    <input class="ng-input" placeholder="CNPJ" formControlName="cnpj">
+                    <input class="ng-input" placeholder="CNPJ" formControlName="cnpj" mask="00.000.000/0000-00">
                 </fieldset>
                 @if (isRequired('cnpj')) {
                 <small class="ng-error">Informe o CNPJ</small>
