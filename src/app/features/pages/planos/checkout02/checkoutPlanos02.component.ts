@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
 import { MatListModule } from '@angular/material/list';
 import { AsideComponent } from '../../../../shared/component/aside-modal/aside-modal.component';
@@ -14,9 +14,13 @@ import { PixPaymentRespons } from '../../../../shared/core/types/paymentPagament
 import { CheckoutPixComponent } from '../../../../shared/component/checkout/checkoutPix.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { environment } from '../../../../../environments/environment';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { loadingService } from '../../../../services/loading/loading.service';
+import { PopoverModule, Popover } from 'primeng/popover';
+import { ButtonModule } from 'primeng/button';
+import { itens, itensPlanos } from '../../../../shared/core/Plano/planosItens';
+import { PlanoService } from '../../../../services/planosServices/planos.service';
 
 
 declare var MercadoPago: any;
@@ -35,25 +39,30 @@ declare var MercadoPago: any;
     FormsModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatButtonModule
+    MatButtonModule,
+    PopoverModule, Popover, ButtonModule,
   ],
   templateUrl: './checkoutPlanos02.component.html',
-  styleUrls: ['./checkoutPlanos02.component.scss']
+  styleUrls: ['./checkoutPlanos02.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
+export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
   spinner = false;
   response!: PixPaymentRespons;
-  cardFormInstance: any;
-  pagamentoData: any;  
+  pagamentoData: any;
   isSmallScreen: boolean = false;
-  constructor(public form: CheckoutFormService, public payment: apiPaymentsService,private router:Router, private activeRoute:loadingService) {
-   
-  }
   datas!: any;
+  event: any;
+  cardFormInstance: any = null;
+
+  constructor(public form: CheckoutFormService, public payment: apiPaymentsService, private rota: ActivatedRoute, private router: Router, private activeRoute: loadingService, public apiPlanosService: PlanoService) {
+
+  }
+
   ngOnInit(): void {
-     const navigation = this.router.getCurrentNavigation();
+    const navigation = this.router.getCurrentNavigation();
     this.datas = navigation?.extras?.state?.['data'];
-   if (this.datas) {
+    if (this.datas) {
       console.log('Dados recebidos:', this.data);
     } else {
       console.warn('Nenhum dado disponível na navegação.');
@@ -65,71 +74,128 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
       }
     }
 
-    
+
     this.checkScreenWidth();
+
+    this.apiPlanosService.planosConsumoApi().subscribe(response => {
+      this.itensPlanos = response.planos;
+    });
+
+    this.rota.queryParams.subscribe(params => {
+      const rawData = params['data'];
+      this.event = rawData ? JSON.parse(rawData) : null;
+    });
+
   }
 
 
   img = "/banners/banner-checkout01.png";
   ativo = false;
-  activeTab: 'credito' | 'debito' | 'pix'  = 'credito';
+  activeTab: 'credito' | 'debito' | 'pix' = 'credito';
   selected: 'cpf' | 'cnpj' = 'cpf';
   NomeCompleto: string = '';
   primeiroNome: string = '';
   sobrenome: string = '';
 
-  setTab(novoTab: 'credito' | 'debito' | 'pix') {
-  if (this.activeTab !== novoTab) {
-    const mudouParaCredito = novoTab === 'credito' && this.activeTab !== 'credito';
 
-    this.activeTab = novoTab;
-
-    if (mudouParaCredito) {
-      window.location.reload();
+  ngAfterViewInit(): void {
+    // Se quiser garantir o carregamento aqui também:
+    if (this.event.price) {
+      this.iniciarMercadoPago();
     }
   }
-}
 
+  iniciarMercadoPago(): void {
+    const mp = new MercadoPago(environment.PublicKey_MercadoPago);
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      const mp = new MercadoPago(environment.PublicKey_MercadoPago);
-  
-      this.cardFormInstance = mp.cardForm({
-        amount: '1',
-        form: {
-          id: 'form-checkout',
-          cardholderName: { id: 'form-checkout__cardholderName', placeholder: 'Nome no cartão' },
-          cardholderEmail: { id: 'form-checkout__cardholderEmail', placeholder: 'E-mail' },
-          cardNumber: { id: 'form-checkout__cardNumber', placeholder: 'Número do cartão' },
-          expirationMonth: { id: 'form-checkout__expirationMonth', placeholder: 'MM' },
-          expirationYear: { id: 'form-checkout__expirationYear', placeholder: 'AAAA' },
-          securityCode: { id: 'form-checkout__securityCode', placeholder: 'CVV' },
-          installments: { id: 'form-checkout__installments', placeholder: 'Parcelas' },
-          issuer: { id: 'form-checkout__issuer', placeholder: 'Banco emissor' }
-        },
-        callbacks: {
-          onFormMounted: function (error: any) {
-            if (error) {
-              console.warn('Erro ao montar o form:', error);
-              return;
-            }
-            console.log("Form montado com sucesso");
-          },
-          onSubmit: (event: any) => {
-            event.preventDefault();
-            const formData = this.cardFormInstance.getCardFormData();
-        
-              this.pagarCredito(formData)
-            
+    // Desmontar se existir
+    this.desmontarMercadoPago()
+
+    this.cardFormInstance = mp.cardForm({
+      amount: String(this.selectedPlano?.price || this.event.price),
+      form: {
+        id: 'form-checkout',
+        cardholderName: { id: 'form-checkout__cardholderName', placeholder: 'Nome no cartão' },
+        cardholderEmail: { id: 'form-checkout__cardholderEmail', placeholder: 'E-mail' },
+        cardNumber: { id: 'form-checkout__cardNumber', placeholder: 'Número do cartão' },
+        expirationMonth: { id: 'form-checkout__expirationMonth', placeholder: 'MM' },
+        expirationYear: { id: 'form-checkout__expirationYear', placeholder: 'AAAA' },
+        securityCode: { id: 'form-checkout__securityCode', placeholder: 'CVV' },
+        installments: { id: 'form-checkout__installments', placeholder: 'Parcelas' },
+        issuer: { id: 'form-checkout__issuer', placeholder: 'Banco emissor' }
+      },
+      callbacks: {
+        onFormMounted: function (error: any) {
+          if (error) {
+            console.warn('Erro ao montar o form:', error);
+            return;
           }
+          console.log("Form montado com sucesso");
+        },
+        onSubmit: (event: any) => {
+          event.preventDefault();
+          const formData = this.cardFormInstance.getCardFormData();
+
+          this.pagarCredito(formData)
+
         }
-      });
-    }, 1000);
+      }
+    });
   }
-  
-  
-  
+
+  desmontarMercadoPago() {
+    if (this.cardFormInstance && typeof this.cardFormInstance.unmount === 'function') {
+      this.cardFormInstance.unmount();
+      this.cardFormInstance = null;
+      console.log('Formulário Mercado Pago desmontado');
+    }
+  }
+
+  // Aqui é o método do ciclo de vida
+  ngAfterViewChecked(): void {
+    // Só monta se estiver na aba crédito e o form ainda não estiver montado
+    if (this.activeTab === 'credito' && !this.cardFormInstance) {
+      this.iniciarMercadoPago();
+    }
+  }
+
+  // Método para trocar aba
+  setTab(novoTab: 'credito' | 'debito' | 'pix') {
+    if (this.activeTab !== novoTab) {
+      this.activeTab = novoTab;
+
+      // Se quiser garantir desmonta ao trocar
+      this.desmontarMercadoPago();
+    }
+  }
+
+
+
+  @ViewChild('op') op!: Popover;
+
+  selectedPlano: itens | null = null;
+  itensPlanos: itens[] = [];
+  showPopover = false;
+
+  togglePopover(event: MouseEvent) {
+    event.stopPropagation();
+    this.showPopover = !this.showPopover;
+  }
+
+  closePopover() {
+    this.showPopover = false;
+  }
+
+  selectPlano(plano: any) {
+    this.selectedPlano = plano;
+    this.iniciarMercadoPago();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    this.showPopover = false;
+  }
+
 
   ativaModal() {
     this.ativo = false;
@@ -146,16 +212,16 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
   }
 
   isRequiredNext(): boolean {
-  const controls = this.form?.checkoutForm?.controls;
+    const controls = this.form?.checkoutForm?.controls;
 
-  if (!controls) return false;
+    if (!controls) return false;
 
-  const isValid =
-    controls['NomeCompleto']?.valid &&
-    controls['email']?.valid &&
-    controls['cpfCnpj']?.valid;
+    const isValid =
+      controls['NomeCompleto']?.valid &&
+      controls['email']?.valid &&
+      controls['cpfCnpj']?.valid;
 
-  return isValid;
+    return isValid;
   }
 
 
@@ -187,9 +253,9 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
   }
 
   selecionar(event: Event): void {
-  const target = event.target as HTMLSelectElement;
-  const opcao = target.value as 'cpf' | 'cnpj'; // forçando o tipo correto
-  this.selected = opcao;
+    const target = event.target as HTMLSelectElement;
+    const opcao = target.value as 'cpf' | 'cnpj'; // forçando o tipo correto
+    this.selected = opcao;
   }
 
   bandeira: string = '';
@@ -234,8 +300,8 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
 
     const data: Pagamento = {
       "paymentMethodId": this.activeTab,
-      "transactionAmount": 1,
-      "description": "Plano Pleno - Zapdai",
+      "transactionAmount": this.selectedPlano?.price ?? 0,
+      "description": this.selectedPlano?.title ?? 'Plano Zapdai',
       "payer": {
         "email": this.select("email").value,
         "first_name": primeiroNome,
@@ -245,17 +311,17 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
           "type": this.selected
         }
       },
-        "itens": [{
-          "id": 2,
-          "title": "Plano Pleno",
-          "description": "Plano Pleno - Zapdai",
-          "quantity": 1,
-          "price": 1
-        }]
+      "itens": [{
+        "id": 2,
+        "title": this.selectedPlano?.title ?? '',
+        "description": this.selectedPlano?.subDescricaoPermition ?? '',
+        "quantity": 1,
+        "price": this.selectedPlano?.price ?? 0
+      }]
     };
     return data;
   }
-  
+
 
   finalizarPagamento() {
     switch (this.activeTab) {
@@ -269,7 +335,7 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
         break;
       default:
         console.warn('Método de pagamento não selecionado.');
-    } 
+    }
   }
 
   pagarCredito(formData: any) {
@@ -282,14 +348,14 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
       console.error('Token não gerado. Verifique os dados do cartão.', formData);
       return;
     }
-  
+
     const paymentData = {
       token: formData.token,
       issuerId: formData.issuerId,
       paymentMethodId: formData.paymentMethodId,
-      transactionAmount: formData.amount,
+      transactionAmount: String(this.selectedPlano?.price || this.event.price),
       installments: formData.installments,
-      description: "Plano Pleno - Zapdai",
+      description: this.selectedPlano?.title ?? 'Plano Zapdai',
       payer: {
         email: formData.cardholderEmail,
         first_name: primeiroNome,
@@ -299,33 +365,33 @@ export class CheckoutPlanos02Component implements AfterViewInit,OnInit{
           number: this.select("cpfCnpj").value,
         }
       },
-        itens: [{
-          id: 2,
-          title: "Plano Pleno",
-          description: "Plano Pleno - Zapdai",
-          quantity: 1,
-          price: 1
-        }]
+      itens: [{
+        id: 2,
+        title: this.selectedPlano?.title ?? '',
+        description: this.selectedPlano?.subDescricaoPermition ?? '',
+        quantity: 1,
+        price: this.selectedPlano?.price ?? 0
+      }]
     };
     this.payment.pagarComCartao(paymentData).subscribe((res) => {
-        console.log('Pagamento processado com sucesso:', res);
-        console.log(paymentData)
-        if(res.status === 'approved'){
-          this.activeRoute.activeLoading()
-          setTimeout(() => {
-              this.router.navigateByUrl('/loading', { skipLocationChange: true}).then(()=>{
-                  setTimeout(() => {
-                      this.router.navigate(['/planos/pos-checkout'])
-                  }, 1000);
-              })            
-          }, 0); 
-        } else {
-          console.log("Pagamento Rejeitado")
-        }   
+      console.log('Pagamento processado com sucesso:', res);
+      console.log(paymentData)
+      if (res.status === 'approved') {
+        this.activeRoute.activeLoading()
+        setTimeout(() => {
+          this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+            setTimeout(() => {
+              this.router.navigate(['/planos/pos-checkout'])
+            }, 1000);
+          })
+        }, 0);
+      } else {
+        console.log("Pagamento Rejeitado")
       }
+    }
     );
   }
-  
+
 
   pagarDebito() {
     console.log('Processando pagamento com cartão de débito...');

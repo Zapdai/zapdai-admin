@@ -5,16 +5,18 @@
 
     .ng-checkout {
         display: flex;
-        flex-direction:column-reverse;
+        flex-direction: column-reverse;
         gap: 20px 0;
         padding: 15px;
+
         .ng-container {
             display: flex;
             flex-direction: column;
             gap: 35px 0;
             padding: 0;
 
-            .ng-subContainer, .ng-subContainer2 {
+            .ng-subContainer,
+            .ng-subContainer2 {
                 display: flex;
                 flex-direction: column;
                 font-size: 14px;
@@ -32,7 +34,7 @@
                         color: #888;
                     }
                 }
-                
+
 
                 /// Formulario e Input estilizado ------------------------------------------------------------///
                 .form-field {
@@ -81,22 +83,23 @@
                             padding: 2px 4px;
                             border-radius: 4px;
                             gap: 2px;
-                            
+
                         }
 
                     }
 
-                    
+
                     .tab.active {
                         background-color: #eee;
                         color: #41b44a;
                         border: 2px solid #41b44a;
                     }
-                      
+
                     .tab-content {
-                    background-color: #fff;
-                    padding: 20px 0;
+                        background-color: #fff;
+                        padding: 20px 0;
                     }
+
                     .ng-pagamento {
                         display: flex;
                         flex-direction: column;
@@ -113,14 +116,14 @@
                         color: rgb(201, 12, 12);
                         gap: 20px 0;
                     }
-                    
+
                     .ng-cont-card2 {
                         width: 100%;
                         display: flex;
-                        gap: 0 10px;   
+                        gap: 0 10px;
 
-                    }                      
-                    
+                    }
+
                     .btn-pagamento {
                         width: 100%;
                         height: 45px;
@@ -133,7 +136,7 @@
                         margin-bottom: 20px;
                     }
 
-                    .btn-pagamento:hover {                        
+                    .btn-pagamento:hover {
                         background-color: #73ca7b;
                     }
 
@@ -141,50 +144,53 @@
                         transform: scale(0.97);
                     }
 
-                  
+
                 }
-                  
+
                 .input-full-width {
                     width: 100%;
                     padding: 10px;
                     border: 1px solid #ccc;
                     border-radius: 4px;
                     font-size: 16px;
-                  }
-                  
-                  .input-full-width:focus {
+                }
+
+                .input-full-width:focus {
                     border-color: #41b44a;
                     outline: none;
-                  }
-                  
-                  .error {
+                }
+
+                .error {
                     color: rgb(184, 40, 40);
                     border-color: rgb(184, 40, 40);
                     font-size: 12px;
                     margin-top: 4px;
-                  }
-                  ///-----------------------------------------------------------------------------///
-                
-                
+                }
+
+                ///-----------------------------------------------------------------------------///
+
+
                 .ng-cont-img {
                     display: flex;
                     flex-direction: row;
                     align-items: center;
                     width: 100%;
                     gap: 15px;
+
                     section {
                         width: 70%;
                     }
+
                     .bandeira-icon {
                         width: 4rem;
                         height: 1.5rem;
                         margin-top: 8px;
                     }
-                  
+
                 }
             }
 
-            
+
 
         }
 
@@ -192,7 +198,7 @@
             display: flex;
             flex-direction: column;
             gap: 25px 0;
-            padding: 15px 0 ;
+            padding: 15px 0;
             border-radius: 10px;
 
             .ng-subContainer2 {
@@ -200,6 +206,7 @@
                 flex-direction: column;
                 gap: 25px 0;
                 font-size: 16px;
+
                 .ng-itemCompra {
                     display: flex;
                     justify-content: center;
@@ -229,6 +236,48 @@
                     gap: 0 10px;
                     font-size: 12px;
                 }
+
+                .custom-popover {
+                    position: absolute;
+                    z-index: 9999;
+                    background: var(--background-color-container);
+                    border-radius: 8px;
+                    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
+                    width: 92vw;
+                    margin-top: 5dvh;
+
+                    .ng-planoTitulo {
+                        color: #fff;
+                        font-size: 20px;
+                        text-align: center;
+                        margin-top: 5px;
+                    }
+                }
+
+                /* Conteúdo interno para padding */
+                .popover-content {
+                    padding: 15px;
+
+                    ul {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px 0;
+                    }
+                }
+
+                /* Se quiser pode ajustar o cursor do botão */
+                .ng-itemCompra {
+                    cursor: pointer;
+                    color: #333;
+                    background-color: rgba(255, 255, 255, 0.6);
+
+                    p {
+                        font-size: 16px;
+                        font-weight: 550;
+                        margin-top: 3px;
+                    }
+                }
+
             }
         }
     }
@@ -237,137 +286,168 @@
 
 ///---------------------------------------------------------------------------------------------------------///
 
-@media screen and (min-width: 1250px) {
+@media screen and (min-width: 1025px) {
     .main {
-    justify-content: center;
-    align-items: flex-start;
-    padding: 8px;
-
-    .ng-checkout {
-        display: flex;
-        align-items: flex-start;
         justify-content: center;
-        flex-direction: row;
-        gap: 0 40px;
-        width: 70%;
+        align-items: flex-start;
+        padding: 8px;
 
-        .ng-container, .ng-container2 {
+        .ng-checkout {
             display: flex;
-            flex-direction: column;
-            flex: 2;
-            gap: 35px 0;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
+            align-items: flex-start;
+            justify-content: center;
+            flex-direction: row;
+            gap: 0 40px;
+            width: 80%;
 
-            .ng-subContainer, .ng-subContainer2 {
+            .ng-container,
+            .ng-container2 {
                 display: flex;
                 flex-direction: column;
-                font-size: 14px;
-                gap: 15px 0;
-                
+                flex: 2;
+                gap: 35px 0;
+                padding: 15px;
+                border: 1px solid #ccc;
+                border-radius: 10px;
 
-                /// Formulario e Input estilizado ------------------------------------------------------------///
-                .form-field {
+                .ng-subContainer,
+                .ng-subContainer2 {
                     display: flex;
                     flex-direction: column;
-                    width: 100%;
-                    font-size: 12px;
-                    gap: 2px;
-                    padding: 5px;
+                    font-size: 14px;
+                    gap: 15px 0;
 
-                    .ng-cont {
-                        .ng-input-cpf {
-                            flex: 4;
+
+                    /// Formulario e Input estilizado ------------------------------------------------------------///
+                    .form-field {
+                        display: flex;
+                        flex-direction: column;
+                        width: 100%;
+                        font-size: 12px;
+                        gap: 2px;
+                        padding: 5px;
+
+                        .ng-cont {
+                            .ng-input-cpf {
+                                flex: 4;
+                            }
+
+                        }
+                    }
+
+                    .input-full-width {
+                        width: 100%;
+                        padding: 6px;
+                        border: 1px solid #ccc;
+                        border-radius: 4px;
+                        font-size: 16px;
+                    }
+
+                    .ng-cont-img {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        width: 100%;
+                        gap: 15px;
+
+                        section {
+                            width: 70%;
+                        }
+
+                        .bandeira-icon {
+                            width: 4rem;
+                            height: 1.5rem;
+                            margin-top: 8px;
                         }
 
                     }
                 }
-                  
-                .input-full-width {
-                    width: 100%;
-                    padding: 6px;
-                    border: 1px solid #ccc;
-                    border-radius: 4px;
-                    font-size: 16px;
-                  }
-                
-                .ng-cont-img {
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    width: 100%;
-                    gap: 15px;
-                    section {
-                        width: 70%;
+
+                .ng-subContainer2 {
+                    .ng-itemCompra {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: row;
+                        border: 2px solid #ccc;
+                        border-radius: 10px;
+                        padding: 10px;
+                        gap: 0 20px;
+
+                        img {
+                            flex: 1;
+                            width: 1.5rem;
+                            height: 1.5rem;
+                            object-fit: cover;
+                            background-size: cover;
+                        }
+
+                        div {
+                            display: flex;
+                            flex: 3;
+                            font-size: 12px;
+                            flex-direction: column;
+                        }
                     }
-                    .bandeira-icon {
-                        width: 4rem;
-                        height: 1.5rem;
-                        margin-top: 8px;
+
+
+                    .btn-pagamento {
+                        width: 100%;
+                        height: 40px;
+                        background-color: #41b44a;
+                        color: #fff;
+                        font-weight: 600;
+                        border-radius: 10px;
+                        border: none;
+                        box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.2);
                     }
-                  
+
+                    .btn-pagamento:hover {
+                        background-color: #73ca7b;
+                    }
+
+                    .btn-pagamento:active {
+                        transform: scale(0.97);
+                    }
+
+                    .custom-popover {
+                        position: absolute;
+                        z-index: 9999;
+                        border-radius: 8px;
+                        width: 23vw;
+                        margin-top: 3vh;
+                    }
+
+                    /* Conteúdo interno para padding */
+                    .popover-content {
+                        padding: 15px;
+
+                        ul {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 10px 0;
+                        }
+                    }
+
+                    /* Se quiser pode ajustar o cursor do botão */
+                    .ng-itemCompra {
+                        cursor: pointer;
+
+                        p {
+                            font-size: 16px;
+                        }
+                    }
+
                 }
+
             }
 
-            .ng-subContainer2 {
-                .ng-itemCompra {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    flex-direction: row;
-                    border: 2px solid #ccc;
-                    border-radius: 10px;
-                    padding: 10px;
-                    gap: 0 20px;
-
-                    img {
-                        flex: 1;
-                        width: 1.5rem;
-                        height: 1.5rem;
-                        object-fit: cover;
-                        background-size: cover;
-                    }
-
-                    div {                
-                        display: flex;        
-                        flex: 3;
-                        font-size: 12px;
-                        flex-direction: column;
-                    }
-                }
-
-
-                .btn-pagamento {
-                    width: 100%;
-                    height: 40px;
-                    background-color: #41b44a;
-                    color: #fff;
-                    font-weight: 600;
-                    border-radius: 10px;
-                    border: none;
-                    box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.2);
-                }
-
-                .btn-pagamento:hover {                        
-                    background-color: #73ca7b;
-                }
-
-                .btn-pagamento:active {
-                    transform: scale(0.97);
-                }
-                
-
+            .ng-my-order {
+                flex: 1;
+                border-right: 1px solid #ccc;
             }
-
-        }
-
-        .ng-my-order {
-            flex: 1;
-            border-right: 1px solid #ccc;
         }
     }
-}
 
 
 }

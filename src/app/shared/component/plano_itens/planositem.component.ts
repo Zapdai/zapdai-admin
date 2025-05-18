@@ -18,7 +18,7 @@ constructor(private router:Router){}
    pageCheckout02(event:any){
     this.router.navigate(['/planos/checkout02'], {
          skipLocationChange: false,
-         state: { data: event}
+         queryParams: { data: JSON.stringify(event)}
          })
   }
     sanitizeDescription(text: any): string {
