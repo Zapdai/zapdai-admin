@@ -21,7 +21,7 @@ interface identification {
 }
 
 interface itens {
-   id: number,
+   id: string,
    title: string,
    description: string,
    quantity: number,

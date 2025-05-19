@@ -1,0 +1,120 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100dvh;
+    background-color: #F2F2F2;
+    padding: 25px;
+    position: fixed;
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        border-radius: 1rem;
+        color: #ddd;
+        background: var(--background-color-container);
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        padding: 1rem;
+        max-width: 600px;
+        width: 100%;
+        gap: 1rem;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        font-size: 16px;
+        color: #28a745;
+        text-align: center;
+    }
+
+    .welcome {
+        font-size: 1rem;
+        margin-top: 1rem;
+        color: #fff;
+    }
+
+    p {
+        font-size: 0.8rem;
+        color: #bbb;
+    }
+
+    .section {
+        margin-top: 2rem;
+
+        .ng-btn {
+            width: 100%;
+            height: 45px;
+            background-color: #ddd;
+            color: #592d74;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .ng-btn:hover {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .ng-btn:active {
+            transform: scale(0.97);
+        }
+    }
+
+    .spinner {
+        margin: 20px auto;
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-top-color: #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+
+}
+
+@media screen and (min-width: 1024px) {
+    .main {
+        .container {
+            padding: 1.5rem;
+        }
+
+        .card {
+            padding: 1rem;
+            max-width: 500px;
+            gap: 1.2rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+        }
+
+        .welcome {
+            font-size: 1.3rem;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #bbb;
+        }
+
+    }
+}

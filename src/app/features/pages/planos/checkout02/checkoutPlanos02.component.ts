@@ -21,12 +21,15 @@ import { PopoverModule, Popover } from 'primeng/popover';
 import { ButtonModule } from 'primeng/button';
 import { itens, itensPlanos } from '../../../../shared/core/Plano/planosItens';
 import { PlanoService } from '../../../../services/planosServices/planos.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackService } from '../../../../services/snackBar/snack.service';
 
 
 declare var MercadoPago: any;
 
 @Component({
   selector: 'app-checkoutPlanos02',
+  standalone: true,
   imports: [
     PageContainerComponent,
     MatListModule,
@@ -40,7 +43,9 @@ declare var MercadoPago: any;
     MatIconModule,
     MatProgressSpinnerModule,
     MatButtonModule,
-    PopoverModule, Popover, ButtonModule,
+    PopoverModule, ButtonModule,
+    MatSnackBarModule,
+
   ],
   templateUrl: './checkoutPlanos02.component.html',
   styleUrls: ['./checkoutPlanos02.component.scss'],
@@ -55,7 +60,13 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
   event: any;
   cardFormInstance: any = null;
 
-  constructor(public form: CheckoutFormService, public payment: apiPaymentsService, private rota: ActivatedRoute, private router: Router, private activeRoute: loadingService, public apiPlanosService: PlanoService) {
+  constructor(public form: CheckoutFormService,
+    public payment: apiPaymentsService,
+    private rota: ActivatedRoute,
+    private router: Router,
+    private activeRoute: loadingService,
+    public apiPlanosService: PlanoService,
+    private snack: SnackService) {
 
   }
 
@@ -78,7 +89,7 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
     this.checkScreenWidth();
 
     this.apiPlanosService.planosConsumoApi().subscribe(response => {
-      this.itensPlanos = response.planos;
+      this.itensPlanos = response.planos.filter((plano: any) => plano.price > 0);
     });
 
     this.rota.queryParams.subscribe(params => {
@@ -147,7 +158,6 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
     if (this.cardFormInstance && typeof this.cardFormInstance.unmount === 'function') {
       this.cardFormInstance.unmount();
       this.cardFormInstance = null;
-      console.log('Formulário Mercado Pago desmontado');
     }
   }
 
@@ -300,8 +310,8 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
 
     const data: Pagamento = {
       "paymentMethodId": this.activeTab,
-      "transactionAmount": this.selectedPlano?.price ?? 0,
-      "description": this.selectedPlano?.title ?? 'Plano Zapdai',
+      "transactionAmount": this.selectedPlano?.price || this.event.price,
+      "description": this.selectedPlano?.title ?? this.event.title,
       "payer": {
         "email": this.select("email").value,
         "first_name": primeiroNome,
@@ -312,11 +322,11 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
         }
       },
       "itens": [{
-        "id": 2,
-        "title": this.selectedPlano?.title ?? '',
-        "description": this.selectedPlano?.subDescricaoPermition ?? '',
+        "id": this.selectedPlano?.planoId ?? this.event.planoId,
+        "title": this.selectedPlano?.title ?? this.event.title,
+        "description": this.selectedPlano?.subDescricaoPermition ?? this.event.subDescricaoPermition,
         "quantity": 1,
-        "price": this.selectedPlano?.price ?? 0
+        "price": this.selectedPlano?.price || this.event.price
       }]
     };
     return data;
@@ -366,30 +376,47 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
         }
       },
       itens: [{
-        id: 2,
-        title: this.selectedPlano?.title ?? '',
-        description: this.selectedPlano?.subDescricaoPermition ?? '',
+        id: this.selectedPlano?.planoId ?? this.event.planoId,
+        title: this.selectedPlano?.title ?? this.event.title,
+        description: this.selectedPlano?.subDescricaoPermition ?? this.event.subDescricaoPermition,
         quantity: 1,
-        price: this.selectedPlano?.price ?? 0
+        price: this.selectedPlano?.price || this.event.price
       }]
     };
-    this.payment.pagarComCartao(paymentData).subscribe((res) => {
-      console.log('Pagamento processado com sucesso:', res);
-      console.log(paymentData)
-      if (res.status === 'approved') {
-        this.activeRoute.activeLoading()
-        setTimeout(() => {
-          this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-            setTimeout(() => {
-              this.router.navigate(['/planos/pos-checkout'])
-            }, 1000);
-          })
-        }, 0);
-      } else {
-        console.log("Pagamento Rejeitado")
+
+    /// Realizando pagamento CARTÃO DE CRÉDITO
+    this.payment.pagarComCartao(paymentData).subscribe({
+      next: (res) => {
+        this.form.checkoutForm.reset();
+
+        if (res.status === 'approved') {
+          this.activeRoute.activeLoading();
+          setTimeout(() => {
+            this.router.navigateByUrl('/loading', { skipLocationChange: false }).then(() => {
+              setTimeout(() => {
+                this.router.navigate(['/planos/loadingPayment']);
+              }, 1000);
+            });
+          }, 0);
+        } else {
+          this.snack.openSnackBar(
+            `❌ Pagamento rejeitado.\nVerifique se todas as informações estão corretas.\nMensagem: ${res.status || 'Erro desconhecido.'}`
+          );
+          console.log(res)
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao processar pagamento:', err);
+
+        const mensagemErro = err?.error?.message || 'Erro ao processar o pagamento.';
+        const detalhes = err?.error?.cause?.[0]?.code || '';
+
+        this.snack.openSnackBar(
+          `❌ Falha ao processar pagamento.\n${mensagemErro}${detalhes ? `\nCódigo: ${detalhes}` : ''}`
+        );
       }
-    }
-    );
+    });
+
   }
 
 
@@ -406,6 +433,7 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
       this.spinner = false;
       this.response = e;
       this.ativo = true;
+      this.form.checkoutForm.reset();
     });
     this.ativaModal();
     console.log(this.data());

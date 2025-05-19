@@ -3,7 +3,7 @@ export type itensPlanos = {
 
 }
 export type itens = {
-  id?: number
+  planoId?: string,
   title: string,
   price: number,
   description: string,

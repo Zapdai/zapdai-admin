@@ -15,7 +15,7 @@ export class SnackService {
       duration:5000,
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
+      panelClass: ['snackbar-multiline'],
     });
   }
 }
-

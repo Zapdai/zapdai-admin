@@ -26,12 +26,15 @@ export const routes: Routes = [
             },
             {
                 path:"pos-checkout", component:PosCheckoutComponent, title: "Tela de Obrigado", 
-                canActivate:[authGuardian], data: { acess: ['ROLE_USER'] }
+                canActivate:[authGuardian]
+            },
+            {
+                path:"loadingPayment", component:CadastroEmpresaComponent, title: "Tela Cadastro de Empresa"
             },
             {
                 path:"create-business", component:CadastroEmpresaComponent, title: "Tela Cadastro de Empresa", 
                 canActivate:[authGuardian], data: { acess: ['ROLE_USER'] }
-            }
+            },
         ]
     }
 ]
