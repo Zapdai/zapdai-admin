@@ -21,12 +21,18 @@ import { PopoverModule, Popover } from 'primeng/popover';
 import { ButtonModule } from 'primeng/button';
 import { itens, itensPlanos } from '../../../../shared/core/Plano/planosItens';
 import { PlanoService } from '../../../../services/planosServices/planos.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackService } from '../../../../services/snackBar/snack.service';
+import { AuthService } from '../../../../services/auth.service';
+import { Subscription, interval, switchMap } from 'rxjs';
+
 
 
 declare var MercadoPago: any;
 
 @Component({
   selector: 'app-checkoutPlanos02',
+  standalone: true,
   imports: [
     PageContainerComponent,
     MatListModule,
@@ -40,26 +46,39 @@ declare var MercadoPago: any;
     MatIconModule,
     MatProgressSpinnerModule,
     MatButtonModule,
-    PopoverModule, Popover, ButtonModule,
+    PopoverModule, ButtonModule,
+    MatSnackBarModule,
+
   ],
   templateUrl: './checkoutPlanos02.component.html',
-  styleUrls: ['./checkoutPlanos02.component.scss'],  
+  styleUrls: ['./checkoutPlanos02.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
   spinner = false;
   response!: PixPaymentRespons;
-  cardFormInstance: any;
   pagamentoData: any;
   isSmallScreen: boolean = false;
   datas!: any;
   event: any;
+  cardFormInstance: any = null;
+  emailUser: string = ''
+  pollingSub!: Subscription;
 
-  constructor(public form: CheckoutFormService, public payment: apiPaymentsService, private rota: ActivatedRoute, private router: Router, private activeRoute: loadingService, public apiPlanosService: PlanoService) {
+  constructor(public form: CheckoutFormService,
+    public payment: apiPaymentsService,
+    private rota: ActivatedRoute,
+    private router: Router,
+    private activeRoute: loadingService,
+    public apiPlanosService: PlanoService,
+    private snack: SnackService,
+    private authService: AuthService) {
 
   }
 
   ngOnInit(): void {
+    this.emailUser = this.authService.getEmail()!;
+
     const navigation = this.router.getCurrentNavigation();
     this.datas = navigation?.extras?.state?.['data'];
     if (this.datas) {
@@ -78,15 +97,14 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
     this.checkScreenWidth();
 
     this.apiPlanosService.planosConsumoApi().subscribe(response => {
-    this.itensPlanos = response.planos;
-  });
+      this.itensPlanos = response.planos.filter((plano: any) => plano.price > 0);
+    });
 
     this.rota.queryParams.subscribe(params => {
       const rawData = params['data'];
       this.event = rawData ? JSON.parse(rawData) : null;
     });
 
-    
   }
 
 
@@ -98,25 +116,22 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
   primeiroNome: string = '';
   sobrenome: string = '';
 
-  setTab(novoTab: 'credito' | 'debito' | 'pix') {
-    if (this.activeTab !== novoTab) {
-      const mudouParaCredito = novoTab === 'credito' && this.activeTab !== 'credito';
 
-      this.activeTab = novoTab;
-
-      if (mudouParaCredito) {
-        window.location.reload();
-      }
+  ngAfterViewInit(): void {
+    // Se quiser garantir o carregamento aqui também:
+    if (this.event.price) {
+      this.iniciarMercadoPago();
     }
   }
 
+  iniciarMercadoPago(): void {
+    const mp = new MercadoPago(environment.PublicKey_MercadoPago);
 
-  ngAfterViewInit() {
+    // Desmontar se existir
+    this.desmontarMercadoPago()
     setTimeout(() => {
-      const mp = new MercadoPago(environment.PublicKey_MercadoPago);
-
       this.cardFormInstance = mp.cardForm({
-        amount: "1",
+        amount: String(this.selectedPlano?.price || this.event.price),
         form: {
           id: 'form-checkout',
           cardholderName: { id: 'form-checkout__cardholderName', placeholder: 'Nome no cartão' },
@@ -126,7 +141,10 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
           expirationYear: { id: 'form-checkout__expirationYear', placeholder: 'AAAA' },
           securityCode: { id: 'form-checkout__securityCode', placeholder: 'CVV' },
           installments: { id: 'form-checkout__installments', placeholder: 'Parcelas' },
-          issuer: { id: 'form-checkout__issuer', placeholder: 'Banco emissor' }
+          issuer: { id: 'form-checkout__issuer', placeholder: 'Banco emissor' },
+          identificationType: { id: 'form-checkout__identificationType', placeholder: 'Tipo de documento' },
+          identificationNumber: { id: 'form-checkout__identificationNumber', placeholder: 'CPF ou CNPJ' }
+
         },
         callbacks: {
           onFormMounted: function (error: any) {
@@ -141,12 +159,32 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
             const formData = this.cardFormInstance.getCardFormData();
 
             this.pagarCredito(formData)
+            console.log(formData)
 
           }
         }
       });
     }, 1000);
   }
+
+  desmontarMercadoPago() {
+    if (this.cardFormInstance && typeof this.cardFormInstance.unmount === 'function') {
+      this.cardFormInstance.unmount();
+      this.cardFormInstance = null;
+    }
+  }
+
+
+  // Método para trocar aba
+  setTab(novoTab: 'credito' | 'debito' | 'pix') {
+    if (this.activeTab !== novoTab) {
+      this.activeTab = novoTab;
+
+      // Se quiser garantir desmonta ao trocar
+      this.desmontarMercadoPago();
+    }
+  }
+
 
 
   @ViewChild('op') op!: Popover;
@@ -156,7 +194,7 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
   showPopover = false;
 
   togglePopover(event: MouseEvent) {
-    event.stopPropagation(); // Para não fechar se clicar dentro do botão
+    event.stopPropagation();
     this.showPopover = !this.showPopover;
   }
 
@@ -166,10 +204,9 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
 
   selectPlano(plano: any) {
     this.selectedPlano = plano;
-    // Qualquer lógica extra aqui...
+    this.iniciarMercadoPago();
   }
 
-  // Fecha o popover se clicar fora dele
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
     this.showPopover = false;
@@ -279,10 +316,10 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
 
     const data: Pagamento = {
       "paymentMethodId": this.activeTab,
-      "transactionAmount": this.selectedPlano?.price ?? 0,
-      "description": this.selectedPlano?.title ?? 'Plano Zapdai',
+      "transactionAmount": this.selectedPlano?.price || this.event.price,
+      "description": this.selectedPlano?.title ?? this.event.title,
       "payer": {
-        "email": this.select("email").value,
+        "email": this.emailUser,
         "first_name": primeiroNome,
         "last_name": sobrenome,
         "identification": {
@@ -291,11 +328,11 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
         }
       },
       "itens": [{
-        "id": "2",
-        "title": this.selectedPlano?.title ?? '',
-        "description": this.selectedPlano?.subDescricaoPermition ?? '',
-        "quantity":  1,
-        "price":  this.selectedPlano?.price ?? 0
+        "id": this.selectedPlano?.planoId ?? this.event.planoId,
+        "title": this.selectedPlano?.title ?? this.event.title,
+        "description": this.selectedPlano?.subDescricaoPermition ?? this.event.subDescricaoPermition,
+        "quantity": 1,
+        "price": this.selectedPlano?.price || this.event.price
       }]
     };
     return data;
@@ -332,11 +369,11 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
       token: formData.token,
       issuerId: formData.issuerId,
       paymentMethodId: formData.paymentMethodId,
-      transactionAmount: formData.amount,
+      transactionAmount: String(this.selectedPlano?.price || this.event.price),
       installments: formData.installments,
       description: this.selectedPlano?.title ?? 'Plano Zapdai',
       payer: {
-        email: formData.cardholderEmail,
+        email: this.emailUser,
         first_name: primeiroNome,
         last_name: sobrenome,
         identification: {
@@ -345,30 +382,47 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
         }
       },
       itens: [{
-        id: 2,
-        title: this.selectedPlano?.title ?? '',
-        description: this.selectedPlano?.subDescricaoPermition ?? '',
-        quantity:  1,
-        price:  this.selectedPlano?.price ?? 0
+        id: this.selectedPlano?.planoId ?? this.event.planoId,
+        title: this.selectedPlano?.title ?? this.event.title,
+        description: this.selectedPlano?.subDescricaoPermition ?? this.event.subDescricaoPermition,
+        quantity: 1,
+        price: this.selectedPlano?.price || this.event.price
       }]
     };
-    this.payment.pagarComCartao(paymentData).subscribe((res) => {
-      console.log('Pagamento processado com sucesso:', res);
-      console.log(paymentData)
-      if (res.status === 'approved') {
-        this.activeRoute.activeLoading()
-        setTimeout(() => {
-          this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-            setTimeout(() => {
-              this.router.navigate(['/planos/pos-checkout'])
-            }, 1000);
-          })
-        }, 0);
-      } else {
-        console.log("Pagamento Rejeitado")
+
+    /// Realizando pagamento CARTÃO DE CRÉDITO
+    this.payment.pagarComCartao(paymentData).subscribe({
+      next: (res) => {
+        this.form.checkoutForm.reset();
+
+        if (res.status === 'approved') {
+          this.activeRoute.activeLoading();
+          setTimeout(() => {
+            this.router.navigateByUrl('/loading', { skipLocationChange: false }).then(() => {
+              setTimeout(() => {
+                this.router.navigate(['/planos/loadingPayment']);
+              }, 1000);
+            });
+          }, 0);
+        } else {
+          this.snack.openSnackBar(
+            `❌ Pagamento rejeitado.\nVerifique se todas as informações estão corretas.\nMensagem: ${res.status || 'Erro desconhecido.'}`
+          );
+          console.log(res)
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao processar pagamento:', err);
+
+        const mensagemErro = err?.error?.message || 'Erro ao processar o pagamento.';
+        const detalhes = err?.error?.cause?.[0]?.code || '';
+
+        this.snack.openSnackBar(
+          `❌ Falha ao processar pagamento.\n${mensagemErro}${detalhes ? `\nCódigo: ${detalhes}` : ''}`
+        );
       }
-    }
-    );
+    });
+
   }
 
 
@@ -385,10 +439,42 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
       this.spinner = false;
       this.response = e;
       this.ativo = true;
+      this.form.checkoutForm.reset();
+
+      // Inicia o polling após gerar o Pix
+      this.iniciarVerificacaoPagamento(this.data().payer.email);
     });
     this.ativaModal();
     console.log(this.data());
   }
+
+
+
+  iniciarVerificacaoPagamento(email: string) {
+    this.pollingSub = interval(5000).pipe(
+      switchMap(() => this.payment.statusPayment({ email }))
+    ).subscribe({
+      next: (res: any) => {
+        console.log('Status do pagamento:', res);
+        if (res.statusPago === true) {
+          // Finaliza o polling se foi pago
+          this.pollingSub.unsubscribe();
+          this.activeRoute.activeLoading();
+          setTimeout(() => {
+            this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+              setTimeout(() => {
+                this.router.navigate(['/planos/pos-checkout']);
+              }, 1000);
+            });
+          }, 0);
+        }
+      },
+      error: (err) => {
+        console.error('Erro na verificação de pagamento:', err);
+      }
+    });
+  }
+
 
 
 }
