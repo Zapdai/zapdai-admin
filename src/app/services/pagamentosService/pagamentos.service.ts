@@ -79,18 +79,18 @@ export class ConfirmPagamentoSocketComponent {
 
 
     desconectar() {
-        // Limpa o ping
         if (this.pingIntervalId) {
             clearInterval(this.pingIntervalId);
             this.pingIntervalId = null;
         }
 
-        // Desativa reconexão
         if (this.stompClient) {
-            this.stompClient.reconnectDelay = 0; // impede novas tentativas
-            this.stompClient.onWebSocketClose = undefined; // desativa reações
-            this.stompClient.onStompError = undefined;
-            this.stompClient.onConnect = undefined;
+            this.stompClient.reconnectDelay = 0;
+
+            // ✅ Evita erro: atribui função vazia em vez de undefined
+            this.stompClient.onWebSocketClose = () => { };
+            this.stompClient.onStompError = () => { };
+            this.stompClient.onConnect = () => { };
 
             this.stompClient.deactivate().then(() => {
                 console.log('🛑 WebSocket desconectado completamente');
@@ -101,6 +101,7 @@ export class ConfirmPagamentoSocketComponent {
 
         this.reconectando = false;
     }
+
 
 
 
