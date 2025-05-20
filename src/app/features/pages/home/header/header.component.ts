@@ -8,6 +8,7 @@ import { loadingService } from "../../../../services/loading/loading.service";
 import { SnackService } from "../../../../services/snackBar/snack.service";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AsideComponent } from "../../../../shared/component/aside-modal/aside-modal.component";
+import { ConfirmPagamentoSocketComponent } from "../../../../services/pagamentosService/pagamentos.service";
 
 
 @Component({
@@ -30,7 +31,7 @@ export class headerComponent{
     })
     ativo = false;
     @Output() ativaMenu = new EventEmitter;
-    constructor(private router:Router,private activeRouter:loadingService,private snack:SnackService){}
+    constructor(private router:Router,private activeRouter:loadingService,private snack:SnackService,private socket:ConfirmPagamentoSocketComponent){}
     setIcon(mudaIcon: boolean) {
         this.snack.openSnackBar("deu certo")
         if (mudaIcon) {
@@ -96,6 +97,6 @@ pagePlanos(){
     }, 0);
 }
 ativoModal(){
-    this.ativo = !this.ativo;
+    this.socket.sendMessage()
 }
 }
