@@ -1,0 +1,453 @@
+import { AfterViewInit, Component, HostListener, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
+import { MatListModule } from '@angular/material/list';
+import { AsideComponent } from '../../../../shared/component/aside-modal/aside-modal.component';
+import { MatInputModule } from '@angular/material/input';
+import { CheckoutFormService } from '../../../../services/checkoutForm/checkoutForm.service';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { NgxMaskDirective } from 'ngx-mask';
+import { MatIconModule } from '@angular/material/icon';
+import { Pagamento } from '../../../../shared/core/types/pagamento';
+import { apiPaymentsService } from '../../../../services/checkoutForm/apiPayments.service';
+import { PixPaymentRespons } from '../../../../shared/core/types/paymentPagamentopix';
+import { CheckoutPixComponent } from '../../../../shared/component/checkout/checkoutPix.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { environment } from '../../../../../environments/environment';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { loadingService } from '../../../../services/loading/loading.service';
+import { PopoverModule, Popover } from 'primeng/popover';
+import { ButtonModule } from 'primeng/button';
+import { itens, itensPlanos } from '../../../../shared/core/Plano/planosItens';
+import { PlanoService } from '../../../../services/planosServices/planos.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackService } from '../../../../services/snackBar/snack.service';
+import { AuthService } from '../../../../services/auth.service';
+import { Subscription, interval, switchMap } from 'rxjs';
+import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
+import { HttpClient } from '@angular/common/http';
+
+
+declare var MercadoPago: any;
+
+@Component({
+  selector: 'app-checkoutPlanos02',
+  standalone: true,
+  imports: [
+    PageContainerComponent,
+    MatListModule,
+    AsideComponent,
+    CheckoutPixComponent,
+    MatInputModule,
+    ReactiveFormsModule,
+    CommonModule,
+    NgxMaskDirective,
+    FormsModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    PopoverModule, ButtonModule,
+    MatSnackBarModule,
+
+  ],
+  templateUrl: './checkoutPlanos04.component.html',
+  styleUrls: ['./checkoutPlanos04.component.scss'],
+  encapsulation: ViewEncapsulation.None
+})
+export class CheckoutPlanos04Component implements OnInit {
+  spinner = false;
+  response!: PixPaymentRespons;
+  pagamentoData: any;
+  isSmallScreen: boolean = false;
+  datas!: any;
+  event: any;
+  cardFormInstance: any = null;
+  emailUser: string = ''
+  pollingSub!: Subscription;
+
+  stripe: Stripe | null = null;
+  card!: StripeCardElement;
+  nomeTitular: string = '';
+
+  constructor(public form: CheckoutFormService,
+    public payment: apiPaymentsService,
+    private rota: ActivatedRoute,
+    private router: Router,
+    private activeRoute: loadingService,
+    public apiPlanosService: PlanoService,
+    private snack: SnackService,
+    private authService: AuthService,
+    private http: HttpClient,) {
+
+  }
+
+  async ngOnInit() {
+    this.emailUser = this.authService.getEmail()!;
+
+    const navigation = this.router.getCurrentNavigation();
+    this.datas = navigation?.extras?.state?.['data'];
+    if (this.datas) {
+      console.log('Dados recebidos:', this.data);
+    } else {
+      console.warn('Nenhum dado disponível na navegação.');
+      // fallback opcional
+      const saved = localStorage.getItem('checkoutData');
+      if (saved) {
+        this.data = JSON.parse(saved);
+        console.log('Dados restaurados do localStorage:', this.data);
+      }
+    }
+
+    this.stripe = await loadStripe('pk_test_51RQgFR4RAOlrIVW4NGeFGRUQOKFUUTSgmzicyM8h60iDMmFjFLlodlc1LPZmdgWiGiQ0LcEa6TZRGZpwVXM9Ufl700pUQKzRZd');
+
+    const elements = this.stripe!.elements();
+    this.card = elements.create('card');
+    this.card.mount('#card-element');
+    this.checkScreenWidth();
+
+    this.apiPlanosService.planosConsumoApi().subscribe(response => {
+      this.itensPlanos = response.planos.filter((plano: any) => plano.price > 0);
+    });
+
+    this.rota.queryParams.subscribe(params => {
+      const rawData = params['data'];
+      this.event = rawData ? JSON.parse(rawData) : null;
+    });
+
+  }
+
+
+  img = "/banners/banner-checkout01.png";
+  ativo = false;
+  activeTab: 'credito' | 'debito' | 'pix' = 'credito';
+  selected: 'cpf' | 'cnpj' = 'cpf';
+  NomeCompleto: string = '';
+  primeiroNome: string = '';
+  sobrenome: string = '';
+
+
+  async onSubmit() {
+    const response = await this.http.post<any>('/api/create-payment-intent', {
+      amount: 2000 // R$ 20,00 em centavos
+    }).toPromise();
+
+    const clientSecret = response.clientSecret;
+
+    const result = await this.stripe!.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: this.card,
+        billing_details: {
+          name: this.nomeTitular
+        }
+      }
+    });
+
+    if (result.error) {
+      alert('Erro: ' + result.error.message);
+    } else if (result.paymentIntent?.status === 'succeeded') {
+      alert('Pagamento realizado com sucesso!');
+    }
+
+  
+  }
+
+  // Método para trocar aba
+  setTab(novoTab: 'credito' | 'debito' | 'pix') {
+    if (this.activeTab !== novoTab) {
+      this.activeTab = novoTab;
+    }
+  }
+
+
+
+  @ViewChild('op') op!: Popover;
+
+  selectedPlano: itens | null = null;
+  itensPlanos: itens[] = [];
+  showPopover = false;
+
+  togglePopover(event: MouseEvent) {
+    event.stopPropagation();
+    this.showPopover = !this.showPopover;
+  }
+
+  closePopover() {
+    this.showPopover = false;
+  }
+
+  selectPlano(plano: any) {
+    this.selectedPlano = plano;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    this.showPopover = false;
+  }
+
+
+  ativaModal() {
+    this.ativo = false;
+  }
+
+  mudaCompo(event: any) {
+    if (event) {
+      event.focus();
+    }
+  }
+
+  isRequired(nome: string) {
+    return this.form.checkoutForm.get(nome)?.errors?.["required"] && this.form.checkoutForm.get(nome)?.touched;
+  }
+
+  isRequiredNext(): boolean {
+    const controls = this.form?.checkoutForm?.controls;
+
+    if (!controls) return false;
+
+    const isValid =
+      controls['NomeCompleto']?.valid &&
+      controls['email']?.valid &&
+      controls['cpfCnpj']?.valid;
+
+    return isValid;
+  }
+
+
+
+  isRequiredFinalizar() {
+    const NomeCompleto = this.form.checkoutForm.get('NomeCompleto')?.valid;
+    const email = this.form.checkoutForm.get('email')?.valid;
+    const cpfCnpj = this.form.checkoutForm.get('cpfCnpj')?.valid;
+
+    if (this.activeTab === 'pix') {
+      return !!(NomeCompleto && email && cpfCnpj);
+    }
+
+    const cardNumber = this.form.checkoutForm.get('cardNumber')?.valid;
+    const mes = this.form.checkoutForm.get('mes')?.valid;
+    const ano = this.form.checkoutForm.get('ano')?.valid;
+    const cvv = this.form.checkoutForm.get('cvv')?.valid;
+
+    return !!(NomeCompleto && email && cpfCnpj && cardNumber && mes && ano && cvv);
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.checkScreenWidth();
+  }
+
+  private checkScreenWidth() {
+    this.isSmallScreen = window.innerWidth <= 1024;
+  }
+
+  selecionar(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    const opcao = target.value as 'cpf' | 'cnpj'; // forçando o tipo correto
+    this.selected = opcao;
+  }
+
+  bandeira: string = '';
+  identificarBandeira(numero: string): string {
+    numero = numero.replace(/\D/g, '');
+
+    const bandeiras: { [key: string]: RegExp } = {
+      visa: /^4[0-9]{12}(?:[0-9]{3})?$/,
+      master: /^5[1-5][0-9]{14}$/,
+      amex: /^3[47][0-9]{13}$/,
+      elo: /^(4011|4312|4389|4514|4576|5041|6277|6362|650|6516|6550)/,
+      hipercard: /^(38|60)/,
+    };
+
+    for (const bandeira in bandeiras) {
+      if (bandeiras[bandeira].test(numero)) {
+        return bandeira;
+      }
+    }
+
+    return '';
+  }
+
+  onInputCardNumber(event: Event): void {
+    const value = (event.target as HTMLInputElement).value || '';
+    this.bandeira = this.identificarBandeira(value);
+  }
+
+  select<T>(nome: string) {
+    const data = this.form.checkoutForm?.get(nome);
+    if (!data) {
+      throw new Error('Nome inválido!!!');
+    }
+    return data as FormControl;
+  }
+
+  data(): Pagamento {
+    const nomeCompleto = this.select("NomeCompleto").value || '';
+    const partes = nomeCompleto.trim().split(' ');
+    const primeiroNome = partes[0] || '';
+    const sobrenome = partes.slice(1).join(' ') || '';
+
+    const data: Pagamento = {
+      "paymentMethodId": this.activeTab,
+      "transactionAmount": this.selectedPlano?.price || this.event.price,
+      "description": this.selectedPlano?.title ?? this.event.title,
+      "payer": {
+        "email": this.emailUser,
+        "first_name": primeiroNome,
+        "last_name": sobrenome,
+        "identification": {
+          "number": this.select("cpfCnpj").value,
+          "type": this.selected
+        }
+      },
+      "itens": [{
+        "id": this.selectedPlano?.planoId ?? this.event.planoId,
+        "title": this.selectedPlano?.title ?? this.event.title,
+        "description": this.selectedPlano?.subDescricaoPermition ?? this.event.subDescricaoPermition,
+        "quantity": 1,
+        "price": this.selectedPlano?.price || this.event.price
+      }]
+    };
+    return data;
+  }
+
+
+  finalizarPagamento() {
+    switch (this.activeTab) {
+      case 'credito':
+        break;
+      case 'debito':
+        this.pagarDebito();
+        break;
+      case 'pix':
+        this.pagarPix();
+        break;
+      default:
+        console.warn('Método de pagamento não selecionado.');
+    }
+  }
+
+  pagarCredito(formData: any) {
+    const nomeCompleto = this.select("NomeCompleto").value || '';
+    const partes = nomeCompleto.trim().split(' ');
+    const primeiroNome = partes[0] || '';
+    const sobrenome = partes.slice(1).join(' ') || '';
+
+    if (!formData.token) {
+      console.error('Token não gerado. Verifique os dados do cartão.', formData);
+      return;
+    }
+
+    const paymentData = {
+      token: formData.token,
+      issuerId: formData.issuerId,
+      paymentMethodId: formData.paymentMethodId,
+      transactionAmount: String(this.selectedPlano?.price || this.event.price),
+      installments: formData.installments,
+      description: this.selectedPlano?.title ?? 'Plano Zapdai',
+      payer: {
+        email: this.emailUser,
+        first_name: primeiroNome,
+        last_name: sobrenome,
+        identification: {
+          type: this.selected,
+          number: this.select("cpfCnpj").value,
+        }
+      },
+      itens: [{
+        id: this.selectedPlano?.planoId ?? this.event.planoId,
+        title: this.selectedPlano?.title ?? this.event.title,
+        description: this.selectedPlano?.subDescricaoPermition ?? this.event.subDescricaoPermition,
+        quantity: 1,
+        price: this.selectedPlano?.price || this.event.price
+      }]
+    };
+
+    /// Realizando pagamento CARTÃO DE CRÉDITO
+    this.payment.pagarComCartao(paymentData).subscribe({
+      next: (res) => {
+        this.form.checkoutForm.reset();
+
+        if (res.status === 'approved') {
+          this.activeRoute.activeLoading();
+          setTimeout(() => {
+            this.router.navigateByUrl('/loading', { skipLocationChange: false }).then(() => {
+              setTimeout(() => {
+                this.router.navigate(['/planos/loadingPayment']);
+              }, 1000);
+            });
+          }, 0);
+        } else {
+          this.snack.openSnackBar(
+            `❌ Pagamento rejeitado.\nVerifique se todas as informações estão corretas.\nMensagem: ${res.status || 'Erro desconhecido.'}`
+          );
+          console.log(res)
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao processar pagamento:', err);
+
+        const mensagemErro = err?.error?.message || 'Erro ao processar o pagamento.';
+        const detalhes = err?.error?.cause?.[0]?.code || '';
+
+        this.snack.openSnackBar(
+          `❌ Falha ao processar pagamento.\n${mensagemErro}${detalhes ? `\nCódigo: ${detalhes}` : ''}`
+        );
+      }
+    });
+
+  }
+
+
+  pagarDebito() {
+    console.log('Processando pagamento com cartão de débito...');
+    // Aqui você pode validar o formulário e enviar os dados
+  }
+
+  pagarPix() {
+    this.spinner = true;
+    this.ativo = false;
+    this.payment.pagamentoPix(this.data()).subscribe((e: any) => {
+      const msg: any = JSON.stringify(e);
+      this.spinner = false;
+      this.response = e;
+      this.ativo = true;
+      this.form.checkoutForm.reset();
+
+      // Inicia o polling após gerar o Pix
+      this.iniciarVerificacaoPagamento(this.data().payer.email);
+    });
+    this.ativaModal();
+    console.log(this.data());
+  }
+
+
+
+  iniciarVerificacaoPagamento(email: string) {
+    this.pollingSub = interval(5000).pipe(
+      switchMap(() => this.payment.statusPayment({ email }))
+    ).subscribe({
+      next: (res: any) => {
+        console.log('Status do pagamento:', res);
+        if (res.statusPago === true) {
+          // Finaliza o polling se foi pago
+          this.pollingSub.unsubscribe();
+          this.activeRoute.activeLoading();
+          setTimeout(() => {
+            this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+              setTimeout(() => {
+                this.router.navigate(['/planos/pos-checkout']);
+              }, 1000);
+            });
+          }, 0);
+        }
+      },
+      error: (err) => {
+        console.error('Erro na verificação de pagamento:', err);
+      }
+    });
+  }
+
+
+
+}

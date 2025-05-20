@@ -96,7 +96,4 @@ pagePlanos(){
         
     }, 0);
 }
-ativoModal(){
-    this.socket.sendMessage()
-}
 }
