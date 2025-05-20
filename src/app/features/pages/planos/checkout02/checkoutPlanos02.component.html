@@ -24,13 +24,12 @@
                         <div class="form-field">
                             <label for="cpfCnpj">CPF / CNPJ</label>
                             <section class="ng-cont">
-                                <select (change)="selecionar($event)">
-                                    <option value="cpf">CPF</option>
-                                    <option value="cnpj">CNPJ</option>
+                                <select (change)="selecionar($event)" id="form-checkout__identificationType">
+                                    <option value="CPF">CPF</option>
+                                    <option value="CNPJ">CNPJ</option>
                                 </select>
                                 <div class="ng-input-cpf">
                                     <input id="form-checkout__identificationNumber" formControlName="cpfCnpj"
-                                        [mask]="selected === 'cpf' ? '000.000.000-00' : '00.000.000/0000-00'"
                                         type="text" placeholder="Digite CPF ou CNPJ" class="input-full-width" />
 
                                     <div class="error" *ngIf="isRequired('cpfCnpj')">

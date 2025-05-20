@@ -23,6 +23,9 @@ import { itens, itensPlanos } from '../../../../shared/core/Plano/planosItens';
 import { PlanoService } from '../../../../services/planosServices/planos.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackService } from '../../../../services/snackBar/snack.service';
+import { AuthService } from '../../../../services/auth.service';
+import { Subscription, interval, switchMap } from 'rxjs';
+
 
 
 declare var MercadoPago: any;
@@ -59,6 +62,8 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
   datas!: any;
   event: any;
   cardFormInstance: any = null;
+  emailUser: string = ''
+  pollingSub!: Subscription;
 
   constructor(public form: CheckoutFormService,
     public payment: apiPaymentsService,
@@ -66,11 +71,14 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
     private router: Router,
     private activeRoute: loadingService,
     public apiPlanosService: PlanoService,
-    private snack: SnackService) {
+    private snack: SnackService,
+    private authService: AuthService) {
 
   }
 
   ngOnInit(): void {
+    this.emailUser = this.authService.getEmail()!;
+
     const navigation = this.router.getCurrentNavigation();
     this.datas = navigation?.extras?.state?.['data'];
     if (this.datas) {
@@ -121,37 +129,42 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
 
     // Desmontar se existir
     this.desmontarMercadoPago()
+    setTimeout(() => {
+      this.cardFormInstance = mp.cardForm({
+        amount: String(this.selectedPlano?.price || this.event.price),
+        form: {
+          id: 'form-checkout',
+          cardholderName: { id: 'form-checkout__cardholderName', placeholder: 'Nome no cartão' },
+          cardholderEmail: { id: 'form-checkout__cardholderEmail', placeholder: 'E-mail' },
+          cardNumber: { id: 'form-checkout__cardNumber', placeholder: 'Número do cartão' },
+          expirationMonth: { id: 'form-checkout__expirationMonth', placeholder: 'MM' },
+          expirationYear: { id: 'form-checkout__expirationYear', placeholder: 'AAAA' },
+          securityCode: { id: 'form-checkout__securityCode', placeholder: 'CVV' },
+          installments: { id: 'form-checkout__installments', placeholder: 'Parcelas' },
+          issuer: { id: 'form-checkout__issuer', placeholder: 'Banco emissor' },
+          identificationType: { id: 'form-checkout__identificationType', placeholder: 'Tipo de documento' },
+          identificationNumber: { id: 'form-checkout__identificationNumber', placeholder: 'CPF ou CNPJ' }
 
-    this.cardFormInstance = mp.cardForm({
-      amount: String(this.selectedPlano?.price || this.event.price),
-      form: {
-        id: 'form-checkout',
-        cardholderName: { id: 'form-checkout__cardholderName', placeholder: 'Nome no cartão' },
-        cardholderEmail: { id: 'form-checkout__cardholderEmail', placeholder: 'E-mail' },
-        cardNumber: { id: 'form-checkout__cardNumber', placeholder: 'Número do cartão' },
-        expirationMonth: { id: 'form-checkout__expirationMonth', placeholder: 'MM' },
-        expirationYear: { id: 'form-checkout__expirationYear', placeholder: 'AAAA' },
-        securityCode: { id: 'form-checkout__securityCode', placeholder: 'CVV' },
-        installments: { id: 'form-checkout__installments', placeholder: 'Parcelas' },
-        issuer: { id: 'form-checkout__issuer', placeholder: 'Banco emissor' }
-      },
-      callbacks: {
-        onFormMounted: function (error: any) {
-          if (error) {
-            console.warn('Erro ao montar o form:', error);
-            return;
-          }
-          console.log("Form montado com sucesso");
         },
-        onSubmit: (event: any) => {
-          event.preventDefault();
-          const formData = this.cardFormInstance.getCardFormData();
+        callbacks: {
+          onFormMounted: function (error: any) {
+            if (error) {
+              console.warn('Erro ao montar o form:', error);
+              return;
+            }
+            console.log("Form montado com sucesso");
+          },
+          onSubmit: (event: any) => {
+            event.preventDefault();
+            const formData = this.cardFormInstance.getCardFormData();
 
-          this.pagarCredito(formData)
+            this.pagarCredito(formData)
+            console.log(formData)
 
+          }
         }
-      }
-    });
+      });
+    }, 1000);
   }
 
   desmontarMercadoPago() {
@@ -161,13 +174,6 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
     }
   }
 
-  // Aqui é o método do ciclo de vida
-  ngAfterViewChecked(): void {
-    // Só monta se estiver na aba crédito e o form ainda não estiver montado
-    if (this.activeTab === 'credito' && !this.cardFormInstance) {
-      this.iniciarMercadoPago();
-    }
-  }
 
   // Método para trocar aba
   setTab(novoTab: 'credito' | 'debito' | 'pix') {
@@ -313,7 +319,7 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
       "transactionAmount": this.selectedPlano?.price || this.event.price,
       "description": this.selectedPlano?.title ?? this.event.title,
       "payer": {
-        "email": this.select("email").value,
+        "email": this.emailUser,
         "first_name": primeiroNome,
         "last_name": sobrenome,
         "identification": {
@@ -367,7 +373,7 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
       installments: formData.installments,
       description: this.selectedPlano?.title ?? 'Plano Zapdai',
       payer: {
-        email: formData.cardholderEmail,
+        email: this.emailUser,
         first_name: primeiroNome,
         last_name: sobrenome,
         identification: {
@@ -434,10 +440,41 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
       this.response = e;
       this.ativo = true;
       this.form.checkoutForm.reset();
+
+      // Inicia o polling após gerar o Pix
+      this.iniciarVerificacaoPagamento(this.data().payer.email);
     });
     this.ativaModal();
     console.log(this.data());
   }
+
+
+
+  iniciarVerificacaoPagamento(email: string) {
+    this.pollingSub = interval(5000).pipe(
+      switchMap(() => this.payment.statusPayment({ email }))
+    ).subscribe({
+      next: (res: any) => {
+        console.log('Status do pagamento:', res);
+        if (res.statusPago === true) {
+          // Finaliza o polling se foi pago
+          this.pollingSub.unsubscribe();
+          this.activeRoute.activeLoading();
+          setTimeout(() => {
+            this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+              setTimeout(() => {
+                this.router.navigate(['/planos/pos-checkout']);
+              }, 1000);
+            });
+          }, 0);
+        }
+      },
+      error: (err) => {
+        console.error('Erro na verificação de pagamento:', err);
+      }
+    });
+  }
+
 
 
 }

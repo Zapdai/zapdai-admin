@@ -1,25 +1,25 @@
 import { Injectable } from "@angular/core";
 
 @Injectable({
-    providedIn:"root"
+    providedIn: "root"
 })
-export class AuthService{
-    PossuiToken(){
-        return this.returnToken()?true:false;
+export class AuthService {
+    PossuiToken() {
+        return this.returnToken() ? true : false;
     }
 
-    returnToken(){
-       if(typeof localStorage !== 'undefined'){
+    returnToken() {
+        if (typeof localStorage !== 'undefined') {
             return localStorage.getItem('acessToken')
-       }
-       return
+        }
+        return
     }
 
-    RemoveToken(){
+    RemoveToken() {
         localStorage.removeItem('acessToken')
     }
 
-    saveToken(token:string){
+    saveToken(token: string) {
         localStorage.setItem('acessToken', token)
     }
 
@@ -39,5 +39,19 @@ export class AuthService{
             return [];
         }
     }
+
+    getEmail(): string | null {
+        const token = this.returnToken();
+        if (!token) return null;
+
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            return payload['sub'] || null;
+        } catch (e) {
+            console.error('Erro ao decodificar o token:', e);
+            return null;
+        }
+    }
+
 
 }
