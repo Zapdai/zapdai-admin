@@ -24,7 +24,8 @@ import { PlanoService } from '../../../../services/planosServices/planos.service
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackService } from '../../../../services/snackBar/snack.service';
 import { AuthService } from '../../../../services/auth.service';
-import { Subscription, interval, switchMap } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { ConfirmPagamentoSocketComponent } from '../../../../services/pagamentosService/pagamentos.service';
 
 
 
@@ -64,6 +65,7 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
   cardFormInstance: any = null;
   emailUser: string = ''
   pollingSub!: Subscription;
+  pagamentoSub?: Subscription | null;
 
   constructor(public form: CheckoutFormService,
     public payment: apiPaymentsService,
@@ -72,7 +74,8 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
     private activeRoute: loadingService,
     public apiPlanosService: PlanoService,
     private snack: SnackService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private socketService: ConfirmPagamentoSocketComponent) {
 
   }
 
@@ -398,12 +401,41 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
         if (res.status === 'approved') {
           this.activeRoute.activeLoading();
           setTimeout(() => {
-            this.router.navigateByUrl('/loading', { skipLocationChange: false }).then(() => {
+            this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
               setTimeout(() => {
-                this.router.navigate(['/planos/loadingPayment']);
+                this.router.navigate(['/planos/loadingPayment'], { skipLocationChange: true });
               }, 1000);
             });
           }, 0);
+
+          // Conecta ao WebSocket (só se ainda não conectado)
+          if (!this.pagamentoSub) {
+            this.socketService.socketWeb(this.emailUser);
+            this.pagamentoSub = this.socketService.pagamento$.subscribe((pagamento) => {
+              console.log('Pagamento confirmado via WebSocket:', pagamento);
+
+              this.response = pagamento;
+
+              // Redireciona após confirmação de pagamento
+              setTimeout(() => {
+                this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+                  setTimeout(() => {
+                    this.router.navigate(['/planos/pos-checkout'], { skipLocationChange: true }).then(() => {
+                      // 🛑 Aqui desativa o WebSocket depois do redirecionamento final
+                      this.socketService.desconectar();
+
+                      // 👇 remove também a inscrição do Observable
+                      this.pagamentoSub?.unsubscribe();
+                      this.pagamentoSub = undefined; // <- Corrige erro de tipo
+                    });
+                  }, 1000);
+                });
+              }, 0);
+            });
+          }
+
+
+
         } else {
           this.snack.openSnackBar(
             `❌ Pagamento rejeitado.\nVerifique se todas as informações estão corretas.\nMensagem: ${res.status || 'Erro desconhecido.'}`
@@ -441,39 +473,41 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
       this.ativo = true;
       this.form.checkoutForm.reset();
 
-      // Inicia o polling após gerar o Pix
-      this.iniciarVerificacaoPagamento(this.data().payer.email);
+
+      // Conecta ao WebSocket (só se ainda não conectado)
+      if (!this.pagamentoSub) {
+        this.socketService.socketWeb(this.emailUser);
+        this.pagamentoSub = this.socketService.pagamento$.subscribe((pagamento) => {
+          console.log('Pagamento confirmado via WebSocket:', pagamento);
+
+          this.spinner = true;
+          this.ativo = false;
+          this.response = pagamento;
+
+          // Redireciona após confirmação de pagamento
+          setTimeout(() => {
+            this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+              setTimeout(() => {
+                this.router.navigate(['/planos/pos-checkout'], { skipLocationChange: true }).then(() => {
+                  // 🛑 Aqui desativa o WebSocket depois do redirecionamento final
+                  this.socketService.desconectar();
+
+                  // 👇 remove também a inscrição do Observable
+                  this.pagamentoSub?.unsubscribe();
+                  this.pagamentoSub = undefined; // <- Corrige erro de tipo
+                });
+              }, 1000);
+            });
+          }, 0);
+        });
+      }
+
+
     });
     this.ativaModal();
     console.log(this.data());
   }
 
-
-
-  iniciarVerificacaoPagamento(email: string) {
-    this.pollingSub = interval(5000).pipe(
-      switchMap(() => this.payment.statusPayment({ email }))
-    ).subscribe({
-      next: (res: any) => {
-        console.log('Status do pagamento:', res);
-        if (res.statusPago === true) {
-          // Finaliza o polling se foi pago
-          this.pollingSub.unsubscribe();
-          this.activeRoute.activeLoading();
-          setTimeout(() => {
-            this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-              setTimeout(() => {
-                this.router.navigate(['/planos/pos-checkout']);
-              }, 1000);
-            });
-          }, 0);
-        }
-      },
-      error: (err) => {
-        console.error('Erro na verificação de pagamento:', err);
-      }
-    });
-  }
 
 
 

@@ -7,6 +7,7 @@ import { CheckoutPlanos02Component } from "./checkout02/checkoutPlanos02.compone
 import { CheckoutPlanos03Component } from "./checkout03/checkoutPlanos03.component"
 import { PosCheckoutComponent } from "./posCheckout/posCheckout.component"
 import { CadastroEmpresaComponent } from "../cadastro-empresa/cadastro-empresa.component"
+import { LoadingPaymentComponent } from "./loadingPayment/loadingPayment.component"
 
 
 export const routes: Routes = [
@@ -29,7 +30,7 @@ export const routes: Routes = [
                 canActivate:[authGuardian]
             },
             {
-                path:"loadingPayment", component:CadastroEmpresaComponent, title: "Tela Cadastro de Empresa"
+                path:"loadingPayment", component:LoadingPaymentComponent, title: "Tela Cadastro de Empresa"
             },
             {
                 path:"create-business", component:CadastroEmpresaComponent, title: "Tela Cadastro de Empresa", 
