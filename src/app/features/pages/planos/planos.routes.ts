@@ -8,6 +8,7 @@ import { CheckoutPlanos03Component } from "./checkout03/checkoutPlanos03.compone
 import { PosCheckoutComponent } from "./posCheckout/posCheckout.component"
 import { CadastroEmpresaComponent } from "../cadastro-empresa/cadastro-empresa.component"
 import { LoadingPaymentComponent } from "./loadingPayment/loadingPayment.component"
+import { CheckoutPlanos04Component } from "./checkout04/checkoutPlanos04.component"
 
 
 export const routes: Routes = [
@@ -17,7 +18,7 @@ export const routes: Routes = [
                 path:"", component: HomePlanosComponent, title: "Tela de Planos"
             },
             {
-                path:"checkout", component: checkoutPlanosComponent, title: "Tela de Checkout"
+                path:"checkout", component: CheckoutPlanos04Component, title: "Tela de Checkout"
             },
             {
                 path:"checkout02", component: CheckoutPlanos02Component, title: "Tela de Checkout", canActivate:[authGuardian]

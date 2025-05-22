@@ -24,9 +24,9 @@ import { PlanoService } from '../../../../services/planosServices/planos.service
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackService } from '../../../../services/snackBar/snack.service';
 import { AuthService } from '../../../../services/auth.service';
-import { Subscription, interval, switchMap } from 'rxjs';
-import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
-import { HttpClient } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { ConfirmPagamentoSocketComponent } from '../../../../services/pagamentosService/pagamentos.service';
+
 
 
 declare var MercadoPago: any;
@@ -55,7 +55,7 @@ declare var MercadoPago: any;
   styleUrls: ['./checkoutPlanos04.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CheckoutPlanos04Component implements OnInit {
+export class CheckoutPlanos04Component implements AfterViewInit, OnInit {
   spinner = false;
   response!: PixPaymentRespons;
   pagamentoData: any;
@@ -65,10 +65,7 @@ export class CheckoutPlanos04Component implements OnInit {
   cardFormInstance: any = null;
   emailUser: string = ''
   pollingSub!: Subscription;
-
-  stripe: Stripe | null = null;
-  card!: StripeCardElement;
-  nomeTitular: string = '';
+  pagamentoSub?: Subscription | null;
 
   constructor(public form: CheckoutFormService,
     public payment: apiPaymentsService,
@@ -78,11 +75,11 @@ export class CheckoutPlanos04Component implements OnInit {
     public apiPlanosService: PlanoService,
     private snack: SnackService,
     private authService: AuthService,
-    private http: HttpClient,) {
+    private socketService: ConfirmPagamentoSocketComponent) {
 
   }
 
-  async ngOnInit() {
+  ngOnInit(): void {
     this.emailUser = this.authService.getEmail()!;
 
     const navigation = this.router.getCurrentNavigation();
@@ -99,11 +96,7 @@ export class CheckoutPlanos04Component implements OnInit {
       }
     }
 
-    this.stripe = await loadStripe('pk_test_51RQgFR4RAOlrIVW4NGeFGRUQOKFUUTSgmzicyM8h60iDMmFjFLlodlc1LPZmdgWiGiQ0LcEa6TZRGZpwVXM9Ufl700pUQKzRZd');
 
-    const elements = this.stripe!.elements();
-    this.card = elements.create('card');
-    this.card.mount('#card-element');
     this.checkScreenWidth();
 
     this.apiPlanosService.planosConsumoApi().subscribe(response => {
@@ -127,35 +120,71 @@ export class CheckoutPlanos04Component implements OnInit {
   sobrenome: string = '';
 
 
-  async onSubmit() {
-    const response = await this.http.post<any>('/api/create-payment-intent', {
-      amount: 2000 // R$ 20,00 em centavos
-    }).toPromise();
-
-    const clientSecret = response.clientSecret;
-
-    const result = await this.stripe!.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: this.card,
-        billing_details: {
-          name: this.nomeTitular
-        }
-      }
-    });
-
-    if (result.error) {
-      alert('Erro: ' + result.error.message);
-    } else if (result.paymentIntent?.status === 'succeeded') {
-      alert('Pagamento realizado com sucesso!');
+  ngAfterViewInit(): void {
+    // Se quiser garantir o carregamento aqui também:
+    if (this.event.price) {
+      this.iniciarMercadoPago();
     }
-
-  
   }
+
+  iniciarMercadoPago(): void {
+    const mp = new MercadoPago(environment.PublicKey_MercadoPago);
+
+    // Desmontar se existir
+    this.desmontarMercadoPago()
+    setTimeout(() => {
+      this.cardFormInstance = mp.cardForm({
+        amount: String(this.selectedPlano?.price || this.event.price),
+        form: {
+          id: 'form-checkout',
+          cardholderName: { id: 'form-checkout__cardholderName', placeholder: 'Nome no cartão' },
+          cardholderEmail: { id: 'form-checkout__cardholderEmail', placeholder: 'E-mail' },
+          cardNumber: { id: 'form-checkout__cardNumber', placeholder: 'Número do cartão' },
+          expirationMonth: { id: 'form-checkout__expirationMonth', placeholder: 'MM' },
+          expirationYear: { id: 'form-checkout__expirationYear', placeholder: 'AAAA' },
+          securityCode: { id: 'form-checkout__securityCode', placeholder: 'CVV' },
+          installments: { id: 'form-checkout__installments', placeholder: 'Parcelas' },
+          issuer: { id: 'form-checkout__issuer', placeholder: 'Banco emissor' },
+          identificationType: { id: 'form-checkout__identificationType', placeholder: 'Tipo de documento' },
+          identificationNumber: { id: 'form-checkout__identificationNumber', placeholder: 'CPF ou CNPJ' }
+
+        },
+        callbacks: {
+          onFormMounted: function (error: any) {
+            if (error) {
+              console.warn('Erro ao montar o form:', error);
+              return;
+            }
+            console.log("Form montado com sucesso");
+          },
+          onSubmit: (event: any) => {
+            event.preventDefault();
+            const formData = this.cardFormInstance.getCardFormData();
+
+            this.pagarCredito(formData)
+            console.log(formData)
+
+          }
+        }
+      });
+    }, 1000);
+  }
+
+  desmontarMercadoPago() {
+    if (this.cardFormInstance && typeof this.cardFormInstance.unmount === 'function') {
+      this.cardFormInstance.unmount();
+      this.cardFormInstance = null;
+    }
+  }
+
 
   // Método para trocar aba
   setTab(novoTab: 'credito' | 'debito' | 'pix') {
     if (this.activeTab !== novoTab) {
       this.activeTab = novoTab;
+
+      // Se quiser garantir desmonta ao trocar
+      this.desmontarMercadoPago();
     }
   }
 
@@ -178,6 +207,7 @@ export class CheckoutPlanos04Component implements OnInit {
 
   selectPlano(plano: any) {
     this.selectedPlano = plano;
+    this.iniciarMercadoPago();
   }
 
   @HostListener('document:click', ['$event'])
@@ -363,38 +393,8 @@ export class CheckoutPlanos04Component implements OnInit {
       }]
     };
 
-    /// Realizando pagamento CARTÃO DE CRÉDITO
-    this.payment.pagarComCartao(paymentData).subscribe({
-      next: (res) => {
-        this.form.checkoutForm.reset();
+    console.log(paymentData)
 
-        if (res.status === 'approved') {
-          this.activeRoute.activeLoading();
-          setTimeout(() => {
-            this.router.navigateByUrl('/loading', { skipLocationChange: false }).then(() => {
-              setTimeout(() => {
-                this.router.navigate(['/planos/loadingPayment']);
-              }, 1000);
-            });
-          }, 0);
-        } else {
-          this.snack.openSnackBar(
-            `❌ Pagamento rejeitado.\nVerifique se todas as informações estão corretas.\nMensagem: ${res.status || 'Erro desconhecido.'}`
-          );
-          console.log(res)
-        }
-      },
-      error: (err) => {
-        console.error('Erro ao processar pagamento:', err);
-
-        const mensagemErro = err?.error?.message || 'Erro ao processar o pagamento.';
-        const detalhes = err?.error?.cause?.[0]?.code || '';
-
-        this.snack.openSnackBar(
-          `❌ Falha ao processar pagamento.\n${mensagemErro}${detalhes ? `\nCódigo: ${detalhes}` : ''}`
-        );
-      }
-    });
 
   }
 
@@ -414,39 +414,41 @@ export class CheckoutPlanos04Component implements OnInit {
       this.ativo = true;
       this.form.checkoutForm.reset();
 
-      // Inicia o polling após gerar o Pix
-      this.iniciarVerificacaoPagamento(this.data().payer.email);
+
+      // Conecta ao WebSocket (só se ainda não conectado)
+      if (!this.pagamentoSub) {
+        this.socketService.socketWeb(this.emailUser);
+        this.pagamentoSub = this.socketService.pagamento$.subscribe((pagamento) => {
+          console.log('Pagamento confirmado via WebSocket:', pagamento);
+
+          this.spinner = true;
+          this.ativo = false;
+          this.response = pagamento;
+
+          // Redireciona após confirmação de pagamento
+          setTimeout(() => {
+            this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+              setTimeout(() => {
+                this.router.navigate(['/planos/pos-checkout'], { skipLocationChange: true }).then(() => {
+                  // 🛑 Aqui desativa o WebSocket depois do redirecionamento final
+                  this.socketService.desconectar();
+
+                  // 👇 remove também a inscrição do Observable
+                  this.pagamentoSub?.unsubscribe();
+                  this.pagamentoSub = undefined; // <- Corrige erro de tipo
+                });
+              }, 1000);
+            });
+          }, 0);
+        });
+      }
+
+
     });
     this.ativaModal();
     console.log(this.data());
   }
 
-
-
-  iniciarVerificacaoPagamento(email: string) {
-    this.pollingSub = interval(5000).pipe(
-      switchMap(() => this.payment.statusPayment({ email }))
-    ).subscribe({
-      next: (res: any) => {
-        console.log('Status do pagamento:', res);
-        if (res.statusPago === true) {
-          // Finaliza o polling se foi pago
-          this.pollingSub.unsubscribe();
-          this.activeRoute.activeLoading();
-          setTimeout(() => {
-            this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-              setTimeout(() => {
-                this.router.navigate(['/planos/pos-checkout']);
-              }, 1000);
-            });
-          }, 0);
-        }
-      },
-      error: (err) => {
-        console.error('Erro na verificação de pagamento:', err);
-      }
-    });
-  }
 
 
 

@@ -29,7 +29,7 @@
                 <fieldset class="ng-fieldset">
                     <legend>Nome da Empresa</legend>
                     <input type="text" class="ng-input" placeholder="Obs: Nome que vai aparecer para seus clientes"
-                        formControlName="nomeCompania">
+                        formControlName="nomeCompania" (keydown.enter)="focarProximoCampo('numeroDeTelefone')">
                 </fieldset>
                 @if (isRequired('nomeCompania')) {
                 <small class="ng-error">Informe o Nome da Empresa</small>
@@ -38,8 +38,8 @@
                 <fieldset class="ng-fieldset">
                     <legend>Número de telefone</legend>
                     <input type="text" class="ng-input" placeholder="Nº de telefone da Empresa"
-                        formControlName="numeroDeTelefone"
-                        mask="(00) 00000-0000">
+                        formControlName="numeroDeTelefone" mask="(00) 00000-0000"
+                        (keydown.enter)="focarProximoCampo('email')">
                 </fieldset>
                 @if (isRequired('numeroDeTelefone')) {
                 <small class="ng-error">Informe o Nº de telefone</small>
@@ -47,7 +47,8 @@
 
                 <fieldset class="ng-fieldset">
                     <legend>Email</legend>
-                    <input type="email" class="ng-input" placeholder="Email da Empresa" formControlName="email">
+                    <input type="email" class="ng-input" placeholder="Email da Empresa" formControlName="email"
+                        (keydown.enter)="next()">
                 </fieldset>
                 @if (isRequired('email')) {
                 <small class="ng-error">Informe o email</small>
@@ -60,27 +61,30 @@
                     <div>
                         <fieldset class="ng-fieldset">
                             <legend>CEP</legend>
-                            <input type="text" class="ng-input" placeholder="CEP" formControlName="cep" mask="00000-000">
+                            <input type="text" class="ng-input" placeholder="CEP" formControlName="cep" mask="00000-000"
+                                (keydown.enter)="focarProximoCampo('estado_sigla')">
                         </fieldset>
                         @if (isRequired('cep')) {
-                            <small class="ng-error">Informe seu CEP</small>
+                        <small class="ng-error">Informe seu CEP</small>
                         }
                     </div>
                     <div>
                         <fieldset class="ng-fieldset">
                             <legend>Estado</legend>
-                            <input type="text" class="ng-input" placeholder="Estado" formControlName="estado_sigla">
+                            <input type="text" class="ng-input" placeholder="Estado" formControlName="estado_sigla"
+                                (keydown.enter)="focarProximoCampo('cidade')">
                         </fieldset>
                         @if (isRequired('estado_sigla')) {
                         <small class="ng-error">Informe o Estado</small>
                         }
                     </div>
-                </div> 
+                </div>
                 <div class="ng-listForm">
                     <div>
                         <fieldset class="ng-fieldset">
                             <legend>Cidade</legend>
-                            <input type="text" class="ng-input" placeholder="Cidade" formControlName="cidade">
+                            <input type="text" class="ng-input" placeholder="Cidade" formControlName="cidade"
+                                (keydown.enter)="focarProximoCampo('bairro')">
                         </fieldset>
                         @if (isRequired('cidade')) {
                         <small class="ng-error">Informe a Cidade</small>
@@ -89,24 +93,26 @@
                     <div>
                         <fieldset class="ng-fieldset">
                             <legend>Bairro</legend>
-                            <input type="text" class="ng-input" placeholder="Bairro" formControlName="bairro">
+                            <input type="text" class="ng-input" placeholder="Bairro" formControlName="bairro"
+                                (keydown.enter)="focarProximoCampo('rua')">
                         </fieldset>
                         @if (isRequired('bairro')) {
-                            <small class="ng-error">Informe o Bairro</small>
+                        <small class="ng-error">Informe o Bairro</small>
                         }
                     </div>
                 </div>
-                
+
                 <fieldset class="ng-fieldset">
                     <legend>Rua</legend>
-                    <input type="text" class="ng-input" placeholder="Rua" formControlName="rua">
+                    <input type="text" class="ng-input" placeholder="Rua" formControlName="rua"
+                        (keydown.enter)="focarProximoCampo('numeroEndereco')">
                 </fieldset>
                 @if (isRequired('rua')) {
                 <small class="ng-error">Informe a Rua</small>
                 }
                 <fieldset class="ng-fieldset">
                     <legend>Nº da Casa/Apt</legend>
-                    <input type="text" class="ng-input" placeholder="Nº da Casa/Apt" formControlName="numeroEndereco">
+                    <input type="text" class="ng-input" placeholder="Nº da Casa/Apt" formControlName="numeroEndereco" (keydown.enter)="next()">
                 </fieldset>
                 @if (isRequired('numeroEndereco')) {
                 <small class="ng-error">Informe o Nº da Casa ou Apt</small>
@@ -117,14 +123,15 @@
             <div *ngIf="currentStep === 3" class="form-step">
                 <fieldset class="ng-fieldset">
                     <legend>Razão Social (opcional)</legend>
-                    <input type="text" class="ng-input" placeholder="Razão Social" formControlName="razaoSocial">
+                    <input type="text" class="ng-input" placeholder="Razão Social" formControlName="razaoSocial" (keydown.enter)="focarProximoCampo('cnpj')">
                 </fieldset>
                 @if (isRequired('razaoSocial')) {
                 <small class="ng-error">Informe a Razão Social</small>
                 }
                 <fieldset class="ng-fieldset">
                     <legend>CNPJ (opcional)</legend>
-                    <input type="text" class="ng-input" placeholder="CNPJ" formControlName="cnpj" mask="00.000.000/0000-00">
+                    <input type="text" class="ng-input" placeholder="CNPJ" formControlName="cnpj"
+                        mask="00.000.000/0000-00">
                 </fieldset>
                 @if (isRequired('cnpj')) {
                 <small class="ng-error">Informe o CNPJ</small>
@@ -136,7 +143,8 @@
                     class="ng-btn">Voltar</button>
                 <button mat-flat-button type="button" (click)="next()" *ngIf="currentStep < 3" class="ng-btn"
                     [disabled]="!isCurrentStepValid()">Próximo</button>
-                <button mat-flat-button type="submit" *ngIf="currentStep === 3" class="ng-btn" [disabled]="!isCurrentStepValid()">Cadastrar</button>
+                <button mat-flat-button type="submit" *ngIf="currentStep === 3" class="ng-btn"
+                    [disabled]="!isCurrentStepValid()">Cadastrar</button>
             </div>
         </form>
     </div>

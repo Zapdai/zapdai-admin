@@ -76,6 +76,14 @@ export class FormCadastroEmpresaComponent implements OnInit {
     }
   }
 
+  focarProximoCampo(proximoCampo: string) {
+  const proximo = document.querySelector(`[formControlName="${proximoCampo}"]`) as HTMLElement;
+  if (proximo) {
+    proximo.focus();
+  }
+}
+
+
   buscarEnderecoPorCep(cep: string) {
     const sanitizedCep = cep.replace(/\D/g, '');
     this.cepApi.consultarCep(sanitizedCep).subscribe((res: any) => {
