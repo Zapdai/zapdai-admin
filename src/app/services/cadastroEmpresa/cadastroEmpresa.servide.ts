@@ -17,9 +17,9 @@ export class cadastroEmpresaForm {
         rua: new FormControl ('', Validators.required),
         numeroEndereco: new FormControl ('', Validators.required),
         complemento: new FormControl ('', Validators.required),
-        cpfResposavel: new FormControl ('', Validators.required),
-        razaoSocial: new FormControl ('', Validators.required),
-        cnpj: new FormControl ('', Validators.required)
+        cpfResposavel: new FormControl (''),
+        razaoSocial: new FormControl (''),
+        cnpj: new FormControl ('')
     }) 
 
     

@@ -7,7 +7,6 @@ import { Router } from "@angular/router";
 import { loadingService } from "../../../../services/loading/loading.service";
 import { SnackService } from "../../../../services/snackBar/snack.service";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { AsideComponent } from "../../../../shared/component/aside-modal/aside-modal.component";
 import { ConfirmPagamentoSocketComponent } from "../../../../services/pagamentosService/pagamentos.service";
 
 
@@ -19,7 +18,6 @@ import { ConfirmPagamentoSocketComponent } from "../../../../services/pagamentos
     imports:[MatIconModule
         ,CommonModule,
         MatIconModule,ReactiveFormsModule,MatMenuModule,MatSnackBarModule,
-        AsideComponent
     ]
 })
 export class headerComponent{

@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <form [formGroup]="form.empresaform">
+        <form [formGroup]="form.empresaform" (ngSubmit)="onSubmit()">
             <!-- Step 1 -->
             <div *ngIf="currentStep === 1" class="form-step">
                 <fieldset class="ng-fieldset">
@@ -60,7 +60,7 @@
                     <div>
                         <fieldset class="ng-fieldset">
                             <legend>CEP</legend>
-                            <input class="ng-input" placeholder="CEP" formControlName="cep" mask="00000-000">
+                            <input type="text" class="ng-input" placeholder="CEP" formControlName="cep" mask="00000-000">
                         </fieldset>
                         @if (isRequired('cep')) {
                             <small class="ng-error">Informe seu CEP</small>
@@ -69,7 +69,7 @@
                     <div>
                         <fieldset class="ng-fieldset">
                             <legend>Estado</legend>
-                            <input type="email" class="ng-input" placeholder="Estado" formControlName="estado_sigla">
+                            <input type="text" class="ng-input" placeholder="Estado" formControlName="estado_sigla">
                         </fieldset>
                         @if (isRequired('estado_sigla')) {
                         <small class="ng-error">Informe o Estado</small>
@@ -80,7 +80,7 @@
                     <div>
                         <fieldset class="ng-fieldset">
                             <legend>Cidade</legend>
-                            <input class="ng-input" placeholder="Cidade" formControlName="cidade">
+                            <input type="text" class="ng-input" placeholder="Cidade" formControlName="cidade">
                         </fieldset>
                         @if (isRequired('cidade')) {
                         <small class="ng-error">Informe a Cidade</small>
@@ -89,7 +89,7 @@
                     <div>
                         <fieldset class="ng-fieldset">
                             <legend>Bairro</legend>
-                            <input class="ng-input" placeholder="Bairro" formControlName="bairro">
+                            <input type="text" class="ng-input" placeholder="Bairro" formControlName="bairro">
                         </fieldset>
                         @if (isRequired('bairro')) {
                             <small class="ng-error">Informe o Bairro</small>
@@ -99,14 +99,14 @@
                 
                 <fieldset class="ng-fieldset">
                     <legend>Rua</legend>
-                    <input class="ng-input" placeholder="Rua" formControlName="rua">
+                    <input type="text" class="ng-input" placeholder="Rua" formControlName="rua">
                 </fieldset>
                 @if (isRequired('rua')) {
                 <small class="ng-error">Informe a Rua</small>
                 }
                 <fieldset class="ng-fieldset">
                     <legend>Nº da Casa/Apt</legend>
-                    <input class="ng-input" placeholder="Nº da Casa/Apt" formControlName="numeroEndereco">
+                    <input type="text" class="ng-input" placeholder="Nº da Casa/Apt" formControlName="numeroEndereco">
                 </fieldset>
                 @if (isRequired('numeroEndereco')) {
                 <small class="ng-error">Informe o Nº da Casa ou Apt</small>
@@ -116,22 +116,15 @@
             <!-- Step 3 -->
             <div *ngIf="currentStep === 3" class="form-step">
                 <fieldset class="ng-fieldset">
-                    <legend>CPF</legend>
-                    <input class="ng-input" placeholder="CPF" formControlName="cpfResposavel" mask="000.000.000-00">
-                </fieldset>
-                @if (isRequired('cpfResposavel')) {
-                <small class="ng-error">Informe o CPF</small>
-                }
-                <fieldset class="ng-fieldset">
-                    <legend>Razão Social</legend>
-                    <input class="ng-input" placeholder="Razão Social" formControlName="razaoSocial">
+                    <legend>Razão Social (opcional)</legend>
+                    <input type="text" class="ng-input" placeholder="Razão Social" formControlName="razaoSocial">
                 </fieldset>
                 @if (isRequired('razaoSocial')) {
                 <small class="ng-error">Informe a Razão Social</small>
                 }
                 <fieldset class="ng-fieldset">
-                    <legend>CNPJ</legend>
-                    <input class="ng-input" placeholder="CNPJ" formControlName="cnpj" mask="00.000.000/0000-00">
+                    <legend>CNPJ (opcional)</legend>
+                    <input type="text" class="ng-input" placeholder="CNPJ" formControlName="cnpj" mask="00.000.000/0000-00">
                 </fieldset>
                 @if (isRequired('cnpj')) {
                 <small class="ng-error">Informe o CNPJ</small>
@@ -143,7 +136,7 @@
                     class="ng-btn">Voltar</button>
                 <button mat-flat-button type="button" (click)="next()" *ngIf="currentStep < 3" class="ng-btn"
                     [disabled]="!isCurrentStepValid()">Próximo</button>
-                <button mat-flat-button type="submit" *ngIf="currentStep === 3" class="ng-btn">Cadastrar</button>
+                <button mat-flat-button type="submit" *ngIf="currentStep === 3" class="ng-btn" [disabled]="!isCurrentStepValid()">Cadastrar</button>
             </div>
         </form>
     </div>
