@@ -5,7 +5,6 @@ import { validaToken } from "../validaToken/validaToken.service";
 @Injectable({
     providedIn:"root"
 })
-
 export class CheckoutFormService {
     checkoutForm = new FormGroup({
         NomeCompleto: new FormControl("",Validators.required),
@@ -16,5 +15,13 @@ export class CheckoutFormService {
         mes: new FormControl("",[Validators.required, Validators.minLength(2)]),
         ano: new FormControl("",[Validators.required, Validators.minLength(4)]),
         cvv: new FormControl("",[Validators.required, Validators.minLength(3)]),
+        installments: new FormControl("1", Validators.required),
+        cep: new FormControl ('', Validators.required),
+        estado: new FormControl ('', Validators.required),
+        cidade: new FormControl ('', Validators.required),
+        bairro: new FormControl ('', Validators.required),
+        rua: new FormControl ('', Validators.required),
+        numeroEndereco: new FormControl ('', Validators.required),
+        complemento: new FormControl ('', Validators.required),
     })
 }

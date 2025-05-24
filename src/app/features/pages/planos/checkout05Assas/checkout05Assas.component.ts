@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostListener, Inject, Input, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
 import { MatListModule } from '@angular/material/list';
 import { AsideComponent } from '../../../../shared/component/aside-modal/aside-modal.component';
@@ -26,9 +26,10 @@ import { SnackService } from '../../../../services/snackBar/snack.service';
 import { AuthService } from '../../../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { ConfirmPagamentoSocketComponent } from '../../../../services/pagamentosService/pagamentos.service';
-import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
 import { isPlatformBrowser } from '@angular/common';
-
+import { PLATFORM_ID, Inject } from '@angular/core';
+import { cepApiBrasilService } from '../../../../services/cepApiBrasil/cep.service';
+import { IpService } from '../../../../services/IpDispositivoCliente/ipClient.service';
 
 
 @Component({
@@ -51,29 +52,30 @@ import { isPlatformBrowser } from '@angular/common';
     MatSnackBarModule,
 
   ],
-  templateUrl: './checkoutPlanos04.component.html',
-  styleUrls: ['./checkoutPlanos04.component.scss'],
+  templateUrl: './checkout05Assas.component.html',
+  styleUrls: ['./checkout05Assas.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
+export class Checkout05AssasComponent implements OnInit {
   spinner = false;
   response!: PixPaymentRespons;
   pagamentoData: any;
   isSmallScreen: boolean = false;
   datas!: any;
   event: any;
-  cardFormInstance: any = null;
   emailUser: string = ''
   pollingSub!: Subscription;
   pagamentoSub?: Subscription | null;
+  ipClient: string = '';
+  latitude: number | null = null;
+  longitude: number | null = null;
+  error: string | null = null;
+  cpfCnpjMask: string = '000.000.000-00'; // padrão inicial
+  selected: 'cpf' | 'cnpj' = 'cpf';
 
-  stripe: Stripe | null = null;
-  card: StripeCardElement | null = null;
-  isCardComplete = false;
-  cardError: string | null = null;
-
-
-  constructor(public form: CheckoutFormService,
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    public form: CheckoutFormService,
     public payment: apiPaymentsService,
     private rota: ActivatedRoute,
     private router: Router,
@@ -82,31 +84,20 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
     private snack: SnackService,
     private authService: AuthService,
     private socketService: ConfirmPagamentoSocketComponent,
-    @Inject(PLATFORM_ID) private platformId: Object) {
+    public cepApi: cepApiBrasilService,
+    private ipClientApi: IpService) {
 
   }
 
   ngOnInit(): void {
     this.emailUser = this.authService.getEmail()!;
 
-    const navigation = this.router.getCurrentNavigation();
-    this.datas = navigation?.extras?.state?.['data'];
-
-    if (this.datas) {
-      console.log('Dados recebidos:', this.datas);
-    } else {
-      console.warn('Nenhum dado disponível na navegação.');
-
-      if (isPlatformBrowser(this.platformId)) {
-        const saved = localStorage.getItem('checkoutData');
-        if (saved) {
-          this.datas = JSON.parse(saved);
-          console.log('Dados restaurados do localStorage:', this.datas);
-        }
-      }
-    }
-
     this.checkScreenWidth();
+
+
+    this.pegaIpClient()
+
+    this.pegaLatLog()
 
     this.apiPlanosService.planosConsumoApi().subscribe(response => {
       this.itensPlanos = response.planos.filter((plano: any) => plano.price > 0);
@@ -116,31 +107,43 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
       const rawData = params['data'];
       this.event = rawData ? JSON.parse(rawData) : null;
     });
+
+    this.form.checkoutForm.get('cep')?.valueChanges.subscribe((cep) => {
+      if (cep && cep.length === 8) {
+        this.buscarEnderecoPorCep(cep);
+      }
+    });
   }
 
-  ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      loadStripe('pk_test_51RQgFR4RAOlrIVW4NGeFGRUQOKFUUTSgmzicyM8h60iDMmFjFLlodlc1LPZmdgWiGiQ0LcEa6TZRGZpwVXM9Ufl700pUQKzRZd')
-        .then(stripe => {
-          if (!stripe) {
-            console.error('Falha ao carregar Stripe');
-            return;
-          }
+  pegaIpClient() {
+    this.ipClientApi.getIPAddress().subscribe({
+      next: (res) => {
+        this.ipClient = res.ip;
+      },
+      error: (err) => {
+        console.error('Erro ao buscar IP:', err);
+      }
+    });
+  }
 
-          this.stripe = stripe;
-          const elements = this.stripe.elements();
-          this.card = elements.create('card');
-          this.card.mount('#card-element');
-
-          this.card.on('change', (event) => {
-            this.isCardComplete = event.complete;
-            if (event.error) {
-              this.cardError = event.error.message;
-            } else {
-              this.cardError = null;
-            }
-          });
-        });
+  pegaLatLog() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.latitude = position.coords.latitude;
+          this.longitude = position.coords.longitude;
+        },
+        (err) => {
+          this.error = 'Erro ao obter localização: ' + err.message;
+        },
+        {
+          enableHighAccuracy: true, // usa GPS se disponível
+          timeout: 10000,
+          maximumAge: 0
+        }
+      );
+    } else {
+      this.error = 'Geolocalização não suportada no navegador.';
     }
   }
 
@@ -148,7 +151,6 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
   img = "/banners/banner-checkout01.png";
   ativo = false;
   activeTab: 'credito' | 'debito' | 'pix' = 'credito';
-  selected: 'cpf' | 'cnpj' = 'cpf';
   NomeCompleto: string = '';
   primeiroNome: string = '';
   sobrenome: string = '';
@@ -159,7 +161,6 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
       this.activeTab = novoTab;
     }
   }
-
 
   @ViewChild('op') op!: Popover;
 
@@ -207,7 +208,6 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
 
     const isValid =
       controls['NomeCompleto']?.valid &&
-      controls['email']?.valid &&
       controls['cpfCnpj']?.valid;
 
     return isValid;
@@ -215,21 +215,35 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
 
 
 
-  isRequiredFinalizar() {
-    const NomeCompleto = this.form.checkoutForm.get('NomeCompleto')?.valid;
-    const email = this.form.checkoutForm.get('email')?.valid;
-    const cpfCnpj = this.form.checkoutForm.get('cpfCnpj')?.valid;
+  isRequiredFinalizar(): boolean {
+    const get = (field: string) => this.form.checkoutForm.get(field)?.valid;
 
-    const camposBasicosValidos = !!(NomeCompleto && email && cpfCnpj);
+    const dadosCliente = [
+      'NomeCompleto',
+      'cpfCnpj',
+      'cep',
+      'estado',
+      'cidade',
+      'bairro',
+      'rua',
+      'numeroEndereco',
+    ];
 
+    const dadosCartao = [
+      'cardNumber',
+      'mes',
+      'ano',
+      'cvv'
+    ];
+
+    // Se for pagamento via PIX, só valida Nome e CPF/CNPJ
     if (this.activeTab === 'pix') {
-      return camposBasicosValidos;
+      return dadosCliente.every(get);
     }
 
-    // Para cartão
-    return camposBasicosValidos && this.isCardComplete;
+    // Para pagamento com cartão, valida Nome, CPF/CNPJ e dados do cartão
+    return [...dadosCliente, ...dadosCartao].every(get);
   }
-
 
   @HostListener('window:resize')
   onResize() {
@@ -244,36 +258,52 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
 
   selecionar(event: Event): void {
     const target = event.target as HTMLSelectElement;
-    const opcao = target.value as 'cpf' | 'cnpj'; // forçando o tipo correto
+    const opcao = target.value as 'cpf' | 'cnpj';
     this.selected = opcao;
+
+    this.cpfCnpjMask = opcao === 'cnpj' ? '00.000.000/0000-00' : '000.000.000-00';
+    this.form.checkoutForm.get('cpfCnpj')?.reset(); // opcional: limpa campo ao mudar
   }
 
-  async handlePayment(event: Event) {
-    event.preventDefault();
+  bandeira: string = '';
+  identificarBandeira(numero: string): string {
+    numero = numero.replace(/\D/g, '');
 
-    if (!this.stripe || !this.card) {
-      console.error('Stripe.js não carregado corretamente.');
-      return;
+    const bandeiras: { [key: string]: RegExp } = {
+      visa: /^4[0-9]{12}(?:[0-9]{3})?$/,
+      master: /^5[1-5][0-9]{14}$/,
+      amex: /^3[47][0-9]{13}$/,
+      elo: /^(4011|4312|4389|4514|4576|5041|6277|6362|650|6516|6550)/,
+      hipercard: /^(38|60)/,
+    };
+
+    for (const bandeira in bandeiras) {
+      if (bandeiras[bandeira].test(numero)) {
+        return bandeira;
+      }
     }
 
-    const { token, error } = await this.stripe.createToken(this.card);
-
-    if (error) {
-      console.error('Erro ao gerar token do cartão:', error.message);
-      this.snack.error('Erro ao processar cartão. Verifique os dados.');
-      return;
-    }
-
-    if (token) {
-      console.log('Token gerado:', token);
-      const paymentData = this.data();
-      paymentData.token = token.id;
-
-      this.pagarCredito(paymentData);
-    }
+    return '';
   }
 
+  onInputCardNumber(event: Event): void {
+    const value = (event.target as HTMLInputElement).value || '';
+    this.bandeira = this.identificarBandeira(value);
+  }
 
+  buscarEnderecoPorCep(cep: string) {
+    const sanitizedCep = cep.replace(/\D/g, '');
+    this.cepApi.consultarCep(sanitizedCep).subscribe((res: any) => {
+      if (!res.erro) {
+        this.form.checkoutForm.patchValue({
+          estado: res.state,
+          cidade: res.city,
+          bairro: res.neighborhood,
+          rua: res.street
+        });
+      }
+    });
+  }
 
   select<T>(nome: string) {
     const data = this.form.checkoutForm?.get(nome);
@@ -283,23 +313,36 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
     return data as FormControl;
   }
 
-  data(): Pagamento {
-    const nomeCompleto = this.select("NomeCompleto").value || '';
-    const partes = nomeCompleto.trim().split(' ');
-    const primeiroNome = partes[0] || '';
-    const sobrenome = partes.slice(1).join(' ') || '';
+  paymentData(): Pagamento {
 
     const data: Pagamento = {
       "paymentMethodId": this.activeTab,
       "transactionAmount": this.selectedPlano?.price || this.event.price,
       "description": this.selectedPlano?.title ?? this.event.title,
+      "infoCard": {
+        "cardNumber": this.select("cardNumber").value,
+        "mes": this.select("mes").value,
+        "ano": this.select("ano").value,
+        "cvv": this.select("cvv").value,
+        "installments": this.select("installments").value,
+      },
       "payer": {
+        "ipClient": this.ipClient,
         "email": this.emailUser,
-        "first_name": primeiroNome,
-        "last_name": sobrenome,
+        "nomeCompleto": this.select("NomeCompleto").value || '',
         "identification": {
           "number": this.select("cpfCnpj").value,
           "type": this.selected
+        },
+        "endereco": {
+          "cep": this.select("cep").value,
+          "estado": this.select("estado").value,
+          "cidade": this.select("cidade").value,
+          "bairro": this.select("bairro").value,
+          "rua": this.select("rua").value,
+          "numeroEndereco": this.select("numeroEndereco").value,
+          "complemento": this.select("complemento").value,
+          "latLong": `${this.latitude},${this.longitude}`,
         }
       },
       "itens": [{
@@ -317,6 +360,7 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
   finalizarPagamento() {
     switch (this.activeTab) {
       case 'credito':
+        this.pagarCredito();
         break;
       case 'debito':
         this.pagarDebito();
@@ -329,44 +373,68 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
     }
   }
 
-  pagarCredito(formData: any) {
-    const nomeCompleto = this.select("NomeCompleto").value || '';
-    const partes = nomeCompleto.trim().split(' ');
-    const primeiroNome = partes[0] || '';
-    const sobrenome = partes.slice(1).join(' ') || '';
+  pagarCredito() {
+    console.log(this.paymentData())
+    this.payment.pagarComCartao(this.paymentData()).subscribe({
+      next: (res) => {
+        this.form.checkoutForm.reset();
 
-    if (!formData.token) {
-      console.error('Token não gerado. Verifique os dados do cartão.', formData);
-      return;
-    }
+        if (res.status === 'approved') {
+          this.activeRoute.activeLoading();
+          setTimeout(() => {
+            this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+              setTimeout(() => {
+                this.router.navigate(['/planos/loadingPayment'], { skipLocationChange: true });
+              }, 1000);
+            });
+          }, 0);
 
-    const paymentData = {
-      token: formData.token,
-      issuerId: formData.issuerId,
-      paymentMethodId: formData.paymentMethodId,
-      transactionAmount: String(this.selectedPlano?.price || this.event.price),
-      installments: formData.installments,
-      description: this.selectedPlano?.title ?? 'Plano Zapdai',
-      payer: {
-        email: this.emailUser,
-        first_name: primeiroNome,
-        last_name: sobrenome,
-        identification: {
-          type: this.selected,
-          number: this.select("cpfCnpj").value,
+          // Conecta ao WebSocket (só se ainda não conectado)
+          if (!this.pagamentoSub) {
+            this.socketService.socketWeb(this.emailUser);
+            this.pagamentoSub = this.socketService.pagamento$.subscribe((pagamento) => {
+              console.log('Pagamento confirmado via WebSocket:', pagamento);
+
+              this.response = pagamento;
+
+              // Redireciona após confirmação de pagamento
+              setTimeout(() => {
+                this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+                  setTimeout(() => {
+                    this.router.navigate(['/planos/pos-checkout'], { skipLocationChange: true }).then(() => {
+                      // 🛑 Aqui desativa o WebSocket depois do redirecionamento final
+                      this.socketService.desconectar();
+
+                      // 👇 remove também a inscrição do Observable
+                      this.pagamentoSub?.unsubscribe();
+                      this.pagamentoSub = undefined; // <- Corrige erro de tipo
+                    });
+                  }, 1000);
+                });
+              }, 0);
+            });
+          }
+
+
+
+        } else {
+          this.snack.openSnackBar(
+            `❌ Pagamento rejeitado.\nVerifique se todas as informações estão corretas.\nMensagem: ${res.status || 'Erro desconhecido.'}`
+          );
+          console.log(res)
         }
       },
-      itens: [{
-        id: this.selectedPlano?.planoId ?? this.event.planoId,
-        title: this.selectedPlano?.title ?? this.event.title,
-        description: this.selectedPlano?.subDescricaoPermition ?? this.event.subDescricaoPermition,
-        quantity: 1,
-        price: this.selectedPlano?.price || this.event.price
-      }]
-    };
+      error: (err) => {
+        console.error('Erro ao processar pagamento:', err);
 
-    console.log(paymentData)
+        const mensagemErro = err?.error?.message || 'Erro ao processar o pagamento.';
+        const detalhes = err?.error?.cause?.[0]?.code || '';
 
+        this.snack.openSnackBar(
+          `❌ Falha ao processar pagamento.\n${mensagemErro}${detalhes ? `\nCódigo: ${detalhes}` : ''}`
+        );
+      }
+    });
 
   }
 
@@ -379,7 +447,7 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
   pagarPix() {
     this.spinner = true;
     this.ativo = false;
-    this.payment.pagamentoPix(this.data()).subscribe((e: any) => {
+    this.payment.pagamentoPix(this.paymentData()).subscribe((e: any) => {
       const msg: any = JSON.stringify(e);
       this.spinner = false;
       this.response = e;
@@ -418,7 +486,7 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
 
     });
     this.ativaModal();
-    console.log(this.data());
+    console.log(this.paymentData());
   }
 
 

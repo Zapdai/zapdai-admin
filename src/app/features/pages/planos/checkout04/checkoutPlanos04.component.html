@@ -1,6 +1,6 @@
 <app-page-container>
     <div class="main">
-        <form class="main" [formGroup]="form.checkoutForm" id="form-checkout">
+        <form class="main" [formGroup]="form.checkoutForm" (submit)="handlePayment($event)">
             <div class="ng-checkout">
                 <section class="ng-container">
                     <div class="ng-subContainer">
@@ -61,76 +61,7 @@
                             </section>
                             <!-- Conteúdo das abas -->
                             <div class="tab-content" *ngIf="activeTab === 'credito'">
-                                <div class="ng-pagamento">
-                                    <div class="form-field ng-cont-img">
-                                        <section class="ng-cont-card1">
-                                            <label for="Número do Cartão">Número do Cartão</label>
-                                            <input type="number" formControlName="cardNumber"
-                                                id="form-checkout__cardNumber" placeholder="0000 0000 0000 0000"
-                                                class="input-full-width" mask="0000000000000000"
-                                                (input)="onInputCardNumber($event)" />
-                                            <div class="error" *ngIf="isRequired('cardNumber')">
-                                                Por favor, informe o Número do Cartão.
-                                            </div>
-                                        </section>
-                                        <!-- Exibe o ícone da bandeira -->
-                                        <img *ngIf="bandeira" [src]="'bandeirasCard/' + bandeira + '.png'"
-                                            [alt]="bandeira" class="bandeira-icon" />
-                                    </div>
-                                    <section class="ng-cont-card2">
-                                        <div class="form-field">
-                                            <label for="mes">Mês</label>
-                                            <input type="text" formControlName="mes" id="form-checkout__expirationMonth"
-                                                placeholder="00" class="input-full-width" mask="00" />
-                                            <div class="error" *ngIf="isRequired('mes')">
-                                                Informe o Mês de vencimento!
-                                            </div>
-                                        </div>
-                                        <div class="form-field">
-                                            <label for="ano">Ano</label>
-                                            <input type="text" formControlName="ano" id="form-checkout__expirationYear"
-                                                data-checkout="cardExpirationYear" placeholder="0000"
-                                                class="input-full-width" mask="0000" />
-                                            <div class="error" *ngIf="isRequired('ano')">
-                                                Informe o Ano de vencimento!
-                                            </div>
-                                        </div>
-                                        <div class="form-field">
-                                            <label for="cc">CVV</label>
-                                            <input type="number" formControlName="cvv" id="form-checkout__securityCode"
-                                                placeholder="000" class="input-full-width" mask="000" />
-                                            <div class="error" *ngIf="isRequired('cvv')">
-                                                Informe o código de segurança do cartão.
-                                            </div>
-                                        </div>
-                                    </section>
-                                    <section class="ng-cont-card2">
-                                        <div class="form-field">
-                                            <label for="cc">Nº de Parcelas</label>
-                                            <select id="form-checkout__installments">
-                                                <option value="1">1x</option>
-                                                <option value="2">2x</option>
-                                                <option value="3">3x</option>
-                                                <option value="4">4x</option>
-                                                <option value="5">5x</option>
-                                                <option value="6">6x</option>
-                                                <option value="7">7x</option>
-                                                <option value="8">8x</option>
-                                                <option value="9">9x</option>
-                                                <option value="10">10x</option>
-                                                <option value="11">11x</option>
-                                                <option value="12">12x</option>
-                                                <!-- Adicione mais opções de parcelas conforme necessário -->
-                                            </select>
-                                        </div>
-                                        <div class="form-field">
-                                            <label for="cc">Banco Emissor</label>
-                                            <select id="form-checkout__issuer">
-                                                <option value=""></option>
-                                            </select>
-                                        </div>
-                                    </section>
-                                </div>
+                                <div id="card-element"><!-- Stripe Element será inserido aqui --></div>
                             </div>
                             <div class="tab-content" *ngIf="activeTab === 'pix'">
                                 <div class="ng-contPix">
@@ -158,8 +89,8 @@
                         <section class="ng-itemCompra" (click)="togglePopover($event)">
                             <img src="logo.png" alt="Zapdai" />
                             <div>
-                                <h3>{{ selectedPlano?.title || event.title }}</h3>
-                                <p>{{ selectedPlano?.price || event.price | currency:'BRL':'symbol':'1.2-2' }}</p>
+                                <h3>{{ selectedPlano?.title || event?.title }}</h3>
+                                <p>{{ selectedPlano?.price || event?.price | currency:'BRL':'symbol':'1.2-2' }}</p>
                             </div>
                         </section>
 
@@ -174,8 +105,8 @@
                                         <section class="ng-itemCompra">
                                             <img src="logo.png" alt="Zapdai" />
                                             <div>
-                                                <h3>{{ itens.title }}</h3>
-                                                <p>{{ itens.price | currency:'BRL':'symbol':'1.2-2' }}</p>
+                                                <h3>{{ itens?.title }}</h3>
+                                                <p>{{ itens?.price | currency:'BRL':'symbol':'1.2-2' }}</p>
                                             </div>
                                         </section>
                                     </li>
@@ -189,7 +120,7 @@
                         </div>
                         <div class="valores">
                             <h4>Valor Total:</h4>
-                            <p>{{ selectedPlano?.price || event.price | currency:'BRL':'symbol':'1.2-2' }}</p>
+                            <p>{{ selectedPlano?.price || event?.price | currency:'BRL':'symbol':'1.2-2' }}</p>
                         </div>
                         <hr>
                         @if (!isSmallScreen) {

@@ -18,4 +18,14 @@ export class SnackService {
       panelClass: ['snackbar-multiline'],
     });
   }
+
+  error(msg: string) {
+  this.snackBar.open(msg, 'X', {
+    duration: 5000,
+    horizontalPosition: this.horizontalPosition,
+    verticalPosition: this.verticalPosition,
+    panelClass: ['snackbar-error'],
+  });
+}
+
 }

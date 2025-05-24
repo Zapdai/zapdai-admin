@@ -1,0 +1,273 @@
+<app-page-container>
+    <div class="main">
+        <form class="main" [formGroup]="form.checkoutForm" id="form-checkout">
+            <div class="ng-checkout">
+                <section class="ng-container">
+                    <div class="ng-subContainer">
+                        <h4>Informações Pessoais</h4>
+                        <div class="form-field">
+                            <label for="Nome Completo">Nome Completo</label>
+                            <input type="text" id="form-checkout__cardholderName" formControlName="NomeCompleto"
+                                placeholder="Informe seu Nome..." class="input-full-width" />
+                            <div class="error" *ngIf="isRequired('NomeCompleto')">
+                                Por favor, insira seu nome completo.
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label for="cpfCnpj">CPF / CNPJ</label>
+                            <section class="ng-cont">
+                                <select (change)="selecionar($event)" id="form-checkout__identificationType">
+                                    <option value="cpf">CPF</option>
+                                    <option value="cnpj">CNPJ</option>
+                                </select>
+                                <div class="ng-input-cpf">
+                                    <input id="form-checkout__identificationNumber" formControlName="cpfCnpj"
+                                        type="text" placeholder="Digite CPF ou CNPJ" class="input-full-width" 
+                                        [mask]="cpfCnpjMask"/>
+
+                                    <div class="error" *ngIf="isRequired('cpfCnpj')">
+                                        Por favor, insira um CPF ou CNPJ válido.
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="ng-subContainer">
+                        @if (isSmallScreen) {
+                        <img src="pagamentos/compra_segura_mercado_pago.png" alt="Pagamento seguro Mercado Pago"
+                            class="img-compra-segura">
+                        }
+                        <h4>Métodos de Pagamento</h4>
+                        <div class="form-field">
+                            <section class="ng-cont ng-contPagamento"
+                                [ngStyle]="!isRequiredNext() ? {'pointer-events': 'none', 'opacity': '0.5'} : {}"
+                                [attr.aria-disabled]="!isRequiredNext()">
+                                <div class="ng-metodoPagamento tab" [class.active]="activeTab === 'credito'"
+                                    (click)="setTab('credito')">
+                                    <mat-icon class="icon">credit_card</mat-icon>
+                                    <p>Cartão de Crédito</p>
+                                </div>
+                                <div class="ng-metodoPagamento tab" [class.active]="activeTab === 'pix'"
+                                    (click)="setTab('pix')">
+                                    <img src="logos/logoPix.png" alt="bandeira" />
+                                </div>
+                            </section>
+                            <!-- Conteúdo das abas -->
+                            <div class="tab-content" *ngIf="activeTab === 'credito'">
+                                <div class="ng-pagamento">
+                                    <div class="form-field ng-cont-img">
+                                        <section class="ng-cont-card1">
+                                            <label for="Número do Cartão">Número do Cartão</label>
+                                            <input type="number" formControlName="cardNumber"
+                                                id="form-checkout__cardNumber" placeholder="0000 0000 0000 0000"
+                                                class="input-full-width" mask="0000000000000000"
+                                                (input)="onInputCardNumber($event)" />
+                                            <div class="error" *ngIf="isRequired('cardNumber')">
+                                                Por favor, informe o Número do Cartão.
+                                            </div>
+                                        </section>
+                                        <!-- Exibe o ícone da bandeira -->
+                                        <img *ngIf="bandeira" [src]="'bandeirasCard/' + bandeira + '.png'"
+                                            [alt]="bandeira" class="bandeira-icon" />
+                                    </div>
+                                    <section class="ng-cont-card2">
+                                        <div class="form-field">
+                                            <label for="mes">Mês</label>
+                                            <input type="text" formControlName="mes" id="form-checkout__expirationMonth"
+                                                placeholder="00" class="input-full-width" mask="00" />
+                                            <div class="error" *ngIf="isRequired('mes')">
+                                                Informe o Mês de vencimento!
+                                            </div>
+                                        </div>
+                                        <div class="form-field">
+                                            <label for="ano">Ano</label>
+                                            <input type="text" formControlName="ano" id="form-checkout__expirationYear"
+                                                data-checkout="cardExpirationYear" placeholder="0000"
+                                                class="input-full-width" mask="0000" />
+                                            <div class="error" *ngIf="isRequired('ano')">
+                                                Informe o Ano de vencimento!
+                                            </div>
+                                        </div>
+                                        <div class="form-field">
+                                            <label for="cc">CVV</label>
+                                            <input type="number" formControlName="cvv" id="form-checkout__securityCode"
+                                                placeholder="000" class="input-full-width" mask="000" />
+                                            <div class="error" *ngIf="isRequired('cvv')">
+                                                Informe o código de segurança do cartão.
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <section class="ng-cont-card2">
+                                        <div class="form-field">
+                                            <label for="cc">Nº de Parcelas</label>
+                                            <select id="form-checkout__installments" formControlName="installments">
+                                                <option value="1">1x</option>
+                                                <option value="2">2x</option>
+                                                <option value="3">3x</option>
+                                                <option value="4">4x</option>
+                                                <option value="5">5x</option>
+                                                <option value="6">6x</option>
+                                                <option value="7">7x</option>
+                                                <option value="8">8x</option>
+                                                <option value="9">9x</option>
+                                                <option value="10">10x</option>
+                                                <option value="11">11x</option>
+                                                <option value="12">12x</option>
+                                                <!-- Adicione mais opções de parcelas conforme necessário -->
+                                            </select>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                            <div class="tab-content" *ngIf="activeTab === 'pix'">
+                                <div class="ng-contPix">
+                                    <h3>O QR Code do seu pagamento pix será gerado ao clicar em FINALIZAR PAGAMENTO!
+                                    </h3>
+                                    @if (spinner) {
+                                    <mat-spinner></mat-spinner>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ng-subContainer">
+                        <h4>Seu Endereço</h4>
+
+                        <section class="ng-contRow">
+                            <div class="form-field">
+                                <label for="CEP">CEP</label>
+                                <input type="text" id="form-checkout__cardholderCep" formControlName="cep"
+                                    placeholder="Informe seu CEP..." class="input-full-width" mask="00000-000"/>
+                                <div class="error" *ngIf="isRequired('cep')">
+                                    Informe o CEP!
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label for="Estado">Estado</label>
+                                <input type="text" id="form-checkout__cardholderEstado" formControlName="estado"
+                                    placeholder="Informe seu Estado..." class="input-full-width" />
+                                <div class="error" *ngIf="isRequired('estado')">
+                                    Informe o Estado!
+                                </div>
+                            </div>
+                        </section>
+                        <section class="ng-contRow">
+                            <div class="form-field">
+                                <label for="Cidade">Cidade</label>
+                                <input type="text" id="form-checkout__cardholderCidade" formControlName="cidade"
+                                    placeholder="Informe sua Cidade..." class="input-full-width" />
+                                <div class="error" *ngIf="isRequired('cidade')">
+                                    Informe o Cidade!
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label for="Bairro">Bairro</label>
+                                <input type="text" id="form-checkout__cardholderBairro" formControlName="bairro"
+                                    placeholder="Informe seu Bairro..." class="input-full-width" />
+                                <div class="error" *ngIf="isRequired('bairro')">
+                                    Informe o Bairro!
+                                </div>
+                            </div>
+                        </section>
+                        <section class="ng-contRow">
+                            <div class="form-field">
+                                <label for="Rua">Rua</label>
+                                <input type="text" id="form-checkout__cardholderRua" formControlName="rua"
+                                    placeholder="Informe sua Rua..." class="input-full-width" />
+                                <div class="error" *ngIf="isRequired('rua')">
+                                    Informe o Rua!
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label for="numeroEndereco">Nº Casa/Apt</label>
+                                <input type="text" id="form-checkout__cardholderNumeroEndereco"
+                                    formControlName="numeroEndereco" placeholder="Informe o Nº da Casa/Apt..."
+                                    class="input-full-width" />
+                                <div class="error" *ngIf="isRequired('numeroEndereco')">
+                                    Informe o Nº da Casa/Apt!
+                                </div>
+                            </div>
+                        </section>
+                        <div class="form-field">
+                            <label for="Complemento">Complemento (opcional)</label>
+                            <input type="text" id="form-checkout__cardholderComplemento" formControlName="complemento"
+                                placeholder="Informe seu Complemento..." class="input-full-width" />
+                            <div class="error" *ngIf="isRequired('complemento')">
+                                Informe o Complemento!
+                            </div>
+                        </div>
+
+                        @if (isSmallScreen) {
+                        <button mat-flat-button [disabled]="!isRequiredFinalizar()" class="btn-pagamento" type="submit"
+                            (click)="finalizarPagamento()"
+                            [ngStyle]="!isRequiredFinalizar() ? {'pointer-events': 'none', 'opacity': '0.5'} : {}">
+                            Finalizar Pagamento
+                        </button>
+                        }
+                    </div>
+
+                </section>
+                <section class="ng-container2 ng-my-order">
+                    <div class="ng-subContainer2">
+                        <h4>Resumo da Compra</h4>
+                        <section class="ng-itemCompra" (click)="togglePopover($event)">
+                            <img src="logo.png" alt="Zapdai" />
+                            <div>
+                                <h3>{{ selectedPlano?.title || event.title }}</h3>
+                                <p>{{ selectedPlano?.price || event.price | currency:'BRL':'symbol':'1.2-2' }}</p>
+                            </div>
+                        </section>
+
+                        <!-- Popover custom -->
+                        <div class="custom-popover" *ngIf="showPopover" (clickOutside)="closePopover()">
+                            <p class="ng-planoTitulo">Selecione seu plano:</p>
+                            <div class="popover-content">
+                                <ul class="list-none p-0 m-0 flex flex-col">
+                                    <li *ngFor="let itens of itensPlanos"
+                                        class="flex items-center gap-2 px-2 py-3 hover:bg-emphasis cursor-pointer rounded-border"
+                                        (click)="selectPlano(itens); closePopover()">
+                                        <section class="ng-itemCompra">
+                                            <img src="logo.png" alt="Zapdai" />
+                                            <div>
+                                                <h3>{{ itens.title }}</h3>
+                                                <p>{{ itens.price | currency:'BRL':'symbol':'1.2-2' }}</p>
+                                            </div>
+                                        </section>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="valores">
+                            <h4>Desconto:</h4>
+                            <p>R$ 0,00</p>
+                        </div>
+                        <div class="valores">
+                            <h4>Valor Total:</h4>
+                            <p>{{ selectedPlano?.price || event.price | currency:'BRL':'symbol':'1.2-2' }}</p>
+                        </div>
+                        <hr>
+                        @if (!isSmallScreen) {
+                        <img src="pagamentos/compra_segura_mercado_pago.png" alt="Pagamento seguro Mercado Pago"
+                            class="img-compra-segura">
+                        <button mat-flat-button [disabled]="!isRequiredFinalizar()" class="btn-pagamento" type="submit"
+                            (click)="finalizarPagamento()"
+                            [ngStyle]="!isRequiredFinalizar() ? {'pointer-events': 'none', 'opacity': '0.5'} : {}">
+                            Finalizar Pagamento
+                        </button>
+                        }
+
+                    </div>
+                    <div>
+                        <h4></h4>
+                    </div>
+                </section>
+            </div>
+        </form>
+    </div>
+    @if (ativo) {
+    <app-aside-modal (emitModal)="ativaModal()">
+        <app-checkoutPix [qr]="response"></app-checkoutPix>
+    </app-aside-modal>
+    }
+</app-page-container>
