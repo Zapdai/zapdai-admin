@@ -22,14 +22,22 @@
                                 </select>
                                 <div class="ng-input-cpf">
                                     <input id="form-checkout__identificationNumber" formControlName="cpfCnpj"
-                                        type="text" placeholder="Digite CPF ou CNPJ" class="input-full-width" 
-                                        [mask]="cpfCnpjMask"/>
+                                        type="text" placeholder="Digite CPF ou CNPJ" class="input-full-width"
+                                        [mask]="cpfCnpjMask" />
 
                                     <div class="error" *ngIf="isRequired('cpfCnpj')">
                                         Por favor, insira um CPF ou CNPJ válido.
                                     </div>
                                 </div>
                             </section>
+                        </div>
+                        <div class="form-field">
+                            <label for="phone">Número de telefone</label>
+                            <input type="text" id="form-checkout__phone" formControlName="phone"
+                                placeholder="Informe seu Número de telefone" class="input-full-width" mask="(00) 00000-0000" />
+                            <div class="error" *ngIf="isRequired('phone')">
+                                Informe o Número de telefone!
+                            </div>
                         </div>
                     </div>
                     <div class="ng-subContainer">
@@ -136,15 +144,15 @@
                         <section class="ng-contRow">
                             <div class="form-field">
                                 <label for="CEP">CEP</label>
-                                <input type="text" id="form-checkout__cardholderCep" formControlName="cep"
-                                    placeholder="Informe seu CEP..." class="input-full-width" mask="00000-000"/>
+                                <input type="text" id="form-checkout__Cep" formControlName="cep"
+                                    placeholder="Informe seu CEP..." class="input-full-width" mask="00000-000" />
                                 <div class="error" *ngIf="isRequired('cep')">
                                     Informe o CEP!
                                 </div>
                             </div>
                             <div class="form-field">
                                 <label for="Estado">Estado</label>
-                                <input type="text" id="form-checkout__cardholderEstado" formControlName="estado"
+                                <input type="text" id="form-checkout__Estado" formControlName="estado"
                                     placeholder="Informe seu Estado..." class="input-full-width" />
                                 <div class="error" *ngIf="isRequired('estado')">
                                     Informe o Estado!
@@ -154,7 +162,7 @@
                         <section class="ng-contRow">
                             <div class="form-field">
                                 <label for="Cidade">Cidade</label>
-                                <input type="text" id="form-checkout__cardholderCidade" formControlName="cidade"
+                                <input type="text" id="form-checkout__Cidade" formControlName="cidade"
                                     placeholder="Informe sua Cidade..." class="input-full-width" />
                                 <div class="error" *ngIf="isRequired('cidade')">
                                     Informe o Cidade!
@@ -162,7 +170,7 @@
                             </div>
                             <div class="form-field">
                                 <label for="Bairro">Bairro</label>
-                                <input type="text" id="form-checkout__cardholderBairro" formControlName="bairro"
+                                <input type="text" id="form-checkout__Bairro" formControlName="bairro"
                                     placeholder="Informe seu Bairro..." class="input-full-width" />
                                 <div class="error" *ngIf="isRequired('bairro')">
                                     Informe o Bairro!
@@ -172,7 +180,7 @@
                         <section class="ng-contRow">
                             <div class="form-field">
                                 <label for="Rua">Rua</label>
-                                <input type="text" id="form-checkout__cardholderRua" formControlName="rua"
+                                <input type="text" id="form-checkout__Rua" formControlName="rua"
                                     placeholder="Informe sua Rua..." class="input-full-width" />
                                 <div class="error" *ngIf="isRequired('rua')">
                                     Informe o Rua!
@@ -180,7 +188,7 @@
                             </div>
                             <div class="form-field">
                                 <label for="numeroEndereco">Nº Casa/Apt</label>
-                                <input type="text" id="form-checkout__cardholderNumeroEndereco"
+                                <input type="text" id="form-checkout__NumeroEndereco"
                                     formControlName="numeroEndereco" placeholder="Informe o Nº da Casa/Apt..."
                                     class="input-full-width" />
                                 <div class="error" *ngIf="isRequired('numeroEndereco')">
@@ -190,7 +198,7 @@
                         </section>
                         <div class="form-field">
                             <label for="Complemento">Complemento (opcional)</label>
-                            <input type="text" id="form-checkout__cardholderComplemento" formControlName="complemento"
+                            <input type="text" id="form-checkout__Complemento" formControlName="complemento"
                                 placeholder="Informe seu Complemento..." class="input-full-width" />
                             <div class="error" *ngIf="isRequired('complemento')">
                                 Informe o Complemento!

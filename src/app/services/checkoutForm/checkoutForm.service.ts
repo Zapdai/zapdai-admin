@@ -23,5 +23,6 @@ export class CheckoutFormService {
         rua: new FormControl ('', Validators.required),
         numeroEndereco: new FormControl ('', Validators.required),
         complemento: new FormControl ('', Validators.required),
+        phone: new FormControl ('', Validators.required),
     })
 }

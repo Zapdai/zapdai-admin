@@ -22,6 +22,7 @@ interface infoCard {
 interface payer {
    ipClient?: string,
    email: string,
+   phone?: number,
    nomeCompleto?: string,
    first_name?: string,
    last_name?: string,

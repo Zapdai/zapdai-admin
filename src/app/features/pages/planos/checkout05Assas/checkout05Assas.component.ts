@@ -221,6 +221,7 @@ export class Checkout05AssasComponent implements OnInit {
     const dadosCliente = [
       'NomeCompleto',
       'cpfCnpj',
+      'phone',
       'cep',
       'estado',
       'cidade',
@@ -334,6 +335,7 @@ export class Checkout05AssasComponent implements OnInit {
           "number": this.select("cpfCnpj").value,
           "type": this.selected
         },
+        "phone": this.select("phone").value,
         "endereco": {
           "cep": this.select("cep").value,
           "estado": this.select("estado").value,
