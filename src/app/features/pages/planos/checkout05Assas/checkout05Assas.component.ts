@@ -30,6 +30,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID, Inject } from '@angular/core';
 import { cepApiBrasilService } from '../../../../services/cepApiBrasil/cep.service';
 import { IpService } from '../../../../services/IpDispositivoCliente/ipClient.service';
+import { paymentAsaas } from '../../../../shared/core/types/paymentAsaas';
+import { CheckoutPixAsaasComponent } from '../../../../shared/component/pixAsaas/checkoutPixAsaas.component';
 
 
 @Component({
@@ -39,7 +41,7 @@ import { IpService } from '../../../../services/IpDispositivoCliente/ipClient.se
     PageContainerComponent,
     MatListModule,
     AsideComponent,
-    CheckoutPixComponent,
+    CheckoutPixAsaasComponent,
     MatInputModule,
     ReactiveFormsModule,
     CommonModule,
@@ -314,47 +316,40 @@ export class Checkout05AssasComponent implements OnInit {
     return data as FormControl;
   }
 
-  paymentData(): Pagamento {
+  paymentData(): paymentAsaas {
 
-    const data: Pagamento = {
+    const data: paymentAsaas = {
       "paymentMethodId": this.activeTab,
-      "transactionAmount": this.selectedPlano?.price || this.event.price,
-      "description": this.selectedPlano?.title ?? this.event.title,
-      "infoCard": {
-        "cardNumber": this.select("cardNumber").value,
-        "mes": this.select("mes").value,
-        "ano": this.select("ano").value,
-        "cvv": this.select("cvv").value,
-        "installments": this.select("installments").value,
-      },
-      "payer": {
-        "ipClient": this.ipClient,
-        "email": this.emailUser,
-        "nomeCompleto": this.select("NomeCompleto").value || '',
-        "identification": {
-          "number": this.select("cpfCnpj").value,
-          "type": this.selected
-        },
-        "phone": this.select("phone").value,
-        "endereco": {
-          "cep": this.select("cep").value,
-          "estado": this.select("estado").value,
-          "cidade": this.select("cidade").value,
-          "bairro": this.select("bairro").value,
-          "rua": this.select("rua").value,
-          "numeroEndereco": this.select("numeroEndereco").value,
-          "complemento": this.select("complemento").value,
-          "latLong": `${this.latitude},${this.longitude}`,
-        }
-      },
-      "itens": [{
-        "id": this.selectedPlano?.planoId ?? this.event.planoId,
-        "title": this.selectedPlano?.title ?? this.event.title,
-        "description": this.selectedPlano?.subDescricaoPermition ?? this.event.subDescricaoPermition,
-        "quantity": 1,
-        "price": this.selectedPlano?.price || this.event.price
-      }]
-    };
+      "name": this.select("NomeCompleto").value || '',
+      "cpfCnpj": this.select("cpfCnpj").value,
+      "email": this.emailUser,
+      "phone": this.select("phone").value,
+      "postalCode": this.select("cep").value,
+      "addressNumber": this.select("numeroEndereco").value,
+
+      "addressComplement": `
+      ${this.select("rua").value}, 
+      ${this.select("numeroEndereco").value}, 
+      ${this.select("bairro").value}, 
+      ${this.select("cidade").value}, 
+      ${this.select("estado").value}, 
+      ${this.select("cep").value},`,
+
+      "creditCardNumber": this.select("cardNumber").value,
+      "creditCardExpiryMonth": this.select("mes").value,
+      "creditCardExpiryYear": this.select("ano").value,
+      "creditCardCcv": this.select("cvv").value,
+      "value": this.selectedPlano?.price || this.event.price,
+      //"installments": this.select("installments").value,
+      //"ipClient": this.ipClient,
+    }
+    // "itens": [{
+    //   "id": this.selectedPlano?.planoId ?? this.event.planoId,
+    //   "title": this.selectedPlano?.title ?? this.event.title,
+    //   "description": this.selectedPlano?.subDescricaoPermition ?? this.event.subDescricaoPermition,
+    //   "quantity": 1,
+    //   "price": this.selectedPlano?.price || this.event.price
+    // }]
     return data;
   }
 
@@ -377,11 +372,11 @@ export class Checkout05AssasComponent implements OnInit {
 
   pagarCredito() {
     console.log(this.paymentData())
-    this.payment.pagarComCartao(this.paymentData()).subscribe({
+    this.payment.paymentAsaas(this.paymentData()).subscribe({
       next: (res) => {
         this.form.checkoutForm.reset();
 
-        if (res.status === 'approved') {
+        if (res.status === true) {
           this.activeRoute.activeLoading();
           setTimeout(() => {
             this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
@@ -449,7 +444,7 @@ export class Checkout05AssasComponent implements OnInit {
   pagarPix() {
     this.spinner = true;
     this.ativo = false;
-    this.payment.pagamentoPix(this.paymentData()).subscribe((e: any) => {
+    this.payment.paymentAsaas(this.paymentData()).subscribe((e: any) => {
       const msg: any = JSON.stringify(e);
       this.spinner = false;
       this.response = e;

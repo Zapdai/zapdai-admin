@@ -275,7 +275,7 @@
     </div>
     @if (ativo) {
     <app-aside-modal (emitModal)="ativaModal()">
-        <app-checkoutPix [qr]="response"></app-checkoutPix>
+        <app-checkoutPixAsaas [respostaApi]="response"></app-checkoutPixAsaas>
     </app-aside-modal>
     }
 </app-page-container>

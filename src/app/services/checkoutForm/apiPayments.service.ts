@@ -24,6 +24,11 @@ export class apiPaymentsService {
         
     }
 
+    paymentAsaas(data: any): Observable <any> {
+        return this.http.post<any>(`${this.urlApiPayment}/v1/payment/zapdai`, data).pipe()
+        
+    }
+
     statusPayment(data: any): Observable <any> {
         return this.http.post<any>(`${this.urlApiPayment}/pagamento/v1/one`, data).pipe()        
     }

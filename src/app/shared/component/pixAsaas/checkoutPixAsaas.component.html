@@ -1,0 +1,14 @@
+<div class="ng-main" *ngIf="respostaApi?.qr">
+    <h3>PIX disponível para pagamento!</h3>
+    <h2>Faça o pagamento do PIX abaixo para finalizar o seu pedido:</h2>
+    <qrcode [qrdata]="respostaApi.qr" [width]="200" [errorCorrectionLevel]="'M'"></qrcode>
+    <div class="ng-key">
+        <h2 >{{cortarTexto(respostaApi.chave,45)}}</h2>
+    </div>
+    <button mat-raised-button [disabled]="btnActive" color="primary" class="ng-btn" (click)="colcarTexto(respostaApi.chave)">
+        {{titule}} <mat-icon>content_copy</mat-icon>
+    </button>
+    <div id="cardPaymentBrick_container"></div>
+    <div class="img-compra-segura"></div>
+</div>
+
