@@ -7,6 +7,7 @@ import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withFetch, withInterc
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { AuthInterceptors } from './interceptors/AuthInterceptors.interceptors';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import * as QRCode from 'qrcode';
 
 export const appConfig: ApplicationConfig = {
   providers: [

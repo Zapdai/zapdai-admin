@@ -96,7 +96,6 @@ export class Checkout05AssasComponent implements OnInit {
 
     this.checkScreenWidth();
 
-
     this.pegaIpClient()
 
     this.pegaLatLog()
@@ -199,9 +198,20 @@ export class Checkout05AssasComponent implements OnInit {
     }
   }
 
-  isRequired(nome: string) {
-    return this.form.checkoutForm.get(nome)?.errors?.["required"] && this.form.checkoutForm.get(nome)?.touched;
+  isRequired(nome: string): boolean {
+    const control = this.form.checkoutForm.get(nome);
+    if (!control) return false;
+
+    const isTouched = control.touched;
+    const hasRequiredError = control.errors?.['required'];
+    const hasCpfCnpjError = (nome === 'cpfCnpj') &&
+      (control.errors?.['cpfInvalido'] || control.errors?.['cnpjInvalido']);
+    const hasCartaoError = (nome === 'cardNumber') && control.errors?.['cartaoInvalido'];
+
+    return (hasRequiredError && isTouched) || hasCpfCnpjError || hasCartaoError;
   }
+
+
 
   isRequiredNext(): boolean {
     const controls = this.form?.checkoutForm?.controls;
@@ -210,7 +220,8 @@ export class Checkout05AssasComponent implements OnInit {
 
     const isValid =
       controls['NomeCompleto']?.valid &&
-      controls['cpfCnpj']?.valid;
+      controls['cpfCnpj']?.valid &&
+      controls['phone']?.valid;
 
     return isValid;
   }
@@ -327,13 +338,7 @@ export class Checkout05AssasComponent implements OnInit {
       "postalCode": this.select("cep").value,
       "addressNumber": this.select("numeroEndereco").value,
 
-      "addressComplement": `
-      ${this.select("rua").value}, 
-      ${this.select("numeroEndereco").value}, 
-      ${this.select("bairro").value}, 
-      ${this.select("cidade").value}, 
-      ${this.select("estado").value}, 
-      ${this.select("cep").value},`,
+      "addressComplement": `${this.select("rua").value}, ${this.select("numeroEndereco").value}, ${this.select("bairro").value}, ${this.select("cidade").value}, ${this.select("estado").value}, ${this.select("cep").value}`,
 
       "creditCardNumber": this.select("cardNumber").value,
       "creditCardExpiryMonth": this.select("mes").value,
@@ -445,6 +450,7 @@ export class Checkout05AssasComponent implements OnInit {
     this.spinner = true;
     this.ativo = false;
     this.payment.paymentAsaas(this.paymentData()).subscribe((e: any) => {
+      console.log(e);
       const msg: any = JSON.stringify(e);
       this.spinner = false;
       this.response = e;

@@ -3,17 +3,20 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 30px 0 ;
+    gap: 30px 0;
     background-color: #FFF;
     width: 100%;
     border-radius: 20px;
     padding: 25px;
-    h2{
+
+    h2 {
         font-size: 14px;
     }
-    .ng-key{
+
+    .ng-key {
         padding: 0 50px;
-        h2{
+
+        h2 {
             font-size: 16px;
             word-wrap: break-word;
         }
@@ -23,20 +26,24 @@
         width: 50px;
         height: 50px;
     }
-    .ng-btn{
+
+    .ng-btn {
         color: #ddd;
         border: none;
         padding: 10px 20px;
         border-radius: 5px;
     }
-    .ng-btn:active{
+
+    .ng-btn:active {
         transform: scale(0.97);
 
     }
-    .ng-btn:disabled{
+
+    .ng-btn:disabled {
         color: #423d3d;
     }
-    .ng-btn{
+
+    .ng-btn {
         transform: scale(0.97);
 
     }
@@ -44,13 +51,25 @@
     p {
         margin: 30px;
     }
+
     .img-compra-segura {
         width: 100%;
-        height:40px;
-        background-image: url("/pagamentos/compra_segura_mercado_pago.png");      
-         background-repeat: no-repeat;
-        background-size:contain;
+        height: 40px;
+        background-image: url("/pagamentos/compra_segura_mercado_pago.png");
+        background-repeat: no-repeat;
+        background-size: contain;
         background-position: center;
     }
+
+    .qr-img {
+        width: 250px;
+        height: 250px;
+        image-rendering: pixelated;
+        display: block;
+        margin: 0 auto;
+    }
+
+
+
 
 }

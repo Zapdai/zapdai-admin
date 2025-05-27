@@ -34,7 +34,8 @@
                         <div class="form-field">
                             <label for="phone">Número de telefone</label>
                             <input type="text" id="form-checkout__phone" formControlName="phone"
-                                placeholder="Informe seu Número de telefone" class="input-full-width" mask="(00) 00000-0000" />
+                                placeholder="Informe seu Número de telefone" class="input-full-width"
+                                mask="(00) 00000-0000" />
                             <div class="error" *ngIf="isRequired('phone')">
                                 Informe o Número de telefone!
                             </div>
@@ -71,7 +72,7 @@
                                                 class="input-full-width" mask="0000000000000000"
                                                 (input)="onInputCardNumber($event)" />
                                             <div class="error" *ngIf="isRequired('cardNumber')">
-                                                Por favor, informe o Número do Cartão.
+                                                Por favor, insira um Número de Cartão válido.
                                             </div>
                                         </section>
                                         <!-- Exibe o ícone da bandeira -->
@@ -188,9 +189,8 @@
                             </div>
                             <div class="form-field">
                                 <label for="numeroEndereco">Nº Casa/Apt</label>
-                                <input type="text" id="form-checkout__NumeroEndereco"
-                                    formControlName="numeroEndereco" placeholder="Informe o Nº da Casa/Apt..."
-                                    class="input-full-width" />
+                                <input type="text" id="form-checkout__NumeroEndereco" formControlName="numeroEndereco"
+                                    placeholder="Informe o Nº da Casa/Apt..." class="input-full-width" />
                                 <div class="error" *ngIf="isRequired('numeroEndereco')">
                                     Informe o Nº da Casa/Apt!
                                 </div>
@@ -273,9 +273,10 @@
             </div>
         </form>
     </div>
-    @if (ativo) {
-    <app-aside-modal (emitModal)="ativaModal()">
-        <app-checkoutPixAsaas [respostaApi]="response"></app-checkoutPixAsaas>
-    </app-aside-modal>
-    }
 </app-page-container>
+
+@if (ativo) {
+<app-aside-modal (emitModal)="ativaModal()">
+    <app-checkoutPixAsaas [respostaApi]="response"></app-checkoutPixAsaas>
+</app-aside-modal>
+}
