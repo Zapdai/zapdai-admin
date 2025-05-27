@@ -76,7 +76,7 @@ export class FormSignupComponent {
   isRequiredToRegistre() {
     const sexoValid = this.form.groupform.get('sexo')?.valid;
     const dataNascimentoValid = this.form.groupform.get('dataNascimento')?.valid;
-    const cpfValid = this.form.groupform.get('cpf')?.valid
+    const cpfValid = this.form.groupform.get('cpf')?.valid && !this.form.groupform.get('cpf')?.errors?.['cpfInvalido']
     const passwordValid = this.form.groupform.get('password')?.valid;
     const connfimeValid = this.form.groupform.get('repeteSenha')?.valid;
     return !!(sexoValid && dataNascimentoValid && cpfValid && passwordValid && connfimeValid);
