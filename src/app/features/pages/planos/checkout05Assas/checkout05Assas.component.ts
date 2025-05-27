@@ -207,8 +207,9 @@ export class Checkout05AssasComponent implements OnInit {
     const hasCpfCnpjError = (nome === 'cpfCnpj') &&
       (control.errors?.['cpfInvalido'] || control.errors?.['cnpjInvalido']);
     const hasCartaoError = (nome === 'cardNumber') && control.errors?.['cartaoInvalido'];
+    const hasCepError = (nome === 'cep') && control.errors?.['cepInvalido'];
 
-    return (hasRequiredError && isTouched) || hasCpfCnpjError || hasCartaoError;
+    return (hasRequiredError && isTouched) || hasCpfCnpjError || hasCartaoError || hasCepError;
   }
 
 

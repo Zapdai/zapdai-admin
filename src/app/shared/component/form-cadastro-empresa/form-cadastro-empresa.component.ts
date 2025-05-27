@@ -45,8 +45,16 @@ export class FormCadastroEmpresaComponent implements OnInit {
   };
 
 
-  isRequired(nome: string) {
-    return this.form.empresaform.get(nome)?.errors?.["required"] && this.form.empresaform.get(nome)?.touched;
+  isRequired(nome: string): boolean {
+    const control = this.form.empresaform.get(nome);
+    if (!control) return false;
+
+    const isTouched = control.touched;
+    const hasRequiredError = control.errors?.['required'];
+    const hasEmailError = (nome === 'email') && control.errors?.['emailInvalido'];
+    const hasCepError = (nome === 'cep') && control.errors?.['cepInvalido'];
+
+    return (hasRequiredError && isTouched) || hasEmailError || hasCepError;
   }
 
   markCurrentStepTouched() {
@@ -77,11 +85,11 @@ export class FormCadastroEmpresaComponent implements OnInit {
   }
 
   focarProximoCampo(proximoCampo: string) {
-  const proximo = document.querySelector(`[formControlName="${proximoCampo}"]`) as HTMLElement;
-  if (proximo) {
-    proximo.focus();
+    const proximo = document.querySelector(`[formControlName="${proximoCampo}"]`) as HTMLElement;
+    if (proximo) {
+      proximo.focus();
+    }
   }
-}
 
 
   buscarEnderecoPorCep(cep: string) {

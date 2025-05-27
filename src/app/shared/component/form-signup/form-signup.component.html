@@ -5,7 +5,7 @@
                 <form action="" [formGroup]="form.groupform">
                     <div class="slide_area" #elemento>
 
-                        <div #slide class="slide" >
+                        <div #slide class="slide">
                             <div #slide1 class="ng-form-n1">
 
                                 <section class="ng-title">
@@ -13,25 +13,36 @@
                                 </section>
                                 <fieldset class="ng-fieldset">
                                     <legend>Nome Completo</legend>
-                                    <input type="text" class="ng-input" placeholder="Nome Completo..." #form1 autofocus="on" (keydown.enter)="mudarCampo(form2)"
-                                        formControlName="name">
+                                    <input type="text" class="ng-input" placeholder="Nome Completo..." #form1
+                                        autofocus="on" (keydown.enter)="mudarCampo(form2)" formControlName="name">
                                 </fieldset>
+                                @if (isRequired('name')) {
+                                <small class="ng-error">Informe seu Nome Completo!</small>
+                                }
 
                                 <fieldset class="ng-fieldset">
                                     <legend>Número de telefone</legend>
-                                    <input type="text" class="ng-input" placeholder="Nº de telefone..." #form2  (keydown.enter)="mudarCampo(form3)"
-                                        formControlName="telefone"
+                                    <input type="text" class="ng-input" placeholder="Nº de telefone..." #form2
+                                        (keydown.enter)="mudarCampo(form3)" formControlName="telefone"
                                         mask="(00) 00000-0000">
                                 </fieldset>
+                                @if (isRequired('telefone')) {
+                                <small class="ng-error">Informe o Nº de telefone!</small>
+                                }
 
                                 <fieldset class="ng-fieldset">
                                     <legend>Email</legend>
-                                    <input type="email" class="ng-input" placeholder="Email" formControlName="email" #form3 (keydown.enter)="MudaProximo()" >
+                                    <input type="email" class="ng-input" placeholder="Email" formControlName="email"
+                                        #form3 (keydown.enter)="MudaProximo()">
                                 </fieldset>
-                             
-                                <button  mat-raised-button [disabled]="!isRequiredNext()" class="ng-btn ng-btn-proximo" (click)="btnProximo()">Proximo</button>
+                                @if (isRequired('email')) {
+                                <small class="ng-error">Informe um Email válido!</small>
+                                }
 
-                                
+                                <button mat-raised-button [disabled]="!isRequiredNext()" class="ng-btn ng-btn-proximo"
+                                    (click)="btnProximo()">Proximo</button>
+
+
                             </div>
                         </div>
                         <div #slide class="slide">
@@ -47,39 +58,55 @@
                                         <select formControlName="sexo" id="" class="ng-input">
                                             <option disabled selected value="">Selecione</option>
                                             <option value="m">Masculino</option>
-                                            <option value="f" >Feminino</option>
-                                            <option value="o" >Outros</option>
+                                            <option value="f">Feminino</option>
+                                            <option value="o">Outros</option>
                                         </select>
                                     </fieldset>
+                                    @if (isRequired('sexo')) {
+                                    <small class="ng-error">Selecione seu sexo!</small>
+                                    }
                                     <fieldset class="ng-fieldset">
                                         <legend>Data nascimento</legend>
-                                        <input type="date" class="ng-input" placeholder="Nome Completo..."
+                                        <input type="date" class="ng-input" placeholder="Data nascimento..."
                                             formControlName="dataNascimento">
                                     </fieldset>
+                                    @if (isRequired('dataNascimento')) {
+                                    <small class="ng-error">Informe sua Data nascimento</small>
+                                    }
                                 </div>
 
                                 <fieldset class="ng-fieldset">
                                     <legend>CPF</legend>
-                                    <input type="text" class="ng-input" autofocus="on"  #formSlide2_1 (keydown.enter)="enterSlide2(formSlide2_2)" placeholder="Nome Completo..."
-                                        formControlName="cpf"
-                                        mask="000.000.000-00">
+                                    <input type="text" class="ng-input" autofocus="on" #formSlide2_1
+                                        (keydown.enter)="enterSlide2(formSlide2_2)" placeholder="Seu CPF..."
+                                        formControlName="cpf" mask="000.000.000-00">
                                 </fieldset>
+                                @if (isRequired('cpf')) {
+                                <small class="ng-error">Informe um CPF válido!</small>
+                                }
 
                                 <fieldset class="ng-fieldset">
                                     <legend>Senha</legend>
-                                    <input type="text" class="ng-input" #formSlide2_2 placeholder="Nº de telefone..." (keydown.enter)="enterSlide2(formSlide2_3)"
-                                        formControlName="password">
+                                    <input type="text" class="ng-input" #formSlide2_2 placeholder="Senha..."
+                                        (keydown.enter)="enterSlide2(formSlide2_3)" formControlName="password">
                                 </fieldset>
+                                @if (isRequired('password')) {
+                                <small class="ng-error">Informe sua Senha!</small>
+                                }
 
                                 <fieldset class="ng-fieldset">
                                     <legend>Confirme a senha</legend>
-                                    <input type="email" class="ng-input" #formSlide2_3 placeholder="Confirme senha" (keydown.enter)="save()"
-                                        formControlName="repeteSenha">
+                                    <input type="email" class="ng-input" #formSlide2_3 placeholder="Confirme senha"
+                                        (keydown.enter)="save()" formControlName="repeteSenha">
                                 </fieldset>
+                                @if (isRequired('repeteSenha')) {
+                                <small class="ng-error">Informe a mesma senha, por favor</small>
+                                }
 
                                 <section class="ng-section-btn">
                                     <button class="ng-btn ng-btn-proximo" (click)="btnVoltar()">Voltar</button>
-                                    <button class="ng-btn ng-btn-cadastrar"  [disabled]="!isRequiredToRegistre()" mat-raised-button  (click)="cadastro()">Cadastrar</button>
+                                    <button class="ng-btn ng-btn-cadastrar" [disabled]="!isRequiredToRegistre()"
+                                        mat-raised-button (click)="cadastro()">Cadastrar</button>
                                 </section>
                             </div>
                         </div>

@@ -3,7 +3,7 @@ import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { formModalComponent } from '../formModel/formModal.component';
-import { MatButtonModule } from '@angular/material/button'; 
+import { MatButtonModule } from '@angular/material/button';
 import { registroForm } from '../../../services/singNupForm/registroForm.servide';
 import { cadastro } from '../../core/types/cadastro';
 import { SnackService } from '../../../services/snackBar/snack.service';
@@ -66,6 +66,19 @@ export class FormSignupComponent {
       this.snak.openSnackBar("Preencha todos os campos!")
     }
   }
+
+  isRequired(nome: string): boolean {
+    const control = this.form.groupform.get(nome);
+    if (!control) return false;
+
+    const isTouched = control.touched;
+    const hasRequiredError = control.errors?.['required'];
+    const hasCpfError = control.errors?.['cpfInvalido'];
+    const hasEmailError = (nome === 'email') && control.errors?.['emailInvalido'];
+
+    return (hasRequiredError && isTouched) || hasCpfError || hasEmailError;
+  }
+
   isRequiredNext() {
     const nameValid = this.form.groupform.get('name')?.valid;
     const telefoneValid = this.form.groupform.get('telefone')?.valid;
@@ -111,15 +124,15 @@ export class FormSignupComponent {
     }
     return data
   }
-    cadastro(){
-      const password = this.select("password").value;
-      const repetepassword = this.select("repeteSenha").value;
-      if (password === repetepassword) {
-        this.registroBtn.emit(this.data())
-      } else {
-        this.snak.openSnackBar("Senhas não conferem")
-      }
+  cadastro() {
+    const password = this.select("password").value;
+    const repetepassword = this.select("repeteSenha").value;
+    if (password === repetepassword) {
+      this.registroBtn.emit(this.data())
+    } else {
+      this.snak.openSnackBar("Senhas não conferem")
     }
+  }
 
 }
 

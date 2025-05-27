@@ -20,17 +20,17 @@ export class SignupComponent{
     constructor ( private router:Router, private activeRoute:loadingService,public auth:apiAuthService,private snack:SnackService,private form:registroForm){
     }
 
-    pageCategorias(){
+    pageHome(){
         this.activeRoute.activeLoading()
         setTimeout(() => {
             this.router.navigateByUrl('/loading', { skipLocationChange: true}).then(()=>{
                 setTimeout(() => {
-                    this.router.navigate(['/categorias'])
+                    this.router.navigate(['/'])
                 }, 1000);
             })
             
         }, 0);
-      }
+    }
 
      // precisa ser feito mais um Slider para validaçao de Codigo enviado ao email
       enviar(event:cadastro){

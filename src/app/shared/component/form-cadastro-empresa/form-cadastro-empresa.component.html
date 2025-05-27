@@ -51,7 +51,7 @@
                         (keydown.enter)="next()">
                 </fieldset>
                 @if (isRequired('email')) {
-                <small class="ng-error">Informe o email</small>
+                <small class="ng-error">Informe um email válido!</small>
                 }
             </div>
 
@@ -65,7 +65,7 @@
                                 (keydown.enter)="focarProximoCampo('estado_sigla')">
                         </fieldset>
                         @if (isRequired('cep')) {
-                        <small class="ng-error">Informe seu CEP</small>
+                        <small class="ng-error">Informe um CEP válido!</small>
                         }
                     </div>
                     <div>
