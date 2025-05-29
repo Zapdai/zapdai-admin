@@ -35,7 +35,7 @@ interface identification {
    type: string
 }
 
-interface itens {
+export interface itens {
    id: string,
    title: string,
    description: string,

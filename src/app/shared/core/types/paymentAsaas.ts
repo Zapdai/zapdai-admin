@@ -1,3 +1,5 @@
+import { itens } from "./pagamento";
+
 export interface paymentAsaas {
     paymentMethodId: string,
     name: string,
@@ -12,4 +14,5 @@ export interface paymentAsaas {
     creditCardExpiryMonth?: number,
     creditCardExpiryYear?: number,
     value: number,
+    itens: [itens],
 }

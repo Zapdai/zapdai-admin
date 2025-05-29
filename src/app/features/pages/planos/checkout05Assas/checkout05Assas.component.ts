@@ -348,14 +348,14 @@ export class Checkout05AssasComponent implements OnInit {
       "value": this.selectedPlano?.price || this.event.price,
       //"installments": this.select("installments").value,
       //"ipClient": this.ipClient,
+      "itens": [{
+        "id": this.selectedPlano?.planoId ?? this.event.planoId,
+        "title": this.selectedPlano?.title ?? this.event.title,
+        "description": this.selectedPlano?.subDescricaoPermition ?? this.event.subDescricaoPermition,
+        "quantity": 1,
+        "price": this.selectedPlano?.price || this.event.price
+      }]
     }
-    // "itens": [{
-    //   "id": this.selectedPlano?.planoId ?? this.event.planoId,
-    //   "title": this.selectedPlano?.title ?? this.event.title,
-    //   "description": this.selectedPlano?.subDescricaoPermition ?? this.event.subDescricaoPermition,
-    //   "quantity": 1,
-    //   "price": this.selectedPlano?.price || this.event.price
-    // }]
     return data;
   }
 
