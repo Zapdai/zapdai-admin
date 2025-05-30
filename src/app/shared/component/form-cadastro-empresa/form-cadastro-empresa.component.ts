@@ -9,6 +9,8 @@ import { NgxMaskDirective } from 'ngx-mask';
 import { registroEmpresaApi } from '../../../services/cadastroEmpresa/registroEmpresaApi.service';
 import { loadingService } from '../../../services/loading/loading.service';
 import { Router } from '@angular/router';
+import { apiBuscaUserService } from '../../../services/buscaUser/buscaUser.service';
+import { AuthService } from '../../../services/auth.service';
 
 type EmpresaFormControls = keyof cadastroEmpresaForm['empresaform']['controls'];
 
@@ -21,6 +23,7 @@ type EmpresaFormControls = keyof cadastroEmpresaForm['empresaform']['controls'];
 })
 export class FormCadastroEmpresaComponent implements OnInit {
   currentStep = 1;
+  emailUser: string = ''
 
   constructor(
     public form: cadastroEmpresaForm,
@@ -29,14 +32,20 @@ export class FormCadastroEmpresaComponent implements OnInit {
     private empresaApi: registroEmpresaApi,
     private activeRoute: loadingService,
     private router: Router,
+    private apiBuscaUser: apiBuscaUserService,
+    private authService: AuthService,
   ) { }
   ngOnInit(): void {
+    this.emailUser = this.authService.getEmail()!;
+
     this.form.empresaform.get('cep')?.valueChanges.subscribe((cep) => {
       if (cep && cep.length === 8) {
         this.buscarEnderecoPorCep(cep);
       }
     });
   }
+
+
 
   stepFields: Record<number, EmpresaFormControls[]> = {
     1: ['nomeCompania', 'numeroDeTelefone', 'email'],
@@ -114,28 +123,26 @@ export class FormCadastroEmpresaComponent implements OnInit {
 
     const formData = this.form.empresaform.value;
 
-    // Suponha que essas informações vêm de outras fontes
-    const usuarioLogado = 2; // contém uid, email, etc.
-    const planoSelecionado = "";     // plano escolhido em outro momento
-
     const empresaPayload = {
       nomeCompania: formData.nomeCompania,
-      razaoSocial: formData.razaoSocial || null,
-      cnpj: formData.cnpj || null,
-      cpfResponsavel: 61688140352,
       email: formData.email,
-      telefone: formData.numeroDeTelefone,
-      clienteId: usuarioLogado,
+      cpfCnpj: formData.cnpj || null,
+      numeroDeTelefone: formData.numeroEndereco,
+      planoId: "zapdai_current_id-1748005019116-85095",
       endereco: {
-        cep: formData.cep,
+        numeroEndereco: formData.numeroEndereco,
+        latLong: "",
         rua: formData.rua,
-        numero: formData.numeroEndereco,
+        logradouro: formData.complemento,
+        estado_sigla: formData.estado_sigla,
+        cep: formData.cep,
         bairro: formData.bairro,
-        cidade: formData.cidade,
-        estado: formData.estado_sigla,
-        logradouro: formData.complemento
+        cidade: formData.cidade
+      },
+      usuario: {
+        id: 2
       }
-    };
+    }
 
     console.log('Payload enviado para API:', empresaPayload);
     this.empresaApi.registroEmpresa(empresaPayload).subscribe({

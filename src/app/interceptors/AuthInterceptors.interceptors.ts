@@ -11,15 +11,29 @@ import { SnackService } from "../services/snackBar/snack.service";
 export class AuthInterceptors implements HttpInterceptor {
   constructor(private auth: AuthService, private router: Router, private dialog: SnackService) { }
 
+
+
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    /*if (this.auth.PossuiToken() && !request.url.includes('/refreshToken')) {
+
+    const rotasPublicas = [
+      '/auth/signup',
+      '/auth/signin',
+      '/auth/resetPassword',
+      '/planos',
+      '/',
+      // adicione aqui todas as rotas públicas da sua API
+    ];
+
+    const RotaPublica = rotasPublicas.some((rota) => request.url.includes(rota));
+
+    if (this.auth.PossuiToken() && !RotaPublica) {
       request = request.clone({
         setHeaders: {
           'Authorization': `Bearer ${this.auth.returnToken()}`
         }
       });
-    }*/
-   
+    }
+
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
@@ -29,16 +43,16 @@ export class AuthInterceptors implements HttpInterceptor {
               // this.dialog.open(ConfirmComponent);
         }*/
         if (error.status === 400) {
-                this.dialog.openSnackBar(error?.error.erro)
-        
-          }
-        if (error.status === 401) {
-        this.dialog.openSnackBar(error?.error.erro)
-
-        }
-        if(error.status === 403){
           this.dialog.openSnackBar(error?.error.erro)
 
+        }
+        if (error.status === 401) {
+          this.dialog.openSnackBar(error?.error.erro)
+
+        }
+        if (error.status === 403) {
+          this.dialog.openSnackBar(error?.error.erro)
+          this.dialog.openSnackBar('Acesso negado. Você não tem permissão para executar esta ação.');
         }
         if (error.status === 501) {
           this.dialog.openSnackBar(error?.error.erro)

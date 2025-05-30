@@ -122,16 +122,9 @@
             <!-- Step 3 -->
             <div *ngIf="currentStep === 3" class="form-step">
                 <fieldset class="ng-fieldset">
-                    <legend>Razão Social (opcional)</legend>
-                    <input type="text" class="ng-input" placeholder="Razão Social" formControlName="razaoSocial" (keydown.enter)="focarProximoCampo('cnpj')">
-                </fieldset>
-                @if (isRequired('razaoSocial')) {
-                <small class="ng-error">Informe a Razão Social</small>
-                }
-                <fieldset class="ng-fieldset">
                     <legend>CNPJ (opcional)</legend>
                     <input type="text" class="ng-input" placeholder="CNPJ" formControlName="cnpj"
-                        mask="00.000.000/0000-00">
+                        >
                 </fieldset>
                 @if (isRequired('cnpj')) {
                 <small class="ng-error">Informe o CNPJ</small>
