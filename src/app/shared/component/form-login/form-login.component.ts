@@ -84,6 +84,17 @@ visible(){
       }, 0);
   }
 
+  pageResetPassword(){
+    this.activeRoute.activeLoading()
+    setTimeout(() => {
+        this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+          setTimeout(() => {
+            this.router.navigate(['/auth/resetPassword']);
+          }, 1000);
+        });
+      }, 0);
+  }
+
   isRequiredEmail(){
     return this.service.groupform.get('email')?.errors?.['required'] && this.service.groupform.get('email')?.touched
   }

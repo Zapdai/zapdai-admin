@@ -1,0 +1,43 @@
+.otp-wrapper {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.otp-input {
+  width: 40px;
+  height: 50px;
+  font-size: 24px;
+  text-align: center;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
+
+.success {
+  color: green;
+  text-align: center;
+  font-weight: bold;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  font-weight: bold;
+}
+
+.otp-container {
+  display: flex;
+  gap: 8px; /* espaço entre os inputs */
+  justify-content: center; /* centraliza na horizontal */
+}
+
+.otp-container input {
+  width: 40px;       /* largura fixa para cada input */
+  height: 40px;      /* altura fixa para deixar quadrado */
+  text-align: center; /* centraliza o texto digitado */
+  font-size: 16px; /* deixa o número maior */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+

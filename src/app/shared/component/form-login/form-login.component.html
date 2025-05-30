@@ -25,7 +25,7 @@
 
 
     <button  mat-flat-button color="secundary" class="ng-btn" (click)="btn()" [disabled]="!this.service.groupform.valid">Login</button>
-    <span class="ng-text">Esqueceu sua senha?</span>
+    <span class="ng-text" (click)="pageResetPassword()">Esqueceu sua senha?</span>
     <button class="ng-btn ng-btn-signup" mat-flat-button color="secundary" (click)="pageSignup()">Criar conta</button>
 
 </form>
