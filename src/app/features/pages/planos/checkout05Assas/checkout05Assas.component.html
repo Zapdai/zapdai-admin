@@ -218,33 +218,13 @@
                 <section class="ng-container2 ng-my-order">
                     <div class="ng-subContainer2">
                         <h4>Resumo da Compra</h4>
-                        <section class="ng-itemCompra" (click)="togglePopover($event)">
+                        <section class="ng-itemCompra">
                             <img src="logo.png" alt="Zapdai" />
                             <div>
-                                <h3>{{ selectedPlano?.title || event.title }}</h3>
-                                <p>{{ selectedPlano?.price || event.price | currency:'BRL':'symbol':'1.2-2' }}</p>
+                                <h3>{{ event.title }}</h3>
+                                <p>{{ event.price | currency:'BRL':'symbol':'1.2-2' }}</p>
                             </div>
                         </section>
-
-                        <!-- Popover custom -->
-                        <div class="custom-popover" *ngIf="showPopover" (clickOutside)="closePopover()">
-                            <p class="ng-planoTitulo">Selecione seu plano:</p>
-                            <div class="popover-content">
-                                <ul class="list-none p-0 m-0 flex flex-col">
-                                    <li *ngFor="let itens of itensPlanos"
-                                        class="flex items-center gap-2 px-2 py-3 hover:bg-emphasis cursor-pointer rounded-border"
-                                        (click)="selectPlano(itens); closePopover()">
-                                        <section class="ng-itemCompra">
-                                            <img src="logo.png" alt="Zapdai" />
-                                            <div>
-                                                <h3>{{ itens.title }}</h3>
-                                                <p>{{ itens.price | currency:'BRL':'symbol':'1.2-2' }}</p>
-                                            </div>
-                                        </section>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
 
                         <div class="valores">
                             <h4>Desconto:</h4>
@@ -252,7 +232,7 @@
                         </div>
                         <div class="valores">
                             <h4>Valor Total:</h4>
-                            <p>{{ selectedPlano?.price || event.price | currency:'BRL':'symbol':'1.2-2' }}</p>
+                            <p>{{ event.price | currency:'BRL':'symbol':'1.2-2' }}</p>
                         </div>
                         <hr>
                         @if (!isSmallScreen) {

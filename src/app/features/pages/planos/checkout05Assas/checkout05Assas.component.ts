@@ -8,12 +8,9 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxMaskDirective } from 'ngx-mask';
 import { MatIconModule } from '@angular/material/icon';
-import { Pagamento } from '../../../../shared/core/types/pagamento';
 import { apiPaymentsService } from '../../../../services/checkoutForm/apiPayments.service';
 import { PixPaymentRespons } from '../../../../shared/core/types/paymentPagamentopix';
-import { CheckoutPixComponent } from '../../../../shared/component/checkout/checkoutPix.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { environment } from '../../../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { loadingService } from '../../../../services/loading/loading.service';
@@ -92,17 +89,13 @@ export class Checkout05AssasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.emailUser = this.authService.getEmail()!;
+    this.emailUser = this.authService.getFromToken('sub')!;
 
     this.checkScreenWidth();
 
     this.pegaIpClient()
 
     this.pegaLatLog()
-
-    this.apiPlanosService.planosConsumoApi().subscribe(response => {
-      this.itensPlanos = response.planos.filter((plano: any) => plano.price > 0);
-    });
 
     this.rota.queryParams.subscribe(params => {
       const rawData = params['data'];
@@ -161,30 +154,6 @@ export class Checkout05AssasComponent implements OnInit {
     if (this.activeTab !== novoTab) {
       this.activeTab = novoTab;
     }
-  }
-
-  @ViewChild('op') op!: Popover;
-
-  selectedPlano: itens | null = null;
-  itensPlanos: itens[] = [];
-  showPopover = false;
-
-  togglePopover(event: MouseEvent) {
-    event.stopPropagation();
-    this.showPopover = !this.showPopover;
-  }
-
-  closePopover() {
-    this.showPopover = false;
-  }
-
-  selectPlano(plano: any) {
-    this.selectedPlano = plano;
-  }
-
-  @HostListener('document:click', ['$event'])
-  onClickOutside(event: MouseEvent) {
-    this.showPopover = false;
   }
 
 
@@ -345,15 +314,15 @@ export class Checkout05AssasComponent implements OnInit {
       "creditCardExpiryMonth": this.select("mes").value,
       "creditCardExpiryYear": this.select("ano").value,
       "creditCardCcv": this.select("cvv").value,
-      "value": this.selectedPlano?.price || this.event.price,
+      "value": this.event.price,
       //"installments": this.select("installments").value,
       //"ipClient": this.ipClient,
       "itens": [{
-        "id": this.selectedPlano?.planoId ?? this.event.planoId,
-        "title": this.selectedPlano?.title ?? this.event.title,
-        "description": this.selectedPlano?.subDescricaoPermition ?? this.event.subDescricaoPermition,
+        "id": this.event.planoId,
+        "title": this.event.title,
+        "description": this.event.subDescricaoPermition,
         "quantity": 1,
-        "price": this.selectedPlano?.price || this.event.price
+        "price": this.event.price
       }]
     }
     return data;

@@ -80,7 +80,7 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.emailUser = this.authService.getEmail()!;
+    this.emailUser = this.authService.getFromToken('sub')!;
 
     const navigation = this.router.getCurrentNavigation();
     this.datas = navigation?.extras?.state?.['data'];

@@ -28,8 +28,9 @@
             <div *ngIf="currentStep === 1" class="form-step">
                 <fieldset class="ng-fieldset">
                     <legend>Nome da Empresa</legend>
-                    <input type="text" class="ng-input" placeholder="Obs: Nome que vai aparecer para seus clientes"
-                        formControlName="nomeCompania" (keydown.enter)="focarProximoCampo('numeroDeTelefone')">
+                    <input #primeiroInput type="text" class="ng-input"
+                        placeholder="Obs: Nome que vai aparecer para seus clientes" formControlName="nomeCompania"
+                        (keydown.enter)="focarProximoCampo('numeroDeTelefone')">
                 </fieldset>
                 @if (isRequired('nomeCompania')) {
                 <small class="ng-error">Informe o Nome da Empresa</small>
@@ -61,8 +62,8 @@
                     <div>
                         <fieldset class="ng-fieldset">
                             <legend>CEP</legend>
-                            <input type="text" class="ng-input" placeholder="CEP" formControlName="cep" mask="00000-000"
-                                (keydown.enter)="focarProximoCampo('estado_sigla')">
+                            <input #primeiroInput type="text" class="ng-input" placeholder="CEP" formControlName="cep"
+                                mask="00000-000" (keydown.enter)="focarProximoCampo('estado_sigla')">
                         </fieldset>
                         @if (isRequired('cep')) {
                         <small class="ng-error">Informe um CEP válido!</small>
@@ -112,22 +113,43 @@
                 }
                 <fieldset class="ng-fieldset">
                     <legend>Nº da Casa/Apt</legend>
-                    <input type="text" class="ng-input" placeholder="Nº da Casa/Apt" formControlName="numeroEndereco" (keydown.enter)="next()">
+                    <input type="text" class="ng-input" placeholder="Nº da Casa/Apt" formControlName="numeroEndereco"
+                        (keydown.enter)="focarProximoCampo('complemento')">
                 </fieldset>
                 @if (isRequired('numeroEndereco')) {
                 <small class="ng-error">Informe o Nº da Casa ou Apt</small>
                 }
+                <fieldset class="ng-fieldset">
+                    <legend>Complemento (opcional)</legend>
+                    <input type="text" class="ng-input" placeholder="Complemento" formControlName="complemento"
+                        (keydown.enter)="next()">
+                </fieldset>
             </div>
 
             <!-- Step 3 -->
             <div *ngIf="currentStep === 3" class="form-step">
+                <p class="selectPlan">Selecione seu plano:</p>
+                <mat-chip-listbox class="mat-mdc-chip-set-stacked plano-lista" aria-label="Cutest dog breeds"
+                    (selectionChange)="onPlanoSelecionado($event)" formControlName="selectPlano">
+                    @for (item of itensPlanos.planos; track item.planoId) {
+                    <mat-chip-option class="chip-option" [selected]="item.planoId === planoSelecionado?.planoId"
+                        [value]="item.planoId">
+                        <p>{{item.title}} - {{ item.price | currency:'BRL':'symbol':'1.2-2' }}</p>
+                    </mat-chip-option>
+                    }
+                </mat-chip-listbox>
+                @if (isRequired('selectPlano')) {
+                <small class="ng-error">Precisa selecionar um Plano!</small>
+                }
+
                 <fieldset class="ng-fieldset">
-                    <legend>CNPJ (opcional)</legend>
-                    <input type="text" class="ng-input" placeholder="CNPJ" formControlName="cnpj"
-                        >
+                    <legend>CPF (Responsável) / CNPJ da Empresa</legend>
+                    <input #primeiroInput type="text" class="ng-input" placeholder="CPF / CNPJ"
+                        formControlName="cpfCnpj" mask="000.000.000-00||00.000.000/0000-00"
+                        [dropSpecialCharacters]="false">
                 </fieldset>
-                @if (isRequired('cnpj')) {
-                <small class="ng-error">Informe o CNPJ</small>
+                @if (isRequired('cpfCnpj')) {
+                <small class="ng-error">Informe um CPF ou CNPJ válido!</small>
                 }
             </div>
 

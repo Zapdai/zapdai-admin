@@ -6,14 +6,12 @@ import { MatInputModule } from '@angular/material/input';
 import { CheckoutFormService } from '../../../../services/checkoutForm/checkoutForm.service';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NgxMaskDirective } from 'ngx-mask';
 import { MatIconModule } from '@angular/material/icon';
 import { Pagamento } from '../../../../shared/core/types/pagamento';
 import { apiPaymentsService } from '../../../../services/checkoutForm/apiPayments.service';
 import { PixPaymentRespons } from '../../../../shared/core/types/paymentPagamentopix';
 import { CheckoutPixComponent } from '../../../../shared/component/checkout/checkoutPix.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { environment } from '../../../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { loadingService } from '../../../../services/loading/loading.service';
@@ -42,7 +40,6 @@ import { isPlatformBrowser } from '@angular/common';
     MatInputModule,
     ReactiveFormsModule,
     CommonModule,
-    NgxMaskDirective,
     FormsModule,
     MatIconModule,
     MatProgressSpinnerModule,
@@ -87,7 +84,7 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.emailUser = this.authService.getEmail()!;
+    this.emailUser = this.authService.getFromToken('sub')!;
 
     const navigation = this.router.getCurrentNavigation();
     this.datas = navigation?.extras?.state?.['data'];

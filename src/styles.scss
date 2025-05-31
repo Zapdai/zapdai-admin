@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 
@@ -37,8 +38,31 @@ select {
   font-size: 16px;
 }
 
+
 .snackbar-error {
-  background-color: #f44336;
-  color: white;
+  @include mat.snack-bar-overrides((
+    container-color: #a8190f,
+    button-color: white,
+    supporting-text-color: white,
+  ));
 }
+
+.snackbar-success {
+  @include mat.snack-bar-overrides((
+    container-color: #4caf50,
+    button-color: white,
+    supporting-text-color: white,
+  ));
+}
+
+.snackbar-info {
+  @include mat.snack-bar-overrides((
+    container-color: #2196f3,
+    button-color: white,
+    supporting-text-color: white,
+  ));
+}
+
+
+
 

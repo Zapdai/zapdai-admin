@@ -19,13 +19,31 @@ export class SnackService {
     });
   }
 
+  success(msg: string) {
+    this.snackBar.open(msg, 'X', {
+      duration: 5000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      panelClass: ['snackbar-success'],
+    });
+  }
+
   error(msg: string) {
-  this.snackBar.open(msg, 'X', {
-    duration: 5000,
-    horizontalPosition: this.horizontalPosition,
-    verticalPosition: this.verticalPosition,
-    panelClass: ['snackbar-error'],
-  });
+    this.snackBar.open(msg, 'X', {
+      duration: 5000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      panelClass: ['snackbar-error'],
+    });
+  }
+
+  info(msg: string) {
+    this.snackBar.open(msg, 'X', {
+      duration: 5000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      panelClass: ['snackbar-info'],
+    });
+  }
 }
 
-}

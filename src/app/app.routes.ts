@@ -12,7 +12,7 @@ export const routes: Routes = [
         path:"",redirectTo:"/home",pathMatch:"full",
     },
     {
-        path:"admin",loadChildren:()=>import("./features/features.routes").then(rota=>rota.routes), data:{acess:["ROLE_ADMIN","ROLE_MODERATOR"]}
+        path:"admin",loadChildren:()=>import("./features/features.routes").then(rota=>rota.routes), data:{acess:["ROLE_USER", "ROLE_ADMIN", "ROLE_MODERATOR"]}
     },
     {
        path:"auth",loadChildren:()=>import("./features/pages/auth/auth.routes").then(e=>e.routes)

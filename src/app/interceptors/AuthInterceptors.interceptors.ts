@@ -20,54 +20,70 @@ export class AuthInterceptors implements HttpInterceptor {
       '/auth/signin',
       '/auth/resetPassword',
       '/planos',
-      '/',
-      // adicione aqui todas as rotas públicas da sua API
+      '/home',
     ];
 
-    const RotaPublica = rotasPublicas.some((rota) => request.url.includes(rota));
+    // Melhor usar URL completa e comparar com `startsWith` ou usar Regex se necessário
+    const isPublicRoute = rotasPublicas.some((rota) => request.url.includes(rota));
 
-    if (this.auth.PossuiToken() && !RotaPublica) {
-      request = request.clone({
-        setHeaders: {
-          'Authorization': `Bearer ${this.auth.returnToken()}`
-        }
-      });
+    if (this.auth.PossuiToken() && !isPublicRoute) {
+      const token = this.auth.returnToken();
+
+      if (token) {
+        request = request.clone({
+          setHeaders: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+      }
     }
-
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        /*if (error.status === 500 ) {
-          this.authApi.$refreshtoken.next(true);
+        const mensagemErro = error?.error?.erro || 'Erro inesperado. Tente novamente mais tarde.';
 
-              // this.dialog.open(ConfirmComponent);
-        }*/
-        if (error.status === 400) {
-          this.dialog.openSnackBar(error?.error.erro)
+        if ([400, 401, 403, 501, 502, 503, 504].includes(error.status)) {
+          this.dialog.error(mensagemErro);
+        }
 
-        }
-        if (error.status === 401) {
-          this.dialog.openSnackBar(error?.error.erro)
-
-        }
-        if (error.status === 403) {
-          this.dialog.openSnackBar(error?.error.erro)
-          this.dialog.openSnackBar('Acesso negado. Você não tem permissão para executar esta ação.');
-        }
-        if (error.status === 501) {
-          this.dialog.openSnackBar(error?.error.erro)
-        }
-        else if (error.status === 502) {
-          this.dialog.openSnackBar(error?.error.erro)
-        }
-        else if (error.status === 503) {
-          this.dialog.openSnackBar(error?.error.erro)
-        }
-        else if (error.status === 504) {
-          this.dialog.openSnackBar(error?.error.erro)
-        }
-        return throwError(error.message);
+        return throwError(() => new Error(error.message));
       })
     );
+
+
+    // return next.handle(request).pipe(
+    //   catchError((error: HttpErrorResponse) => {
+    //     /*if (error.status === 500 ) {
+    //       this.authApi.$refreshtoken.next(true);
+
+    //           // this.dialog.open(ConfirmComponent);
+    //     }*/
+    //     if (error.status === 400) {
+    //       this.dialog.openSnackBar(error?.error.erro)
+
+    //     }
+    //     if (error.status === 401) {
+    //       this.dialog.openSnackBar(error?.error.erro)
+
+    //     }
+    //     if (error.status === 403) {
+    //       this.dialog.openSnackBar(error?.error.erro)
+    //       this.dialog.openSnackBar('Acesso negado. Você não tem permissão para executar esta ação.');
+    //     }
+    //     if (error.status === 501) {
+    //       this.dialog.openSnackBar(error?.error.erro)
+    //     }
+    //     else if (error.status === 502) {
+    //       this.dialog.openSnackBar(error?.error.erro)
+    //     }
+    //     else if (error.status === 503) {
+    //       this.dialog.openSnackBar(error?.error.erro)
+    //     }
+    //     else if (error.status === 504) {
+    //       this.dialog.openSnackBar(error?.error.erro)
+    //     }
+    //     return throwError(error.message);
+    //   })
+    // );
   }
 }

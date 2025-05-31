@@ -38,7 +38,7 @@ export class SignupComponent{
            this.auth.signup(event).subscribe((e:any)=>{
                const msg:any =JSON.stringify(e)
              if(e?.OK){
-                this.snack.openSnackBar(e?.OK);
+                this.snack.success(e?.OK);
                 this.form.groupform.reset();
                 this.router.navigate(['/auth/signin']);
              }

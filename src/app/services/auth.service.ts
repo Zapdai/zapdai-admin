@@ -40,18 +40,19 @@ export class AuthService {
         }
     }
 
-    getEmail(): string | null {
-        const token = this.returnToken();
-        if (!token) return null;
+    getFromToken(field: string): string | null {
+    const token = this.returnToken();
+    if (!token) return null;
 
-        try {
-            const payload = JSON.parse(atob(token.split('.')[1]));
-            return payload['sub'] || null;
-        } catch (e) {
-            console.error('Erro ao decodificar o token:', e);
-            return null;
-        }
+    try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload[field] || null;
+    } catch (e) {
+        console.error('Erro ao decodificar o token:', e);
+        return null;
     }
+}
+
 
 
 }

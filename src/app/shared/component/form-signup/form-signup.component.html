@@ -79,7 +79,7 @@
                                     <legend>CPF</legend>
                                     <input type="text" class="ng-input" autofocus="on" #formSlide2_1
                                         (keydown.enter)="enterSlide2(formSlide2_2)" placeholder="Seu CPF..."
-                                        formControlName="cpf" mask="000.000.000-00">
+                                        formControlName="cpf" mask="000.000.000-00" [dropSpecialCharacters]="false">
                                 </fieldset>
                                 @if (isRequired('cpf')) {
                                 <small class="ng-error">Informe um CPF válido!</small>
