@@ -395,16 +395,6 @@ export class Checkout05AssasComponent implements OnInit {
           );
           console.log(res)
         }
-      },
-      error: (err) => {
-        console.error('Erro ao processar pagamento:', err);
-
-        const mensagemErro = err?.error?.message || 'Erro ao processar o pagamento.';
-        const detalhes = err?.error?.cause?.[0]?.code || '';
-
-        this.snack.openSnackBar(
-          `❌ Falha ao processar pagamento.\n${mensagemErro}${detalhes ? `\nCódigo: ${detalhes}` : ''}`
-        );
       }
     });
 

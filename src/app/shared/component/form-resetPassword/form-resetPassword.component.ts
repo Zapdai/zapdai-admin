@@ -1,65 +1,79 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { cadastroEmpresaForm } from '../../../services/cadastroEmpresa/cadastroEmpresa.servide';
 import { NgxMaskDirective } from 'ngx-mask';
 import { loadingService } from '../../../services/loading/loading.service';
 import { Router } from '@angular/router';
 import { resetPasswordForm } from '../../../services/resetPassword/resetPassword.servide';
 import { InputOtpModule } from 'primeng/inputotp';
+import { verificationEmailApi } from '../../../services/verificationEmail/verificationEmailApi.service';
+import { SnackService } from '../../../services/snackBar/snack.service';
 import { InputOtp } from 'primeng/inputotp';
-import { inputOPTComponent } from "../inputOPT/inputOPT.component";
+import { PasswordModule } from 'primeng/password';
+import { PasswordStrengthBarComponent } from "../password/password-strength-bar.component";
+import { MatIconModule } from '@angular/material/icon';
+import { resetPasswordApi } from '../../../services/resetPassword/resetPasswordApi.service';
 
 type ResetPasswordControls = keyof resetPasswordForm['passwordform']['controls'];
 
 @Component({
   selector: 'app-form-resetPassword',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, NgxMaskDirective, InputOtpModule, FormsModule, inputOPTComponent],
+  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatIconModule, InputOtpModule, FormsModule, InputOtp, PasswordModule, PasswordStrengthBarComponent],
   templateUrl: './form-resetPassword.component.html',
   styleUrls: ['./form-resetPassword.component.scss']
 })
-export class FormResetPasswordComponent {
-  @ViewChild('otpRef') otpComponent!: any;
+export class FormResetPasswordComponent implements OnInit, AfterViewInit {
   currentStep = 1;
-  validoOPT: any
-  codigoOTP: string = '';
-  otpInvalido = false;
-
+  ativo = false;
+  icon: "visibility" | "visibility_off" = "visibility"
+  
+  @ViewChild('primeiroInput') primeiroInput!: ElementRef;
 
   constructor(
     public form: resetPasswordForm,
     private cd: ChangeDetectorRef,
     private activeRoute: loadingService,
     private router: Router,
+    private verificationEmailApi: verificationEmailApi,
+    private resetPasswordApi: resetPasswordApi,
+    private snack: SnackService,
   ) { }
+
 
   stepFields: Record<number, ResetPasswordControls[]> = {
     1: ['email'],
-    2: [],
-    3: []
+    2: ['code'],
+    3: ['password', 'repeatPassword']
   };
 
-
-  onCodigoCompleto(codigo: string) {
-    console.log('Código completo recebido:', codigo);
-    // Aqui você chama a validação do OTP
-    this.validarOTP(codigo);
+  ngAfterViewInit(): void {
+    this.focarPrimeiroCampo();
   }
 
-  validarOTP(codigo: string) {
-    if (codigo === '123456') {
-      this.otpInvalido = false;
-      this.currentStep++;
-    } else {
-      this.otpInvalido = true;
+  ngOnInit(): void {
+    const codeControl = this.form.passwordform.get('code');
+    if (codeControl) {
+      codeControl.valueChanges.subscribe(value => {
+        if (value && value !== value.toUpperCase()) {
+          codeControl.setValue(value.toUpperCase(), { emitEvent: false });
+        }
+      });
     }
   }
 
 
-
+  visible() {
+    if (this.icon === "visibility") {
+      this.icon = "visibility_off"
+      this.ativo = true;
+    } else {
+      this.icon = "visibility"
+      this.ativo = false;
+    }
+  }
 
 
   isRequired(nome: string): boolean {
@@ -71,6 +85,38 @@ export class FormResetPasswordComponent {
     const hasEmailError = (nome === 'email') && control.errors?.['emailInvalido'];
 
     return (hasRequiredError && isTouched) || hasEmailError;
+  }
+
+  getFirstPasswordErrorMessage(): string | null {
+    const control = this.form.passwordform.get('password');
+    if (!control || !control.errors) return null;
+
+    const errors = control.errors;
+
+    if (errors['minLength']) {
+      return 'A senha precisa ter pelo menos 8 caracteres.';
+    }
+    if (errors['minUppercase']) {
+      return 'A senha precisa conter pelo menos uma letra maiúscula.';
+    }
+    if (errors['minLowercase']) {
+      return 'A senha precisa conter pelo menos uma letra minúscula.';
+    }
+    if (errors['minNumbers']) {
+      return 'A senha precisa conter pelo menos um número.';
+    }
+    if (errors['minSymbols']) {
+      return 'A senha precisa conter pelo menos um símbolo especial.';
+    }
+
+    return null; // sem erros
+  }
+
+  senhasNaoConferem(): boolean {
+    return (
+      this.form.passwordform.hasError('senhasDiferentes') &&
+      !!this.form.passwordform.get('repeatPassword')?.touched
+    );
   }
 
   markCurrentStepTouched() {
@@ -107,41 +153,65 @@ export class FormResetPasswordComponent {
     }
   }
 
+  enviarCodigoEmail() {
+    const email = this.form.passwordform.value.email;
 
-
-  onSubmit() {
-    if (!this.isCurrentStepValid()) {
-      this.markCurrentStepTouched();
+    if (!email) {
+      this.form.passwordform.controls['email'].markAsTouched();
       return;
     }
 
-    const formData = this.form.passwordform.value;
+    const payload = { email };
 
-    // Suponha que essas informações vêm de outras fontes
-    const usuarioLogado = 2; // contém uid, email, etc.
-    const planoSelecionado = "";     // plano escolhido em outro momento
-
-    const empresaPayload = {
-      email: formData.email
-    };
-
-    // console.log('Payload enviado para API:', empresaPayload);
-    // this.empresaApi.registroEmpresa(empresaPayload).subscribe({
-    //   next: (res) => {
-    //     console.log('Empresa cadastrada com sucesso:', res);
-    //     this.activeRoute.activeLoading()
-    //     setTimeout(() => {
-    //       this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-    //         setTimeout(() => {
-    //           this.router.navigate(['/admin']);
-    //         }, 1000);
-    //       });
-    //     }, 0);
-    //   },
-    //   error: (err) => {
-    //     console.error('Erro ao cadastrar empresa:', err);
-    //   }
-    // });
+    this.verificationEmailApi.geraCodeEmail(payload).subscribe({
+      next: (res) => {
+        this.currentStep = 2; // Avança para o passo de verificação
+        this.snack.success('Código enviado para seu email!')
+      }
+    });
   }
 
+
+  validarCodigo() {
+    const email = this.form.passwordform.value.email;
+    const code = this.form.passwordform.value.code;
+
+    if (!email || !code) return;
+
+    this.verificationEmailApi.verificationCodeEmail({ email, code }).subscribe({
+      next: (res) => {
+        this.currentStep++; // Avança para o próximo passo, se quiser
+      }
+    });
+  }
+
+
+  novaSenha() {
+    const email = this.form.passwordform.value.email;
+    const newPasswd = this.form.passwordform.value.password;
+
+    if (!email || !newPasswd) return;
+
+    this.resetPasswordApi.resetPassword({ email, newPasswd }).subscribe({
+      next: (res) => {
+        this.form.passwordform.reset()
+        this.snack.success('Senha alterada com sucesso!')
+        this.activeRoute.activeLoading()
+        setTimeout(() => {
+          this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+            setTimeout(() => {
+              this.router.navigate(['/auth/signin']);
+            }, 1000);
+          });
+        }, 0);
+      }
+    });
+  }
+
+
+  focarPrimeiroCampo() {
+    if (this.primeiroInput && this.primeiroInput.nativeElement) {
+      this.primeiroInput.nativeElement.focus();
+    }
+  }
 }

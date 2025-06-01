@@ -21,6 +21,9 @@ export class AuthInterceptors implements HttpInterceptor {
       '/auth/resetPassword',
       '/planos',
       '/home',
+      '/zapdai/v1/usuario/verification',
+      '/zapdai/v1/usuario/code',
+      '/zapdai/v1/usuario/newpasswd ',
     ];
 
     // Melhor usar URL completa e comparar com `startsWith` ou usar Regex se necessário
@@ -40,7 +43,29 @@ export class AuthInterceptors implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        const mensagemErro = error?.error?.erro || 'Erro inesperado. Tente novamente mais tarde.';
+        let mensagemErro = 'Erro inesperado. Tente novamente mais tarde.';
+
+        // Tenta extrair mensagem personalizada
+        if (error.error) {
+          try {
+            // Caso error.error seja um objeto
+            if (typeof error.error === 'object' && error.error.erro) {
+              mensagemErro = error.error.erro;
+            }
+            // Caso error.error seja uma string JSON
+            else if (typeof error.error === 'string') {
+              const erroObj = JSON.parse(error.error);
+              if (erroObj.erro) {
+                mensagemErro = erroObj.erro;
+              } else {
+                mensagemErro = error.error;
+              }
+            }
+          } catch (_) {
+            // Se o JSON estiver malformado, mostra como string pura
+            mensagemErro = typeof error.error === 'string' ? error.error : mensagemErro;
+          }
+        }
 
         if ([400, 401, 403, 501, 502, 503, 504].includes(error.status)) {
           this.dialog.error(mensagemErro);
@@ -48,6 +73,7 @@ export class AuthInterceptors implements HttpInterceptor {
 
         return throwError(() => new Error(error.message));
       })
+
     );
 
 

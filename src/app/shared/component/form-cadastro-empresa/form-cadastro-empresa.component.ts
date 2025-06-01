@@ -220,9 +220,6 @@ export class FormCadastroEmpresaComponent implements OnInit, AfterViewInit {
             }, 1000);
           });
         }, 0);
-      },
-      error: (err) => {
-        this.snack.error(err);
       }
     });
   }

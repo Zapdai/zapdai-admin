@@ -89,7 +89,7 @@ visible(){
     setTimeout(() => {
         this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
           setTimeout(() => {
-            this.router.navigate(['/auth/resetPassword']);
+            this.router.navigate(['/auth/resetPassword'], { skipLocationChange: false });
           }, 1000);
         });
       }, 0);

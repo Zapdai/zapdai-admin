@@ -1,4 +1,4 @@
-import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 // validators.ts
 export function validarCPF(cpf: string): boolean {
@@ -117,3 +117,47 @@ export function validarCep(control: AbstractControl): ValidationErrors | null {
     return cepValido ? null : { cepInvalido: true };
 }
 
+
+
+export function senhaValidator(control: AbstractControl): ValidationErrors | null {
+    const senha: string = control.value || '';
+
+    if (!senha) return null;
+
+    // Regras para ser considerada forte:
+    // mínimo 8 caracteres, 1 maiúscula, 1 minúscula, 1 número e 1 símbolo
+    const minLength = 8;
+    const maiusculas = (senha.match(/[A-Z]/g) || []).length;
+    const minusculas = (senha.match(/[a-z]/g) || []).length;
+    const numeros = (senha.match(/[0-9]/g) || []).length;
+    const simbolos = (senha.match(/[^a-zA-Z0-9]/g) || []).length;
+
+    const erros: ValidationErrors = {};
+
+    if (senha.length < minLength) {
+        erros['minLength'] = { requiredLength: minLength, actualLength: senha.length };
+    }
+    if (maiusculas < 1) {
+        erros['minUppercase'] = { required: 1, actual: maiusculas };
+    }
+    if (minusculas < 1) {
+        erros['minLowercase'] = { required: 1, actual: minusculas };
+    }
+    if (numeros < 1) {
+        erros['minNumbers'] = { required: 1, actual: numeros };
+    }
+    if (simbolos < 1) {
+        erros['minSymbols'] = { required: 1, actual: simbolos };
+    }
+
+    return Object.keys(erros).length > 0 ? erros : null;
+}
+
+export const senhaIguaisValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
+    const senha = group.get('password')?.value;
+    const repetirSenha = group.get('repeatPassword')?.value;
+
+    if (!senha || !repetirSenha) return null;
+
+    return senha === repetirSenha ? null : { senhasDiferentes: true };
+};
