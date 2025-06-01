@@ -1,12 +1,10 @@
 import { Component } from "@angular/core";
-import { FormSignupComponent } from "../../../../shared/component/form-signup/form-signup.component";
 import { loadingService } from "../../../../services/loading/loading.service";
 import { Router } from "@angular/router";
 import { apiAuthService } from "../../../../services/apiAuth.service";
 import { cadastro } from "../../../../shared/core/types/cadastro";
 import { SnackService } from "../../../../services/snackBar/snack.service";
 import { registroForm } from "../../../../services/singNupForm/registroForm.servide";
-import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
 import { FormResetPasswordComponent } from "../../../../shared/component/form-resetPassword/form-resetPassword.component";
 
 @Component({
@@ -14,7 +12,7 @@ import { FormResetPasswordComponent } from "../../../../shared/component/form-re
     standalone:true,
     templateUrl:"./resetPassword.component.html",
     styleUrl:"./resetPassword.component.scss",
-    imports: [FormResetPasswordComponent, PageContainerComponent]
+    imports: [FormResetPasswordComponent]
 })
 export class ResetPasswordComponent{
     

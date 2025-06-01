@@ -15,7 +15,7 @@ export class resetPasswordApi {
     constructor(private http: HttpClient){}
 
     resetPassword(data: any): Observable<resetPassword> {
-        return this.http.post<resetPassword>(`${this.apiUrl}/zapdai/v1/usuario/code`, data).pipe()
+        return this.http.post<resetPassword>(`${this.apiUrl}/zapdai/v1/usuario/newpasswd`, data).pipe()
     }
 
 

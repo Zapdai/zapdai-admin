@@ -15,6 +15,7 @@ import { PasswordModule } from 'primeng/password';
 import { PasswordStrengthBarComponent } from "../password/password-strength-bar.component";
 import { MatIconModule } from '@angular/material/icon';
 import { resetPasswordApi } from '../../../services/resetPassword/resetPasswordApi.service';
+import e from 'express';
 
 type ResetPasswordControls = keyof resetPasswordForm['passwordform']['controls'];
 
@@ -163,11 +164,9 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
 
     const payload = { email };
 
-    this.verificationEmailApi.geraCodeEmail(payload).subscribe({
-      next: (res) => {
+    this.verificationEmailApi.geraCodeEmail(payload).subscribe((e:any)=>{
         this.currentStep = 2; // Avança para o passo de verificação
-        this.snack.success('Código enviado para seu email!')
-      }
+        this.snack.success(e.msg)
     });
   }
 
@@ -178,10 +177,11 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
 
     if (!email || !code) return;
 
-    this.verificationEmailApi.verificationCodeEmail({ email, code }).subscribe({
-      next: (res) => {
-        this.currentStep++; // Avança para o próximo passo, se quiser
-      }
+    this.verificationEmailApi.verificationCodeEmail({ email, code }).subscribe((res:any) => {
+       if(res.msg){
+         this.currentStep++;
+       } 
+      
     });
   }
 
@@ -192,10 +192,10 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
 
     if (!email || !newPasswd) return;
 
-    this.resetPasswordApi.resetPassword({ email, newPasswd }).subscribe({
-      next: (res) => {
-        this.form.passwordform.reset()
-        this.snack.success('Senha alterada com sucesso!')
+    this.resetPasswordApi.resetPassword({ email, newPasswd }).subscribe((res:any) => {
+        if(res.msg){
+          this.form.passwordform.reset()
+        this.snack.success(res.msg)
         this.activeRoute.activeLoading()
         setTimeout(() => {
           this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
@@ -204,7 +204,8 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
             }, 1000);
           });
         }, 0);
-      }
+        }
+      
     });
   }
 

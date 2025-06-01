@@ -19,6 +19,7 @@ export class verificationEmailApi {
     }
 
     verificationCodeEmail(data: any): Observable<verificationCodeEmail> {
+        console.log("minhas datas"+data)
         return this.http.post<verificationCodeEmail>(`${this.apiUrl}/zapdai/v1/usuario/verification`, data).pipe()
     }
 
