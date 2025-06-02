@@ -30,7 +30,7 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
   currentStep = 1;
   ativo = false;
   icon: "visibility" | "visibility_off" = "visibility"
-  
+
   @ViewChild('primeiroInput') primeiroInput!: ElementRef;
 
   constructor(
@@ -164,9 +164,9 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
 
     const payload = { email };
 
-    this.verificationEmailApi.geraCodeEmail(payload).subscribe((e:any)=>{
-        this.currentStep = 2; // Avança para o passo de verificação
-        this.snack.success(e.msg)
+    this.verificationEmailApi.geraCodeEmail(payload).subscribe((e: any) => {
+      this.currentStep = 2; // Avança para o passo de verificação
+      this.snack.success(e.msg)
     });
   }
 
@@ -177,36 +177,42 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
 
     if (!email || !code) return;
 
-    this.verificationEmailApi.verificationCodeEmail({ email, code }).subscribe((res:any) => {
-       if(res.msg){
-         this.currentStep++;
-       } 
-      
+    this.verificationEmailApi.verificationCodeEmail({ email, code }).subscribe((res: any) => {
+      if (res.msg) {
+        this.currentStep++;
+      }
+
     });
   }
 
 
   novaSenha() {
     const email = this.form.passwordform.value.email;
-    const newPasswd = this.form.passwordform.value.password;
+    const password = this.form.passwordform.value.password;
+    const repeatPassword = this.form.passwordform.value.repeatPassword;
 
-    if (!email || !newPasswd) return;
+    if (!email || !password) return;
 
-    this.resetPasswordApi.resetPassword({ email, newPasswd }).subscribe((res:any) => {
-        if(res.msg){
+    if (password === repeatPassword) {
+      this.resetPasswordApi.resetPassword({ email, password }).subscribe((res: any) => {
+        if (res.msg) {
           this.form.passwordform.reset()
-        this.snack.success(res.msg)
-        this.activeRoute.activeLoading()
-        setTimeout(() => {
-          this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-            setTimeout(() => {
-              this.router.navigate(['/auth/signin']);
-            }, 1000);
-          });
-        }, 0);
+          this.snack.success(res.msg)
+          this.activeRoute.activeLoading()
+          setTimeout(() => {
+            this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+              setTimeout(() => {
+                this.router.navigate(['/auth/signin']);
+              }, 1000);
+            });
+          }, 0);
         }
-      
-    });
+
+      });
+    } else {
+      this.snack.error("Senhas não conferem!")
+    }
+
   }
 
 
@@ -214,5 +220,28 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
     if (this.primeiroInput && this.primeiroInput.nativeElement) {
       this.primeiroInput.nativeElement.focus();
     }
+  }
+
+  pageSignin() {
+    this.activeRoute.activeLoading()
+    setTimeout(() => {
+      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+        setTimeout(() => {
+          this.router.navigate(['/auth/signin'])
+        }, 1000);
+      })
+
+    }, 0);
+  }
+
+  pageSignup() {
+    this.activeRoute.activeLoading()
+    setTimeout(() => {
+      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+        setTimeout(() => {
+          this.router.navigate(['/auth/signup']);
+        }, 1000);
+      });
+    }, 0);
   }
 }

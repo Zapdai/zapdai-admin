@@ -8,6 +8,8 @@ import { registroForm } from '../../../services/singNupForm/registroForm.servide
 import { cadastro } from '../../core/types/cadastro';
 import { SnackService } from '../../../services/snackBar/snack.service';
 import { NgxMaskDirective } from 'ngx-mask';
+import { Router } from '@angular/router';
+import { loadingService } from '../../../services/loading/loading.service';
 
 @Component({
   selector: 'app-form-signup',
@@ -31,7 +33,7 @@ export class FormSignupComponent {
   @ViewChild("formSlide2_3", { static: true }) formSlide2_3?: ElementRef
 
 
-  constructor(public form: registroForm, private snak: SnackService) { }
+  constructor(public form: registroForm, private snak: SnackService, private router:Router, private activeRoute:loadingService,) { }
 
   enterSlide2(event: any) {
     if (event) {
@@ -132,6 +134,29 @@ export class FormSignupComponent {
     } else {
       this.snak.openSnackBar("Senhas não conferem")
     }
+  }
+
+  pageSignin() {
+    this.activeRoute.activeLoading()
+    setTimeout(() => {
+      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+        setTimeout(() => {
+          this.router.navigate(['/auth/signin'])
+        }, 1000);
+      })
+
+    }, 0);
+  }
+
+  pageResetPassword(){
+    this.activeRoute.activeLoading()
+    setTimeout(() => {
+        this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+          setTimeout(() => {
+            this.router.navigate(['/auth/resetPassword'], { skipLocationChange: false });
+          }, 1000);
+        });
+      }, 0);
   }
 
 }
