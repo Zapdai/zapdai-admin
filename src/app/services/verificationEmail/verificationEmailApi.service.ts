@@ -15,12 +15,11 @@ export class verificationEmailApi {
     constructor(private http: HttpClient){}
 
     geraCodeEmail(data: any): Observable<geraCodeEmail> {
-        return this.http.post<geraCodeEmail>(`${this.apiUrl}/zapdai/v1/usuario/code`, data).pipe()
+        return this.http.put<geraCodeEmail>(`${this.apiUrl}/zapdai/v1/usuario/code`, data).pipe()
     }
 
     verificationCodeEmail(data: any): Observable<verificationCodeEmail> {
-        console.log("minhas datas"+data)
-        return this.http.post<verificationCodeEmail>(`${this.apiUrl}/zapdai/v1/usuario/verification`, data).pipe()
+        return this.http.put<verificationCodeEmail>(`${this.apiUrl}/zapdai/v1/usuario/verification`, data).pipe()
     }
 
 

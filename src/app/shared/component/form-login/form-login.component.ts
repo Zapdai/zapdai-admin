@@ -50,8 +50,10 @@ export class FormLoginComponent {
 perfil = "admin"
   btn() {
     this.auth.login(this.data()).subscribe(item => {
+          this.service.groupform.reset()
       if (item.authToken !== null) {
         this.authService.saveToken(item.authToken);
+        
 
         // Recupera a URL salva (ou define '/' como padrão)
         const returnUrl = localStorage.getItem('returnUrl') || '/';

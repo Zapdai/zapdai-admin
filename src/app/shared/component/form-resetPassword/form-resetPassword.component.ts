@@ -188,13 +188,13 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
 
   novaSenha() {
     const email = this.form.passwordform.value.email;
-    const password = this.form.passwordform.value.password;
+    const newPasswd = this.form.passwordform.value.password;
     const repeatPassword = this.form.passwordform.value.repeatPassword;
 
-    if (!email || !password) return;
+    if (!email || !newPasswd) return;
 
-    if (password === repeatPassword) {
-      this.resetPasswordApi.resetPassword({ email, password }).subscribe((res: any) => {
+    if (newPasswd === repeatPassword) {
+      this.resetPasswordApi.resetPassword({ email, newPasswd }).subscribe((res: any) => {
         if (res.msg) {
           this.form.passwordform.reset()
           this.snack.success(res.msg)
