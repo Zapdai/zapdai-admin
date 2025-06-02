@@ -36,23 +36,29 @@
                 light_mode
             </mat-icon>
             <small class="ng-perfil-name">Olá Elivandro</small>
-            <mat-icon class="ng-avatar-icon">
+            <mat-icon class="ng-avatar-icon" (click)="Tmenu()">
                 person
             </mat-icon>
         </section>
         }
-        <p-popover #op>
-            <div class="flex flex-col gap-4 ng-popover">
-                <div>
-                    <p>{{ emailUser }}</p>
-                    <hr>
-                    <button>Meus Pedidos</button>
-                    <button>Configurações</button>
-                    <button>Editar Perfil</button>
-                    <button (click)="deslogar()">Log Out</button>
+        @if (exibimenu) {
+        <div  class="menu">
+            <div class="menu_drop">
+                <p>{{ emailUser }}</p>
+                <div class="menu_area">
+
+                    <nav>
+                        <ul>
+                            <li>Meus Pedidos</li>
+                            <li>Configurações</li>
+                            <li>Editar Perfil</li>
+                            <li (click)="deslogar()">Log Out</li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
-        </p-popover>
+        </div>
+    }
     </div>
 
 </header>

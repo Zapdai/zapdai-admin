@@ -40,7 +40,7 @@ export class headerComponent implements OnInit {
     ativo = true;
     isHome: boolean = false;
     emailUser: any;
-
+     exibimenu = false;
     constructor(
         private router: Router,
         private activeRouter: loadingService,
@@ -142,5 +142,9 @@ export class headerComponent implements OnInit {
             })
 
         }, 0);
+    }
+   
+    Tmenu(){
+      this.exibimenu = !this.exibimenu;
     }
 }

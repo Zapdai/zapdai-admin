@@ -1,5 +1,6 @@
 @media screen and (min-width:700px) {
     .categoria {
+        
         background-color: #0a1630;
         padding: 0 40px;
 
@@ -17,10 +18,10 @@
         .ng-checkout {
             display: flex;
             align-items: center;
-            justify-content: end;
+            padding: 0 10px;
             height: 100%;
-            margin-right: 1.3em;
             gap: 0 15px;
+            background-color: #FF9933;
             cursor: pointer;
 
             .mat-icon {
@@ -146,6 +147,7 @@
                 border-radius: 50%;
                 line-height: 30px;
                 text-align: center;
+                cursor: pointer;
             }
         }
     }
@@ -159,6 +161,35 @@
         border-radius:12px;
         padding: 10px;
         margin-top: 5px
+    }
+    .menu{
+        background-color: #0a1630;
+        right: 1px;
+        top: 5%;
+        position: absolute;
+        padding: 0 5px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        .menu_drop{
+            display: flex;
+            flex-direction: column;
+            padding: 10px 0;
+            .menu_area{
+                display: flex;
+            flex-direction: column;
+                        margin-top: 5px;
+
+            li{
+                padding: 5px 00;
+                font-size: 15px;
+                cursor: pointer;
+            }
+            li:hover{
+                background-color: #064b5a;
+            }
+
+            }
+        }
     }
 
 }
