@@ -1,17 +1,20 @@
 @media screen and (min-width:700px) {
-    .categoria{
-        background-color:#0a1630;
+    .categoria {
+        background-color: #0a1630;
         padding: 0 40px;
-        form input{
+
+        form input {
             border-radius: 5px;
             height: 30px;
         }
-        .search{
-            .icone:active{
+
+        .search {
+            .icone:active {
                 transform: scale(0.92);
             }
         }
-        .ng-checkout{
+
+        .ng-checkout {
             display: flex;
             align-items: center;
             justify-content: end;
@@ -19,9 +22,11 @@
             margin-right: 1.3em;
             gap: 0 15px;
             cursor: pointer;
-            .mat-icon{
+
+            .mat-icon {
                 color: #fff;
             }
+
             .ng-btn-empresas {
                 width: 160px;
                 height: 100%;
@@ -30,65 +35,78 @@
                 text-align: center;
                 color: #ddd;
                 cursor: pointer;
-            }.ng-btn-empresas:hover {
+            }
+
+            .ng-btn-empresas:hover {
                 background-color: #192c57;
             }
-            button{
+
+            button {
                 margin-left: 10px;
-                background-color:#FF9933 ;
+                background-color: #FF9933;
                 padding: 5px 20px;
                 border: 0;
                 border-radius: 5px;
                 cursor: pointer;
 
             }
-            button:active{
+
+            button:active {
                 transform: scale(0.92);
             }
-            .btn1{
-                background-color:#FF9933 ;
+
+            .btn1 {
+                background-color: #FF9933;
             }
-            .btn2{
-                background-color:#f7f5f4 ;
+
+            .btn2 {
+                background-color: #f7f5f4;
             }
-            .btn1:hover{
+
+            .btn1:hover {
                 background-color: #928c45;
                 color: #FFF;
             }
-            .btn2:hover{
+
+            .btn2:hover {
                 background-color: #b5f1ff;
                 color: #0f0f0f;
             }
         }
     }
-    .ng-header{
-        box-sizing: 0px  0x 0px 1px;
+
+    .ng-header {
+        box-sizing: 0px 0x 0px 1px;
         display: flex;
-        justify-content:space-between;
+        justify-content: space-between;
         height: 55px;
         align-items: center;
-    
-        .ng-logo{
-                width:160px;
-                height: 40px;
-                background-size: contain;
-                background-image: url("/logo.png");
-                padding: 18px 2px;
-                background-repeat: no-repeat;
-                margin-left: 10px;
-                display: flex;
-                align-items: center;
-                justify-content: end;
-                cursor: pointer;
-                .icon{
-                    text-align: center;
-                    cursor: pointer;
+        padding: 0 20px;
 
-                }
-        }
-        .ng-form form{
+        .ng-logo {
+            width: 160px;
+            height: 40px;
+            background-size: contain;
+            background-image: url("/logo.png");
+            padding: 18px 2px;
+            background-repeat: no-repeat;
+            margin-left: 10px;
             display: flex;
-            .search{
+            align-items: center;
+            justify-content: end;
+            cursor: pointer;
+
+            .icon {
+                text-align: center;
+                cursor: pointer;
+
+            }
+        }
+
+        .ng-form form {
+            display: flex;
+
+            .search {
                 width: 400px;
                 display: flex;
                 align-items: center;
@@ -96,27 +114,51 @@
                 padding: 0 10px;
                 border-radius: 5px;
                 border: 1px solid #cac9c9;
-                .ng-input{
+
+                .ng-input {
                     flex: 1;
                     padding: 5px;
                     outline: none;
                     border: 0;
                 }
-                mat-icon{
+
+                mat-icon {
                     padding: 0 2px;
                     cursor: pointer;
                 }
             }
-            
+
         }
-        .ng-perfil{
+
+        .ng-perfil {
             display: flex;
             align-items: center;
             gap: 10px;
-            .ng-perfil-name{
+
+            .ng-perfil-name {
                 font-size: 12px;
+            }
+
+            .ng-avatar-icon {
+                width: 35px;
+                height: 35px;
+                background-color: #ccc;
+                border-radius: 50%;
+                line-height: 30px;
+                text-align: center;
             }
         }
     }
-    
+
+    .ng-usuario-logado {
+        color: #fff;
+    }
+    .ng-popover {
+        background: rgba($color: #BBB, $alpha: 0.9);
+        width: 15dvw;
+        border-radius:12px;
+        padding: 10px;
+        margin-top: 5px
+    }
+
 }

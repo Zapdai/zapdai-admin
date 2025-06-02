@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import { PixPaymentRespons } from "../../core/types/paymentPagamentopix";
-import { QRCodeComponent } from 'angularx-qrcode';
 import { CommonModule } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
@@ -9,7 +8,7 @@ import * as QRCode from 'qrcode';
 @Component({
   selector: "app-checkoutPixAsaas",
   standalone: true,
-  imports: [QRCodeComponent, CommonModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule],
   templateUrl: "./checkoutPixAsaas.component.html",
   styleUrl: "checkoutPixAsaas.component.scss"
 })

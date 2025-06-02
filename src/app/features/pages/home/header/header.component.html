@@ -1,6 +1,6 @@
-<header class="ng-header" [ngClass]="categoria">
+<header class="ng-header" [ngClass]="[(categoria || ''), token != null && isHome ? 'ng-usuario-logado' : '']">
     <section class="ng-logo" (click)="pageHome()">
-        @if (usuario) {
+        @if (admin) {
         <mat-icon (click)="exibir()" class="icon">menu</mat-icon>
         }
     </section>
@@ -12,31 +12,47 @@
             </div>
         </form>
     </section>
-    @if (usuario) {
-    <section class="ng-perfil">
-        <mat-icon (click)="light()">
-            light_mode
-        </mat-icon>
-        <small class="ng-perfil-name">Olá Elivandro</small>
-        <mat-menu>
-            <mat-icon>
-                person
-            </mat-icon>
-        </mat-menu>
-    </section>
-    }
     @if (carrinho) {
     <section class="ng-checkout">
         <div class="ng-btn-empresas" (click)="pagePlanos()">Zapdai Empresas</div>
         <mat-icon (click)="light()">
             shopping_cart
         </mat-icon>
+        @if (token === null) {
         <button ngClass="btn1" (click)="pageSignin()">
             Login
         </button>
         <button ngClass="btn2" (click)="pageSignup()">
             Signin
         </button>
+        }
     </section>
     }
+
+    <div class="card flex justify-center">
+        @if (token != null) {
+        <section class="ng-perfil" (click)="toggle($event)">
+            <mat-icon (click)="light()">
+                light_mode
+            </mat-icon>
+            <small class="ng-perfil-name">Olá Elivandro</small>
+            <mat-icon class="ng-avatar-icon">
+                person
+            </mat-icon>
+        </section>
+        }
+        <p-popover #op>
+            <div class="flex flex-col gap-4 ng-popover">
+                <div>
+                    <p>{{ emailUser }}</p>
+                    <hr>
+                    <button>Meus Pedidos</button>
+                    <button>Configurações</button>
+                    <button>Editar Perfil</button>
+                    <button (click)="deslogar()">Log Out</button>
+                </div>
+            </div>
+        </p-popover>
+    </div>
+
 </header>
