@@ -4,6 +4,7 @@
     align-items: center;
     width: 380px;
     padding: 0 10x;
+    height: 480px;
     height: 100%;
     overflow: hidden;
 
@@ -15,6 +16,8 @@
         .slide_area {
             width: 400%;
             display: flex;
+                height: 440px;
+
 
             .slide {
                 width: 25%;
@@ -118,10 +121,11 @@
                     }
 
                     .ng-text {
-                        color: #bbb;
-                        font-size: 12px;
+                        color: #e7e4e4;
+                        font-size: 14px;
                         text-decoration: underline;
                         margin-top: 20px;
+                        cursor: pointer;
                     }
 
                     .ng-btn-signup {
@@ -146,8 +150,22 @@
 }
 
 .show {
+    
     width: 25%;
     padding: 30px;
+      .ng-form-n1 {
+                    display: flex;
+                    .ng-text {
+                        color: #e7e4e4;
+                        font-size: 14px;
+                        text-decoration: underline;
+                        margin-top: 20px;
+                        cursor: pointer;
+                        background-color: #FF8401;
+                        width: 100%;
+                    }
+      }
+
 }
 
 .first {

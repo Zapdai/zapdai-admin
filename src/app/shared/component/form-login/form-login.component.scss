@@ -84,16 +84,24 @@
 
     .ng-text {
         color: #bbb;
-        font-size: 12px;
+        font-size: 13px;
         text-decoration: underline;
         margin-top: 20px;
+        cursor: pointer;
+    }
+     .ng-text:hover {
+        color: #c5d1fa;
+        
     }
 
     .ng-btn-signup {
-        height: 25px;
-        border-radius: 10px;
+        height: 28px;
+        border-radius: 5px;
         background-color: #ccc;
         margin-top: 20px;
+    }
+    .ng-btn-signup:hover {
+        background-color: #ccc;
     }
 }
 @media screen and (min-width:475px){
