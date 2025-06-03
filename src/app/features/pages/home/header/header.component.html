@@ -32,23 +32,23 @@
     <div class="card flex justify-center">
         @if (token != null) {
         <section class="ng-perfil" (click)="toggle($event)">
-            
 
-            
+
+
             <small class="ng-perfil-name">Olá {{authDecodeUser.getName().split(" ")[0]}}</small>
             @if (!authDecodeUser.getAvatar()) {
             <mat-icon class="ng-avatar-icon" (click)="Tmenu()">
                 person
             </mat-icon>
             }@else {
-                <div  class="avatar" (click)="Tmenu()">
-                   <img [src]="authDecodeUser.getAvatar()"/>
-                </div>
+            <div class="avatar" (click)="Tmenu()">
+                <img [src]="authDecodeUser.getAvatar()" />
+            </div>
             }
         </section>
         }
         @if (exibimenu) {
-        <div  class="menu">
+        <div class="menu">
             <div class="menu_drop">
                 <div class="detalhes">
                     <p>{{ authDecodeUser.getSub() }}</p>
@@ -60,7 +60,13 @@
                         <ul>
                             <li>Editar Perfil</li>
                             <li>Meus Pedidos</li>
-                            <li>Configurações</li>   
+                            <li>Configurações</li>
+                            <!-- so aparecer quando o usuario estiver logado e o perfil for admin -->
+                             @if (!isAdminRoute() && authDecodeUser.getRole().includes("ROLE_ADMIN")) {
+                                <li (click)="adminrouter()" [class.disabled]="isAdminRoute()">zapdai
+                                admin</li>
+                             }
+                            
                         </ul>
                     </nav>
                 </div>
@@ -70,7 +76,7 @@
                 </div>
             </div>
         </div>
-    }
+        }
     </div>
 
 </header>

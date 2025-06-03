@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angu
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { NavigationEnd, Router } from "@angular/router";
+import { ActivatedRoute, NavigationEnd, Router, RouterLink } from "@angular/router";
 import { loadingService } from "../../../../services/loading/loading.service";
 import { SnackService } from "../../../../services/snackBar/snack.service";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -23,7 +23,7 @@ import { AuthService } from "../../../../services/auth.service";
     imports: [MatIconModule, CommonModule,
         MatIconModule, ReactiveFormsModule,
         MatMenuModule, MatSnackBarModule,
-        PopoverModule, ButtonModule,
+        PopoverModule, ButtonModule
     ]
 })
 export class headerComponent implements OnInit {
@@ -40,7 +40,7 @@ export class headerComponent implements OnInit {
     })
     ativo = true;
     isHome: boolean = false;
-     exibimenu = false;
+    exibimenu = false;
     constructor(
         private router: Router,
         private activeRouter: loadingService,
@@ -48,7 +48,8 @@ export class headerComponent implements OnInit {
         private socket: ConfirmPagamentoSocketComponent,
         private auth: AuthService,
         private cdRef: ChangeDetectorRef,
-        public authDecodeUser:AuthDecodeService
+        public authDecodeUser: AuthDecodeService,
+        private activatedRoute: ActivatedRoute
     ) { }
 
     ngOnInit(): void {
@@ -94,7 +95,7 @@ export class headerComponent implements OnInit {
         this.ativaMenu.emit()
     }
 
-    deslogar (){
+    deslogar() {
         this.auth.RemoveToken()
         this.pageSignin()
     }
@@ -109,6 +110,20 @@ export class headerComponent implements OnInit {
             })
 
         }, 0);
+    }
+    adminrouter() {
+        this.activeRouter.activeLoading()
+        setTimeout(() => {
+            this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+                setTimeout(() => {
+                    this.router.navigate(['/admin'])
+                }, 1000);
+            })
+
+        }, 0);
+    }
+    isAdminRoute(): boolean {
+        return this.router.url === '/admin';
     }
     pageSignup() {
         this.activeRouter.activeLoading()
@@ -143,8 +158,8 @@ export class headerComponent implements OnInit {
 
         }, 0);
     }
-   
-    Tmenu(){
-      this.exibimenu = !this.exibimenu;
+
+    Tmenu() {
+        this.exibimenu = !this.exibimenu;
     }
 }
