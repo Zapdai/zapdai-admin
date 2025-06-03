@@ -36,7 +36,7 @@ export class FormLoginComponent {
 
   data ():any {
       const dataName = {
-          email: this.select('email').value,
+          email: this.select('email').value.toLowerCase(),
           password: this.select('password').value
       }
       return dataName

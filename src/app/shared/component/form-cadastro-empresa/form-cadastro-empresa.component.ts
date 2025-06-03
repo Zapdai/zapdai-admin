@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { cadastroEmpresaForm } from '../../../services/cadastroEmpresa/cadastroEmpresa.servide';
@@ -32,12 +32,16 @@ export class FormCadastroEmpresaComponent implements OnInit, AfterViewInit {
   usuarioId = ''
   itensPlanos: itensPlanos = { planos: [] };
   planoSelecionado: any = null;
+  latitude: number | null = null;
+  longitude: number | null = null;
+  error: string | null = null;
 
 
   @ViewChild('primeiroInput') primeiroInput!: ElementRef;
 
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
     public form: cadastroEmpresaForm,
     private cd: ChangeDetectorRef,
     public cepApi: cepApiBrasilService,
@@ -48,7 +52,7 @@ export class FormCadastroEmpresaComponent implements OnInit, AfterViewInit {
     private apiPlanosService: PlanoService,
     private route: ActivatedRoute,
     private snack: SnackService,
-    private authUser:AuthDecodeService
+    private authUser: AuthDecodeService
   ) { }
 
   ngAfterViewInit(): void {
@@ -56,8 +60,12 @@ export class FormCadastroEmpresaComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.emailUser = this.authUser.getSub();
+    this.emailUser = this.authUser.getSub().toLowerCase();
     this.usuarioId = this.authUser.getusuarioId();
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.pegaLatLog();
+    }
 
     this.buscaPlanoUrl()
 
@@ -100,6 +108,28 @@ export class FormCadastroEmpresaComponent implements OnInit, AfterViewInit {
 
   trackByPlanoId(index: number, item: itens): string {
     return item.planoId ?? index.toString();
+  }
+
+  pegaLatLog() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.latitude = position.coords.latitude;
+          this.longitude = position.coords.longitude;
+          console.log(position)
+        },
+        (err) => {
+          this.error = 'Erro ao obter localização: ' + err.message;
+        },
+        {
+          enableHighAccuracy: true, // usa GPS se disponível
+          timeout: 10000,
+          maximumAge: 0
+        }
+      );
+    } else {
+      this.error = 'Geolocalização não suportada no navegador.';
+    }
   }
 
 
@@ -192,13 +222,13 @@ export class FormCadastroEmpresaComponent implements OnInit, AfterViewInit {
 
     const empresaPayload = {
       nomeCompania: formData.nomeCompania,
-      email: formData.email,
+      email: formData.email?.toLowerCase(),
       cpfCnpj: formData.cpfCnpj,
       numeroDeTelefone: formData.numeroEndereco,
       planoId: this.planoSelecionado.planoId,
       endereco: {
         numeroEndereco: formData.numeroEndereco,
-        latLong: "",
+        latLong: `${this.latitude}, ${this.longitude}`,
         rua: formData.rua,
         logradouro: formData.complemento,
         estado_sigla: formData.estado_sigla,

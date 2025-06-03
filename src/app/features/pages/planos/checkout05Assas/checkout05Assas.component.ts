@@ -71,6 +71,7 @@ export class Checkout05AssasComponent implements OnInit {
   error: string | null = null;
   cpfCnpjMask: string = '000.000.000-00'; // padrão inicial
   selected: 'cpf' | 'cnpj' = 'cpf';
+  planoSelecionado: any = null;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -85,29 +86,46 @@ export class Checkout05AssasComponent implements OnInit {
     private socketService: ConfirmPagamentoSocketComponent,
     public cepApi: cepApiBrasilService,
     private ipClientApi: IpService,
-    public authUser:AuthDecodeService
+    public authUser: AuthDecodeService,
+    private route: ActivatedRoute,
   ) {
-    
+
 
   }
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.pegaLatLog();
+    }
     this.checkScreenWidth();
 
     this.pegaIpClient()
 
-    this.pegaLatLog()
-
-    this.rota.queryParams.subscribe(params => {
-      const rawData = params['data'];
-      this.event = rawData ? JSON.parse(rawData) : null;
-    });
+    this.buscaPlanoUrl()
 
     this.form.checkoutForm.get('cep')?.valueChanges.subscribe((cep) => {
       if (cep && cep.length === 8) {
         this.buscarEnderecoPorCep(cep);
       }
     });
+  }
+
+  buscaPlanoUrl() {
+    const planoId = this.route.snapshot.queryParamMap.get('planoId');
+
+
+    if (planoId) {
+      this.apiPlanosService.planosConsumoApi().subscribe(res => {
+        const plano = res.planos.find(p => p.planoId === planoId);
+        if (plano) {
+          this.planoSelecionado = plano;
+        }
+      });
+    }
+  }
+
+  trackByPlanoId(index: number, item: itens): string {
+    return item.planoId ?? index.toString();
   }
 
   pegaIpClient() {
@@ -315,15 +333,15 @@ export class Checkout05AssasComponent implements OnInit {
       "creditCardExpiryMonth": this.select("mes").value,
       "creditCardExpiryYear": this.select("ano").value,
       "creditCardCcv": this.select("cvv").value,
-      "value": this.event.price,
+      "value": this.planoSelecionado.price,
       //"installments": this.select("installments").value,
       //"ipClient": this.ipClient,
       "itens": [{
-        "id": this.event.planoId,
-        "title": this.event.title,
-        "description": this.event.subDescricaoPermition,
+        "id": this.planoSelecionado.planoId,
+        "title": this.planoSelecionado.title,
+        "description": this.planoSelecionado.subDescricaoPermition,
         "quantity": 1,
-        "price": this.event.price
+        "price": this.planoSelecionado.price
       }]
     }
     return data;

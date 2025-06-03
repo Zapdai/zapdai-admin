@@ -36,7 +36,7 @@ export const routes: Routes = [
             },
             {
                 path:"create-business", component:CadastroEmpresaComponent, title: "Tela Cadastro de Empresa", 
-                canActivate:[authGuardian], data: { acess: ['ROLE_USER'] }
+                canActivate:[authGuardian], data: { acess: ['ROLE_USER', 'ROLE_ADMIN'] }
             },
         ]
     }

@@ -119,7 +119,7 @@ export class FormSignupComponent {
       cpf: this.select("cpf").value,
       dataNascimento: this.select("dataNascimento").value,
       sexo: this.select("sexo").value,
-      email: this.select("email").value,
+      email: this.select("email").value.toLowerCase(),
       password: this.select("password").value,
       endereco: {}
 

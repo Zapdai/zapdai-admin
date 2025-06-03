@@ -97,7 +97,7 @@ export class headerComponent implements OnInit {
 
     deslogar() {
         this.auth.RemoveToken()
-        this.pageSignin()
+        this.pageHome()
     }
 
     pageHome() {
@@ -148,16 +148,29 @@ export class headerComponent implements OnInit {
         }, 0);
     }
     pagePlanos() {
-        this.activeRouter.activeLoading()
-        setTimeout(() => {
-            this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-                setTimeout(() => {
-                    this.router.navigate(['/planos'])
-                }, 1000);
-            })
+        const role = this.authDecodeUser.getRole();
 
-        }, 0);
+        if (role && (role.includes("ROLE_ADMIN") || role.includes("ROLE_MODERATOR"))) {
+            this.activeRouter.activeLoading();
+            setTimeout(() => {
+                this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+                    setTimeout(() => {
+                        this.router.navigate(['/admin']);
+                    }, 1000);
+                });
+            }, 0);
+        } else {
+            this.activeRouter.activeLoading();
+            setTimeout(() => {
+                this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+                    setTimeout(() => {
+                        this.router.navigate(['/planos']);
+                    }, 1000);
+                });
+            }, 0);
+        }
     }
+
 
     Tmenu() {
         this.exibimenu = !this.exibimenu;

@@ -221,8 +221,8 @@
                         <section class="ng-itemCompra">
                             <img src="logo.png" alt="Zapdai" />
                             <div>
-                                <h3>{{ event.title }}</h3>
-                                <p>{{ event.price | currency:'BRL':'symbol':'1.2-2' }}</p>
+                                <h3>{{ planoSelecionado?.title }}</h3>
+                                <p>{{ planoSelecionado?.price | currency:'BRL':'symbol':'1.2-2' }}</p>
                             </div>
                         </section>
 
@@ -232,7 +232,7 @@
                         </div>
                         <div class="valores">
                             <h4>Valor Total:</h4>
-                            <p>{{ event.price | currency:'BRL':'symbol':'1.2-2' }}</p>
+                            <p>{{ planoSelecionado?.price | currency:'BRL':'symbol':'1.2-2' }}</p>
                         </div>
                         <hr>
                         @if (!isSmallScreen) {
