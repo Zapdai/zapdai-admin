@@ -115,7 +115,6 @@ export class FormCadastroEmpresaComponent implements OnInit, AfterViewInit {
           (position) => {
             this.latitude = position.coords.latitude;
             this.longitude = position.coords.longitude;
-            console.log('Localização:', this.latitude, this.longitude);
           },
           (err) => {
             this.error = 'Erro ao obter localização: ' + err.message;

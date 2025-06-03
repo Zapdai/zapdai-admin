@@ -14,16 +14,16 @@ export const routes:Routes = [
                path:"",component:DestaqueComponent
             },
             {
-                path:"dashboard",component:dashBoard,title:"Dashboard"
+                path:"dashboard",component:dashBoard,title:"Dashboard - Zapdai"
             },
             {
-                path:"clientes",component:ClientesComponentes,title:"Clientes"
+                path:"clientes",component:ClientesComponentes,title:"Clientes - Zapdai"
             },
             {
-                path:"produtos",component:ProdutosComponentes,title:"Produtos"
+                path:"produtos",component:ProdutosComponentes,title:"Produtos - Zapdai"
             },
             {
-                path:"pedidos",component:pedidosComponent,title:"Pedidos"
+                path:"pedidos",component:pedidosComponent,title:"Pedidos - Zapdai"
             }
         ]
         ,

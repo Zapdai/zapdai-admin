@@ -3,13 +3,14 @@ import { headerComponent } from "./header/header.component";
 import { menuDropComponent } from "./menuDropDown/menudrop.component";
 import { RouterOutlet } from "@angular/router";
 import { footerComponent } from "./foother/footer.component";
+import { MobileNavbarComponent } from "./mobile-navbar/mobile-navbar.component";
 
 @Component({
     selector:"app-home",
     templateUrl:"./home.component.html",
     styleUrl:"./home.component.scss",
     standalone:true,
-    imports:[headerComponent,menuDropComponent,RouterOutlet,footerComponent]
+    imports: [headerComponent, menuDropComponent, RouterOutlet, footerComponent, MobileNavbarComponent]
 })
 export class homeComponent{
     ativa = false;

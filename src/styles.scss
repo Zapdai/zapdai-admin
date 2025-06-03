@@ -32,6 +32,11 @@ body {
   overflow: hidden;
 }
 
+body, app-root {
+  padding-bottom: 60px;
+  margin: 0;
+}
+
 input,
 textarea,
 select {
@@ -40,29 +45,22 @@ select {
 
 
 .snackbar-error {
-  @include mat.snack-bar-overrides((
-    container-color: #a8190f,
-    button-color: white,
-    supporting-text-color: white,
-  ));
+  @include mat.snack-bar-overrides((container-color: #a8190f,
+      button-color: white,
+      supporting-text-color: white,
+    ));
 }
 
 .snackbar-success {
-  @include mat.snack-bar-overrides((
-    container-color: #4caf50,
-    button-color: white,
-    supporting-text-color: white,
-  ));
+  @include mat.snack-bar-overrides((container-color: #4caf50,
+      button-color: white,
+      supporting-text-color: white,
+    ));
 }
 
 .snackbar-info {
-  @include mat.snack-bar-overrides((
-    container-color: #2196f3,
-    button-color: white,
-    supporting-text-color: white,
-  ));
+  @include mat.snack-bar-overrides((container-color: #2196f3,
+      button-color: white,
+      supporting-text-color: white,
+    ));
 }
-
-
-
-

@@ -1,6 +1,6 @@
 .ng-container{
     display: flex;
-    height: calc(100vh - 82px);
+    height: 100vh;
     aside{
        overflow: hidden;
 
@@ -13,7 +13,7 @@
             overflow: auto;
             scrollbar-width: thin;
             scrollbar-color: #505861 #f2f2f2;
-            padding: 6px 10px;
+            padding: 0 10px;
 
         }
     }

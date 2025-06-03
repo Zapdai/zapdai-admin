@@ -7,10 +7,11 @@ import { ModalComponent } from '../../../shared/component/modal/modal.component'
 import { MaisPostadosComponent } from '../../../shared/component/mais-postados/mais-postados.component';
 import { PageContainerComponent } from "../../../shared/component/page-container/page-container.component";
 import { footerComponent } from "../home/foother/footer.component";
+import { MobileNavbarComponent } from "../home/mobile-navbar/mobile-navbar.component";
 
 @Component({
   selector: 'app-categorias',
-  imports: [headerComponent, OpcoesCategoriaComponent, CarrosselComponent, MaisPostadosComponent, PageContainerComponent, footerComponent],
+  imports: [headerComponent, OpcoesCategoriaComponent, CarrosselComponent, MaisPostadosComponent, PageContainerComponent, footerComponent, MobileNavbarComponent],
   templateUrl: './categorias.component.html',
   styleUrl: './categorias.component.scss'
 })

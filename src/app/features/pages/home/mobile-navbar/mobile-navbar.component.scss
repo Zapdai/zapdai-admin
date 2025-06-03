@@ -1,0 +1,41 @@
+.navbar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+
+  .nav-links {
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+    margin: 0;
+    list-style: none;
+
+    li {
+      a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: #666;
+        font-size: 11px;
+
+        mat-icon {
+          font-size: 24px;
+          color: #666;
+        }
+
+        &.active {
+          color: #1976d2; // cor do texto ativo
+
+          mat-icon {
+            color: #1976d2; // cor do ícone ativo
+          }
+        }
+      }
+    }
+  }
+}

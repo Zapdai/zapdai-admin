@@ -14,28 +14,28 @@ import { Checkout05AssasComponent } from "./checkout05Assas/checkout05Assas.comp
 
 export const routes: Routes = [
     {
-        path: '', component: PlanosComponent, title: "Tela de Planos e Preços", children: [            
+        path: '', component: PlanosComponent, title: "Tela de Planos e Preços - Zapdai", children: [            
             {
-                path:"", component: HomePlanosComponent, title: "Tela de Planos"
+                path:"", component: HomePlanosComponent, title: "Tela de Planos - Zapdai"
             },
             {
-                path:"checkout", component: Checkout05AssasComponent, title: "Tela de Checkout"
+                path:"checkout", component: Checkout05AssasComponent, title: "Tela de Checkout - Zapdai"
             },
             {
-                path:"checkout02", component: Checkout05AssasComponent, title: "Tela de Checkout", canActivate:[authGuardian]
+                path:"checkout02", component: Checkout05AssasComponent, title: "Tela de Checkout - Zapdai", canActivate:[authGuardian]
             },
             {
                 path:"payment",component:CheckoutPlanos03Component
             },
             {
-                path:"pos-checkout", component:PosCheckoutComponent, title: "Tela de Obrigado", 
+                path:"pos-checkout", component:PosCheckoutComponent, title: "Tela de Obrigado - Zapdai", 
                 canActivate:[authGuardian]
             },
             {
-                path:"loadingPayment", component:LoadingPaymentComponent, title: "Tela Cadastro de Empresa"
+                path:"loadingPayment", component:LoadingPaymentComponent, title: "Acessar Negocio - Zapdai"
             },
             {
-                path:"create-business", component:CadastroEmpresaComponent, title: "Tela Cadastro de Empresa", 
+                path:"create-business", component:CadastroEmpresaComponent, title: "Tela Cadastro de Empresa - Zapdai", 
                 canActivate:[authGuardian], data: { acess: ['ROLE_USER', 'ROLE_ADMIN'] }
             },
         ]

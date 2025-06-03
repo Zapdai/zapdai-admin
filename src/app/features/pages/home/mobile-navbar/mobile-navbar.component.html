@@ -1,0 +1,37 @@
+@if (isVisible) {
+<nav class="navbar">
+  <ul class="nav-links">
+    <li>
+      <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <mat-icon>home</mat-icon>
+        <span>Início</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/compras" routerLinkActive="active">
+        <mat-icon>shopping_bag</mat-icon>
+        <span>Compras</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/lojas" routerLinkActive="active">
+        <mat-icon>store</mat-icon>
+        <span>Lojas Próximas</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/notificacoes" routerLinkActive="active">
+        <mat-icon>notifications</mat-icon>
+        <span>Notificações</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/my-account" routerLinkActive="active">
+        <mat-icon>person</mat-icon>
+        <span>Minha Conta</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+}

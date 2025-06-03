@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
+import { Component, EventEmitter, HostListener, Inject, Input, OnInit, Output, PLATFORM_ID, ViewChild } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -14,6 +14,7 @@ import { PopoverModule } from 'primeng/popover';
 import { ButtonModule } from 'primeng/button';
 import { AuthDecodeService } from "../../../../services/AuthUser.service";
 import { AuthService } from "../../../../services/auth.service";
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
     selector: "app-header",
@@ -41,7 +42,10 @@ export class headerComponent implements OnInit {
     ativo = true;
     isHome: boolean = false;
     exibimenu = false;
+    isVisible = false;
+
     constructor(
+        @Inject(PLATFORM_ID) private platformId: any,
         private router: Router,
         private activeRouter: loadingService,
         private snack: SnackService,
@@ -51,6 +55,8 @@ export class headerComponent implements OnInit {
         public authDecodeUser: AuthDecodeService,
         private activatedRoute: ActivatedRoute
     ) { }
+
+
 
     ngOnInit(): void {
 
@@ -65,6 +71,10 @@ export class headerComponent implements OnInit {
         });
 
         this.token = this.auth.returnToken();
+
+        if (isPlatformBrowser(this.platformId)) {
+            this.checkWindowSize();
+        }
     }
 
     toggle(event: MouseEvent) {
@@ -93,6 +103,20 @@ export class headerComponent implements OnInit {
     }
     exibir() {
         this.ativaMenu.emit()
+    }
+
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event: any) {
+        if (isPlatformBrowser(this.platformId)) {
+            this.checkWindowSize();
+        }
+    }
+
+    checkWindowSize() {
+        if (isPlatformBrowser(this.platformId)) {
+            this.isVisible = window.innerWidth > 768;
+        }
     }
 
     deslogar() {
