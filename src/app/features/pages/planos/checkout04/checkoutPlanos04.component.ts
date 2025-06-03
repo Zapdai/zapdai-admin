@@ -26,6 +26,7 @@ import { Subscription } from 'rxjs';
 import { ConfirmPagamentoSocketComponent } from '../../../../services/pagamentosService/pagamentos.service';
 import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
 import { isPlatformBrowser } from '@angular/common';
+import { AuthDecodeService } from '../../../../services/AuthUser.service';
 
 
 
@@ -60,7 +61,6 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
   datas!: any;
   event: any;
   cardFormInstance: any = null;
-  emailUser: string = ''
   pollingSub!: Subscription;
   pagamentoSub?: Subscription | null;
 
@@ -79,12 +79,12 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
     private snack: SnackService,
     private authService: AuthService,
     private socketService: ConfirmPagamentoSocketComponent,
+    private authUser:AuthDecodeService,
     @Inject(PLATFORM_ID) private platformId: Object) {
 
   }
 
   ngOnInit(): void {
-    this.emailUser = this.authService.getFromToken('sub')!;
 
     const navigation = this.router.getCurrentNavigation();
     this.datas = navigation?.extras?.state?.['data'];
@@ -291,7 +291,7 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
       "transactionAmount": this.selectedPlano?.price || this.event.price,
       "description": this.selectedPlano?.title ?? this.event.title,
       "payer": {
-        "email": this.emailUser,
+        "email": this.authUser.getSub(),
         "first_name": primeiroNome,
         "last_name": sobrenome,
         "identification": {
@@ -345,7 +345,7 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
       installments: formData.installments,
       description: this.selectedPlano?.title ?? 'Plano Zapdai',
       payer: {
-        email: this.emailUser,
+        email: this.authUser.getSub(),
         first_name: primeiroNome,
         last_name: sobrenome,
         identification: {
@@ -386,7 +386,7 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
 
       // Conecta ao WebSocket (só se ainda não conectado)
       if (!this.pagamentoSub) {
-        this.socketService.socketWeb(this.emailUser);
+        this.socketService.socketWeb(this.authUser.getSub());
         this.pagamentoSub = this.socketService.pagamento$.subscribe((pagamento) => {
           console.log('Pagamento confirmado via WebSocket:', pagamento);
 

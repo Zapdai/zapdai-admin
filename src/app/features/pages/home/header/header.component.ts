@@ -8,11 +8,12 @@ import { loadingService } from "../../../../services/loading/loading.service";
 import { SnackService } from "../../../../services/snackBar/snack.service";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ConfirmPagamentoSocketComponent } from "../../../../services/pagamentosService/pagamentos.service";
-import { AuthService } from "../../../../services/auth.service";
 import { ChangeDetectorRef } from '@angular/core';
 import { Popover } from 'primeng/popover';
 import { PopoverModule } from 'primeng/popover';
 import { ButtonModule } from 'primeng/button';
+import { AuthDecodeService } from "../../../../services/AuthUser.service";
+import { AuthService } from "../../../../services/auth.service";
 
 @Component({
     selector: "app-header",
@@ -39,7 +40,6 @@ export class headerComponent implements OnInit {
     })
     ativo = true;
     isHome: boolean = false;
-    emailUser: any;
      exibimenu = false;
     constructor(
         private router: Router,
@@ -48,12 +48,12 @@ export class headerComponent implements OnInit {
         private socket: ConfirmPagamentoSocketComponent,
         private auth: AuthService,
         private cdRef: ChangeDetectorRef,
-        private authService: AuthService,
+        public authDecodeUser:AuthDecodeService
     ) { }
 
     ngOnInit(): void {
 
-        this.emailUser = this.authService.getFromToken('sub')!;
+        // this.emailUser = this.authService.getFromToken('sub')!;
         this.isHome = this.router.url === '/home';
 
         // Escuta mudanças de rota subsequentes

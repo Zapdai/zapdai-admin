@@ -14,6 +14,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { itens, itensPlanos } from '../../core/Plano/planosItens';
 import { PlanoService } from '../../../services/planosServices/planos.service';
 import { SnackService } from '../../../services/snackBar/snack.service';
+import { AuthDecodeService } from '../../../services/AuthUser.service';
 
 type EmpresaFormControls = keyof cadastroEmpresaForm['empresaform']['controls'];
 
@@ -47,6 +48,7 @@ export class FormCadastroEmpresaComponent implements OnInit, AfterViewInit {
     private apiPlanosService: PlanoService,
     private route: ActivatedRoute,
     private snack: SnackService,
+    private authUser:AuthDecodeService
   ) { }
 
   ngAfterViewInit(): void {
@@ -54,8 +56,8 @@ export class FormCadastroEmpresaComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.emailUser = this.authService.getFromToken('sub')!;
-    this.usuarioId = this.authService.getFromToken('usuarioId')!;
+    this.emailUser = this.authUser.getSub();
+    this.usuarioId = this.authUser.getusuarioId();
 
     this.buscaPlanoUrl()
 

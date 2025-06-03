@@ -29,6 +29,7 @@ import { cepApiBrasilService } from '../../../../services/cepApiBrasil/cep.servi
 import { IpService } from '../../../../services/IpDispositivoCliente/ipClient.service';
 import { paymentAsaas } from '../../../../shared/core/types/paymentAsaas';
 import { CheckoutPixAsaasComponent } from '../../../../shared/component/pixAsaas/checkoutPixAsaas.component';
+import { AuthDecodeService } from '../../../../services/AuthUser.service';
 
 
 @Component({
@@ -62,7 +63,6 @@ export class Checkout05AssasComponent implements OnInit {
   isSmallScreen: boolean = false;
   datas!: any;
   event: any;
-  emailUser: string = ''
   pollingSub!: Subscription;
   pagamentoSub?: Subscription | null;
   ipClient: string = '';
@@ -84,13 +84,14 @@ export class Checkout05AssasComponent implements OnInit {
     private authService: AuthService,
     private socketService: ConfirmPagamentoSocketComponent,
     public cepApi: cepApiBrasilService,
-    private ipClientApi: IpService) {
+    private ipClientApi: IpService,
+    public authUser:AuthDecodeService
+  ) {
+    
 
   }
 
   ngOnInit(): void {
-    this.emailUser = this.authService.getFromToken('sub')!;
-
     this.checkScreenWidth();
 
     this.pegaIpClient()
@@ -303,7 +304,7 @@ export class Checkout05AssasComponent implements OnInit {
       "paymentMethodId": this.activeTab,
       "name": this.select("NomeCompleto").value || '',
       "cpfCnpj": this.select("cpfCnpj").value,
-      "email": this.emailUser,
+      "email": this.authUser.getSub(),
       "phone": this.select("phone").value,
       "postalCode": this.select("cep").value,
       "addressNumber": this.select("numeroEndereco").value,
@@ -363,7 +364,7 @@ export class Checkout05AssasComponent implements OnInit {
 
           // Conecta ao WebSocket (só se ainda não conectado)
           if (!this.pagamentoSub) {
-            this.socketService.socketWeb(this.emailUser);
+            this.socketService.socketWeb(this.authUser.getSub());
             this.pagamentoSub = this.socketService.pagamento$.subscribe((pagamento) => {
               console.log('Pagamento confirmado via WebSocket:', pagamento);
 
@@ -420,7 +421,7 @@ export class Checkout05AssasComponent implements OnInit {
 
       // Conecta ao WebSocket (só se ainda não conectado)
       if (!this.pagamentoSub) {
-        this.socketService.socketWeb(this.emailUser);
+        this.socketService.socketWeb(this.authUser.getSub());
         this.pagamentoSub = this.socketService.pagamento$.subscribe((pagamento) => {
           console.log('Pagamento confirmado via WebSocket:', pagamento);
 

@@ -26,6 +26,7 @@ import { SnackService } from '../../../../services/snackBar/snack.service';
 import { AuthService } from '../../../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { ConfirmPagamentoSocketComponent } from '../../../../services/pagamentosService/pagamentos.service';
+import { AuthDecodeService } from '../../../../services/AuthUser.service';
 
 
 
@@ -74,13 +75,13 @@ export class CheckoutPlanos02Component implements AfterViewInit, OnInit {
     private activeRoute: loadingService,
     public apiPlanosService: PlanoService,
     private snack: SnackService,
-    private authService: AuthService,
+    private authService: AuthDecodeService,
     private socketService: ConfirmPagamentoSocketComponent) {
 
   }
 
   ngOnInit(): void {
-    this.emailUser = this.authService.getFromToken('sub')!;
+    this.emailUser = this.authService.getSub();
 
     const navigation = this.router.getCurrentNavigation();
     this.datas = navigation?.extras?.state?.['data'];
