@@ -63,9 +63,7 @@ export class FormCadastroEmpresaComponent implements OnInit, AfterViewInit {
     this.emailUser = this.authUser.getSub().toLowerCase();
     this.usuarioId = this.authUser.getusuarioId();
 
-    if (isPlatformBrowser(this.platformId)) {
-      this.pegaLatLog();
-    }
+    this.pegaLatLog();
 
     this.buscaPlanoUrl()
 
@@ -111,24 +109,30 @@ export class FormCadastroEmpresaComponent implements OnInit, AfterViewInit {
   }
 
   pegaLatLog() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.latitude = position.coords.latitude;
-          this.longitude = position.coords.longitude;
-          console.log(position)
-        },
-        (err) => {
-          this.error = 'Erro ao obter localização: ' + err.message;
-        },
-        {
-          enableHighAccuracy: true, // usa GPS se disponível
-          timeout: 10000,
-          maximumAge: 0
-        }
-      );
+    if (isPlatformBrowser(this.platformId)) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.latitude = position.coords.latitude;
+            this.longitude = position.coords.longitude;
+            console.log('Localização:', this.latitude, this.longitude);
+          },
+          (err) => {
+            this.error = 'Erro ao obter localização: ' + err.message;
+            console.error(this.error);
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+          }
+        );
+      } else {
+        this.error = 'Geolocalização não suportada no navegador.';
+        console.error(this.error);
+      }
     } else {
-      this.error = 'Geolocalização não suportada no navegador.';
+      console.warn('Código executado fora do browser.');
     }
   }
 
