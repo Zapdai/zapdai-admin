@@ -61,7 +61,7 @@
                             <ul>
                                 <li>Editar Perfil</li>
                                 <li>Meus Pedidos</li>
-                                <li>Configurações</li>
+                                <li (click)="pageMyAccount()">Minha Conta</li>
                                 <!-- so aparecer quando o usuario estiver logado e o perfil for admin -->
                                 @if (!isAdminRoute() && authDecodeUser.getRole().includes("ROLE_ADMIN")) {
                                 <li (click)="adminrouter()" [class.disabled]="isAdminRoute()">zapdai

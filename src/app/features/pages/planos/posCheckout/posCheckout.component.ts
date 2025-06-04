@@ -11,9 +11,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./posCheckout.component.scss']
 })
 export class PosCheckoutComponent {
-  
-  constructor (private router: Router){}
-  pageCadastroEmpresa(){
-    this.router.navigateByUrl('/planos/create-business', { skipLocationChange: false })
+
+  constructor(private router: Router) { }
+  pageAdmin() {
+    this.router.navigate(['/admin']);
   }
 }

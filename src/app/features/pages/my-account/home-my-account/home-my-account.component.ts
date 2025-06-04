@@ -7,7 +7,7 @@ import { MobileNavbarComponent } from "../../home/mobile-navbar/mobile-navbar.co
 @Component({
   selector: 'app-home-my-account',
   standalone: true,
-  imports: [PageContainerComponent, headerComponent, MobileNavbarComponent],
+  imports: [headerComponent, MobileNavbarComponent],
   templateUrl: './home-my-account.component.html',
   styleUrls: ['./home-my-account.component.scss']
 })

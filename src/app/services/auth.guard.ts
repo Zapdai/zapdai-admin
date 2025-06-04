@@ -19,7 +19,7 @@ export const authGuardian: CanActivateChildFn = (
     const perfisPermitidos: string[] = route.data['acess'] || [];
 
     // Se não há perfis exigidos, apenas estar logado é suficiente
-    // if (perfisPermitidos.length === 0) return true; falha 
+      if (perfisPermitidos.length === 0) return true;
 
     const temAcesso = perfisPermitidos.some(perfil =>
       userPerfis.includes(perfil)

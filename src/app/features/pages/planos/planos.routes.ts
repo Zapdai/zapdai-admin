@@ -32,11 +32,12 @@ export const routes: Routes = [
                 canActivate:[authGuardian]
             },
             {
-                path:"loadingPayment", component:LoadingPaymentComponent, title: "Acessar Negocio - Zapdai"
+                path:"loadingPayment", component:LoadingPaymentComponent, title: "Acessar Negocio - Zapdai", 
+                canActivate:[authGuardian]
             },
             {
                 path:"create-business", component:CadastroEmpresaComponent, title: "Tela Cadastro de Empresa - Zapdai", 
-                canActivate:[authGuardian], data: { acess: ['ROLE_USER', 'ROLE_ADMIN'] }
+                canActivate:[authGuardian], data: { acess: ['ROLE_USER'] }
             },
         ]
     }

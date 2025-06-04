@@ -14,65 +14,6 @@
                 transform: scale(0.92);
             }
         }
-
-        .ng-checkout {
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
-            height: 100%;
-            gap: 0 15px;
-            cursor: pointer;
-
-            .mat-icon {
-                color: #fff;
-            }
-
-            .ng-btn-empresas {
-                width: 160px;
-                height: 100%;
-                font-size: 16px;
-                align-content: center;
-                text-align: center;
-                color: #ddd;
-                cursor: pointer;
-            }
-
-            .ng-btn-empresas:hover {
-                background-color: #192c57;
-            }
-
-            button {
-                margin-left: 10px;
-                background-color: #FF9933;
-                padding: 5px 20px;
-                border: 0;
-                border-radius: 5px;
-                cursor: pointer;
-
-            }
-
-            button:active {
-                transform: scale(0.92);
-            }
-
-            .btn1 {
-                background-color: #FF9933;
-            }
-
-            .btn2 {
-                background-color: #f7f5f4;
-            }
-
-            .btn1:hover {
-                background-color: #928c45;
-                color: #FFF;
-            }
-
-            .btn2:hover {
-                background-color: #b5f1ff;
-                color: #0f0f0f;
-            }
-        }
     }
 
     .ng-header {
@@ -82,6 +23,8 @@
         height: 55px;
         align-items: center;
         padding: 0 20px;
+        background-color: #0a1630;
+        color: #ddd;
 
         .ng-logo {
             width: 160px;
@@ -165,6 +108,65 @@
                 cursor: pointer;
             }
         }
+
+        .ng-checkout {
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            height: 100%;
+            gap: 0 15px;
+            cursor: pointer;
+
+            .mat-icon {
+                color: #fff;
+            }
+
+            .ng-btn-empresas {
+                width: 160px;
+                height: 100%;
+                font-size: 16px;
+                align-content: center;
+                text-align: center;
+                color: #ddd;
+                cursor: pointer;
+            }
+
+            .ng-btn-empresas:hover {
+                background-color: #192c57;
+            }
+
+            button {
+                margin-left: 10px;
+                background-color: #FF9933;
+                padding: 5px 20px;
+                border: 0;
+                border-radius: 5px;
+                cursor: pointer;
+
+            }
+
+            button:active {
+                transform: scale(0.92);
+            }
+
+            .btn1 {
+                background-color: #FF9933;
+            }
+
+            .btn2 {
+                background-color: #f7f5f4;
+            }
+
+            .btn1:hover {
+                background-color: #928c45;
+                color: #FFF;
+            }
+
+            .btn2:hover {
+                background-color: #b5f1ff;
+                color: #0f0f0f;
+            }
+        }
     }
 
     .ng-usuario-logado {
@@ -226,6 +228,7 @@
                     transform: scale(0.97);
                     cursor: pointer;
                 }
+
                 .btn:hover {
                     background-color: #ac5f13;
                     transition: all 0.5s ease;

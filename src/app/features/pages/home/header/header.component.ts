@@ -195,6 +195,18 @@ export class headerComponent implements OnInit {
         }
     }
 
+    pageMyAccount() {
+        this.activeRouter.activeLoading()
+        setTimeout(() => {
+            this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+                setTimeout(() => {
+                    this.router.navigate(['/my-account'])
+                }, 1000);
+            })
+
+        }, 0);
+    }
+
 
     Tmenu() {
         this.exibimenu = !this.exibimenu;
