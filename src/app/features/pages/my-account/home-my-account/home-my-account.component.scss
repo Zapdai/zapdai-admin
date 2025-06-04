@@ -3,252 +3,120 @@
     height: 100dvh;
     background: #F2F2F2;
     overflow: auto;
-    position: fixed;
 
     .container {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
         padding: 30px;
-        gap: 2rem;
+        height: auto;
+        gap: 1.5rem;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-        .ng-cont1 {
+        .ng-perfil {
             display: flex;
-            flex-direction: column;
-            height: 25%;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
 
-            h2 {
-                text-align: center;
-                font-size: 18px;
-                margin-bottom: 20px;
-                color: #ddd;
+            .ng-perfil-name {
+                font-size: 16px;
+                font-weight: 600;
             }
 
-            .steps-indicator {
+            .avatar {
+                width: 85px;
+                height: 85px;
+                border-radius: 15px;
                 display: flex;
-                flex-direction: column;
+                align-items: center;
                 justify-content: center;
-                width: 100%;
-            }
-
-            .steps-indicator div {
-                display: flex;
-                justify-content: space-between;
-                width: 100%;
-                font-weight: 500;
-                color: #ddd;
-                gap: 10px;
-                font-size: 8px;
-
-                .ng-cont {
-                    display: flex;
-                    justify-content: space-around;
-                    align-items: center;
-                    flex-direction: row;
-                    gap: 0;
-                    cursor: default;
-                    user-select: none;
-                    transition: background-color 0.3s ease;
-                    padding: 0 30px;
-
-
-                    .ng-bola {
-                        display: inline-block;
-                        width: 20px;
-                        height: 20px;
-                        border-radius: 50%;
-                        background-color: #ccc;
-                        font-weight: 600;
-                        color: #555;
-                        line-height: 20px;
-                        text-align: center;
-                    }
-
-                    .ng-hr {
-                        width: 45%;
-                        height: 3px;
-                        background-color: #ddd;
-                    }
-
-
-                    .ng-bola.active,
-                    .ng-hr.active,
-                    .ng-p.active {
-                        background-color: #af5ffa;
-                        color: #ccc;
-                    }
-                }
-
-                .ng-p.active {
-                    color: #af5ffa;
-                }
-
-            }
-        }
-
-        .mat-mdc-chip-set {
-            max-width: 200px;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: 100%;
-            gap: 10px 0;
-
-            .form-step .ng-fieldset {
-                width: 100%;
-                padding: 2px;
-                border-radius: 5px;
-                margin-top: 15px;
-                border-color: #bbb;
-
-                legend {
-                    font-size: 12px;
-                    font-weight: 500;
-                    color: #bbb;
-                    padding: 0 4px;
-                }
-
-                .ng-input {
-                    background-color: transparent;
-                    outline: none;
-                    border: 0;
-                    width: 100%;
-                    height: 30px;
-                    font-size: 16px;
-                    color: #eee;
-                }
-
-                .ng-input::placeholder {
-                    color: #999;
-                    font-size: 14px;
-                    padding-left: 10px;
-                }
-
-                .ng-password-btn {
-                    display: flex;
-                    padding: 2px;
-
-                    mat-icon {
-                        cursor: pointer;
-                        transform: scale(0.0.97);
-                    }
-                }
-
-
-
-            }
-
-            .ng-listForm {
-                display: flex;
-                justify-content: space-between;
-                gap: 0 15px;
-
-                div {
-                    flex: 1;
-                }
-            }
-
-            .ng-error {
-                width: 100%;
-                font-size: 12px;
-                color: #FF8401;
-                padding: 2px 5px;
-            }
-
-            .selectPlan {
-                color: #FFF;
-                margin-bottom: 10px;
-                font-size: 16px;
-            }
-
-            .mat-mdc-chip-set {
-                max-width: 80%;
-            }
-
-            mat-chip-option {
-                padding: 20px 0;
-                border-radius: 12px;
-                font-weight: 550;
-                font-size: 16px;
-                background-color: #F2F2F2;
-                color: #ccc;
-                transition: all 0.3s ease;
-
-                h4 {
-                    margin: 0;
-                }
-
-                &.mdc-evolution-chip--selected {
-                    background-color: #1976d2;
-                    color: white;
-                }
-
-                &:hover {
-                    background-color: #e0e0e0;
-                }
-
-            }
-
-        }
-
-
-        .buttons {
-            display: flex;
-            justify-content: space-between;
-            gap: 0 15px;
-
-
-            .ng-btn {
-                width: 100%;
-                height: 35px;
-                border-radius: 5px;
-                border: 1px solid #c8c8c8;
                 cursor: pointer;
-                font-family: var(--font-family);
-                font-size: 14px;
-                font-weight: 500;
-                color: #592d74;
-                margin-top: 20px;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
             }
 
-            .ng-btn:hover {
-                background-color: #eee;
-            }
-
-            .ng-btn:active {
-                transform: scale(0.97);
-
-            }
-
-            .ng-btn:disabled {
-                color: #888;
+            .ng-avatar-icon {
+                width: 85px;
+                height: 85px;
+                background-color: #bbb;
+                border-radius: 50%;
+                line-height: 85px;
+                text-align: center;
             }
         }
+
+        .btn-profile {
+            display: flex;
+            align-items: center;
+            background-color: transparent;
+            padding: 5px 30px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            color: #fff;
+            gap: 0 10px;
+        }
+
+
+        .btn-menu {
+            display: flex;
+            align-items: center;
+            border: none;
+            gap: 0 10px;
+
+            .ng-menu-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 28px;
+                color: #555;
+            }
+
+            .ng-menu-name {
+                font-size: 14px;
+                font-weight: 550;
+                color: #555;
+            }
+        }
+
+        .perfil-principal {
+            width: 100%;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+    }
+
+    .container1 {
+        background: #3d5996;
+        color: #ddd;
+    }
+
+
+    .container2 {
+        border: none;
     }
 }
 
 
 
-// 
+// -----------------------------------------------------------------------------------------------------------//
 @media screen and (min-width:730px) {
     .ng-main {
         display: flex;
         flex-direction: column;
+        align-items: center;
         background: #F2F2F2;
-        width: 100%;
-        height: 100vh;
-        padding: 0;
-        margin: 0;
+        height: auto;
 
         .container {
             display: flex;
             flex-direction: column;
             width: 80%;
-            height: auto;
             padding: 25px 30px;
             gap: 10px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -256,55 +124,86 @@
             border-radius: 12px;
             border: 1px solid #ccc;
 
-            .ng-cont1 {
+            .ng-perfil {
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+                cursor: pointer;
 
-                h2 {
-                    text-align: center;
-                    font-size: 18px;
-                    margin-bottom: 20px;
-                    color: #ddd;
-                }
-
-                .steps-indicator {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    width: 100%;
-                    margin-bottom: 25px;
-                }
-
-                .steps-indicator div {
-                    display: flex;
-                    justify-content: space-between;
-                    width: 100%;
+                .ng-perfil-name {
+                    font-size: 14px;
                     font-weight: 600;
-                    color: #ddd;
-                    gap: 10px;
-                    font-size: 10px;
+                }
 
+                .avatar {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 15px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
 
-
-                    .ng-cont {
-                        gap: 0;
-
-                        .ng-bola {
-                            width: 30px;
-                            height: 30px;
-                            border-radius: 50%;
-                            line-height: 30px;
-                        }
-
-
-                        .ng-hr {
-                            width: 40%;
-                            height: 3px;
-                        }
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
                     }
                 }
 
+                .ng-avatar-icon {
+                    width: 100px;
+                    height: 100px;
+                    background-color: #ccc;
+                    border-radius: 50%;
+                    line-height: 100px;
+                    text-align: center;
+                    font-size: 28px;
+                }
             }
+
+            .btn-menu {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                border: none;
+                width: 200px;
+                height: 80px;
+                padding: 10px;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+
+                .ng-menu-icon {
+                    width: 60px;
+                    height: 60px;
+                    font-size: 28px;
+                    color: #1e3464;
+                }
+
+                .ng-menu-name {
+                    font-size: 12px;
+                    font-weight: 550;
+                    color: #1e3464;
+                }
+            }
+
+        }
+
+        .container1 {
+            background: #3d5996;
+            color: #ddd;
+        }
+
+        .container2 {
+            display: flex;
+            flex-direction: row;
+            border: none;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            margin: 0;
+            padding: 5px;
+            gap: 25px;
         }
     }
 }

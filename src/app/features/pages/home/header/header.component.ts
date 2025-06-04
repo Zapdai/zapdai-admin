@@ -7,7 +7,6 @@ import { ActivatedRoute, NavigationEnd, Router, RouterLink } from "@angular/rout
 import { loadingService } from "../../../../services/loading/loading.service";
 import { SnackService } from "../../../../services/snackBar/snack.service";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { ConfirmPagamentoSocketComponent } from "../../../../services/pagamentosService/pagamentos.service";
 import { ChangeDetectorRef } from '@angular/core';
 import { Popover } from 'primeng/popover';
 import { PopoverModule } from 'primeng/popover';
@@ -49,7 +48,6 @@ export class headerComponent implements OnInit {
         private router: Router,
         private activeRouter: loadingService,
         private snack: SnackService,
-        private socket: ConfirmPagamentoSocketComponent,
         private auth: AuthService,
         private cdRef: ChangeDetectorRef,
         public authDecodeUser: AuthDecodeService,

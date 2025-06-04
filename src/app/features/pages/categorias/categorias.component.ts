@@ -8,10 +8,14 @@ import { MaisPostadosComponent } from '../../../shared/component/mais-postados/m
 import { PageContainerComponent } from "../../../shared/component/page-container/page-container.component";
 import { footerComponent } from "../home/foother/footer.component";
 import { MobileNavbarComponent } from "../home/mobile-navbar/mobile-navbar.component";
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-categorias',
-  imports: [headerComponent, OpcoesCategoriaComponent, CarrosselComponent, MaisPostadosComponent, PageContainerComponent, footerComponent, MobileNavbarComponent],
+  imports: [headerComponent, OpcoesCategoriaComponent, 
+    CarrosselComponent, MaisPostadosComponent, 
+    PageContainerComponent, footerComponent, 
+    MobileNavbarComponent, MatTabsModule,],
   templateUrl: './categorias.component.html',
   styleUrl: './categorias.component.scss'
 })

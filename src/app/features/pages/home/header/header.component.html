@@ -32,17 +32,17 @@
 
     <div class="card flex justify-center">
         @if (token != null) {
-            <section class="ng-perfil" >
+            <section class="ng-perfil" (click)="Tmenu()">
 
 
 
-                <small class="ng-perfil-name">Olá {{authDecodeUser.getName().split(" ")[0]}}</small>
+                <small class="ng-perfil-name">Olá, {{authDecodeUser.getName().split(" ")[0]}}</small>
                 @if (!authDecodeUser.getAvatar()) {
-                <mat-icon class="ng-avatar-icon" (click)="Tmenu()">
+                <mat-icon class="ng-avatar-icon">
                     person
                 </mat-icon>
                 }@else {
-                <div class="avatar" (click)="Tmenu()">
+                <div class="avatar">
                     <img [src]="authDecodeUser.getAvatar()" />
                 </div>
                 }

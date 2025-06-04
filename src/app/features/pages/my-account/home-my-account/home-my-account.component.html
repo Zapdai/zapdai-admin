@@ -1,8 +1,87 @@
-<div class="ng-main">
+<app-page-container>
     <app-header [carrinho]="true"></app-header>
+
     <app-mobile-navbar></app-mobile-navbar>
 
-    <div class="container">
-        Minha Conta
+    <div class="ng-main">
+
+        <div class="container container1">
+            <section class="ng-perfil perfil-principal">
+                <section class="ng-perfil">
+                    @if (!authDecodeUser.getAvatar()) {
+                    <mat-icon class="ng-avatar-icon">
+                        person
+                    </mat-icon>
+                    }@else {
+                    <div class="avatar">
+                        <img [src]="authDecodeUser.getAvatar()" />
+                    </div>
+                    }
+                    <small class="ng-perfil-name">Olá, {{authDecodeUser.getName().split(" ")[0]}}</small>
+                </section>
+                <button class="btn-profile">
+                    <mat-icon class="ng-menu-icon">manage_accounts</mat-icon>
+                    <small class="ng-menu-name">Editar Perfil</small>
+                </button>
+            </section>
+        </div>
+        <div class="container container2">
+            <button class="btn-menu">
+                <mat-icon class="ng-menu-icon">shopping_bag</mat-icon>
+                <small class="ng-menu-name">Minhas Compras</small>
+            </button>
+            <button class="btn-menu">
+                <mat-icon class="ng-menu-icon">storefront</mat-icon>
+                <small class="ng-menu-name">Lojas Próximas</small>
+            </button>
+            <button class="btn-menu">
+                <mat-icon class="ng-menu-icon">payments</mat-icon>
+                <small class="ng-menu-name">Metódos de Pagamento</small>
+            </button>
+            <button class="btn-menu">
+                <mat-icon class="ng-menu-icon">apartment</mat-icon>
+                <small class="ng-menu-name">Meu Negócio</small>
+            </button>
+            <button class="btn-menu">
+                <mat-icon class="ng-menu-icon">add_business</mat-icon>
+                <small class="ng-menu-name">Criar Meu Negóxio</small>
+            </button>
+            <button class="btn-menu">
+                <mat-icon class="ng-menu-icon">manage_accounts</mat-icon>
+                <small class="ng-menu-name">Configuraões Da conta</small>
+            </button>
+            <button class="btn-menu">
+                <mat-icon class="ng-menu-icon">shopping_bag</mat-icon>
+                <small class="ng-menu-name">Suporte Técnico</small>
+            </button>
+            <button class="btn-menu">
+                <mat-icon class="ng-menu-icon">shopping_bag</mat-icon>
+                <small class="ng-menu-name">Minhas Compras</small>
+            </button>
+            <button class="btn-menu">
+                <mat-icon class="ng-menu-icon">storefront</mat-icon>
+                <small class="ng-menu-name">Lojas Próximas</small>
+            </button>
+            <button class="btn-menu">
+                <mat-icon class="ng-menu-icon">payments</mat-icon>
+                <small class="ng-menu-name">Metódos de Pagamento</small>
+            </button>
+            <button class="btn-menu">
+                <mat-icon class="ng-menu-icon">apartment</mat-icon>
+                <small class="ng-menu-name">Meu Negócio</small>
+            </button>
+            <button class="btn-menu">
+                <mat-icon class="ng-menu-icon">add_business</mat-icon>
+                <small class="ng-menu-name">Criar Meu Negóxio</small>
+            </button>
+            <button class="btn-menu">
+                <mat-icon class="ng-menu-icon">manage_accounts</mat-icon>
+                <small class="ng-menu-name">Configuraões Da conta</small>
+            </button>
+            <button class="btn-menu">
+                <mat-icon class="ng-menu-icon">shopping_bag</mat-icon>
+                <small class="ng-menu-name">Suporte Técnico</small>
+            </button>
+        </div>
     </div>
-</div>
+</app-page-container>

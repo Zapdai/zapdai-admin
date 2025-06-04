@@ -1,249 +1,244 @@
-@media screen and (min-width:700px) {
-    .categoria {
+.ng-header {
+    display: flex;
+    justify-content: space-between;
+    height: 55px;
+    align-items: center;
+    padding: 0 20px;
+    background-color: #0a1630;
+    color: #ddd;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 
-        background-color: #0a1630;
-        padding: 0 40px;
+    .ng-logo {
+        width: 160px;
+        height: 40px;
+        background-size: contain;
+        background-image: url("/logo.png");
+        padding: 18px 2px;
+        background-repeat: no-repeat;
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        cursor: pointer;
 
-        form input {
-            border-radius: 5px;
-            height: 30px;
+        .icon {
+            text-align: center;
+            cursor: pointer;
+
         }
+    }
+
+    .ng-form form {
+        display: flex;
 
         .search {
-            .icone:active {
-                transform: scale(0.92);
-            }
-        }
-    }
-
-    .ng-header {
-        box-sizing: 0px 0x 0px 1px;
-        display: flex;
-        justify-content: space-between;
-        height: 55px;
-        align-items: center;
-        padding: 0 20px;
-        background-color: #0a1630;
-        color: #ddd;
-
-        .ng-logo {
-            width: 160px;
-            height: 40px;
-            background-size: contain;
-            background-image: url("/logo.png");
-            padding: 18px 2px;
-            background-repeat: no-repeat;
-            margin-left: 10px;
+            width: 400px;
             display: flex;
             align-items: center;
-            justify-content: end;
-            cursor: pointer;
-
-            .icon {
-                text-align: center;
-                cursor: pointer;
-
-            }
-        }
-
-        .ng-form form {
-            display: flex;
-
-            .search {
-                width: 400px;
-                display: flex;
-                align-items: center;
-                background-color: #ffffff;
-                padding: 0 10px;
-                border-radius: 5px;
-                border: 1px solid #cac9c9;
-
-                .ng-input {
-                    flex: 1;
-                    padding: 5px;
-                    outline: none;
-                    border: 0;
-                }
-
-                mat-icon {
-                    padding: 0 2px;
-                    cursor: pointer;
-                }
-            }
-
-        }
-
-        .ng-perfil {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            .ng-perfil-name {
-                font-size: 12px;
-            }
-
-            .avatar {
-                width: 35px;
-                height: 35px;
-                border-radius: 15px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-
-                img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                }
-            }
-
-            .ng-avatar-icon {
-                width: 35px;
-                height: 35px;
-                background-color: #ccc;
-                border-radius: 50%;
-                line-height: 30px;
-                text-align: center;
-                cursor: pointer;
-            }
-        }
-
-        .ng-checkout {
-            display: flex;
-            align-items: center;
+            background-color: #ffffff;
             padding: 0 10px;
-            height: 100%;
-            gap: 0 15px;
+            border-radius: 5px;
+            border: 1px solid #cac9c9;
+
+            .ng-input {
+                flex: 1;
+                padding: 5px;
+                outline: none;
+                border: 0;
+            }
+
+            mat-icon {
+                padding: 0 2px;
+                cursor: pointer;
+            }
+        }
+
+    }
+
+    .ng-perfil {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+
+        .ng-perfil-name {
+            font-size: 12px;
+        }
+
+        .avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
 
-            .mat-icon {
-                color: #fff;
-            }
-
-            .ng-btn-empresas {
-                width: 160px;
+            img {
+                width: 100%;
                 height: 100%;
-                font-size: 16px;
-                align-content: center;
-                text-align: center;
-                color: #ddd;
-                cursor: pointer;
+                object-fit: cover;
             }
+        }
 
-            .ng-btn-empresas:hover {
-                background-color: #192c57;
-            }
-
-            button {
-                margin-left: 10px;
-                background-color: #FF9933;
-                padding: 5px 20px;
-                border: 0;
-                border-radius: 5px;
-                cursor: pointer;
-
-            }
-
-            button:active {
-                transform: scale(0.92);
-            }
-
-            .btn1 {
-                background-color: #FF9933;
-            }
-
-            .btn2 {
-                background-color: #f7f5f4;
-            }
-
-            .btn1:hover {
-                background-color: #928c45;
-                color: #FFF;
-            }
-
-            .btn2:hover {
-                background-color: #b5f1ff;
-                color: #0f0f0f;
-            }
+        .ng-avatar-icon {
+            width: 35px;
+            height: 35px;
+            background-color: #ccc;
+            border-radius: 50%;
+            line-height: 30px;
+            text-align: center;
         }
     }
 
-    .ng-usuario-logado {
-        color: #fff;
+    form input {
+        border-radius: 5px;
+        height: 30px;
     }
 
-    .menu {
-        background-color: #0a1630;
-        right: 0;
-        top: 7%;
-        position: absolute;
-        padding: 0 5px;
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
+    .search {
+        .icone:active {
+            transform: scale(0.92);
+        }
+    }
 
-        .menu_drop {
+    .ng-checkout {
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        height: 100%;
+        gap: 0 15px;
+        cursor: pointer;
+
+        .mat-icon {
+            color: #fff;
+        }
+
+        .ng-btn-empresas {
+            width: 160px;
+            height: 100%;
+            font-size: 16px;
+            align-content: center;
+            text-align: center;
+            color: #ddd;
+            cursor: pointer;
+        }
+
+        .ng-btn-empresas:hover {
+            background-color: #192c57;
+        }
+
+        button {
+            margin-left: 10px;
+            background-color: #FF9933;
+            padding: 5px 20px;
+            border: 0;
+            border-radius: 5px;
+            cursor: pointer;
+
+        }
+
+        button:active {
+            transform: scale(0.92);
+        }
+
+        .btn1 {
+            background-color: #FF9933;
+        }
+
+        .btn2 {
+            background-color: #f7f5f4;
+        }
+
+        .btn1:hover {
+            background-color: #928c45;
+            color: #FFF;
+        }
+
+        .btn2:hover {
+            background-color: #b5f1ff;
+            color: #0f0f0f;
+        }
+    }
+}
+
+.ng-usuario-logado {
+    color: #fff;
+}
+
+.menu {
+    background-color: #0a1630;
+    right: 0;
+    top: 7%;
+    position: absolute;
+    padding: 0 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    position: fixed;
+
+    .menu_drop {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 0;
+
+        .menu_area {
             display: flex;
             flex-direction: column;
-            padding: 10px 0;
+            margin-top: 5px;
 
-            .menu_area {
-                display: flex;
-                flex-direction: column;
-                margin-top: 5px;
-
-                li {
-                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-                    padding: 5px 0;
-                    font-size: 15px;
-                    color: #BBB;
-                    cursor: pointer;
-                }
-
-                li:hover {
-                    color: #064b5a;
-                }
-
+            li {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                padding: 5px 0;
+                font-size: 15px;
+                color: #BBB;
+                cursor: pointer;
             }
 
-            .detalhes {
-                height: 36px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                padding: 0px 2px;
-
-                p {
-                    font-size: 16px;
-                }
+            li:hover {
+                color: #064b5a;
             }
 
-            .a {
-                .btn {
-                    background-color: #FF9933;
-                    border-radius: 5px;
-                    padding: 2px 0;
-                    border: 0;
-                    transition: all 1s ease-in;
-                    transform: scale(0.97);
-                    cursor: pointer;
-                }
+        }
 
-                .btn:hover {
-                    background-color: #ac5f13;
-                    transition: all 0.5s ease;
-                    color: #f2f2f2;
-                }
+        .detalhes {
+            height: 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0px 2px;
 
-            }
-
-            .linha {
-                height: 1px;
-                background-color: rgba(255, 255, 255, 0.1);
-                width: 100%;
-                margin: 8px 0;
+            p {
+                font-size: 16px;
             }
         }
-    }
 
+        .a {
+            .btn {
+                background-color: #FF9933;
+                border-radius: 5px;
+                padding: 2px 0;
+                border: 0;
+                transition: all 1s ease-in;
+                transform: scale(0.97);
+                cursor: pointer;
+            }
+
+            .btn:hover {
+                background-color: #ac5f13;
+                transition: all 0.5s ease;
+                color: #f2f2f2;
+            }
+
+        }
+
+        .linha {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 100%;
+            margin: 8px 0;
+        }
+    }
 }

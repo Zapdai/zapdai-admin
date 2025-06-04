@@ -37,6 +37,12 @@ body, app-root {
   margin: 0;
 }
 
+@media screen and (min-width: 768px) {  
+  body, app-root {
+  padding-top: 46px;
+}
+}
+
 input,
 textarea,
 select {
