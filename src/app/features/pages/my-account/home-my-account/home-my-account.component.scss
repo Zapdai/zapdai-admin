@@ -24,6 +24,7 @@
             .ng-perfil-name {
                 font-size: 14px;
                 font-weight: 600;
+                color: #fff;
             }
 
             .avatar {
@@ -45,10 +46,12 @@
             .ng-avatar-icon {
                 width: 85px;
                 height: 85px;
-                background-color: #bbb;
+                background-color: #ddd;
+                color: #fff;
                 border-radius: 50%;
                 line-height: 85px;
                 text-align: center;
+                font-size: 34px;
             }
         }
 
@@ -90,13 +93,13 @@
                 width: 35px;
                 height: 35px;
                 font-size: 28px;
-                color: #555;
+                color: #333;
             }
 
             .ng-menu-name {
                 font-size: 14px;
                 font-weight: 550;
-                color: #555;
+                color: #333;
             }
         }
 
@@ -108,7 +111,7 @@
         }
 
         .btn-logOut {
-            background: rgba(143, 7, 7, 0.9);
+            background: rgba(165, 4, 4, 0.9);
             margin-top: 30px;
             padding: 10px 30px;
             border-radius: 8px;
@@ -116,7 +119,7 @@
 
             .ng-menu-icon,
             .ng-menu-name {
-                color: #ddd;
+                color: #fff;
                 text-align: center;
             }
         }
