@@ -13,7 +13,7 @@ export const routes: Routes = [
         path: "", redirectTo: "/home", pathMatch: "full",
     },
     {
-        path: "admin", loadChildren: () => import("./features/features.routes").then(rota => rota.routes), data: { acess: ["ROLE_ADMIN", "ROLE_MODERATOR"] }, canActivateChild: [authGuardian],
+        path: "admin", loadChildren: () => import("./features/features.routes").then(rota => rota.routes), data: { acess: ["ROLE_USER", "ROLE_ADMIN", "ROLE_MODERATOR"] }, canActivateChild: [authGuardian],
     },
     {
         path: "auth", loadChildren: () => import("./features/pages/auth/auth.routes").then(e => e.routes)
@@ -25,7 +25,7 @@ export const routes: Routes = [
         path: "loading", component: LoadingComponent, canActivate: [loadingGuard]
     },
     {
-        path: "my-account", loadChildren: () => import("./features/pages/my-account/account.routes").then(rota => rota.routes), data: { acess: ["ROLE_USER", "ROLE_ADMIN", "ROLE_MODERATOR"] }
+        path: "my-account", loadChildren: () => import("./features/pages/my-account/account.routes").then(rota => rota.routes)
     },
     {
         path: "planos", loadChildren: () => import("./features/pages/planos/planos.routes").then(route => route.routes)

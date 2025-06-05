@@ -1,5 +1,5 @@
 @if (isVisible) {
-<header class="ng-header" [ngClass]="[(categoria || ''), token != null && isHome ? 'ng-usuario-logado' : '']">
+<header class="ng-header" [ngClass]="[isAdmin ? 'ng-isAdmin' : '']">
     <section class="ng-logo" (click)="pageHome()">
         @if (admin) {
         <mat-icon (click)="exibir()" class="icon">menu</mat-icon>
@@ -52,7 +52,7 @@
             <div class="menu">
                 <div class="menu_drop">
                     <div class="detalhes">
-                        <p>{{ authDecodeUser.getSub() }}</p>
+                        <p >{{ authDecodeUser.getSub() }}</p>
                     </div>
                     <div class="linha"></div>
                     <div class="menu_area">

@@ -3,6 +3,8 @@
     height: 100dvh;
     background: #F2F2F2;
     overflow: auto;
+    padding-bottom: 80px;
+    gap: 30px 0;
 
     .container {
         display: flex;
@@ -20,7 +22,7 @@
             cursor: pointer;
 
             .ng-perfil-name {
-                font-size: 16px;
+                font-size: 14px;
                 font-weight: 600;
             }
 
@@ -50,15 +52,29 @@
             }
         }
 
+        .profile {
+            width: 100%;
+            justify-content: space-around;
+        }
+
         .btn-profile {
             display: flex;
             align-items: center;
             background-color: transparent;
-            padding: 5px 30px;
+            padding: 5px 20px;
             border-radius: 20px;
             border: 1px solid #ddd;
             color: #fff;
             gap: 0 10px;
+            cursor: pointer;
+
+            .ng-menu-icon {
+                font-size: 24px;
+            }
+
+            .ng-menu-name {
+                font-size: 12px;
+            }
         }
 
 
@@ -67,6 +83,8 @@
             align-items: center;
             border: none;
             gap: 0 10px;
+            background-color: transparent;
+            cursor: pointer;
 
             .ng-menu-icon {
                 width: 35px;
@@ -89,6 +107,20 @@
             flex-direction: column;
         }
 
+        .btn-logOut {
+            background: rgba(143, 7, 7, 0.9);
+            margin-top: 30px;
+            padding: 10px 30px;
+            border-radius: 8px;
+            border: none;
+
+            .ng-menu-icon,
+            .ng-menu-name {
+                color: #ddd;
+                text-align: center;
+            }
+        }
+
     }
 
     .container1 {
@@ -103,15 +135,15 @@
 }
 
 
-
 // -----------------------------------------------------------------------------------------------------------//
-@media screen and (min-width:730px) {
+@media screen and (min-width:769px) {
     .ng-main {
         display: flex;
         flex-direction: column;
         align-items: center;
         background: #F2F2F2;
         height: auto;
+        padding-top: 46px;
 
         .container {
             display: flex;
@@ -130,6 +162,7 @@
                 align-items: center;
                 gap: 10px;
                 cursor: pointer;
+                width: 100%;
 
                 .ng-perfil-name {
                     font-size: 14px;
@@ -139,7 +172,7 @@
                 .avatar {
                     width: 50px;
                     height: 50px;
-                    border-radius: 15px;
+                    border-radius: 25px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -186,6 +219,19 @@
                     font-weight: 550;
                     color: #1e3464;
                 }
+            }
+
+
+            .perfil-principal {
+                width: 100%;
+                justify-content: end;
+                align-items: center;
+                flex-direction: row;
+            }
+
+            .profile {
+                width: 100%;
+                justify-content: flex-end;
             }
 
         }

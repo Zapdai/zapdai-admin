@@ -39,7 +39,7 @@ export class headerComponent implements OnInit {
         name: new FormControl("")
     })
     ativo = true;
-    isHome: boolean = false;
+    isAdmin: boolean = false;
     exibimenu = false;
     isVisible = false;
 
@@ -51,7 +51,6 @@ export class headerComponent implements OnInit {
         private auth: AuthService,
         private cdRef: ChangeDetectorRef,
         public authDecodeUser: AuthDecodeService,
-        private activatedRoute: ActivatedRoute
     ) { }
 
 
@@ -59,12 +58,12 @@ export class headerComponent implements OnInit {
     ngOnInit(): void {
 
         // this.emailUser = this.authService.getFromToken('sub')!;
-        this.isHome = this.router.url === '/home';
+        this.isAdmin = this.router.url === '/admin';
 
         // Escuta mudanças de rota subsequentes
         this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
-                this.isHome = this.router.url === '/home';
+                this.isAdmin = this.router.url === '/admin';
             }
         });
 

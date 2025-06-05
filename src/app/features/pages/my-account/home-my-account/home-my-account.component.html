@@ -17,12 +17,21 @@
                         <img [src]="authDecodeUser.getAvatar()" />
                     </div>
                     }
-                    <small class="ng-perfil-name">Olá, {{authDecodeUser.getName().split(" ")[0]}}</small>
+                    <div>
+                        <small class="ng-perfil-name">Olá, {{authDecodeUser.getName().split(" ")[0]}}!</small><br />
+                        <small class="ng-perfil-name">Email: {{ authDecodeUser.getSub() }}</small>
+                    </div>
                 </section>
-                <button class="btn-profile">
-                    <mat-icon class="ng-menu-icon">manage_accounts</mat-icon>
-                    <small class="ng-menu-name">Editar Perfil</small>
-                </button>
+                <section class="ng-perfil profile">
+                    <button class="btn-profile" (click)="pageManagerProfile()">
+                        <mat-icon class="ng-menu-icon">manage_accounts</mat-icon>
+                        <small class="ng-menu-name">Editar Perfil</small>
+                    </button>
+                    <button class="btn-profile" (click)="pageResetPassword()">
+                        <mat-icon class="ng-menu-icon">key</mat-icon>
+                        <small class="ng-menu-name" >Alterar Senha</small>
+                    </button>
+                </section>
             </section>
         </div>
         <div class="container container2">
@@ -54,34 +63,14 @@
                 <mat-icon class="ng-menu-icon">shopping_bag</mat-icon>
                 <small class="ng-menu-name">Suporte Técnico</small>
             </button>
-            <button class="btn-menu">
-                <mat-icon class="ng-menu-icon">shopping_bag</mat-icon>
-                <small class="ng-menu-name">Minhas Compras</small>
+
+
+            @if(isVisible) {
+            <button class="btn-menu btn-logOut" (click)="deslogar()">
+                <mat-icon class="ng-menu-icon">logout</mat-icon>
+                <small class="ng-menu-name">Sair</small>
             </button>
-            <button class="btn-menu">
-                <mat-icon class="ng-menu-icon">storefront</mat-icon>
-                <small class="ng-menu-name">Lojas Próximas</small>
-            </button>
-            <button class="btn-menu">
-                <mat-icon class="ng-menu-icon">payments</mat-icon>
-                <small class="ng-menu-name">Metódos de Pagamento</small>
-            </button>
-            <button class="btn-menu">
-                <mat-icon class="ng-menu-icon">apartment</mat-icon>
-                <small class="ng-menu-name">Meu Negócio</small>
-            </button>
-            <button class="btn-menu">
-                <mat-icon class="ng-menu-icon">add_business</mat-icon>
-                <small class="ng-menu-name">Criar Meu Negóxio</small>
-            </button>
-            <button class="btn-menu">
-                <mat-icon class="ng-menu-icon">manage_accounts</mat-icon>
-                <small class="ng-menu-name">Configuraões Da conta</small>
-            </button>
-            <button class="btn-menu">
-                <mat-icon class="ng-menu-icon">shopping_bag</mat-icon>
-                <small class="ng-menu-name">Suporte Técnico</small>
-            </button>
+            }
         </div>
     </div>
 </app-page-container>

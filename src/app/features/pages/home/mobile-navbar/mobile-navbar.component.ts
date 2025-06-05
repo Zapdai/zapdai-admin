@@ -8,6 +8,7 @@ import {
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-mobile-navbar',
@@ -22,11 +23,13 @@ export class MobileNavbarComponent implements OnInit {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    public router: Router // <- public para uso no template
-  ) {}
+    public router: Router,
+    private auth: AuthService,
+  ) { }
 
   ngOnInit(): void {
-    this.token = localStorage.getItem('token'); // substitua se tiver outro método
+    this.token = this.auth.returnToken();
+
     if (isPlatformBrowser(this.platformId)) {
       this.checkWindowSize();
     }

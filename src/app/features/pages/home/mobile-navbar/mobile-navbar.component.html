@@ -5,17 +5,17 @@
       <span>Home</span>
     </button>
 
-    <button (click)="navegar('/compras')" [class.active]="router.url === '/compras'">
+    <button (click)="navegar('/home')" [class.active]="router.url === '/compras'">
       <mat-icon>shopping_cart</mat-icon>
       <span>Compras</span>
     </button>
 
-    <button (click)="navegar('/lojas')" [class.active]="router.url === '/lojas'">
+    <button (click)="navegar('/home')" [class.active]="router.url === '/lojas'">
       <mat-icon>store</mat-icon>
       <span>Lojas</span>
     </button>
 
-    <button (click)="navegar('/notificacoes')" [class.active]="router.url === '/notificacoes'">
+    <button (click)="navegar('/home')" [class.active]="router.url === '/notificacoes'">
       <mat-icon>notifications</mat-icon>
       <span>Notificações</span>
     </button>
