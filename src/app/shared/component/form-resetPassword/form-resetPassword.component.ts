@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { NgxMaskDirective } from 'ngx-mask';
@@ -16,6 +16,8 @@ import { PasswordStrengthBarComponent } from "../password/password-strength-bar.
 import { MatIconModule } from '@angular/material/icon';
 import { resetPasswordApi } from '../../../services/resetPassword/resetPasswordApi.service';
 import e from 'express';
+import { AuthDecodeService } from '../../../services/AuthUser.service';
+import { Location } from '@angular/common';
 
 type ResetPasswordControls = keyof resetPasswordForm['passwordform']['controls'];
 
@@ -30,10 +32,12 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
   currentStep = 1;
   ativo = false;
   icon: "visibility" | "visibility_off" = "visibility"
+  isVisible = false;
 
   @ViewChild('primeiroInput') primeiroInput!: ElementRef;
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
     public form: resetPasswordForm,
     private cd: ChangeDetectorRef,
     private activeRoute: loadingService,
@@ -41,6 +45,8 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
     private verificationEmailApi: verificationEmailApi,
     private resetPasswordApi: resetPasswordApi,
     private snack: SnackService,
+    public authDecodeUser: AuthDecodeService,
+    private location: Location,
   ) { }
 
 
@@ -63,6 +69,29 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
         }
       });
     }
+
+    if (this.authDecodeUser.getSub()) {
+      this.form.passwordform.get('email')?.setValue(this.authDecodeUser.getSub());
+    }
+
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkWindowSize();
+    }
+  }
+
+  
+  
+
+  @HostListener('window:resize')
+  onResize() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkWindowSize();
+    }
+  }
+
+  checkWindowSize() {
+    this.isVisible = window.innerWidth <= 767;
   }
 
 
@@ -243,5 +272,9 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
         }, 1000);
       });
     }, 0);
+  }
+
+  voltarPaginaAnterior() {
+    this.location.back();
   }
 }

@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
 import { loadingService } from '../../../../services/loading/loading.service';
 import { isPlatformBrowser } from '@angular/common';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-home-my-account',
@@ -27,6 +28,7 @@ export class HomeMyAccountComponent implements OnInit {
     public authDecodeUser: AuthDecodeService,
     private auth: AuthService,
     private activeRouter: loadingService,
+    private location: Location,
   ) { }
 
   ngOnInit(): void {
@@ -86,5 +88,10 @@ export class HomeMyAccountComponent implements OnInit {
           }, 1000);
         });
       }, 0);
+  }
+
+  
+  voltarPaginaAnterior() {
+    this.location.back();
   }
 }

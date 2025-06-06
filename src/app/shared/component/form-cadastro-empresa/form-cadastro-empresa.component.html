@@ -1,4 +1,9 @@
 <div class="ng-main">
+    @if(isVisible) {
+    <button class="btn-voltar" (click)="voltarPaginaAnterior()">
+        <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+    }
     <div class="container">
         <div class="ng-cont1">
             <h2>Cadastre sua Empresa</h2>

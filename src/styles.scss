@@ -30,18 +30,11 @@ body {
   font-style: var(--font-style);
   font-size: 18px;
   overflow: hidden;
-  height: 100dvh;
 }
 
 body, app-root {
-  padding: 0;
+  padding-bottom: 60px;
   margin: 0;
-  height: 100dvh;
-}
-
-body {
-  touch-action: manipulation;
-  overscroll-behavior: none;
 }
 
 

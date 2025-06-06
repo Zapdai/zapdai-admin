@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
@@ -15,13 +15,15 @@ import { itens, itensPlanos } from '../../core/Plano/planosItens';
 import { PlanoService } from '../../../services/planosServices/planos.service';
 import { SnackService } from '../../../services/snackBar/snack.service';
 import { AuthDecodeService } from '../../../services/AuthUser.service';
+import { Location } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 type EmpresaFormControls = keyof cadastroEmpresaForm['empresaform']['controls'];
 
 @Component({
   selector: 'app-form-cadastro-empresa',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, NgxMaskDirective, MatChipsModule],
+  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, NgxMaskDirective, MatChipsModule, MatIconModule],
   templateUrl: './form-cadastro-empresa.component.html',
   styleUrls: ['./form-cadastro-empresa.component.scss'],
 
@@ -35,6 +37,7 @@ export class FormCadastroEmpresaComponent implements OnInit, AfterViewInit {
   latitude: number | null = null;
   longitude: number | null = null;
   error: string | null = null;
+  isVisible = false;
 
 
   @ViewChild('primeiroInput') primeiroInput!: ElementRef;
@@ -52,7 +55,8 @@ export class FormCadastroEmpresaComponent implements OnInit, AfterViewInit {
     private apiPlanosService: PlanoService,
     private route: ActivatedRoute,
     private snack: SnackService,
-    private authUser: AuthDecodeService
+    private authUser: AuthDecodeService,
+    private location: Location,
   ) { }
 
   ngAfterViewInit(): void {
@@ -76,6 +80,23 @@ export class FormCadastroEmpresaComponent implements OnInit, AfterViewInit {
         this.buscarEnderecoPorCep(cep);
       }
     });
+
+    
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkWindowSize();
+    }
+  }
+  
+
+  @HostListener('window:resize')
+  onResize() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkWindowSize();
+    }
+  }
+
+  checkWindowSize() {
+    this.isVisible = window.innerWidth <= 767;
   }
 
   buscaPlanoUrl() {
@@ -257,6 +278,11 @@ export class FormCadastroEmpresaComponent implements OnInit, AfterViewInit {
         }, 0);
       }
     });
+  }
+
+  
+  voltarPaginaAnterior() {
+    this.location.back();
   }
 
 }
