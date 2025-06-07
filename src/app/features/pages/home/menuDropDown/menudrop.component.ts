@@ -26,11 +26,11 @@ export class menuDropComponent implements OnInit {
             next: (data) => {
                 this.functionList = data;
 
-                // Normaliza todos os children para evitar undefined
                 this.functionList.funcoes.forEach(f => {
                     if (!f.children) {
                         f.children = [];
                     }
+                    f.ativo = false;
                 });
 
                 console.log(this.functionList);
@@ -46,11 +46,17 @@ export class menuDropComponent implements OnInit {
 
         for (const item of itens) {
             if (item.id === id) {
+                // Toggle do clicado
                 item.ativo = !item.ativo;
-                break;
+            } else {
+                // Fecha os outros
+                item.ativo = false;
             }
         }
     }
+
+
+
 
     setIcon(mudaIcon: boolean): string {
         return mudaIcon ? "keyboard_arrow_down" : "chevron_right";
