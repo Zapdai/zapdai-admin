@@ -32,15 +32,16 @@
 
     <div class="card flex justify-center">
         @if (token != null) {
-        <section class="ng-perfil" (click)="Tmenu()">
+        <section class="ng-perfil">
             <mat-icon (click)="light()">
                 light_mode
             </mat-icon>
 
+        <section class="ng-perfil" (click)="Tmenu()">
 
-            <small class="ng-perfil-name">Olá, {{authDecodeUser.getName().split(" ")[0]}}</small>
+            <small class="ng-perfil-name" >Olá, {{authDecodeUser.getName().split(" ")[0]}}</small>
             @if (!authDecodeUser.getAvatar()) {
-            <mat-icon class="ng-avatar-icon">
+            <mat-icon class="ng-avatar-icon" (click)="Tmenu()">
                 person
             </mat-icon>
             }@else {
@@ -48,6 +49,7 @@
                 <img [src]="authDecodeUser.getAvatar()" />
             </div>
             }
+        </section>
         </section>
         }
         @if (exibimenu) {
