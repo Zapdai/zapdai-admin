@@ -1,9 +1,13 @@
 import { Injectable } from "@angular/core";
+import { jwtDecode } from "jwt-decode";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
     providedIn: "root"
 })
 export class AuthService {
+    userSubject = new BehaviorSubject<any | null>(null);
+
     PossuiToken() {
         return this.returnToken() ? true : false;
     }
@@ -11,7 +15,7 @@ export class AuthService {
     returnToken() {
         if (typeof localStorage !== 'undefined') {
             return localStorage.getItem('acessToken')
-        } 
+        }
         return
     }
 
@@ -21,6 +25,13 @@ export class AuthService {
 
     saveToken(token: string) {
         localStorage.setItem('acessToken', token)
+        this.decode();
+    }
+
+    decode() {
+        const token = this.returnToken();
+        const user = jwtDecode(token as any) as any;
+        this.userSubject.next(user);
     }
 
     //     getPerfis(): string[] {

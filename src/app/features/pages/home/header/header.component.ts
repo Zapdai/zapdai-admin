@@ -170,7 +170,6 @@ export class headerComponent implements OnInit {
     }
     pagePlanos() {
         const role = this.authDecodeUser.getRole();
-        console.log("Role:", role);
 
         if (role && (role.includes("ROLE_ADMIN") || role.includes("ROLE_MODERATOR"))) {
             this.activeRouter.activeLoading();

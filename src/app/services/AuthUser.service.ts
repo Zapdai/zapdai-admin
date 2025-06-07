@@ -4,24 +4,24 @@ import { jwtDecode } from "jwt-decode";
 import { AuthService } from "./auth.service";
 
 @Injectable({
-    providedIn: "root"
+  providedIn: "root"
 })
 export class AuthDecodeService {
-     userSubject = new BehaviorSubject<any | null>(null);
+  userSubject = new BehaviorSubject<any | null>(null);
   constructor(private AuthToken: AuthService) {
     if (AuthToken.PossuiToken()) {
       this.decode();
     }
   }
-    decode() {
+  decode() {
     const token = this.AuthToken.returnToken();
     const user = jwtDecode(token as any) as any;
     this.userSubject.next(user);
   }
-    retornUser() {
+  retornUser() {
     return this.userSubject.asObservable();
   }
-   getRole() {
+  getRole() {
     let role;
     this.retornUser().subscribe(e => {
       if (e && e.roles !== null) {
@@ -51,7 +51,7 @@ export class AuthDecodeService {
     });
     return sub as any;
   }
-  getusuarioId(){
+  getusuarioId() {
     let usuarioId;
     this.retornUser().subscribe(e => {
       usuarioId = e.usuarioId;
