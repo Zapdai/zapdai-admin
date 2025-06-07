@@ -5,6 +5,47 @@
     justify-content: center;
     width: 100%;
     height: calc(100vh - 40px);
-    background-color: #2a083f;
-    color: rgb(201, 0, 0);
+    background-color: #F2F2F2;
+    color: rgb(184, 0, 0);
+    gap: 20px;
+    padding: 20px;
+
+    .ng-btn {
+                width: 50%;
+                height: 35px;
+                border-radius: 5px;
+                background-color: #ddd;
+                border: 1px solid #888;
+                cursor: pointer;
+                font-family: var(--font-family);
+                font-size: 14px;
+                font-weight: 500;
+                color: #444;
+                margin-top: 20px;
+            }
+
+            .ng-btn:hover {
+                background-color: #ccc;
+                color: #444;
+            }
+
+            .ng-btn:active {
+                transform: scale(0.97);
+
+            }
+}
+
+.btn-voltar {
+    position: fixed;
+    top: 20px;
+    left: 15px;
+    background-color: transparent;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 1000;
+
+    mat-icon {
+        color: #555;
+    }
 }

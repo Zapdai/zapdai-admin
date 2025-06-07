@@ -1,8 +1,13 @@
+@if(isVisible) {
+<button class="btn-voltar" (click)="voltarPaginaAnterior()">
+    <mat-icon>arrow_back_ios</mat-icon>
+</button>
+}
 <section class="main-erro">
     <h1>Permissão Negada!</h1>
     <small>Seu usuário não tem permissão para acessar essa página!</small>
 
+    @if(!isVisible) {
+    <button class="ng-btn" mat-flat-button color="secundary" (click)="voltarPaginaAnterior()">Voltar</button>
+    }
 </section>
-<div>
-    <app-footer></app-footer>
-</div>

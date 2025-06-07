@@ -1,13 +1,41 @@
-import { Component } from "@angular/core";
-import { footerComponent } from "../home/foother/footer.component";
+import { Component, HostListener, Inject, OnInit, PLATFORM_ID } from "@angular/core";
+import { isPlatformBrowser, Location } from "@angular/common";
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector:"",
-    standalone:true,
-    imports:[footerComponent],
-    templateUrl:"./unauthorized.component.html",
-    styleUrl:"./unauthorized.component.scss"
+    selector: "",
+    standalone: true,
+    imports: [MatIconModule],
+    templateUrl: "./unauthorized.component.html",
+    styleUrl: "./unauthorized.component.scss"
 })
-export class UnauthorizedComponent{
+export class UnauthorizedComponent implements OnInit {
+    isVisible = false;
+
+    constructor(
+        @Inject(PLATFORM_ID) private platformId: Object,
+        private location: Location,
+    ) { }
+    ngOnInit(): void {
+        if (isPlatformBrowser(this.platformId)) {
+            this.checkWindowSize();
+        }
+    }
+
+    @HostListener('window:resize')
+    onResize() {
+        if (isPlatformBrowser(this.platformId)) {
+            this.checkWindowSize();
+        }
+    }
+
+    checkWindowSize() {
+        this.isVisible = window.innerWidth <= 767;
+    }
+
+
+    voltarPaginaAnterior() {
+        this.location.back();
+    }
 
 }
