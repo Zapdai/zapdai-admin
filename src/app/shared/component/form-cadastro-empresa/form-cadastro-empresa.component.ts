@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { MatChipsModule } from '@angular/material/chips';
 import { itens, itensPlanos } from '../../core/Plano/planosItens';
-import { PlanoService } from '../../../services/planosServices/planos.service';
+import { PlanoService } from '../../../services/routesApiZapdai/planos.service';
 import { SnackService } from '../../../services/snackBar/snack.service';
 import { AuthDecodeService } from '../../../services/AuthUser.service';
 import { Location } from '@angular/common';

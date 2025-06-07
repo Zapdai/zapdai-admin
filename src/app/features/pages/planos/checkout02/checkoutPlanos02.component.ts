@@ -20,7 +20,7 @@ import { loadingService } from '../../../../services/loading/loading.service';
 import { PopoverModule, Popover } from 'primeng/popover';
 import { ButtonModule } from 'primeng/button';
 import { itens, itensPlanos } from '../../../../shared/core/Plano/planosItens';
-import { PlanoService } from '../../../../services/planosServices/planos.service';
+import { PlanoService } from '../../../../services/routesApiZapdai/planos.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackService } from '../../../../services/snackBar/snack.service';
 import { AuthService } from '../../../../services/auth.service';

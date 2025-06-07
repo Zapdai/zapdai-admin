@@ -8,7 +8,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { loadingService } from '../../../../services/loading/loading.service';
 import { formModalComponent } from "../../../../shared/component/formModel/formModal.component";
 import { PlanosItensComponent } from '../../../../shared/component/plano_itens/planositem.component';
-import { PlanoService } from '../../../../services/planosServices/planos.service';
+import { PlanoService } from '../../../../services/routesApiZapdai/planos.service';
 import { itensPlanos } from '../../../../shared/core/Plano/planosItens';
 
 @Component({

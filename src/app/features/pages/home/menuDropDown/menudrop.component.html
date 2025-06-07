@@ -1,42 +1,35 @@
 <div class="area-menu">
-    <!-- <section class="ng-logo">
-       <img src="/logo.png" alt="" width="150px" height="130px">
-    </section> -->
-    <!-- <div class="btn">
-        <mat-icon  class="icon">arrow_back_ios</mat-icon>
-    </div> -->
-    <section class=" menu">
+    <section class="menu">
         <nav class="menu-area">
             <ul>
-                @for (item of menuIten; track $index) {
-                <li [routerLink]="item.rotas" routerLinkActive="active-page" class="item" ariaCurrentWhenActive="page"
-                    [routerLinkActiveOptions]="{exact: true}">
-                    <mat-icon class="icon">{{item.icone}}</mat-icon>
+                @for (item of functionList?.funcoes ?? []; track item.id) {
+                <li [routerLink]="item.router" routerLinkActive="active-page" class="item" ariaCurrentWhenActive="page"
+                    [routerLinkActiveOptions]="{ exact: true }" (click)="setAtivo(item.id)">
+                    <mat-icon class="icon">{{ item.icone }}</mat-icon>
                     <div class="icone-name">
                         @if (!desabled) {
                         <div class="text-left">
-                            {{item.name}}
+                            {{ item.name }}
                         </div>
                         }
-                        @if (item.iconeItem) {
-                        <mat-icon (click)="setAtivo(item.id)">{{setIcon(item.menuItens)}}</mat-icon>
-
+                        @if (item.children && item.children.length > 0) {
+                        <mat-icon>
+                            {{ setIcon(!item.ativo) }}
+                        </mat-icon>
                         }
                     </div>
                 </li>
 
-                @for (items of item.children; track $index) {
-                @if (item.menuItens) {
-                <div class="sub-menu" [routerLink]="items.rota" routerLinkActive="active-page">
+                @for (child of item.children; track child.id) {
+                @if (item.ativo) {
+                <div class="sub-menu" [routerLink]="child.router" routerLinkActive="active-page">
                     <mat-icon class="icone-sub">check_box_outline_blank</mat-icon>
-                    <span>{{items.name}}</span>
+                    <span>{{ child.name }}</span>
                 </div>
                 }
                 }
-
                 }
             </ul>
         </nav>
     </section>
-
 </div>

@@ -1,10 +1,9 @@
    .area-menu {
-       height: 100vh;
-       overflow: hidden;
+       height: auto;
        padding-bottom: 200px;
-       box-shadow: 0,8px,0,2.3;
+       box-shadow: 0, 8px, 0, 2.3;
 
-      
+
        .btn {
            display: flex;
            align-items: end;
@@ -18,12 +17,11 @@
        }
 
        .menu-area {
-        padding-top: 20px;
-           overflow: auto;
            scrollbar-width: thin;
+           height: auto;
            scrollbar-color: #505861 #f2f2f2;
            color: #79717A;
-           height: 82vh;
+
            .active-page {
                background-color: #bddefa;
 
@@ -36,6 +34,7 @@
            ul {
                display: flex;
                flex-direction: column;
+
                li {
                    padding: 6px 1em;
                    display: flex;
@@ -43,6 +42,7 @@
                    line-height: 1.5em;
                    cursor: pointer;
                    color: #000;
+
                    .icon {
                        height: 100%;
                        text-align: center;
@@ -51,6 +51,7 @@
                        padding: 0.1em 0;
                        margin: 0;
                    }
+
                    .icone-name {
                        display: flex;
                        align-items: center;
@@ -68,7 +69,7 @@
 
 
                li:hover {
-                background-color: #bddefa;
+                   background-color: #bddefa;
 
                }
 
@@ -105,6 +106,26 @@
 
                }
            }
+       }
+
+       .item-container {
+           display: flex;
+           align-items: center;
+           justify-content: space-between;
+       }
+
+       .item-link {
+           display: flex;
+           align-items: center;
+           width: 100%;
+           text-decoration: none;
+           color: inherit;
+           padding: 8px;
+       }
+
+       .expand-icon {
+           cursor: pointer;
+           padding: 8px;
        }
 
 

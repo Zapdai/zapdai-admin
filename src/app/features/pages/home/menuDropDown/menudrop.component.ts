@@ -1,225 +1,67 @@
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { Router, RouterLink, RouterLinkActive } from "@angular/router";
+import { functionList, funcoes } from "../../../../shared/core/functionList/functionList";
+import { functionListService } from "../../../../services/routesApiZapdai/functionList.service";
 
 @Component({
-    selector:"app-menu-dropdown",
-    templateUrl:"./menudrop.component.html",
-    styleUrl:"./menudrop.component.scss",
-    standalone:true,
-    imports:[MatIconModule, RouterLink, RouterLinkActive,CommonModule]
+    selector: "app-menu-dropdown",
+    templateUrl: "./menudrop.component.html",
+    styleUrl: "./menudrop.component.scss",
+    standalone: true,
+    imports: [MatIconModule, RouterLink, RouterLinkActive, CommonModule]
 })
-export class menuDropComponent{
-     @Output() sm = new EventEmitter;
-    menuIten = [
-        {
-            id: 0,
-            name: "Home",
-            icone: "home",
-            rotas: "/admin",
-            menuItens: false,
-            iconeItem: false,
-            children: []
-        },
-        {
-            id: 1,
-            name: "Dashboard",
-            icone: "bar_chart_4_bars",
-            rotas: "/admin/dashboard",
-            menuItens: false,
-            iconeItem: false,
-            children: []
-        },
-        {
-            id: 2,
-            name: "Clientes",
-            icone: "groups",
-            rotas: "/admin/clientes",
-            menuItens: false,
-            iconeItem: false,
-            children: []
-        },
+export class menuDropComponent implements OnInit {
+    @Output() sm = new EventEmitter<void>();
+    @Input() funcoes?: funcoes[];
+    @Input() desabled?: boolean;  // manter 'desabled' para consistência com seu código
 
-        {
-            id: 3,
-            name: "Produtos",
-            icone: "menu_book",
-            rotas: "/admin/produtos",
-            menuItens: false,
-            iconeItem: false,
-            children: []
-        },
-        {
-            id: 4,
-            name: "Cadastro",
-            icone: "assignment_ind",
-            menuItens: false,
-            iconeItem: true,
-            children: [
-                {
-                    name: "Contas a Pagar",
-                },
-                {
-                    name: "Contas a Pagar"
-                },
-                {
-                    name: "Boletos"
-                },
-                {
-                    name: "Contas a Pagar"
-                },
-                {
-                    name: "Contas a Pagar"
-                },
-                {
-                    name: "Boletos"
-                },
-                {
-                    name: "Contas a Pagar"
-                },
-                {
-                    name: "Contas a Pagar"
-                },
-                {
-                    name: "Boletos"
-                }
+    functionList?: functionList;
 
+    constructor(private router: Router, private functionService: functionListService) { }
 
-            ]
-        },
-        {
-            id: 5,
-            name: "Financeiro",
-            icone: "attach_money",
-            menuItens: false,
-            iconeItem: true,
-            children: [
-                {
-                    name: "Contas a Pagar",
-                    rota: "/dashboard/contas/pagar"
-                },
-                {
-                    name: "Contas a Receber",
-                    rota: "/dashboard/contas/receber"
-                },
-                {
-                    name: "Boletos",
-                    rota: "/dashboard/contas/boletos"
-                }
+    ngOnInit() {
+        this.functionService.BuscarFunctionList().subscribe({
+            next: (data) => {
+                this.functionList = data;
 
+                // Normaliza todos os children para evitar undefined
+                this.functionList.funcoes.forEach(f => {
+                    if (!f.children) {
+                        f.children = [];
+                    }
+                });
 
-            ]
-        },
-        {
-            id: 6,
-            name: "Planos",
-            icone: "new_releases",
-            menuItens: false,
-            iconeItem: true,
-            children: [
-                {
-                    name: "Todos",
-                    rota: "/dashboard/planos/all"
-                },
-                {
-                    name: "Plano Básico"
-                },
-                {
-                    name: "Plano Intermediário"
-                },
-                {
-                    name: "Plano Premium"
-                },
-                {
-                    name: "Plano Personalizado"
-                }
-
-
-            ]
-        },
-        {
-            id: 7,
-            name: "Tarefas",
-            icone: "today",
-            rotas: "/admin/tarefas",
-            menuItens: false,
-            iconeItem: false,
-            children: []
-        },
-        {
-            id: 8,
-            name: "Ações",
-            icone: "pending_actions",
-            rotas: "/admin/acoes",
-            menuItens: false,
-            iconeItem: false,
-            children: []
-        },
-        {
-            id: 9,
-            name: "Anotaçoes",
-            icone: "assignment",
-            rotas: "/admin/anotacoes",
-            menuItens: false,
-            iconeItem: false,
-            children: []
-        },
-        {
-            id: 10,
-            name: "Pedidos",
-            icone: "shopping_cart",
-            rotas: "/admin/pedidos",
-            menuItens: false,
-            iconeItem: false,
-            children: []
-        },
-        {
-            id: 11,
-            name: "Entregadores",
-            icone: "local_shipping",
-            rotas: "/admin/anotacoes",
-            menuItens: false,
-            iconeItem: false,
-            children: []
-        }
-    ]
-    @Input() desabled?: boolean;
-    constructor(private router: Router) { }
-    setAtivo(id: number) {
-        const itens = this.menuIten.find((item) => item.id === id
-        )
-        if (itens && itens.menuItens) {
-            itens.menuItens = !itens.menuItens
-        } else {
-            itens!.menuItens = true
-        }
-    }
-    setIcon(mudaIcon: boolean) {
-        if (mudaIcon) {
-            return "keyboard_arrow_down"
-        } else {
-            return "chevron_right"
-        }
-
-    }
-
-
-    selectedIndex: number | null = null;
-
-    selectItem(index: number): void {
-        this.selectedIndex = this.selectedIndex === index ? null : index;
-    }
-    navigation(rotas: any) {
-        this.router.navigateByUrl(rotas, { skipLocationChange: false }).then((e) => {
-
-            location.reload();
-
-
-
+                console.log(this.functionList);
+            },
+            error: (err) => console.error(err),
         });
     }
-    btn(){
+
+
+    setAtivo(id: string) {
+        const itens = this.functionList?.funcoes;
+        if (!itens) return;
+
+        for (const item of itens) {
+            if (item.id === id) {
+                item.ativo = !item.ativo;
+                break;
+            }
+        }
+    }
+
+    setIcon(mudaIcon: boolean): string {
+        return mudaIcon ? "keyboard_arrow_down" : "chevron_right";
+    }
+
+    navigation(rotas: string) {
+        this.router.navigateByUrl(rotas);
+    }
+
+    btn() {
         this.desabled = !this.desabled;
     }
+
 }
