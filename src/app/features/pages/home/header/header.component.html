@@ -37,19 +37,19 @@
                 light_mode
             </mat-icon>
 
-        <section class="ng-perfil" (click)="Tmenu()">
+            <section class="ng-perfil" (click)="Tmenu()">
 
-            <small class="ng-perfil-name" >Olá, {{authDecodeUser.getName().split(" ")[0]}}</small>
-            @if (!authDecodeUser.getAvatar()) {
-            <mat-icon class="ng-avatar-icon" (click)="Tmenu()">
-                person
-            </mat-icon>
-            }@else {
-            <div class="avatar">
-                <img [src]="authDecodeUser.getAvatar()" />
-            </div>
-            }
-        </section>
+                <small class="ng-perfil-name">Olá, {{authDecodeUser.getName().split(" ")[0]}}</small>
+                @if (!authDecodeUser.getAvatar()) {
+                <mat-icon class="ng-avatar-icon">
+                    person
+                </mat-icon>
+                }@else {
+                <div class="avatar">
+                    <img [src]="authDecodeUser.getAvatar()" />
+                </div>
+                }
+            </section>
         </section>
         }
         @if (exibimenu) {
