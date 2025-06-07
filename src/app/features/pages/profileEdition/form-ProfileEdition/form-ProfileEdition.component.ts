@@ -7,18 +7,33 @@ import { registroForm } from '../../../../services/singNupForm/registroForm.serv
 import { SnackService } from '../../../../services/snackBar/snack.service';
 import { NgxMaskDirective } from 'ngx-mask';
 import { cepApiBrasilService } from '../../../../services/cepApiBrasil/cep.service';
+import { MatIconModule } from '@angular/material/icon';
+import { TabsModule } from 'primeng/tabs';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-form-ProfileEdition',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatTabsModule, NgxMaskDirective],
+  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatTabsModule, NgxMaskDirective, MatIconModule, TabsModule,],
   templateUrl: './form-ProfileEdition.component.html',
   styleUrls: ['./form-ProfileEdition.component.scss'],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('200ms ease-in', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        animate('150ms ease-out', style({ opacity: 0 }))
+      ])
+    ])
+  ]
 
 })
 export class FormProfileEditionComponent implements AfterViewInit, OnInit {
   emailUser: any
   usuarioId: any
+  activeTab = 'pessoal';
 
   @ViewChild('primeiroInput') primeiroInput!: ElementRef;
 
@@ -32,13 +47,18 @@ export class FormProfileEditionComponent implements AfterViewInit, OnInit {
   ngAfterViewInit(): void {
     this.focarPrimeiroCampo();
   }
-  
+
   ngOnInit(): void {
     this.form.groupform.get('cep')?.valueChanges.subscribe((cep) => {
       if (cep && cep.length === 8) {
         this.buscarEnderecoPorCep(cep);
       }
     });
+  }
+
+
+  setTab(tab: string) {
+    this.activeTab = tab;
   }
 
   focarPrimeiroCampo() {

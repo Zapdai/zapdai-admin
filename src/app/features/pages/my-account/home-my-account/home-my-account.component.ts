@@ -33,6 +33,7 @@ export class HomeMyAccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.token = this.auth.returnToken();
+    
     if (isPlatformBrowser(this.platformId)) {
       this.checkWindowSize();
     }

@@ -1,78 +1,101 @@
 <div class="ng-main">
     <div class="container">
         <p>Configurações da Conta</p>
-        <form action="" [formGroup]="form.groupform">
-            <mat-tab-group>
-                <mat-tab label="Informações Pessoais">Informações Pessoais</mat-tab>
-                <mat-tab label="Seu Endereço">
-                    <div class="ng-listForm">
-                        <div>
-                            <fieldset class="ng-fieldset">
-                                <legend>CEP</legend>
-                                <input #primeiroInput type="text" class="ng-input" placeholder="CEP"
-                                    formControlName="cep" mask="00000-000"
-                                    (keydown.enter)="focarProximoCampo('estado_sigla')">
-                            </fieldset>
-                            @if (isRequired('cep')) {
-                            <small class="ng-error">Informe um CEP válido!</small>
-                            }
-                        </div>
-                        <div>
-                            <fieldset class="ng-fieldset">
-                                <legend>Estado</legend>
-                                <input type="text" class="ng-input" placeholder="Estado" formControlName="estado_sigla"
-                                    (keydown.enter)="focarProximoCampo('cidade')">
-                            </fieldset>
-                            @if (isRequired('estado_sigla')) {
-                            <small class="ng-error">Informe o Estado</small>
-                            }
-                        </div>
-                    </div>
-                    <div class="ng-listForm">
-                        <div>
-                            <fieldset class="ng-fieldset">
-                                <legend>Cidade</legend>
-                                <input type="text" class="ng-input" placeholder="Cidade" formControlName="cidade"
-                                    (keydown.enter)="focarProximoCampo('bairro')">
-                            </fieldset>
-                            @if (isRequired('cidade')) {
-                            <small class="ng-error">Informe a Cidade</small>
-                            }
-                        </div>
-                        <div>
-                            <fieldset class="ng-fieldset">
-                                <legend>Bairro</legend>
-                                <input type="text" class="ng-input" placeholder="Bairro" formControlName="bairro"
-                                    (keydown.enter)="focarProximoCampo('rua')">
-                            </fieldset>
-                            @if (isRequired('bairro')) {
-                            <small class="ng-error">Informe o Bairro</small>
-                            }
-                        </div>
-                    </div>
+        <form [formGroup]="form.groupform">
+            <div class="tab-container">
+                <div class="tab-header">
+                    <button [class.active]="activeTab === 'pessoal'" (click)="setTab('pessoal')">
+                        <mat-icon>manage_accounts</mat-icon>
+                        Informações Pessoais
+                    </button>
+                    <button [class.active]="activeTab === 'endereco'" (click)="setTab('endereco')">
+                        <mat-icon>house</mat-icon>
+                        Seu Endereço
+                    </button>
+                </div>
 
-                    <fieldset class="ng-fieldset">
-                        <legend>Rua</legend>
-                        <input type="text" class="ng-input" placeholder="Rua" formControlName="rua"
-                            (keydown.enter)="focarProximoCampo('numeroEndereco')">
-                    </fieldset>
-                    @if (isRequired('rua')) {
-                    <small class="ng-error">Informe a Rua</small>
+                <div class="tab-body">
+                    @if (activeTab === 'pessoal') {
+                    <div [@fadeInOut]>
+                        <p>Aqui você pode editar seu nome, email, etc.</p>
+                    </div>
                     }
-                    <fieldset class="ng-fieldset">
-                        <legend>Nº da Casa/Apt</legend>
-                        <input type="text" class="ng-input" placeholder="Nº da Casa/Apt"
-                            formControlName="numeroEndereco" (keydown.enter)="focarProximoCampo('complemento')">
-                    </fieldset>
-                    @if (isRequired('numeroEndereco')) {
-                    <small class="ng-error">Informe o Nº da Casa ou Apt</small>
+
+                    @if (activeTab === 'endereco') {
+                    <div [@fadeInOut]>
+                        <div class="ng-listForm">
+                            <div>
+                                <fieldset class="ng-fieldset">
+                                    <legend>CEP</legend>
+                                    <input #primeiroInput type="text" class="ng-input" placeholder="CEP"
+                                        formControlName="cep" mask="00000-000"
+                                        (keydown.enter)="focarProximoCampo('estado_sigla')">
+                                </fieldset>
+                                @if (isRequired('cep')) {
+                                <small class="ng-error">Informe um CEP válido!</small>
+                                }
+                            </div>
+                            <div>
+                                <fieldset class="ng-fieldset">
+                                    <legend>Estado</legend>
+                                    <input type="text" class="ng-input" placeholder="Estado"
+                                        formControlName="estado_sigla" (keydown.enter)="focarProximoCampo('cidade')">
+                                </fieldset>
+                                @if (isRequired('estado_sigla')) {
+                                <small class="ng-error">Informe o Estado</small>
+                                }
+                            </div>
+                        </div>
+                        <div class="ng-listForm">
+                            <div>
+                                <fieldset class="ng-fieldset">
+                                    <legend>Cidade</legend>
+                                    <input type="text" class="ng-input" placeholder="Cidade" formControlName="cidade"
+                                        (keydown.enter)="focarProximoCampo('bairro')">
+                                </fieldset>
+                                @if (isRequired('cidade')) {
+                                <small class="ng-error">Informe a Cidade</small>
+                                }
+                            </div>
+                            <div>
+                                <fieldset class="ng-fieldset">
+                                    <legend>Bairro</legend>
+                                    <input type="text" class="ng-input" placeholder="Bairro" formControlName="bairro"
+                                        (keydown.enter)="focarProximoCampo('rua')">
+                                </fieldset>
+                                @if (isRequired('bairro')) {
+                                <small class="ng-error">Informe o Bairro</small>
+                                }
+                            </div>
+                        </div>
+
+                        <fieldset class="ng-fieldset">
+                            <legend>Rua</legend>
+                            <input type="text" class="ng-input" placeholder="Rua" formControlName="rua"
+                                (keydown.enter)="focarProximoCampo('numeroEndereco')">
+                        </fieldset>
+                        @if (isRequired('rua')) {
+                        <small class="ng-error">Informe a Rua</small>
+                        }
+                        <fieldset class="ng-fieldset">
+                            <legend>Nº da Casa/Apt</legend>
+                            <input type="text" class="ng-input" placeholder="Nº da Casa/Apt"
+                                formControlName="numeroEndereco" (keydown.enter)="focarProximoCampo('complemento')">
+                        </fieldset>
+                        @if (isRequired('numeroEndereco')) {
+                        <small class="ng-error">Informe o Nº da Casa ou Apt</small>
+                        }
+                        <fieldset class="ng-fieldset">
+                            <legend>Complemento (opcional)</legend>
+                            <input type="text" class="ng-input" placeholder="Complemento" formControlName="complemento">
+                        </fieldset>
+
+
+                        <button mat-flat-button type="button" class="ng-btn" >Enviar código</button>
+                    </div>
                     }
-                    <fieldset class="ng-fieldset">
-                        <legend>Complemento (opcional)</legend>
-                        <input type="text" class="ng-input" placeholder="Complemento" formControlName="complemento">
-                    </fieldset>
-                </mat-tab>
-            </mat-tab-group>
+                </div>
+            </div>
         </form>
     </div>
 </div>
