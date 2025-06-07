@@ -1,5 +1,5 @@
 @if (isVisible) {
-  <nav class="mobile-tab-bar">
+  <nav class="mobile-tab-bar" [ngClass]="[isAdmin ? 'ng-isAdmin' : '']">
     <button (click)="navegar('/home')" [class.active]="router.url === '/home'">
       <mat-icon>home</mat-icon>
       <span>Home</span>

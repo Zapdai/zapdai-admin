@@ -32,4 +32,18 @@
       font-weight: 550;
     }
   }
+
+}
+
+.ng-isAdmin {
+  background-color: #F2F2F2;
+  color: #555;
+
+
+  button {
+    mat-icon, span {
+      color: #555;
+    }
+
+  }
 }

@@ -6,7 +6,7 @@ import {
   PLATFORM_ID
 } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../../services/auth.service';
 
@@ -20,6 +20,7 @@ import { AuthService } from '../../../../services/auth.service';
 export class MobileNavbarComponent implements OnInit {
   isVisible = false;
   token: any;
+    isAdmin: boolean = false;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -28,6 +29,17 @@ export class MobileNavbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // this.emailUser = this.authService.getFromToken('sub')!;
+    this.isAdmin = this.router.url.startsWith('/admin');
+
+    // Escuta mudanças de rota subsequentes
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.isAdmin = this.router.url.startsWith('/admin');
+      }
+    });
+
+
     this.token = this.auth.returnToken();
 
     if (isPlatformBrowser(this.platformId)) {
