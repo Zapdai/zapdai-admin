@@ -58,12 +58,12 @@ export class headerComponent implements OnInit {
     ngOnInit(): void {
 
         // this.emailUser = this.authService.getFromToken('sub')!;
-        this.isAdmin = this.router.url === '/admin';
+        this.isAdmin = this.router.url.startsWith('/admin');
 
         // Escuta mudanças de rota subsequentes
         this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
-                this.isAdmin = this.router.url === '/admin';
+                this.isAdmin = this.router.url.startsWith('/admin');
             }
         });
 
@@ -170,6 +170,7 @@ export class headerComponent implements OnInit {
     }
     pagePlanos() {
         const role = this.authDecodeUser.getRole();
+        console.log("Role:", role);
 
         if (role && (role.includes("ROLE_ADMIN") || role.includes("ROLE_MODERATOR"))) {
             this.activeRouter.activeLoading();

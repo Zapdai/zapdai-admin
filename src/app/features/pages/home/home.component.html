@@ -1,15 +1,16 @@
-<app-header [admin]="true" (ativaMenu)="ativo()"></app-header>
+<app-page-container>
+    <app-header [admin]="true" (ativaMenu)="ativo()"></app-header>
 
-<app-mobile-navbar></app-mobile-navbar>
-<main class="ng-container">
-    <aside>
-        <app-menu-dropdown [desabled]="ativa"></app-menu-dropdown>
-    </aside>
-    <section class="ng-main">
-        <div class="area-main">
-        </div>
-    </section>
-</main>
-<app-footer></app-footer>
-
-<router-outlet></router-outlet>
+    <app-mobile-navbar></app-mobile-navbar>
+    <main class="ng-container">
+        <aside>
+            <app-menu-dropdown [desabled]="ativa"></app-menu-dropdown>
+        </aside>
+        <section class="ng-main">
+            <div class="area-main">
+                <router-outlet></router-outlet>
+            </div>
+        </section>
+    </main>
+    <app-footer [footerActive]="true"></app-footer>
+</app-page-container>
