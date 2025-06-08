@@ -1,1 +1,54 @@
-<router-outlet></router-outlet>
+<app-page-container>
+    <div class="ng-main">
+
+        @if(isVisible) {
+        <button class="btn-voltar" (click)="voltarPaginaAnterior()">
+            <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+        }
+
+
+        <div class="container container1">
+            <section class="ng-perfil perfil-principal">
+                <section class="ng-perfil">
+                    @if (!authDecodeUser.getAvatar()) {
+                    <mat-icon class="ng-avatar-icon">
+                        person
+                    </mat-icon>
+                    }@else {
+                    <div class="avatar">
+                        <img [src]="authDecodeUser.getAvatar()" />
+                    </div>
+                    }
+                    <div>
+                        <small class="ng-perfil-name">Olá, <b>{{authDecodeUser.getName().split("
+                                ")[0]}}</b>!</small><br />
+                        <small class="ng-perfil-name">{{ authDecodeUser.getSub() }}</small>
+                    </div>
+                </section>
+                <section class="ng-perfil profile">
+
+                    @if(!isVisible) {
+                    <button class="btn-profile" (click)="pageMyAccount()">
+                        <mat-icon class="ng-menu-icon">person</mat-icon>
+                        <small class="ng-menu-name">Minha Conta</small>
+                    </button>
+                    }
+
+                    <button class="btn-profile" (click)="pageManagerProfile()">
+                        <mat-icon class="ng-menu-icon">manage_accounts</mat-icon>
+                        <small class="ng-menu-name">Configurações do Usuário</small>
+                    </button>
+                    <button class="btn-profile" (click)="pageResetPassword()">
+                        <mat-icon class="ng-menu-icon">key</mat-icon>
+                        <small class="ng-menu-name">Alterar Senha</small>
+                    </button>
+                </section>
+            </section>
+        </div>
+
+        <div class="container">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</app-page-container>

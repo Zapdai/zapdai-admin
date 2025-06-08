@@ -1,84 +1,19 @@
-<app-page-container>
-    <app-header [carrinho]="true"></app-header>
-
+<div class="ng-main">
     <app-mobile-navbar></app-mobile-navbar>
 
-    <div class="ng-main">
-
-        @if(isVisible) {
-        <button class="btn-voltar" (click)="voltarPaginaAnterior()">
-            <mat-icon>arrow_back_ios</mat-icon>
+    <div class="container container2">
+        @for (item of itens; track $index) {
+        <button class="btn-menu" [routerLink]="item.router">
+            <mat-icon class="ng-menu-icon">{{ item.icon }}</mat-icon>
+            <small class="ng-menu-name">{{ item.title }}</small>
         </button>
         }
 
-
-        <div class="container container1">
-            <section class="ng-perfil perfil-principal">
-                <section class="ng-perfil">
-                    @if (!authDecodeUser.getAvatar()) {
-                    <mat-icon class="ng-avatar-icon">
-                        person
-                    </mat-icon>
-                    }@else {
-                    <div class="avatar">
-                        <img [src]="authDecodeUser.getAvatar()" />
-                    </div>
-                    }
-                    <div>
-                        <small class="ng-perfil-name">Olá, <b>{{authDecodeUser.getName().split("
-                                ")[0]}}</b>!</small><br />
-                        <small class="ng-perfil-name">{{ authDecodeUser.getSub() }}</small>
-                    </div>
-                </section>
-                <section class="ng-perfil profile">
-                    <button class="btn-profile" (click)="pageManagerProfile()">
-                        <mat-icon class="ng-menu-icon">manage_accounts</mat-icon>
-                        <small class="ng-menu-name">Editar Perfil</small>
-                    </button>
-                    <button class="btn-profile" (click)="pageResetPassword()">
-                        <mat-icon class="ng-menu-icon">key</mat-icon>
-                        <small class="ng-menu-name">Alterar Senha</small>
-                    </button>
-                </section>
-            </section>
-        </div>
-        <div class="container container2">
-            <button class="btn-menu">
-                <mat-icon class="ng-menu-icon">shopping_bag</mat-icon>
-                <small class="ng-menu-name">Minhas Compras</small>
-            </button>
-            <button class="btn-menu">
-                <mat-icon class="ng-menu-icon">storefront</mat-icon>
-                <small class="ng-menu-name">Lojas Próximas</small>
-            </button>
-            <button class="btn-menu">
-                <mat-icon class="ng-menu-icon">payments</mat-icon>
-                <small class="ng-menu-name">Metódos de Pagamento</small>
-            </button>
-            <button class="btn-menu">
-                <mat-icon class="ng-menu-icon">apartment</mat-icon>
-                <small class="ng-menu-name">Meu Negócio</small>
-            </button>
-            <button class="btn-menu">
-                <mat-icon class="ng-menu-icon">add_business</mat-icon>
-                <small class="ng-menu-name">Criar Meu Negóxio</small>
-            </button>
-            <button class="btn-menu">
-                <mat-icon class="ng-menu-icon">manage_accounts</mat-icon>
-                <small class="ng-menu-name">Configuraões Da conta</small>
-            </button>
-            <button class="btn-menu">
-                <mat-icon class="ng-menu-icon">shopping_bag</mat-icon>
-                <small class="ng-menu-name">Suporte Técnico</small>
-            </button>
-
-
-            @if(isVisible) {
-            <button class="btn-menu btn-logOut" (click)="deslogar()">
-                <mat-icon class="ng-menu-icon">logout</mat-icon>
-                <small class="ng-menu-name">Sair</small>
-            </button>
-            }
-        </div>
+        @if(isVisible) {
+        <button class="btn-menu btn-logOut" (click)="deslogar()">
+            <mat-icon class="ng-menu-icon">logout</mat-icon>
+            <small class="ng-menu-name">Sair</small>
+        </button>
+        }
     </div>
-</app-page-container>
+</div>

@@ -1,5 +1,5 @@
 import { Component, HostListener, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { headerComponent } from "../../home/header/header.component";
 import { MobileNavbarComponent } from "../../home/mobile-navbar/mobile-navbar.component";
 import { MatTabsModule } from '@angular/material/tabs';
@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-home-my-account',
   standalone: true,
-  imports: [headerComponent, MobileNavbarComponent, MatTabsModule, MatIconModule, PageContainerComponent],
+  imports: [ MobileNavbarComponent, MatTabsModule, MatIconModule, PageContainerComponent, RouterLink ],
   templateUrl: './home-my-account.component.html',
   styleUrls: ['./home-my-account.component.scss']
 })
@@ -69,30 +69,41 @@ export class HomeMyAccountComponent implements OnInit {
     }, 0);
   }
   
-  pageManagerProfile(){
-    this.activeRouter.activeLoading()
-    setTimeout(() => {
-        this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-          setTimeout(() => {
-            this.router.navigate(['/my-account/manager-profile'], { skipLocationChange: false });
-          }, 1000);
-        });
-      }, 0);
-  }
-
-  pageResetPassword(){
-    this.activeRouter.activeLoading()
-    setTimeout(() => {
-        this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-          setTimeout(() => {
-            this.router.navigate(['/auth/resetPassword'], { skipLocationChange: false });
-          }, 1000);
-        });
-      }, 0);
-  }
-
-  
-  voltarPaginaAnterior() {
-    this.location.back();
-  }
+  itens = [
+    {
+      title: "Minhas Compras",
+      icon: "shopping_bag",
+      router: ""
+    },
+    {
+      title: "Lojas Próximas",
+      icon: "storefront",
+      router: ""
+    },
+    {
+      title: "Metódos de Pagamento",
+      icon: "payments",
+      router: ""
+    },
+    {
+      title: "Meu Negócio",
+      icon: "apartment",
+      router: ""
+    },
+    {
+      title: "Criar Meu Negóxio",
+      icon: "add_business",
+      router: ""
+    },
+    {
+      title: "Configuraões Da conta",
+      icon: "manage_accounts",
+      router: ""
+    },
+    {
+      title: "Suporte Técnico",
+      icon: "add_business",
+      router: ""
+    },
+  ]
 }

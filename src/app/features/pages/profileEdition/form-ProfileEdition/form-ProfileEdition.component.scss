@@ -1,14 +1,12 @@
 .ng-main {
     width: 100%;
-    height: 100dvh;
-    background: #fff;
-    overflow: auto;
+    background: #F2F2F2;
 
     .container {
         display: flex;
         flex-direction: column;
         gap: 30px;
-        padding: 30px;
+        padding: 25px;
 
         form {
             display: flex;
@@ -209,31 +207,21 @@
 
 }
 
-::ng-deep .p-tabview {
-    border: none !important;
-    box-shadow: none !important;
-}
-
-
 // 
-@media screen and (min-width:730px) {
+@media screen and (min-width:769px) {
     .ng-main {
-        display: flex;
-        justify-content: center;
-        background: #fff;
         width: 100%;
-        height: auto;
-        padding-top: 70px;
 
         .container {
             display: flex;
             flex-direction: column;
-            width: 80%;
-            padding: 40px 60px;
+            padding: 0;
             gap: 30px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            border-radius: 12px;
-            border: 1px solid #ccc;
+
+            .tab-header {
+                width: 50%;
+            }
         }
     }
 }

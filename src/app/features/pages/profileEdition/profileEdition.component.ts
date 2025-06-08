@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { PageContainerComponent } from '../../../shared/component/page-container/page-container.component';
 import { Router } from '@angular/router';
 import { FormProfileEditionComponent } from "./form-ProfileEdition/form-ProfileEdition.component";
 import { headerComponent } from "../home/header/header.component";
@@ -8,7 +7,7 @@ import { MobileNavbarComponent } from "../home/mobile-navbar/mobile-navbar.compo
 @Component({
   selector: 'app-profileEdition',
   standalone: true,
-  imports: [PageContainerComponent, FormProfileEditionComponent, headerComponent, MobileNavbarComponent],
+  imports: [ FormProfileEditionComponent, MobileNavbarComponent],
   templateUrl: './profileEdition.component.html',
   styleUrls: ['./profileEdition.component.scss']
 })

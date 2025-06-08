@@ -1,11 +1,14 @@
 <div class="area-menu">
     <section class="menu">
         <nav class="menu-area">
+
+            <mat-icon class="dropClosed">arrow_back_ios</mat-icon>
             <ul>
                 @for (item of functionList?.funcoes ?? []; track item.id) {
                 <li [routerLink]="item.router" routerLinkActive="active-page" class="item" ariaCurrentWhenActive="page"
                     [routerLinkActiveOptions]="{ exact: true }" (click)="setAtivo(item.id)">
                     <mat-icon class="icon">{{ item.icone }}</mat-icon>
+                    @if (dropOpen) {
                     <div class="icone-name">
                         @if (!desabled) {
                         <div class="text-left">
@@ -18,6 +21,7 @@
                         </mat-icon>
                         }
                     </div>
+                    }
                 </li>
 
                 @for (child of item.children; track child.id) {

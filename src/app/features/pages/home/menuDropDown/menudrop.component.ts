@@ -16,8 +16,8 @@ export class menuDropComponent implements OnInit {
     @Output() sm = new EventEmitter<void>();
     @Input() funcoes?: funcoes[];
     @Input() desabled?: boolean;  // manter 'desabled' para consistência com seu código
-
     functionList?: functionList;
+    dropOpen: boolean = false;
 
     constructor(private router: Router, private functionService: functionListService) { }
 
@@ -42,6 +42,7 @@ export class menuDropComponent implements OnInit {
 
     setAtivo(id: string) {
         const itens = this.functionList?.funcoes;
+        this.dropOpen = true
         if (!itens) return;
 
         for (const item of itens) {
