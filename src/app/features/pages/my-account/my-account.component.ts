@@ -6,17 +6,19 @@ import { AuthDecodeService } from '../../../services/AuthUser.service';
 import { AuthService } from '../../../services/auth.service';
 import { loadingService } from '../../../services/loading/loading.service';
 import { isPlatformBrowser, Location } from '@angular/common';
+import { AsideComponent } from "../../../shared/component/aside-modal/aside-modal.component";
 
 @Component({
   selector: 'app-my-account',
   standalone: true,
-  imports: [RouterOutlet, MatIconModule, PageContainerComponent],
+  imports: [RouterOutlet, MatIconModule, PageContainerComponent, AsideComponent],
   templateUrl: './my-account.component.html',
   styleUrls: ['./my-account.component.scss'],
 })
 export class MyAccountComponent implements OnInit {
   token: any;
   isVisible = false;
+  modalAtivo = false;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -46,6 +48,15 @@ export class MyAccountComponent implements OnInit {
 
   checkWindowSize() {
     this.isVisible = window.innerWidth <= 767;
+  }
+
+  
+  ativaModal() {
+    this.modalAtivo = false;
+  }
+
+  abrirModalAlterarImagem() {
+    this.modalAtivo = true
   }
 
   pageMyAccount() {
