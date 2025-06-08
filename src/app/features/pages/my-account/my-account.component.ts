@@ -32,13 +32,13 @@ export class MyAccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.token = this.auth.returnToken();
-    
+
     if (isPlatformBrowser(this.platformId)) {
       this.checkWindowSize();
     }
 
   }
-  
+
 
   @HostListener('window:resize')
   onResize() {
@@ -51,7 +51,7 @@ export class MyAccountComponent implements OnInit {
     this.isVisible = window.innerWidth <= 767;
   }
 
-  
+
   ativaModal() {
     this.modalAtivo = false;
   }
@@ -61,41 +61,52 @@ export class MyAccountComponent implements OnInit {
   }
 
   pageMyAccount() {
-        this.activeRouter.activeLoading()
+    this.activeRouter.activeLoading()
+    setTimeout(() => {
+      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
         setTimeout(() => {
-            this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-                setTimeout(() => {
-                    this.router.navigate(['/my-account'])
-                }, 1000);
-            })
+          this.router.navigate(['/my-account'])
+        }, 1000);
+      })
 
-        }, 0);
-    }
-
-  
-  pageManagerProfile(){
+    }, 0);
+  }
+  pageHome() {
     this.activeRouter.activeLoading()
     setTimeout(() => {
-        this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-          setTimeout(() => {
-            this.router.navigate(['/my-account/manager-profile'], { skipLocationChange: false });
-          }, 1000);
-        });
-      }, 0);
+      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+        setTimeout(() => {
+          this.router.navigate(['/home'])
+        }, 1000);
+      })
+
+    }, 0);
   }
 
-  pageResetPassword(){
+
+  pageManagerProfile() {
     this.activeRouter.activeLoading()
     setTimeout(() => {
-        this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-          setTimeout(() => {
-            this.router.navigate(['/auth/resetPassword'], { skipLocationChange: false });
-          }, 1000);
-        });
-      }, 0);
+      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+        setTimeout(() => {
+          this.router.navigate(['/my-account/manager-profile'], { skipLocationChange: false });
+        }, 1000);
+      });
+    }, 0);
   }
 
-  
+  pageResetPassword() {
+    this.activeRouter.activeLoading()
+    setTimeout(() => {
+      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+        setTimeout(() => {
+          this.router.navigate(['/auth/resetPassword'], { skipLocationChange: false });
+        }, 1000);
+      });
+    }, 0);
+  }
+
+
   voltarPaginaAnterior() {
     this.location.back();
   }

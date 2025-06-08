@@ -33,6 +33,10 @@
                 <section class="ng-perfil profile">
 
                     @if(!isVisible) {
+                    <button class="btn-profile" (click)="pageHome()">
+                        <mat-icon class="ng-menu-icon">home</mat-icon>
+                        <small class="ng-menu-name">Pagina Inicial</small>
+                    </button>
                     <button class="btn-profile" (click)="pageMyAccount()">
                         <mat-icon class="ng-menu-icon">person</mat-icon>
                         <small class="ng-menu-name">Minha Conta</small>
