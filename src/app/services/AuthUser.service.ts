@@ -9,53 +9,57 @@ import { AuthService } from "./auth.service";
 export class AuthDecodeService {
   userSubject = new BehaviorSubject<any | null>(null);
   constructor(private AuthToken: AuthService) {
+    ;
+
     if (AuthToken.PossuiToken()) {
       this.decode();
     }
   }
   decode() {
     const token = this.AuthToken.returnToken();
-    const user = jwtDecode(token as any) as any;
-    this.userSubject.next(user);
+    if (token) {
+      const user = jwtDecode(token as any) as any;
+      this.userSubject.next(user);
+    }
   }
   retornUser() {
     return this.userSubject.asObservable();
   }
+
+  atualizaAvatar(novaUrl: string) {
+    const usuario = this.userSubject.value;
+    if (usuario) {
+      usuario.avatar = novaUrl;
+      this.userSubject.next(usuario);
+    }
+  }
+
+
   getRole() {
-    let role;
-    this.retornUser().subscribe(e => {
-      if (e && e.roles !== null) {
-        role = e.roles;
-      }
-    });
-    return role as any;
+    const user = this.userSubject.getValue();
+    return user?.roles ?? null;
   }
+
   getName() {
-    let name;
-    this.retornUser().subscribe(e => {
-      name = e.username;
-    });
-    return name as any;
+    const user = this.userSubject.getValue();
+    return user?.username ?? null;
   }
+
   getAvatar() {
-    let avatar;
-    this.retornUser().subscribe(e => {
-      avatar = e.avatar;
-    });
-    return avatar as any;
+    const user = this.userSubject.getValue();
+    return user?.avatar ?? null;
   }
+
   getSub() {
-    let sub;
-    this.retornUser().subscribe(e => {
-      sub = e.sub;
-    });
-    return sub as any;
+    const user = this.userSubject.getValue();
+    return user?.sub ?? null;
   }
+
   getusuarioId() {
-    let usuarioId;
-    this.retornUser().subscribe(e => {
-      usuarioId = e.usuarioId;
-    });
-    return usuarioId as any;
+    const user = this.userSubject.getValue();
+    return user?.usuarioId ?? null;
   }
+
+
+
 }

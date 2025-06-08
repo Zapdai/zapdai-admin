@@ -24,9 +24,20 @@ export class AuthService {
     }
 
     saveToken(token: string) {
-        localStorage.setItem('acessToken', token)
-        this.decode();
+        localStorage.removeItem('acessToken');
+        localStorage.setItem('acessToken', token);
+
+        try {
+            const user = jwtDecode(token);
+            this.userSubject.next(user);
+        } catch (e) {
+            console.error('Token inválido');
+            this.RemoveToken();
+        }
     }
+
+
+
 
     decode() {
         const token = this.returnToken();

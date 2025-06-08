@@ -1,0 +1,20 @@
+<div class="ng-main">
+  <div class="avatar-preview">
+    @if (previewUrl) {
+      <img [src]="previewUrl" alt="Pré-visualização" class="ng-img" />
+    } @else {
+      <img [src]="authDecodeUser.getAvatar()" alt="Avatar atual" class="ng-img" />
+    }
+  </div>
+
+  <div class="buttons">
+    <label for="fileInput" class="ng-btn">
+      <input id="fileInput" type="file" (change)="onFileSelected($event)" hidden />
+      Escolher Imagem
+    </label>
+
+    <button mat-raised-button class="ng-btn" [disabled]="!selectedFile" (click)="salvarImagem()">
+      Salvar Imagem
+    </button>
+  </div>
+</div>

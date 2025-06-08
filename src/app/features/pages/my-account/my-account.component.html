@@ -59,5 +59,6 @@
 
 @if (modalAtivo) {
 <app-aside-modal (emitModal)="ativaModal()">
+    <app-avatarUser (fecharModal)="ativaModal()"></app-avatarUser>
 </app-aside-modal>
 }

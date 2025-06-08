@@ -8,6 +8,7 @@ import { functionList } from "../../shared/core/functionList/functionList";
     providedIn:"root"
 })
 export class functionListService{
+    
     api = environment.apiUrl
     constructor(private http:HttpClient){}
     BuscarFunctionList():Observable<functionList>{

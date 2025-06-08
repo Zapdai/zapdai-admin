@@ -7,11 +7,12 @@ import { AuthService } from '../../../services/auth.service';
 import { loadingService } from '../../../services/loading/loading.service';
 import { isPlatformBrowser, Location } from '@angular/common';
 import { AsideComponent } from "../../../shared/component/aside-modal/aside-modal.component";
+import { AvatarUserComponent } from "./avatarUser/avatarUser.component";
 
 @Component({
   selector: 'app-my-account',
   standalone: true,
-  imports: [RouterOutlet, MatIconModule, PageContainerComponent, AsideComponent],
+  imports: [RouterOutlet, MatIconModule, PageContainerComponent, AsideComponent, AvatarUserComponent],
   templateUrl: './my-account.component.html',
   styleUrls: ['./my-account.component.scss'],
 })
