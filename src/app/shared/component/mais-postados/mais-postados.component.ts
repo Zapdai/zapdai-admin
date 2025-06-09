@@ -1,10 +1,11 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { UtiusComponent } from '../utius/utius.component';
 import { ModalComponent } from '../modal/modal.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-mais-postados',
-  imports: [UtiusComponent,ModalComponent],
+  imports: [UtiusComponent,ModalComponent,MatIconModule],
   templateUrl: './mais-postados.component.html',
   styleUrl: './mais-postados.component.scss'
 })

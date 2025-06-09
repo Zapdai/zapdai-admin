@@ -1,10 +1,13 @@
 @if (isVisible) {
-<header class="ng-header" [ngClass]="[isAdmin ? 'ng-isAdmin' : '']">
-    <section class="ng-logo" (click)="pageHome()">
-        @if (admin) {
+<header class="ng-header" [ngClass]="[admin ? 'admin' : '']">
+    @if (!admin) {
+        <section class="ng-logo" (click)="pageHome()">
+                </section>
+
+        }
+     @if (admin) {
         <mat-icon (click)="exibir()" class="icon">menu</mat-icon>
         }
-    </section>
     <section class="ng-form">
         <form action="" [formGroup]="grupo" (submit)="pegarvalor()">
             <div class="search">
@@ -19,7 +22,7 @@
         <mat-icon (click)="light()">
             shopping_cart
         </mat-icon>
-        @if (token === null) {
+        @if (!auth.PossuiToken()) {
         <button ngClass="btn1" (click)="pageSignin()">
             Login
         </button>
@@ -31,7 +34,7 @@
     }
 
     <div class="card flex justify-center">
-        @if (token != null) {
+        @if (auth.PossuiToken()) {
         <section class="ng-perfil">
             <mat-icon (click)="light()">
                 light_mode
@@ -40,13 +43,13 @@
             <section class="ng-perfil" (click)="Tmenu()">
 
                 <small class="ng-perfil-name">Olá, {{authDecodeUser.getName().split(" ")[0]}}</small>
-                @if (!authDecodeUser.getAvatar()) {
+                @if (authDecodeUser.getAvatar()==null) {
                 <mat-icon class="ng-avatar-icon">
                     person
                 </mat-icon>
                 }@else {
                 <div class="avatar">
-                    <img [src]="authDecodeUser.getAvatar()" />
+                    <img [src]="imagem" />
                 </div>
                 }
             </section>

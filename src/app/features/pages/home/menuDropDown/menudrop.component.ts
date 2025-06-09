@@ -17,7 +17,8 @@ export class menuDropComponent implements OnInit {
     @Input() funcoes?: funcoes[];
     @Input() desabled?: boolean;  // manter 'desabled' para consistência com seu código
     functionList?: functionList;
-    dropOpen: boolean = false;
+    dropOpen: boolean = true;
+    @Input() rotaAtiva?:boolean;
 
     constructor(private router: Router, private functionService: functionListService) { }
 
@@ -49,9 +50,6 @@ export class menuDropComponent implements OnInit {
             if (item.id === id) {
                 // Toggle do clicado
                 item.ativo = !item.ativo;
-            } else {
-                // Fecha os outros
-                item.ativo = false;
             }
         }
     }
@@ -60,7 +58,7 @@ export class menuDropComponent implements OnInit {
 
 
     setIcon(mudaIcon: boolean): string {
-        return mudaIcon ? "keyboard_arrow_down" : "chevron_right";
+        return mudaIcon ? "chevron_right" : "keyboard_arrow_down";
     }
 
     navigation(rotas: string) {

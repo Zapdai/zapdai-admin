@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { headerComponent } from "./header/header.component";
 import { menuDropComponent } from "./menuDropDown/menudrop.component";
 import { RouterOutlet } from "@angular/router";
@@ -14,7 +14,8 @@ import { PageContainerComponent } from "../../../shared/component/page-container
     imports: [headerComponent, menuDropComponent, RouterOutlet, footerComponent, MobileNavbarComponent, PageContainerComponent]
 })
 export class homeComponent{
-    ativa = false;
+    @Input() desabled?: boolean; 
+    ativa = true;
 
     ativo(){
         this.ativa = !this.ativa;

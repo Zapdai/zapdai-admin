@@ -1,16 +1,24 @@
-<app-page-container>
-    <app-header [admin]="true" (ativaMenu)="ativo()"></app-header>
+<div class="ng-body">
+    @if (ativa) {
+    <aside class="log">
+        <div class="ng-logo">
+        </div>
+        <app-menu-dropdown [desabled]="ativa"></app-menu-dropdown>
+    </aside>
+    }
+    <main class="main">
+        <app-mobile-navbar ></app-mobile-navbar>
+        <div class="header">
+            <app-header [admin]="true" (ativaMenu)="ativo()"></app-header>
+        </div>
+        <div class="ng-container">
+            <section class="ng-main">
+                <div class="area-main">
+                    <router-outlet></router-outlet>
+                </div>
+                <footer class="footer">Developed by Zapdai</footer>
+            </section>
+        </div>
 
-    <app-mobile-navbar></app-mobile-navbar>
-    <main class="ng-container">
-        <aside>
-            <app-menu-dropdown [desabled]="ativa"></app-menu-dropdown>
-        </aside>
-        <section class="ng-main">
-            <div class="area-main">
-                <router-outlet></router-outlet>
-            </div>
-        </section>
     </main>
-    <app-footer [footerActive]="true"></app-footer>
-</app-page-container>
+</div>

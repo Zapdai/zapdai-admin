@@ -1,20 +1,69 @@
-.ng-container{
+.ng-body {
     display: flex;
-    height: auto;
-    .ng-main{
-        flex: 1;
-            padding: 0 10px;
-        .area-main{
-            background-color: #f2f2f2;
-            height: auto;
-            scrollbar-color: #505861 #f2f2f2;
+    aside {
+        border-right: 1px solid #eee;
+        //    background-color: #0d1d3f;
 
+        .ng-logo {
+            
+            width: 350px;
+            height: 54px;
+            padding-right: 5px;
+            background-size: contain;
+            background-image: url("/logo.png");
+            padding: 17px 2px;
+            background-repeat: no-repeat;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            cursor: pointer;
+
+            .icon {
+                text-align: center;
+                cursor: pointer;
+
+            }
+        }
+    }
+
+    .main {
+      
+
+        .header {
+            width: 100%;
+        }
+
+        .ng-container {
+            display: flex;
+
+            .ng-main {
+                height:calc(100vh - 50px);
+                overflow-y: auto;
+                scrollbar-width: thin;
+                scrollbar-color: #505861 #f2f2f2;
+
+                .area-main {
+                    height: auto;
+
+
+                }
+
+                .footer {
+                    height: 30px;
+                    text-align: center;
+                    font-size: 14px;
+                    font-weight: 600;
+                    font-family: Arial, Helvetica, sans-serif;
+                    color: #8b8383;
+                }
+            }
         }
     }
 }
 
-@media screen and (min-width: 768px) {
-    .ng-container {
-        padding-top: 55px;
+@media screen and (max-width: 769px) {
+    .log{
+        display: none;
     }
 }

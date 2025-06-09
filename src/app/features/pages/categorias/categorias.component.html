@@ -1,6 +1,7 @@
-<app-page-container>
     <div class="main">
-        <app-header [carrinho]="true" class="s"></app-header>
+        <div class="header">
+            <app-header [carrinho]="true" class="s" [admin]="false"></app-header>
+        </div>
 
         <app-mobile-navbar></app-mobile-navbar>
         <div class="ng-categoria">
@@ -29,6 +30,6 @@
 
 
         </div>
+            <app-footer [footerActive]="true"></app-footer>
+
     </div>
-    <app-footer [footerActive]="true"></app-footer>
-</app-page-container>

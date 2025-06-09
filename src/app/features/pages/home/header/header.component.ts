@@ -32,7 +32,6 @@ export class headerComponent implements OnInit {
 
     @Input() categoria?: string;
     @Input() menu = false;
-    token: any;
     @Input() admin = false;
     @Input() carrinho = false;
     grupo = new FormGroup({
@@ -42,13 +41,14 @@ export class headerComponent implements OnInit {
     isAdmin: boolean = false;
     exibimenu = false;
     isVisible = false;
+    imagem:any;
 
     constructor(
         @Inject(PLATFORM_ID) private platformId: any,
         private router: Router,
         private activeRouter: loadingService,
         private snack: SnackService,
-        private auth: AuthService,
+        public auth: AuthService,
         private cdRef: ChangeDetectorRef,
         public authDecodeUser: AuthDecodeService,
     ) { }
@@ -57,7 +57,7 @@ export class headerComponent implements OnInit {
 
     ngOnInit(): void {
 
-        // this.emailUser = this.authService.getFromToken('sub')!;
+        this.imagem = this.authDecodeUser.getAvatar();
         this.isAdmin = this.router.url.startsWith('/admin');
 
         // Escuta mudanças de rota subsequentes
@@ -66,8 +66,6 @@ export class headerComponent implements OnInit {
                 this.isAdmin = this.router.url.startsWith('/admin');
             }
         });
-
-        this.token = this.auth.returnToken();
 
         if (isPlatformBrowser(this.platformId)) {
             this.checkWindowSize();

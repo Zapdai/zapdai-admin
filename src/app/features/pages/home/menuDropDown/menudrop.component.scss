@@ -1,8 +1,15 @@
    .area-menu {
-       height: auto;
-       padding-bottom: 200px;
+    width: 100%;
+       height: calc(100vh - 20px);
+       margin-bottom: 200px;
        box-shadow: 0, 8px, 0, 2.3;
        border-right: 1px solid #eee;
+       overflow-y: auto;
+       scrollbar-color: #505861 #f2f2f2;
+       scrollbar-width: thin;
+       border-top: 10x solid #999;
+       border-top: 1px solid #999;
+
 
 
        .btn {
@@ -18,9 +25,10 @@
        }
 
        .menu-area {
-           scrollbar-width: thin;
+           margin-bottom: 50px;
+
+
            height: auto;
-           scrollbar-color: #505861 #f2f2f2;
            color: #79717A;
 
            .active-page {
@@ -75,8 +83,8 @@
                }
 
                .sub-menu {
-                   margin-left: 25px;
-                   margin-right: 10px;
+                   margin-left: 15px;
+                   margin-right: 2px;
                    display: flex;
                    align-items: center;
                    gap: 5px;
@@ -87,7 +95,7 @@
 
                    .icone-sub {
                        height: 100%;
-                       font-size: 12px;
+                       font-size: 10px;
                        text-align: center;
                    }
 
@@ -97,7 +105,7 @@
                    }
 
                    span {
-                       font-size: 13px;
+                       font-size: 12px;
                        text-align: center;
                    }
                }

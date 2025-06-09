@@ -3,10 +3,21 @@
     <span>{{titulo}}</span>
   </div>
   <div class="carrossel-container">
-    <div class="botoes bn">
+ <div class="botoes bn">
       <button (click)="rolarDireita()">
+        <mat-icon (click)="rolarDireita()">
+          chevron_left
+
+      </mat-icon>
         </button>
+         <button class="btn" (click)="rolarEsquerda()">
+         <mat-icon (click)="rolarDireita()">
+          chevron_right
+
+      </mat-icon>
+      </button>
     </div>
+   
 
     <div class="scroll-container" #scrollContainer>
       <app-utius [titulo]="titulo2" [imagem]="imagem"></app-utius>
@@ -19,8 +30,6 @@
       <app-utius [titulo]="titulo3" [imagem]="imagem"></app-utius>
     </div>
 
-    <div class="botoes bn">
-      <button class="btn" (click)="rolarEsquerda()">></button>
-    </div>
+    
   </div>
 </app-modal>

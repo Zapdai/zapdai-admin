@@ -1,20 +1,21 @@
 <div class="area-menu">
     <section class="menu">
+        <section class="ng-logo" >
+    </section>
+        
         <nav class="menu-area">
 
-            <mat-icon class="dropClosed">arrow_back_ios</mat-icon>
+            <!-- <mat-icon class="dropClosed">arrow_back_ios</mat-icon> -->
             <ul>
                 @for (item of functionList?.funcoes ?? []; track item.id) {
                 <li [routerLink]="item.router" routerLinkActive="active-page" class="item" ariaCurrentWhenActive="page"
-                    [routerLinkActiveOptions]="{ exact: true }" (click)="setAtivo(item.id)">
+                    [routerLinkActiveOptions]="{ exact: false }" (click)="setAtivo(item.id)">
                     <mat-icon class="icon">{{ item.icone }}</mat-icon>
                     @if (dropOpen) {
                     <div class="icone-name">
-                        @if (!desabled) {
                         <div class="text-left">
                             {{ item.name }}
                         </div>
-                        }
                         @if (item.children && item.children.length > 0) {
                         <mat-icon>
                             {{ setIcon(!item.ativo) }}

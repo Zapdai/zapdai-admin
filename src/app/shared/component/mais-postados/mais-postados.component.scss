@@ -39,20 +39,26 @@
     align-items: center;
     .btn{
         right:10px;
+
+      mat-icon{
+      font-size: 23px;
+    }
       }
   }
   
   .botoes button {
-    background-color: rgba(0, 0, 0, 0.18);
-    color: white;
+    background-color:rgba(255, 255, 255, 0.1);;
+    color: rgb(153, 7, 7);
     border: none;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
     font-size: 20px;
     cursor: pointer;
-    z-index: 9999;
-    position: fixed;
+    position: absolute;
+    z-index: 999;
+
     
   }
  
@@ -61,7 +67,6 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    background-color: re;
     justify-content: center;
     gap: 0 32px;
     margin: 0;
