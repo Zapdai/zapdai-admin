@@ -3,7 +3,7 @@ import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-opcoes-categoria',
-  imports: [ModalComponent],
+  imports: [],
   templateUrl: './opcoes-categoria.component.html',
   styleUrl: './opcoes-categoria.component.scss'
 })

@@ -11,7 +11,7 @@ import { PageContainerComponent } from "../../../shared/component/page-container
     templateUrl:"./home.component.html",
     styleUrl:"./home.component.scss",
     standalone:true,
-    imports: [headerComponent, menuDropComponent, RouterOutlet, footerComponent, MobileNavbarComponent, PageContainerComponent]
+    imports: [headerComponent, menuDropComponent, RouterOutlet, MobileNavbarComponent]
 })
 export class homeComponent{
     @Input() desabled?: boolean; 

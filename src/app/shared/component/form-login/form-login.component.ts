@@ -47,7 +47,6 @@ export class FormLoginComponent {
       event.focus()
      }
   }
-perfil = "admin"
   btn() {
     this.auth.login(this.data()).subscribe(item => {
           this.service.groupform.reset()
@@ -60,7 +59,13 @@ perfil = "admin"
         localStorage.removeItem('returnUrl'); // limpa após usar
 
         // Redireciona para a página original
-        this.router.navigateByUrl(returnUrl);
+        setTimeout(() => {
+        this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+          setTimeout(() => {
+            this.router.navigateByUrl(returnUrl);
+          }, 1000);
+        });
+      }, 0);
       }
     });
   }

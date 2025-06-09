@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-home-my-account',
   standalone: true,
-  imports: [ MobileNavbarComponent, MatTabsModule, MatIconModule, PageContainerComponent, RouterLink ],
+  imports: [ MobileNavbarComponent, MatTabsModule, MatIconModule, RouterLink ],
   templateUrl: './home-my-account.component.html',
   styleUrls: ['./home-my-account.component.scss']
 })

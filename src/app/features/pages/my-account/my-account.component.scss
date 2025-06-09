@@ -12,8 +12,6 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            cursor: pointer;
-
             .ng-perfil-name {
                 font-size: 14px;
                 color: #fff;
@@ -94,6 +92,10 @@
             .ng-menu-name {
                 font-size: 11px;
             }
+        }
+        .btn-profile:hover{
+            background-color: rgba(0, 0, 0, 0.05);
+            transform: scale(0.97);
         }
 
 
@@ -194,7 +196,6 @@
                 flex-direction: row;
                 align-items: center;
                 gap: 10px;
-                cursor: pointer;
                 width: 100%;
 
                 .ng-perfil-name {

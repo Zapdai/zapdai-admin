@@ -13,8 +13,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 @Component({
   selector: 'app-categorias',
   imports: [headerComponent, OpcoesCategoriaComponent, 
-    CarrosselComponent, MaisPostadosComponent, 
-    PageContainerComponent, footerComponent, 
+    CarrosselComponent, MaisPostadosComponent, footerComponent, 
     MobileNavbarComponent, MatTabsModule,],
   templateUrl: './categorias.component.html',
   styleUrl: './categorias.component.scss'
