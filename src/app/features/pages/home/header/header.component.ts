@@ -14,7 +14,11 @@ import { ButtonModule } from 'primeng/button';
 import { AuthDecodeService } from "../../../../services/AuthUser.service";
 import { AuthService } from "../../../../services/auth.service";
 import { isPlatformBrowser } from '@angular/common';
-
+import { apiAuthService } from "../../../../services/apiAuth.service";
+import { Usuario } from "../../../../shared/core/types/usuario";
+type usuario={
+    avatar:string
+}
 @Component({
     selector: "app-header",
     templateUrl: "./header.component.html",
@@ -42,7 +46,7 @@ export class headerComponent implements OnInit {
     exibimenu = false;
     isVisible = false;
     imagem:any;
-
+    usuario!:Usuario
     constructor(
         @Inject(PLATFORM_ID) private platformId: any,
         private router: Router,
@@ -51,13 +55,13 @@ export class headerComponent implements OnInit {
         public auth: AuthService,
         private cdRef: ChangeDetectorRef,
         public authDecodeUser: AuthDecodeService,
+        private apiAuth:apiAuthService
     ) { }
 
 
 
     ngOnInit(): void {
-
-        this.imagem = this.authDecodeUser.getAvatar();
+        this.buscaUsuario();
         this.isAdmin = this.router.url.startsWith('/admin');
 
         // Escuta mudanças de rota subsequentes
@@ -78,7 +82,14 @@ export class headerComponent implements OnInit {
 
 
 
-
+  buscaUsuario(){
+    this.apiAuth.buscaUsuario(this.authDecodeUser.getSub()).subscribe((usuario:Usuario)=>{
+        console.log("data "+usuario)
+        if(usuario!==null){
+            this.usuario = usuario;
+        }
+    })
+  }
 
     setIcon(mudaIcon: boolean) {
         this.snack.openSnackBar("deu certo")

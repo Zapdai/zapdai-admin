@@ -42,14 +42,14 @@
 
             <section class="ng-perfil" (click)="Tmenu()">
 
-                <small class="ng-perfil-name">Olá, {{authDecodeUser.getName().split(" ")[0]}}</small>
-                @if (authDecodeUser.getAvatar()==null) {
+                <small class="ng-perfil-name">Olá, {{usuario.nome.split(" ")[0]}}</small>
+                @if (usuario.nome==null) {
                 <mat-icon class="ng-avatar-icon">
                     person
                 </mat-icon>
                 }@else {
                 <div class="avatar">
-                    <img [src]="imagem" />
+                    <img [src]="usuario.avatar" />
                 </div>
                 }
             </section>

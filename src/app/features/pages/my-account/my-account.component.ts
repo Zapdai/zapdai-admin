@@ -8,6 +8,8 @@ import { loadingService } from '../../../services/loading/loading.service';
 import { isPlatformBrowser, Location } from '@angular/common';
 import { AsideComponent } from "../../../shared/component/aside-modal/aside-modal.component";
 import { AvatarUserComponent } from "./avatarUser/avatarUser.component";
+import { apiAuthService } from '../../../services/apiAuth.service';
+import { Usuario } from '../../../shared/core/types/usuario';
 
 @Component({
   selector: 'app-my-account',
@@ -20,6 +22,8 @@ export class MyAccountComponent implements OnInit {
   token: any;
   isVisible = false;
   modalAtivo = false;
+    usuario!:Usuario;
+
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -28,10 +32,21 @@ export class MyAccountComponent implements OnInit {
     private auth: AuthService,
     private activeRouter: loadingService,
     private location: Location,
+    private apiAuth:apiAuthService
+    
   ) { }
 
   ngOnInit(): void {
     this.token = this.auth.returnToken();
+   new Promise((resove)=>{
+    resove(
+       this.apiAuth.buscaUsuario(this.authDecodeUser.getSub()).subscribe((usuario:Usuario)=>{
+        if(usuario!==null){
+          this.usuario = usuario;
+        }
+    })
+    )
+   })
 
     if (isPlatformBrowser(this.platformId)) {
       this.checkWindowSize();

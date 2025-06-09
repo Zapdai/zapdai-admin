@@ -1,0 +1,15 @@
+.update{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    background-color: rgb(248, 186, 186);
+    padding: 5px 156px;
+    box-sizing: border-box;
+    span{
+        font-size: 14px;
+        color: #2b2c2c;
+    }
+    button{
+        padding:2px 5px;
+    }
+}

@@ -21,4 +21,9 @@ export class apiAuthService {
     signup (data:any):Observable <cadastro> {
         return this.http.post<cadastro>(`${this.apiUrl}/zapdai/v1/usuario/registro`, data).pipe()
     }
+     buscaUsuario (email:any):Observable <any> {
+      const  data = {email:email}
+        console.log(data)
+        return this.http.post<any>(`${this.apiUrl}/zapdai/v1/usuario/search`, data).pipe()
+    }
 }
