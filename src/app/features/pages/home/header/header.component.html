@@ -41,7 +41,7 @@
             </mat-icon>
 
             <section class="ng-perfil" (click)="Tmenu()">
-                @if (usuario.nome!==null) {
+                @if (usuario&& usuario.nome!==null) {
                 <small class="ng-perfil-name">Olá, {{usuario.nome?.split(" ")[0]}}</small>
                  <div class="avatar">
                     <img [src]="usuario.avatar" width="32" height="32" />
