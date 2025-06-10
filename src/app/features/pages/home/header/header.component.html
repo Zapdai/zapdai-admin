@@ -41,16 +41,15 @@
             </mat-icon>
 
             <section class="ng-perfil" (click)="Tmenu()">
-
-                <small class="ng-perfil-name">Olá, {{usuario.nome.split(" ")[0]}}</small>
-                @if (usuario.nome==null) {
-                <mat-icon class="ng-avatar-icon">
+                @if (usuario.nome!==null) {
+                <small class="ng-perfil-name">Olá, {{usuario.nome?.split(" ")[0]}}</small>
+                 <div class="avatar">
+                    <img [src]="usuario.avatar" width="32" height="32" />
+                </div>
+                }@else {
+                   <mat-icon class="ng-avatar-icon">
                     person
                 </mat-icon>
-                }@else {
-                <div class="avatar">
-                    <img [src]="usuario.avatar" />
-                </div>
                 }
             </section>
         </section>

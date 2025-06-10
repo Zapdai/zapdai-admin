@@ -4,7 +4,7 @@ type Role = {
 }
 export type Usuario = {
   clientId: number;
-  nome: string;
+  nome: any;
   phoneNumer: string;
   cpf: string;
   dataNascimento: string; // ou `Date` se for convertido

@@ -22,8 +22,8 @@ export class MyAccountComponent implements OnInit {
   token: any;
   isVisible = false;
   modalAtivo = false;
-    usuario!:Usuario;
-
+  usuario!:Usuario;
+  valida:any;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -41,6 +41,7 @@ export class MyAccountComponent implements OnInit {
    new Promise((resove)=>{
     resove(
        this.apiAuth.buscaUsuario(this.authDecodeUser.getSub()).subscribe((usuario:Usuario)=>{
+        this.valida = usuario;
         if(usuario!==null){
           this.usuario = usuario;
         }

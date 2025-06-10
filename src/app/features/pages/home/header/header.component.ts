@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, HostListener, Inject, Input, OnInit, Output, PLATFORM_ID, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, EventEmitter, HostListener, Inject, Input, OnInit, Output, PLATFORM_ID, ViewChild } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -61,7 +61,7 @@ export class headerComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.buscaUsuario();
+        
         this.isAdmin = this.router.url.startsWith('/admin');
 
         // Escuta mudanças de rota subsequentes
@@ -70,6 +70,10 @@ export class headerComponent implements OnInit {
                 this.isAdmin = this.router.url.startsWith('/admin');
             }
         });
+        if(this.auth.PossuiToken()){
+            this.buscaUsuario();
+    }
+       
 
         if (isPlatformBrowser(this.platformId)) {
             this.checkWindowSize();
