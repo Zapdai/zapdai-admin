@@ -16,6 +16,11 @@ export class avatarUserService {
         formData.append('id', id);
         formData.append('file', file);
 
+        // Timestamp para evitar cache em mobile
+        formData.append('ts', Date.now().toString());
+
         return this.http.put<any>(`${this.api}/zapdai/v1/usuario/avatar`, formData);
     }
+
+
 }

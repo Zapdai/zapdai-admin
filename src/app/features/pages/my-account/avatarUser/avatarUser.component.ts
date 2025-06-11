@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Inject, OnInit, Output, PLATFORM_ID } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Inject, OnInit, Output, PLATFORM_ID, ViewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { headerComponent } from "../../home/header/header.component";
 import { MobileNavbarComponent } from "../../home/mobile-navbar/mobile-navbar.component";
@@ -22,6 +22,7 @@ import { Usuario } from '../../../../shared/core/types/usuario';
   styleUrls: ['./avatarUser.component.scss']
 })
 export class AvatarUserComponent implements OnInit {
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   @Output() fecharModal = new EventEmitter<void>();
   token: any;
   isVisible = false;
@@ -91,12 +92,13 @@ export class AvatarUserComponent implements OnInit {
       reader.onload = () => {
         this.usuario.avatar = reader.result as string;
       };
-
       reader.readAsDataURL(this.selectedFile);
-
-      fileInput.value = '';
     }
+
+    // 🔁 Limpar o valor após seleção
+    this.fileInput.nativeElement.value = '';
   }
+
 
 
   salvarImagem(): void {
@@ -107,22 +109,20 @@ export class AvatarUserComponent implements OnInit {
 
 
   enviarImagem() {
-    if (this.selectedFile) {
-      this.avatarUserService.UpdateAvatarUser(this.usuario.clientId, this.selectedFile)
-        .subscribe({
-          next: (res) => {
-            this.snack.success(res.msg);
-            // 🔄 Atualiza o preview após upload com base no avatar novo salvo
-            this.previewUrl = this.usuario.avatar;
-            this.selectedFile = null;
-            this.fechar();
-          },
-          error: () => {
-            this.snack.error("Erro ao atualizar avatar.");
-          }
-        });
-    }
+    this.avatarUserService.UpdateAvatarUser(this.usuario.clientId, this.selectedFile)
+      .subscribe({
+        next: (res) => {
+          this.snack.success(res.msg);
+          this.previewUrl = this.usuario.avatar;
+          this.selectedFile = null;
+          this.fechar();
+        },
+        error: (err) => {
+          this.snack.error("Erro ao atualizar avatar.");
+        }
+      });
   }
+
 
 
 
