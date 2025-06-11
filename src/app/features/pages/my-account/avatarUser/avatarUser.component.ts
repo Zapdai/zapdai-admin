@@ -113,7 +113,7 @@ export class AvatarUserComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.snack.success(res.msg);
-          this.previewUrl = this.usuario.avatar;
+          this.previewUrl = `${this.usuario.avatar}?t=${Date.now()}`;
           this.selectedFile = null;
           this.fechar();
         },
