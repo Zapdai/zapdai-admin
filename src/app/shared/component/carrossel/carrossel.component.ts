@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, PLATFORM_ID, ViewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 
@@ -9,18 +9,18 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
   templateUrl: './carrossel.component.html',
   styleUrl: './carrossel.component.scss'
 })
-export class CarrosselComponent implements OnInit, OnDestroy {
+export class CarrosselComponent implements AfterViewInit, OnDestroy {
    constructor(@Inject(PLATFORM_ID) private id:Object){}
   @ViewChild("radio1") radio1!: ElementRef;
   @ViewChild("radio2") radio2!: ElementRef;
   numero = 0; // Começa no primeiro slide
   intervalId!: ReturnType<typeof setInterval>;
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
        if(isPlatformBrowser(this.id)){
         this.numero = 1;
         this.intervalId = setInterval(()=>{
           this.nextImg();
-        }, 5000); // A cada 2 segundos
+        }, 4000); // A cada 2 segundos
 
        }
       
