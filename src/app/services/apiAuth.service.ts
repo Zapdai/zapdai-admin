@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { cadastro } from "../shared/core/types/cadastro";
+import { cadastro } from "../shared/core/types/cadastroUpdateUser";
 import { environment } from "../../environments/environment";
 
 @Injectable ({
@@ -24,5 +24,9 @@ export class apiAuthService {
      buscaUsuario (email:any):Observable <any> {
       const  data = {email:email}
         return this.http.post<any>(`${this.apiUrl}/zapdai/v1/usuario/search`, data).pipe()
+    }
+
+    updateUsuario (data:any):Observable <any> {
+        return this.http.put<any>(`${this.apiUrl}/zapdai/v1/usuario/address`, data).pipe()
     }
 }

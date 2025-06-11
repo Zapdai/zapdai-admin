@@ -3,7 +3,7 @@ import { FormSignupComponent } from "../../../../shared/component/form-signup/fo
 import { loadingService } from "../../../../services/loading/loading.service";
 import { Router } from "@angular/router";
 import { apiAuthService } from "../../../../services/apiAuth.service";
-import { cadastro } from "../../../../shared/core/types/cadastro";
+import { cadastro } from "../../../../shared/core/types/cadastroUpdateUser";
 import { SnackService } from "../../../../services/snackBar/snack.service";
 import { registroForm } from "../../../../services/singNupForm/registroForm.servide";
 import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";

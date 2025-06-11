@@ -5,7 +5,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { formModalComponent } from '../formModel/formModal.component';
 import { MatButtonModule } from '@angular/material/button';
 import { registroForm } from '../../../services/singNupForm/registroForm.servide';
-import { cadastro } from '../../core/types/cadastro';
+import { cadastro } from '../../core/types/cadastroUpdateUser';
 import { SnackService } from '../../../services/snackBar/snack.service';
 import { NgxMaskDirective } from 'ngx-mask';
 import { Router } from '@angular/router';
@@ -121,8 +121,6 @@ export class FormSignupComponent {
       sexo: this.select("sexo").value,
       email: this.select("email").value.toLowerCase(),
       password: this.select("password").value,
-      endereco: {}
-
     }
     return data
   }

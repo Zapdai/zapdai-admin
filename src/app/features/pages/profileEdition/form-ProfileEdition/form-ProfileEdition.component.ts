@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { registroForm } from '../../../../services/singNupForm/registroForm.servide';
@@ -10,6 +10,10 @@ import { cepApiBrasilService } from '../../../../services/cepApiBrasil/cep.servi
 import { MatIconModule } from '@angular/material/icon';
 import { TabsModule } from 'primeng/tabs';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { apiAuthService } from '../../../../services/apiAuth.service';
+import { AuthDecodeService } from '../../../../services/AuthUser.service';
+import { Usuario } from '../../../../shared/core/types/usuario';
+import { cadastro } from '../../../../shared/core/types/cadastroUpdateUser';
 
 @Component({
   selector: 'app-form-ProfileEdition',
@@ -34,14 +38,22 @@ export class FormProfileEditionComponent implements AfterViewInit, OnInit {
   emailUser: any
   usuarioId: any
   activeTab = 'pessoal';
+  usuario!: Usuario;
+  valida: any;
+  latitude: number | null = null;
+  longitude: number | null = null;
+  error: string | null = null;
 
   @ViewChild('primeiroInput') primeiroInput!: ElementRef;
 
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
     public form: registroForm,
     private snak: SnackService,
     public cepApi: cepApiBrasilService,
+    private apiAuth: apiAuthService,
+    public authDecodeUser: AuthDecodeService,
   ) { }
 
   ngAfterViewInit(): void {
@@ -54,6 +66,38 @@ export class FormProfileEditionComponent implements AfterViewInit, OnInit {
         this.buscarEnderecoPorCep(cep);
       }
     });
+
+    this.getUser()
+
+    this.pegaLatLog()
+
+  }
+
+  getUser() {
+    new Promise((resove) => {
+      resove(
+        this.apiAuth.buscaUsuario(this.authDecodeUser.getSub()).subscribe((usuario: Usuario) => {
+          this.valida = usuario;
+          if (usuario !== null) {
+            this.usuario = usuario;
+
+            this.form.groupform.patchValue({
+              name: this.usuario.nome,
+              sexo: this.usuario.sexo,
+              telefone: this.usuario.phoneNumer,
+              dataNascimento: this.usuario.dataNascimento,
+              cep: '54444444',
+              estado_sigla: 'this.usuario.',
+              cidade: 'res.city',
+              bairro: 'res.neighborhood',
+              rua: 'res.street',
+              numeroEndereco: '54',
+              complemento: 'gf'
+            });
+          }
+        })
+      )
+    })
   }
 
 
@@ -87,6 +131,75 @@ export class FormProfileEditionComponent implements AfterViewInit, OnInit {
 
 
     return (hasRequiredError && isTouched) || hasEmailError || hasCepError || hasCpfCnpjError;
+  }
+
+  select<T>(nome: string) {
+    const data = this.form.groupform?.get(nome);
+    if (!data) {
+      throw new Error('Nome inválido!!!');
+    }
+    return data as FormControl;
+  }
+
+  get dataUser(): cadastro {
+    return {
+      "id": this.authDecodeUser.getusuarioId(),
+      "nome": this.select("name").value || this.usuario.nome,
+      "phoneNumer": this.select("telefone").value || this.usuario.phoneNumer,
+      "sexo": this.select("sexo").value || this.usuario.sexo,
+      "endereco": {
+        "numeroEndereco": this.select("numeroEndereco").value,
+        "latLong": `${this.latitude}, ${this.longitude}`,
+        "rua": this.select("rua").value,
+        "complemento": this.select("complemento").value,
+        "estado": this.select("estado_sigla").value,
+        "cep": this.select("cep").value,
+        "bairro": this.select("bairro").value,
+        "cidade": this.select("cidade").value,
+      }
+    };
+  }
+
+  AtualizarUsuario() {
+    const dados = this.dataUser;
+
+    this.apiAuth.updateUsuario(dados).subscribe({
+      next: (res) => {
+        this.snak.success(res.msg);
+      },
+      error: (err) => {
+        console.error('Erro ao atualizar usuário:', err);
+        this.snak.error(err);
+      }
+    });
+  }
+
+
+  pegaLatLog() {
+    if (isPlatformBrowser(this.platformId)) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.latitude = position.coords.latitude;
+            this.longitude = position.coords.longitude;
+          },
+          (err) => {
+            this.error = 'Erro ao obter localização: ' + err.message;
+            console.error(this.error);
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+          }
+        );
+      } else {
+        this.error = 'Geolocalização não suportada no navegador.';
+        console.error(this.error);
+      }
+    } else {
+      console.warn('Código executado fora do browser.');
+    }
   }
 
   buscarEnderecoPorCep(cep: string) {

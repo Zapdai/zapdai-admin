@@ -16,9 +16,76 @@
                 <div class="tab-body">
                     @if (activeTab === 'pessoal') {
                     <div [@fadeInOut]>
-                        <p>Aqui você pode editar seu nome, email, etc.</p>
+                        <fieldset class="ng-fieldset">
+                            <legend>Nome Completo</legend>
+                            <input #primeiroInput type="text" class="ng-input" placeholder="Seu nome completo..."
+                                formControlName="name" (keydown.enter)="focarProximoCampo('numeroDeTelefone')">
+                        </fieldset>
+                        @if (isRequired('name')) {
+                        <small class="ng-error">Informe o Nome da Empresa</small>
+                        }
+
+                        <fieldset class="ng-fieldset">
+                            <legend>Número de telefone</legend>
+                            <input type="text" class="ng-input" placeholder="Nº de telefone" formControlName="telefone"
+                                mask="(00) 00000-0000">
+                        </fieldset>
+                        @if (isRequired('telefone')) {
+                        <small class="ng-error">Informe o Nº de telefone</small>
+                        }
+
+                        <div class="ng-listForm">
+                            <div>
+                                <fieldset class="ng-fieldset">
+                                    <legend>Sexo</legend>
+                                    <select formControlName="sexo" id="" class="ng-input">
+                                        <option disabled selected value="">Selecione</option>
+                                        <option value="m">Masculino</option>
+                                        <option value="f">Feminino</option>
+                                        <option value="o">Outros</option>
+                                    </select>
+                                </fieldset>
+                                @if (isRequired('sexo')) {
+                                <small class="ng-error">Selecione seu sexo!</small>
+                                }
+                            </div>
+                            <div>
+                                <fieldset class="ng-fieldset">
+                                    <legend>Data nascimento</legend>
+                                    <input type="date" class="ng-input" placeholder="Data nascimento..."
+                                        formControlName="dataNascimento">
+                                </fieldset>
+                                @if (isRequired('dataNascimento')) {
+                                <small class="ng-error">Informe sua Data nascimento</small>
+                                }
+                            </div>
+                        </div>
+
+
+                        <div class="ng-listForm">
+                            <div>
+                                <fieldset class="ng-fieldset fieldset-disabled">
+                                    <legend>Email</legend>
+                                    <input type="email" class="ng-input email-somente-leitura"
+                                        [value]="[this.authDecodeUser.getSub()]" readonly />
+                                </fieldset>
+                            </div>
+                            <div>
+                                <fieldset class="ng-fieldset fieldset-disabled">
+                                    <legend>CPF</legend>
+                                    <input type="text" class="ng-input email-somente-leitura" [value]="usuario.cpf"
+                                        readonly />
+                                </fieldset>
+                            </div>
+
+                        </div>
+
+
+                        <button mat-flat-button type="button" class="ng-btn" (click)="AtualizarUsuario()">Atualizar Informações</button>
                     </div>
                     }
+
+                    <!---------------------------------------------------------------------------------------------------- -->
 
                     @if (activeTab === 'endereco') {
                     <div [@fadeInOut]>
@@ -90,7 +157,7 @@
                         </fieldset>
 
 
-                        <button mat-flat-button type="button" class="ng-btn" >Atualizar Endereço</button>
+                        <button mat-flat-button type="button" class="ng-btn" (click)="AtualizarUsuario()">Atualizar Endereço</button>
                     </div>
                     }
                 </div>
