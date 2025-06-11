@@ -1,6 +1,6 @@
 <div class="ng-main">
     <div class="container">
-        <form [formGroup]="form.groupform">
+        <form *ngIf="groupform"  [formGroup]="groupform">
             <div class="tab-container">
                 <div class="tab-header">
                     <button [class.active]="activeTab === 'pessoal'" (click)="setTab('pessoal')">
@@ -18,22 +18,21 @@
                     <div [@fadeInOut]>
                         <fieldset class="ng-fieldset">
                             <legend>Nome Completo</legend>
-                            <input #primeiroInput type="text" class="ng-input" placeholder="Seu nome completo..."
-                                formControlName="name" (keydown.enter)="focarProximoCampo('numeroDeTelefone')">
+                            <input #primeiroInput type="text" class="ng-input"
+                                formControlName="nome" (keydown.enter)="focarProximoCampo('numeroDeTelefone')">
                         </fieldset>
-                        @if (isRequired('name')) {
+                        @if (isRequired('nome')) {
                         <small class="ng-error">Informe o Nome da Empresa</small>
                         }
 
                         <fieldset class="ng-fieldset">
                             <legend>Número de telefone</legend>
-                            <input type="text" class="ng-input" placeholder="Nº de telefone" formControlName="telefone"
+                            <input type="text" class="ng-input" placeholder="Nº de telefone" formControlName="telefone" 
                                 mask="(00) 00000-0000">
                         </fieldset>
                         @if (isRequired('telefone')) {
                         <small class="ng-error">Informe o Nº de telefone</small>
                         }
-
                         <div class="ng-listForm">
                             <div>
                                 <fieldset class="ng-fieldset">
@@ -52,7 +51,7 @@
                             <div>
                                 <fieldset class="ng-fieldset">
                                     <legend>Data nascimento</legend>
-                                    <input type="date" class="ng-input" placeholder="Data nascimento..."
+                                    <input type="datetime" class="ng-input" placeholder="Data nascimento..."
                                         formControlName="dataNascimento">
                                 </fieldset>
                                 @if (isRequired('dataNascimento')) {
@@ -73,7 +72,7 @@
                             <div>
                                 <fieldset class="ng-fieldset fieldset-disabled">
                                     <legend>CPF</legend>
-                                    <input type="text" class="ng-input email-somente-leitura" [value]="usuario.cpf"
+                                    <input type="text" class="ng-input email-somente-leitura" formControlName="cpf"
                                         readonly />
                                 </fieldset>
                             </div>
@@ -136,8 +135,8 @@
                         </div>
 
                         <fieldset class="ng-fieldset">
-                            <legend>Rua</legend>
-                            <input type="text" class="ng-input" placeholder="Rua" formControlName="rua"
+                            <legend>Logradouro</legend>
+                            <input type="text" class="ng-input" placeholder="Rua" formControlName="logradouro"
                                 (keydown.enter)="focarProximoCampo('numeroEndereco')">
                         </fieldset>
                         @if (isRequired('rua')) {
@@ -146,14 +145,14 @@
                         <fieldset class="ng-fieldset">
                             <legend>Nº da Casa/Apt</legend>
                             <input type="text" class="ng-input" placeholder="Nº da Casa/Apt"
-                                formControlName="numeroEndereco" (keydown.enter)="focarProximoCampo('complemento')">
+                                formControlName="numeroEndereco" (keydown.enter)="focarProximoCampo('LOGRADOURO')">
                         </fieldset>
                         @if (isRequired('numeroEndereco')) {
                         <small class="ng-error">Informe o Nº da Casa ou Apt</small>
                         }
                         <fieldset class="ng-fieldset">
                             <legend>Complemento (opcional)</legend>
-                            <input type="text" class="ng-input" placeholder="Complemento" formControlName="complemento">
+                            <input type="text" class="ng-input" placeholder="Complemento" >
                         </fieldset>
 
 

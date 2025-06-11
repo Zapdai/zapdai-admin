@@ -1,7 +1,7 @@
 export interface endereco {
     numeroEndereco: string,
     latLong?: string,
-    rua: string,
+    logradouro: string,
     complemento?: string,
     estado: string,
     cep: string,

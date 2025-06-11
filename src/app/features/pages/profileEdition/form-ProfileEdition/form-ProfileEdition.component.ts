@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
-import { registroForm } from '../../../../services/singNupForm/registroForm.servide';
 import { SnackService } from '../../../../services/snackBar/snack.service';
 import { NgxMaskDirective } from 'ngx-mask';
 import { cepApiBrasilService } from '../../../../services/cepApiBrasil/cep.service';
@@ -13,7 +12,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { apiAuthService } from '../../../../services/apiAuth.service';
 import { AuthDecodeService } from '../../../../services/AuthUser.service';
 import { Usuario } from '../../../../shared/core/types/usuario';
-import { cadastro } from '../../../../shared/core/types/cadastroUpdateUser';
+import { cpfOuCnpjValidator, validarCep, validarEmail } from '../../../../../validators';
 
 @Component({
   selector: 'app-form-ProfileEdition',
@@ -35,21 +34,19 @@ import { cadastro } from '../../../../shared/core/types/cadastroUpdateUser';
 
 })
 export class FormProfileEditionComponent implements AfterViewInit, OnInit {
-  emailUser: any
-  usuarioId: any
   activeTab = 'pessoal';
   usuario!: Usuario;
   valida: any;
   latitude: number | null = null;
   longitude: number | null = null;
   error: string | null = null;
+   groupform!:FormGroup;
 
   @ViewChild('primeiroInput') primeiroInput!: ElementRef;
 
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    public form: registroForm,
     private snak: SnackService,
     public cepApi: cepApiBrasilService,
     private apiAuth: apiAuthService,
@@ -61,48 +58,50 @@ export class FormProfileEditionComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.form.groupform.get('cep')?.valueChanges.subscribe((cep) => {
+        this.getUser()
+     this.groupform.get('cep')?.valueChanges.subscribe((cep:any) => {
       if (cep && cep.length === 8) {
         this.buscarEnderecoPorCep(cep);
       }
     });
-
-    this.getUser()
-
     this.pegaLatLog()
-
+   
   }
+  
+CarregaFormGroup(usuario:Usuario){
+  this.groupform =  new FormGroup({
+            nome: new FormControl(usuario!.nome, Validators.required),
+            telefone: new FormControl(usuario.phoneNumer, Validators.required),
+            sexo: new FormControl(usuario.sexo, Validators.required),
+            email: new FormControl(usuario.email, [Validators.required, Validators.email, validarEmail]),
+            cpf: new FormControl(usuario.cpf, [Validators.required, Validators.minLength(11), cpfOuCnpjValidator]),
+    
+            cep: new FormControl(usuario.endereco?.cep, [Validators.required, validarCep]),
+            estado_sigla: new FormControl(usuario.endereco?.estado_sigla, Validators.required),
+            cidade: new FormControl(usuario.endereco?.cidade, Validators.required),
+            bairro: new FormControl(usuario.endereco?.bairro, Validators.required),
+            logradouro: new FormControl(usuario.endereco?.logradouro, Validators.required),
+            numeroEndereco: new FormControl(usuario.endereco?.numeroEndereco, Validators.required),
+            dataNascimento:new FormControl(`${usuario.dataNascimento}`)
+     })
+}
+
 
   getUser() {
-    new Promise((resove) => {
-      resove(
-        this.apiAuth.buscaUsuario(this.authDecodeUser.getSub()).subscribe((usuario: Usuario) => {
+        this.apiAuth.buscaUsuario(this.authDecodeUser.getSub()).subscribe((usuario: any) => {
           this.valida = usuario;
           if (usuario !== null) {
             this.usuario = usuario;
-
-            this.form.groupform.patchValue({
-              name: this.usuario.nome,
-              sexo: this.usuario.sexo,
-              telefone: this.usuario.phoneNumer,
-              dataNascimento: this.usuario.dataNascimento,
-              cep: '54444444',
-              estado_sigla: 'this.usuario.',
-              cidade: 'res.city',
-              bairro: 'res.neighborhood',
-              rua: 'res.street',
-              numeroEndereco: '54',
-              complemento: 'gf'
-            });
+            this.CarregaFormGroup(usuario)
           }
-        })
-      )
+        
     })
   }
 
 
   setTab(tab: string) {
     this.activeTab = tab;
+     this.getUser()
   }
 
   focarPrimeiroCampo() {
@@ -119,7 +118,7 @@ export class FormProfileEditionComponent implements AfterViewInit, OnInit {
   }
 
   isRequired(nome: string): boolean {
-    const control = this.form.groupform.get(nome);
+    const control = this.groupform.get(nome);
     if (!control) return false;
 
     const isTouched = control.touched;
@@ -134,45 +133,42 @@ export class FormProfileEditionComponent implements AfterViewInit, OnInit {
   }
 
   select<T>(nome: string) {
-    const data = this.form.groupform?.get(nome);
+    const data = this.groupform?.get(nome);
     if (!data) {
       throw new Error('Nome inválido!!!');
     }
     return data as FormControl;
   }
 
-  get dataUser(): cadastro {
-    return {
-      "id": this.authDecodeUser.getusuarioId(),
-      "nome": this.select("name").value || this.usuario.nome,
-      "phoneNumer": this.select("telefone").value || this.usuario.phoneNumer,
-      "sexo": this.select("sexo").value || this.usuario.sexo,
-      "endereco": {
-        "numeroEndereco": this.select("numeroEndereco").value,
-        "latLong": `${this.latitude}, ${this.longitude}`,
-        "rua": this.select("rua").value,
-        "complemento": this.select("complemento").value,
-        "estado": this.select("estado_sigla").value,
-        "cep": this.select("cep").value,
-        "bairro": this.select("bairro").value,
-        "cidade": this.select("cidade").value,
+  dataUser(): any {
+    const data =  {
+      id:this.authDecodeUser.getusuarioId(),
+      nome: this.select("nome").value || this.usuario.nome,
+      numero: this.select("telefone").value || this.usuario.phoneNumer,
+      sexo: this.select("sexo").value || this.usuario.sexo,
+      endereco: {
+        numeroEndereco: this.select("numeroEndereco").value,
+        latLong: `${this.latitude}, ${this.longitude}`,
+        logradouro: this.select("logradouro").value,
+        estado_sigla: this.select("estado_sigla").value,
+        cep: this.select("cep").value,
+        bairro: this.select("bairro").value,
+        cidade: this.select("cidade").value,
       }
     };
+    return data;
   }
 
   AtualizarUsuario() {
-    const dados = this.dataUser;
-
-    this.apiAuth.updateUsuario(dados).subscribe({
-      next: (res) => {
+    this.apiAuth.updateUsuario(this.dataUser()).subscribe((res:any)=>{
+      if(res){
         this.snak.success(res.msg);
-      },
-      error: (err) => {
-        console.error('Erro ao atualizar usuário:', err);
-        this.snak.error(err);
       }
-    });
+    }
+    )
+    
   }
+
 
 
   pegaLatLog() {
@@ -206,11 +202,11 @@ export class FormProfileEditionComponent implements AfterViewInit, OnInit {
     const sanitizedCep = cep.replace(/\D/g, '');
     this.cepApi.consultarCep(sanitizedCep).subscribe((res: any) => {
       if (!res.erro) {
-        this.form.groupform.patchValue({
+        this.groupform.patchValue({
           estado_sigla: res.state,
           cidade: res.city,
           bairro: res.neighborhood,
-          rua: res.street
+          logradouro: res.street
         });
       }
     });

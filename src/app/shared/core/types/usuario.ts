@@ -12,4 +12,15 @@ export type Usuario = {
   email: string;
   avatar: string | null;
   role: Role[];
+  endereco?:endereco
 };
+
+type endereco = {
+		numeroEndereco:string
+		latLong:string ,
+		logradouro:string,
+		estado_sigla: string,
+		cep: string,
+		bairro: string,
+		cidade:string
+	}
