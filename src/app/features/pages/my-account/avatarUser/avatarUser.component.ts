@@ -118,7 +118,7 @@ export class AvatarUserComponent implements OnInit {
           this.fechar();
         },
         error: (err) => {
-          this.snack.error("Erro ao atualizar avatar.");
+          this.snack.error("Erro ao atualizar avatar. " +err);
         }
       });
   }
