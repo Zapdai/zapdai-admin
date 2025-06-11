@@ -58,7 +58,7 @@ export class FormProfileEditionComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-        this.getUser()
+      this.getUser()
      this.groupform.get('cep')?.valueChanges.subscribe((cep:any) => {
       if (cep && cep.length === 8) {
         this.buscarEnderecoPorCep(cep);

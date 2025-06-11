@@ -14,7 +14,7 @@ import { MatTabsModule } from '@angular/material/tabs';
   selector: 'app-categorias',
   imports: [headerComponent, OpcoesCategoriaComponent, 
     CarrosselComponent, MaisPostadosComponent, footerComponent, 
-    MobileNavbarComponent, MatTabsModule,],
+    MobileNavbarComponent, MatTabsModule],
   templateUrl: './categorias.component.html',
   styleUrl: './categorias.component.scss'
 })

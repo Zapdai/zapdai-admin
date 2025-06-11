@@ -1,47 +1,64 @@
-.main{
-    height: 100vh;
+.area-loja {
     background-color: #F2F2F2;
-    width: 100%;
-    overflow-y: auto;
-           position: relative;
-           scrollbar-width: thin;
-           scrollbar-color: #d2d2;
 
-    .header{
+    .header {
         width: 100%;
-        z-index: 999;
-        position: fixed;
     }
-.ng-categoria{
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    .container-area{
-        margin-bottom: 20px;
-        .ng-itens{
+
+    .main {
+        height: calc(100vh - 58px);
+        width: 100%;
+        overflow-y: auto;
+        position: relative;
+        scrollbar-width: thin;
+        scrollbar-color: #d2d2;
+
+        .ng-categoria {
+            margin-top: 10px;
+
             display: flex;
-            flex-wrap: nowrap;
-            width: 100%;
-            margin-top: 20px;
-            padding:2px 156px;
-            align-items: center;
-            justify-content: space-between;    
+            flex-direction: column;
+            flex: 1;
+
+            .container-area {
+                margin-bottom: 20px;
+
+                .ng-itens {
+                    display: flex;
+                    flex-wrap: nowrap;
+                    width: 100%;
+                    margin-top: 20px;
+                    padding: 2px 156px;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+
+                .carrossel {
+                    margin-top: 152px 0;
+
+
+                }
+
+                margin: auto 56px;
+            }
+
+            .propaganda {
+                margin: auto 56px;
+                gap: 10px 0;
+
+            }
+
         }
     }
-    .propaganda{
-        margin: auto 56px;
-        gap: 10px 0;
-        
-    }
-    
 }
-}
+
 @media screen and (min-width: 768px) {
     .main {
 
         .ng-categoria {
             .container-area {
-               margin-bottom: 20px;
+                margin-bottom: 20px;
+
                 .ng-itens {
                     padding: 2px 156px;
                 }
