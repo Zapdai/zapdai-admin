@@ -3,8 +3,8 @@ export type functionList = {
 
 }
 export type funcoes = {
-  id: string,
-  name: string,
+  id: number,
+  name: any,
   router: string,
   icone: string,
   ativo: boolean,
@@ -12,8 +12,8 @@ export type funcoes = {
 }
   
 export type children = {
-      id: string,
-      name: string,
+      id: number,
+      name: any,
       icone: string,
       router: string,
     }

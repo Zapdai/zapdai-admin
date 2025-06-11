@@ -9,8 +9,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { loadingService } from '../../../../services/loading/loading.service';
 import { isPlatformBrowser } from '@angular/common';
 import { Location } from '@angular/common';
-import { avatarUserService } from '../../../../services/routesApiZapdai/avatarUser.service copy';
+import { avatarUserService } from '../../../../services/routesApiZapdai/avatarUser.service';
 import { SnackService } from '../../../../services/snackBar/snack.service';
+import { apiAuthService } from '../../../../services/apiAuth.service';
+import { Usuario } from '../../../../shared/core/types/usuario';
 
 @Component({
   selector: 'app-avatarUser',
@@ -25,6 +27,8 @@ export class AvatarUserComponent implements OnInit {
   isVisible = false;
   previewUrl: string | ArrayBuffer | null = null;
   selectedFile: File | null = null;
+  usuario!: Usuario;
+  valida: any;
 
 
   constructor(
@@ -34,6 +38,7 @@ export class AvatarUserComponent implements OnInit {
     private auth: AuthService,
     private avatarUserService: avatarUserService,
     private snack: SnackService,
+    private apiAuth: apiAuthService,
   ) { }
 
   ngOnInit(): void {
@@ -45,10 +50,25 @@ export class AvatarUserComponent implements OnInit {
       }
     });
 
+    this.getUser()
+
 
     if (isPlatformBrowser(this.platformId)) {
       this.checkWindowSize();
     }
+  }
+
+  getUser() {
+    new Promise((resove) => {
+      resove(
+        this.apiAuth.buscaUsuario(this.authDecodeUser.getSub()).subscribe((usuario: Usuario) => {
+          this.valida = usuario;
+          if (usuario !== null) {
+            this.usuario = usuario;
+          }
+        })
+      )
+    })
   }
 
   @HostListener('window:resize')
@@ -69,7 +89,7 @@ export class AvatarUserComponent implements OnInit {
 
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.previewUrl = e.target?.result || null;
+        this.usuario.avatar = reader.result as string;
       };
 
       reader.readAsDataURL(this.selectedFile);
@@ -86,18 +106,11 @@ export class AvatarUserComponent implements OnInit {
 
   enviarImagem() {
     if (this.selectedFile) {
-      const id = this.authDecodeUser.getusuarioId();
-      this.avatarUserService.UpdateAvatarUser(id, this.selectedFile)
+      this.avatarUserService.UpdateAvatarUser(this.usuario.clientId, this.selectedFile)
         .subscribe({
           next: (res) => {
-            const avatarBaseUrl = `https://api.zapdai.com/zapdai/v1/usuario/avatar/${encodeURIComponent(this.authDecodeUser.getName())}.png`;
-            const novaUrl = `${avatarBaseUrl}?t=${Date.now()}`;
-
-            this.previewUrl = novaUrl;
-            this.authDecodeUser.atualizaAvatar(novaUrl);
-
             this.snack.success(res.msg)
-            this.fechar();
+            this.fechar()
           }
         });
 

@@ -1,11 +1,21 @@
 <div class="ng-main">
+
+  @if (usuario && usuario.nome) {
   <div class="avatar-preview">
-    @if (previewUrl) {
-      <img [src]="previewUrl" alt="Pré-visualização" class="ng-img" />
+    @if (usuario.avatar) {
+    <img [src]="usuario.avatar" alt="Pré-visualização" class="ng-img" />
     } @else {
-      <img [src]="authDecodeUser.getAvatar()" alt="Avatar atual" class="ng-img" />
+    <mat-icon class="ng-avatar-icon">
+      person
+    </mat-icon>
     }
   </div>
+
+  }@else{
+  <ng-template class="usuario">
+    <p>Carregando dados de usuário...</p>
+  </ng-template>
+  }
 
   <div class="buttons">
     <label for="fileInput" class="ng-btn">

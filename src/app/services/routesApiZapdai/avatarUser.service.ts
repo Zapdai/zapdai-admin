@@ -11,7 +11,7 @@ export class avatarUserService {
 
     api = environment.apiUrl
     constructor(private http: HttpClient) { }
-    UpdateAvatarUser(id: string, file: File): Observable<any> {
+    UpdateAvatarUser(id: any, file: any): Observable<any> {
         const formData = new FormData();
         formData.append('id', id);
         formData.append('file', file);

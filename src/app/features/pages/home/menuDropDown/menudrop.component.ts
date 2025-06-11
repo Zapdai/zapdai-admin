@@ -34,14 +34,13 @@ export class menuDropComponent implements OnInit {
                     f.ativo = false;
                 });
 
-                console.log(this.functionList);
             },
             error: (err) => console.error(err),
         });
     }
 
 
-    setAtivo(id: string) {
+    setAtivo(id: any) {
         const itens = this.functionList?.funcoes;
         this.dropOpen = true
         if (!itens) return;

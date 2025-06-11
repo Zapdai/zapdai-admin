@@ -22,8 +22,8 @@ export class MyAccountComponent implements OnInit {
   token: any;
   isVisible = false;
   modalAtivo = false;
-  usuario!:Usuario;
-  valida:any;
+  usuario!: Usuario;
+  valida: any;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -32,27 +32,32 @@ export class MyAccountComponent implements OnInit {
     private auth: AuthService,
     private activeRouter: loadingService,
     private location: Location,
-    private apiAuth:apiAuthService
-    
+    private apiAuth: apiAuthService,
+
   ) { }
 
   ngOnInit(): void {
     this.token = this.auth.returnToken();
-   new Promise((resove)=>{
-    resove(
-       this.apiAuth.buscaUsuario(this.authDecodeUser.getSub()).subscribe((usuario:Usuario)=>{
-        this.valida = usuario;
-        if(usuario!==null){
-          this.usuario = usuario;
-        }
-    })
-    )
-   })
+
+    this.getUser()
 
     if (isPlatformBrowser(this.platformId)) {
       this.checkWindowSize();
     }
 
+  }
+
+  getUser() {
+    new Promise((resove) => {
+      resove(
+        this.apiAuth.buscaUsuario(this.authDecodeUser.getSub()).subscribe((usuario: Usuario) => {
+          this.valida = usuario;
+          if (usuario !== null) {
+            this.usuario = usuario;
+          }
+        })
+      )
+    })
   }
 
 

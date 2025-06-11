@@ -23,7 +23,6 @@ export class apiAuthService {
     }
      buscaUsuario (email:any):Observable <any> {
       const  data = {email:email}
-        console.log(data)
         return this.http.post<any>(`${this.apiUrl}/zapdai/v1/usuario/search`, data).pipe()
     }
 }

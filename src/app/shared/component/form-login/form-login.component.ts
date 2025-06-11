@@ -10,49 +10,60 @@ import { loginFormService } from '../../../services/loginService/loginForm.servi
 import { SnackService } from '../../../services/snackBar/snack.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { Usuario } from '../../core/types/usuario';
 
 @Component({
   selector: 'app-form-login',
-  imports:[CommonModule,ReactiveFormsModule,MatSnackBarModule,MatIconModule,MatButtonModule],
+  imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule, MatIconModule, MatButtonModule],
   templateUrl: './form-login.component.html',
   styleUrl: './form-login.component.scss'
 })
 export class FormLoginComponent {
-  @ViewChild("form1",{static:true}) form1!:ElementRef
-  @ViewChild("form2",{static:true}) form2!:ElementRef
-  constructor (public service:loginFormService, private auth:apiAuthService, private router:Router, private activeRoute:loadingService, private authService:AuthService,private snack:SnackService){
+  @ViewChild("form1", { static: true }) form1!: ElementRef
+  @ViewChild("form2", { static: true }) form2!: ElementRef
+
+
+  constructor(
+    public service: loginFormService,
+    private auth: apiAuthService,
+    private router: Router,
+    private activeRoute: loadingService,
+    private authService: AuthService,
+    private snack: SnackService,
+    private apiAuth: apiAuthService,
+  ) {
   }
-  
+
   ativo = false;
-  icon:"visibility"|"visibility_off" = "visibility"
-  select <T> (name:string){
-      const form = this.service.groupform.get(name)
+  icon: "visibility" | "visibility_off" = "visibility"
+  select<T>(name: string) {
+    const form = this.service.groupform.get(name)
 
-      if(!form) {
-          throw new Error('Nome inválido!!!')
-      }
-      return form as FormControl
+    if (!form) {
+      throw new Error('Nome inválido!!!')
+    }
+    return form as FormControl
   }
 
-  data ():any {
-      const dataName = {
-          email: this.select('email').value.toLowerCase(),
-          password: this.select('password').value
-      }
-      return dataName
+  data(): any {
+    const dataName = {
+      email: this.select('email').value.toLowerCase(),
+      password: this.select('password').value
+    }
+    return dataName
   }
 
-  mudaCompo(event:any){
-     if(event){
+  mudaCompo(event: any) {
+    if (event) {
       event.focus()
-     }
+    }
   }
   btn() {
     this.auth.login(this.data()).subscribe(item => {
-          this.service.groupform.reset()
+      this.service.groupform.reset()
       if (item.authToken !== null) {
         this.authService.saveToken(item.authToken);
-        
+
 
         // Recupera a URL salva (ou define '/' como padrão)
         const returnUrl = localStorage.getItem('returnUrl') || '/';
@@ -60,53 +71,53 @@ export class FormLoginComponent {
 
         // Redireciona para a página original
         setTimeout(() => {
-        this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-          setTimeout(() => {
-            this.router.navigateByUrl(returnUrl);
-          }, 1000);
-        });
-      }, 0);
+          this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+            setTimeout(() => {
+              window.location.href = returnUrl;
+            }, 1000);
+          });
+        }, 0);
       }
     });
   }
 
-visible(){
-  if(this.icon==="visibility"){
-    this.icon =  "visibility_off"
-    this.ativo = true;
-  }else{
-    this.icon="visibility"
-    this.ativo = false;
+  visible() {
+    if (this.icon === "visibility") {
+      this.icon = "visibility_off"
+      this.ativo = true;
+    } else {
+      this.icon = "visibility"
+      this.ativo = false;
+    }
   }
-}
 
-  pageSignup(){
+  pageSignup() {
     this.activeRoute.activeLoading()
     setTimeout(() => {
-        this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-          setTimeout(() => {
-            this.router.navigate(['/auth/signup']);
-          }, 1000);
-        });
-      }, 0);
+      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+        setTimeout(() => {
+          this.router.navigate(['/auth/signup']);
+        }, 1000);
+      });
+    }, 0);
   }
 
-  pageResetPassword(){
+  pageResetPassword() {
     this.activeRoute.activeLoading()
     setTimeout(() => {
-        this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-          setTimeout(() => {
-            this.router.navigate(['/auth/resetPassword'], { skipLocationChange: false });
-          }, 1000);
-        });
-      }, 0);
+      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+        setTimeout(() => {
+          this.router.navigate(['/auth/resetPassword'], { skipLocationChange: false });
+        }, 1000);
+      });
+    }, 0);
   }
 
-  isRequiredEmail(){
+  isRequiredEmail() {
     return this.service.groupform.get('email')?.errors?.['required'] && this.service.groupform.get('email')?.touched
   }
 
-  isRequiredPassword(){
+  isRequiredPassword() {
     return this.service.groupform.get('password')?.errors?.['required'] && this.service.groupform.get('password')?.touched
   }
 

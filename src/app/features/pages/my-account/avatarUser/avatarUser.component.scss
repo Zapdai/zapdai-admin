@@ -17,6 +17,17 @@
             border-radius: 100%;
             border: 2px solid #ccc;
         }
+
+        .ng-avatar-icon {
+            width: 150px;
+            height: 150px;
+            background-color: #ccc;
+            color: #fff;
+            border-radius: 50%;
+            line-height: 150px;
+            text-align: center;
+            font-size: 44px;
+        }
     }
 
     .buttons {

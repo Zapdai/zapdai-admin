@@ -1,5 +1,5 @@
 @if (usuario && usuario.nome) {
-    <app-page-container>
+<app-page-container>
     <div class="ng-main">
 
         @if(isVisible) {
@@ -12,7 +12,7 @@
         <div class="container container1">
             <section class="ng-perfil perfil-principal">
                 <section class="ng-perfil">
-                    @if (usuario.avatar!==null) {
+                    @if (usuario.avatar) {
                     <div class="avatar" (click)="abrirModalAlterarImagem()">
                         <img [src]="usuario.avatar" />
                         <div class="camera-overlay">
@@ -20,17 +20,22 @@
                         </div>
                     </div>
                     }@else {
-                     <mat-icon class="ng-avatar-icon">
-                        person
-                    </mat-icon>
+                    <div class="avatar" (click)="abrirModalAlterarImagem()">
+                        <mat-icon class="ng-avatar-icon">
+                            person
+                        </mat-icon>
+                        <div class="camera-overlay">
+                            <mat-icon class="camera-icon">photo_camera</mat-icon>
+                        </div>
+                    </div>
 
                     }
-                         <div>
+                    <div>
                         <small class="ng-perfil-name">Olá, <b>{{usuario.nome.split("
                                 ")[0]}}</b></small><br />
                         <small class="ng-perfil-name">{{ usuario.email }}</small>
                     </div>
-                    
+
                 </section>
                 <section class="ng-perfil profile">
 
@@ -65,11 +70,11 @@
 
 @if (modalAtivo) {
 <app-aside-modal (emitModal)="ativaModal()">
-    <app-avatarUser (fecharModal)="ativaModal()"></app-avatarUser>
+    <app-avatarUser (fecharModal)="[ativaModal(), getUser()]"></app-avatarUser>
 </app-aside-modal>
 }
 }@else{
-   <ng-template class="usuario">
+<ng-template class="usuario">
     <p>Carregando dados de usuário...</p>
 </ng-template>
 }

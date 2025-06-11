@@ -16,8 +16,8 @@ import { AuthService } from "../../../../services/auth.service";
 import { isPlatformBrowser } from '@angular/common';
 import { apiAuthService } from "../../../../services/apiAuth.service";
 import { Usuario } from "../../../../shared/core/types/usuario";
-type usuario={
-    avatar:string
+type usuario = {
+    avatar: string
 }
 @Component({
     selector: "app-header",
@@ -45,8 +45,8 @@ export class headerComponent implements OnInit {
     isAdmin: boolean = false;
     exibimenu = false;
     isVisible = false;
-    imagem:any;
-    usuario!:Usuario
+    imagem: any;
+    usuario!: Usuario
     constructor(
         @Inject(PLATFORM_ID) private platformId: any,
         private router: Router,
@@ -55,13 +55,13 @@ export class headerComponent implements OnInit {
         public auth: AuthService,
         private cdRef: ChangeDetectorRef,
         public authDecodeUser: AuthDecodeService,
-        private apiAuth:apiAuthService
+        private apiAuth: apiAuthService
     ) { }
 
 
 
     ngOnInit(): void {
-        
+
         this.isAdmin = this.router.url.startsWith('/admin');
 
         // Escuta mudanças de rota subsequentes
@@ -70,14 +70,15 @@ export class headerComponent implements OnInit {
                 this.isAdmin = this.router.url.startsWith('/admin');
             }
         });
-        if(this.auth.PossuiToken()){
+        if (this.auth.PossuiToken()) {
             this.buscaUsuario();
-    }
-       
+        }
+
 
         if (isPlatformBrowser(this.platformId)) {
             this.checkWindowSize();
         }
+        
     }
 
     toggle(event: MouseEvent) {
@@ -86,14 +87,13 @@ export class headerComponent implements OnInit {
 
 
 
-  buscaUsuario(){
-    this.apiAuth.buscaUsuario(this.authDecodeUser.getSub()).subscribe((usuario:Usuario)=>{
-        console.log("data "+usuario)
-        if(usuario!==null){
-            this.usuario = usuario;
-        }
-    })
-  }
+    buscaUsuario() {
+        this.apiAuth.buscaUsuario(this.authDecodeUser.getSub()).subscribe((usuario: Usuario) => {
+            if (usuario !== null) {
+                this.usuario = usuario;
+            }
+        })
+    }
 
     setIcon(mudaIcon: boolean) {
         this.snack.openSnackBar("deu certo")

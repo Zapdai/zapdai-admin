@@ -1,13 +1,13 @@
 @if (isVisible) {
 <header class="ng-header" [ngClass]="[admin ? 'admin' : '']">
     @if (!admin) {
-        <section class="ng-logo" (click)="pageHome()">
-                </section>
+    <section class="ng-logo" (click)="pageHome()">
+    </section>
 
-        }
-     @if (admin) {
-        <mat-icon (click)="exibir()" class="icon">menu</mat-icon>
-        }
+    }
+    @if (admin) {
+    <mat-icon (click)="exibir()" class="icon">menu</mat-icon>
+    }
     <section class="ng-form">
         <form action="" [formGroup]="grupo" (submit)="pegarvalor()">
             <div class="search">
@@ -40,18 +40,26 @@
                 light_mode
             </mat-icon>
 
-            <section class="ng-perfil" (click)="Tmenu()">
-                @if (usuario&& usuario.nome!==null) {
+            @if (usuario && usuario.nome) {
+            <section class="ng-perfil ng-perfil02" (click)="Tmenu()">
                 <small class="ng-perfil-name">Olá, {{usuario.nome?.split(" ")[0]}}</small>
-                 <div class="avatar">
+                @if (usuario.avatar && usuario.nome) {
+                <div class="avatar">
                     <img [src]="usuario.avatar" width="32" height="32" />
                 </div>
                 }@else {
-                   <mat-icon class="ng-avatar-icon">
+                <mat-icon class="ng-avatar-icon">
                     person
                 </mat-icon>
                 }
             </section>
+
+            }@else{
+            <ng-template class="usuario">
+                <p>Carregando dados de usuário...</p>
+            </ng-template>
+            }
+            
         </section>
         }
         @if (exibimenu) {
