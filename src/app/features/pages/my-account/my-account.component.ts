@@ -82,49 +82,19 @@ export class MyAccountComponent implements OnInit {
   }
 
   pageMyAccount() {
-    this.activeRouter.activeLoading()
-    setTimeout(() => {
-      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-        setTimeout(() => {
-          this.router.navigate(['/my-account'])
-        }, 1000);
-      })
-
-    }, 0);
+    this.router.navigate(['/my-account'])
   }
   pageHome() {
-    this.activeRouter.activeLoading()
-    setTimeout(() => {
-      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-        setTimeout(() => {
-          this.router.navigate(['/home'])
-        }, 1000);
-      })
-
-    }, 0);
+    this.router.navigate(['/home'])
   }
 
 
   pageManagerProfile() {
-    this.activeRouter.activeLoading()
-    setTimeout(() => {
-      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-        setTimeout(() => {
-          this.router.navigate(['/my-account/manager-profile'], { skipLocationChange: false });
-        }, 1000);
-      });
-    }, 0);
+    this.router.navigate(['/my-account/manager-profile'], { skipLocationChange: false });
   }
 
   pageResetPassword() {
-    this.activeRouter.activeLoading()
-    setTimeout(() => {
-      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-        setTimeout(() => {
-          this.router.navigate(['/auth/resetPassword'], { skipLocationChange: false });
-        }, 1000);
-      });
-    }, 0);
+    this.router.navigate(['/auth/resetPassword'], { skipLocationChange: false });
   }
 
 

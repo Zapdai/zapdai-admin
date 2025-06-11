@@ -88,19 +88,21 @@ export class AvatarUserComponent implements OnInit {
       this.selectedFile = fileInput.files[0];
 
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = () => {
         this.usuario.avatar = reader.result as string;
       };
 
       reader.readAsDataURL(this.selectedFile);
+
+      fileInput.value = '';
     }
   }
+
 
   salvarImagem(): void {
     if (!this.selectedFile) return;
 
     this.enviarImagem();
-    console.log('Pronto para envio:', this.selectedFile);
   }
 
 
@@ -109,14 +111,19 @@ export class AvatarUserComponent implements OnInit {
       this.avatarUserService.UpdateAvatarUser(this.usuario.clientId, this.selectedFile)
         .subscribe({
           next: (res) => {
-            this.snack.success(res.msg)
-            this.fechar()
+            this.snack.success(res.msg);
+            // 🔄 Atualiza o preview após upload com base no avatar novo salvo
+            this.previewUrl = this.usuario.avatar;
+            this.selectedFile = null;
+            this.fechar();
+          },
+          error: () => {
+            this.snack.error("Erro ao atualizar avatar.");
           }
         });
-
-
     }
   }
+
 
 
   fechar() {
