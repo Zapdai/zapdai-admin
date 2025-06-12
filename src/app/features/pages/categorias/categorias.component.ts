@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { headerComponent } from '../home/header/header.component';
 import { DestaqueComponent } from '../destaque/destaque.component';
 import { CarrosselComponent } from '../../../shared/component/carrossel/carrossel.component';
@@ -9,6 +9,8 @@ import { PageContainerComponent } from "../../../shared/component/page-container
 import { footerComponent } from "../home/foother/footer.component";
 import { MobileNavbarComponent } from "../home/mobile-navbar/mobile-navbar.component";
 import { MatTabsModule } from '@angular/material/tabs';
+import { apiBuscaUserService } from '../../../services/buscaUser/buscaUser.service';
+import { ApiCategorias } from '../../../services/apiCategorias/apiCategorias.service';
 
 @Component({
   selector: 'app-categorias',
@@ -18,8 +20,19 @@ import { MatTabsModule } from '@angular/material/tabs';
   templateUrl: './categorias.component.html',
   styleUrl: './categorias.component.scss'
 })
-export class CategoriasComponent {
-  img = "https://cdn.casaeculinaria.com/wp-content/uploads/2023/04/05163949/Hamburguer-artesanal.webp"
-  img2 = "https://www.mundoboaforma.com.br/wp-content/uploads/2020/10/Hamburguer.jpg"
+export class CategoriasComponent implements OnInit{
+  constructor(private apiCategosrias:ApiCategorias){}
+  categorias:any;
+  ngOnInit(): void {
+   this.getAllCategorias()
+  }
+  getAllCategorias(){
+   this.apiCategosrias.findAllCategorias().subscribe((item:any)=>{
+     if(item!==null){
+         this.categorias = item.categorias;
+     }
+   })
+  }
+
 
 }

@@ -24,6 +24,8 @@ export class AuthInterceptors implements HttpInterceptor {
       '/zapdai/v1/usuario/verification',
       '/zapdai/v1/usuario/code',
       '/zapdai/v1/usuario/newpasswd ',
+      '/categorias/lista'
+
     ];
 
     // Melhor usar URL completa e comparar com `startsWith` ou usar Regex se necessário

@@ -5,13 +5,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding:5px ;
+    padding: 5px;
+
     .ng-logo-item {
-        width: 2.5em;
+        width: 2.9em;
         height: 2.5em;
         border-radius: 0.5em;
-        object-fit: cover;
-        background-size: cover;
         box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
         padding: 1px;
         cursor: pointer;
@@ -21,12 +20,21 @@
             text-align: center;
             width: 100%;
             height: 100%;
+            object-fit: contain;
+            background-size: contain;
+
+
         }
+    }
+
+    .ng-logo-item:hover {
+        transform: scale(0.97);
+
     }
 
     .titulo {
         color: var(--color-header);
-        padding:5px 0;
+        padding: 5px 0;
         font-size: 12px;
     }
 

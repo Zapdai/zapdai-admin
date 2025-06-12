@@ -10,15 +10,10 @@
                     <app-carrossel></app-carrossel>
                 </div>
                 <div class="ng-itens">
-                    <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
-                    <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
-                    <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
-                    <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
-                    <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
-                    <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
-                    <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
-                    <app-opcoes-categoria [url]="img"></app-opcoes-categoria>
+                    @for (categoria of categorias; track $index) {
+                    <app-opcoes-categoria [url]="categoria.icone" [name]="categoria.nome"></app-opcoes-categoria>
 
+                    }
                 </div>
             </section>
             <div class="propaganda">
