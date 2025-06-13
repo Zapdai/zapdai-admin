@@ -8,9 +8,13 @@ export const routes:Routes = [
         path:"",component:CategoriasComponent
     },
     {
-        path:"categoria/:nome",component:AppLojaComponent
+        path:"categoria/:nome",component:AppLojaComponent ,data: {
+      renderMode: 'ssr'
+    }
     },
     {
-        path:"detalhes/produto/:nome",component:AppLojaComponent
+        path:"detalhes/produto/:nome",component:AppLojaComponent,data: {
+      renderMode: 'ssr' 
+    }
     }
 ]
