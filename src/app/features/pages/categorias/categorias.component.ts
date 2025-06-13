@@ -40,6 +40,10 @@ export class CategoriasComponent implements OnInit{
     this.router.navigateByUrl(`/home/categoria/${name}`)
   }
      navigateDetalhesProdutos(name:any){
-    this.router.navigateByUrl(`/home/detalhes/produto/${name}`)
+    this.router.navigateByUrl(`/detalhes/produto/${name}`)
+  }
+
+   async getNomesCategorias(): Promise<any[]> {
+    return this.categorias;
   }
 }
