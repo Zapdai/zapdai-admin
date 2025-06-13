@@ -1,4 +1,4 @@
-import { Component, Input, input } from '@angular/core';
+import { Component, EventEmitter, Input, input, Output } from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
 
 @Component({
@@ -10,4 +10,12 @@ import { ModalComponent } from '../modal/modal.component';
 export class OpcoesCategoriaComponent {
  @Input() url?:string;
  @Input() name?:string
+ @Output() idevent = new EventEmitter();
+
+ navigate(){
+  this.idevent.emit()
+ }
 }
+
+
+

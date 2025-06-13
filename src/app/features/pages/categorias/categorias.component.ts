@@ -11,6 +11,7 @@ import { MobileNavbarComponent } from "../home/mobile-navbar/mobile-navbar.compo
 import { MatTabsModule } from '@angular/material/tabs';
 import { apiBuscaUserService } from '../../../services/buscaUser/buscaUser.service';
 import { ApiCategorias } from '../../../services/apiCategorias/apiCategorias.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-categorias',
@@ -21,7 +22,7 @@ import { ApiCategorias } from '../../../services/apiCategorias/apiCategorias.ser
   styleUrl: './categorias.component.scss'
 })
 export class CategoriasComponent implements OnInit{
-  constructor(private apiCategosrias:ApiCategorias){}
+  constructor(private apiCategosrias:ApiCategorias,public router:Router){}
   categorias:any;
   ngOnInit(): void {
    this.getAllCategorias()
@@ -32,6 +33,11 @@ export class CategoriasComponent implements OnInit{
          this.categorias = item.categorias;
      }
    })
+  }
+
+
+  navigate(name:any){
+    this.router.navigateByUrl(`/home/categoria/${name}`)
   }
 
 

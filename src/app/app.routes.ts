@@ -19,7 +19,7 @@ export const routes: Routes = [
         path: "auth", loadChildren: () => import("./features/pages/auth/auth.routes").then(e => e.routes)
     },
     {
-        path: "home", component: CategoriasComponent
+        path: "home", loadChildren:()=>import("./features/pages/categorias/categorias.routes").then(e=>e.routes)
     },
     {
         path: "loading", component: LoadingComponent, canActivate: [loadingGuard]

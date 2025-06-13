@@ -1,7 +1,7 @@
-    <div class="area-loja">
+<div class="area-loja">
     <div class="header">
-            <app-header [carrinho]="true" class="s" [admin]="false"></app-header>
-        </div>
+        <app-header [carrinho]="true" class="s" [admin]="false"></app-header>
+    </div>
     <div class="main">
         <app-mobile-navbar></app-mobile-navbar>
         <div class="ng-categoria">
@@ -11,8 +11,7 @@
                 </div>
                 <div class="ng-itens">
                     @for (categoria of categorias; track $index) {
-                    <app-opcoes-categoria [url]="categoria.icone" [name]="categoria.nome"></app-opcoes-categoria>
-
+                    <app-opcoes-categoria (idevent)="navigate(categoria.nome)" [url]="categoria.icone" [name]="categoria.nome"></app-opcoes-categoria>
                     }
                 </div>
             </section>
@@ -25,7 +24,7 @@
 
 
         </div>
-            <app-footer [footerActive]="true"></app-footer>
+        <app-footer [footerActive]="true"></app-footer>
 
     </div>
-    </div>
+</div>
