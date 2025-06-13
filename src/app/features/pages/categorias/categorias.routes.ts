@@ -9,5 +9,8 @@ export const routes:Routes = [
     },
     {
         path:"categoria/:nome",component:AppLojaComponent
+    },
+    {
+        path:"detalhes/produto/:nome",component:AppLojaComponent
     }
 ]

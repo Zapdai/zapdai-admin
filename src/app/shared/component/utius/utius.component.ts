@@ -12,5 +12,8 @@ export class UtiusComponent {
   @Input() imagem2?:string;
   @Input() imagem3?:string;
    @Input() titulo?:string;
+   detalhes(){
+    alert("deu certo")
+   }
 
 }

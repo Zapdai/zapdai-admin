@@ -39,6 +39,7 @@ export class CategoriasComponent implements OnInit{
   navigate(name:any){
     this.router.navigateByUrl(`/home/categoria/${name}`)
   }
-
-
+     navigateDetalhesProdutos(name:any){
+    this.router.navigateByUrl(`/home/detalhes/produto/${name}`)
+  }
 }
