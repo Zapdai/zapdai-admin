@@ -6,7 +6,4 @@ services:
     startCommand: npm start
     plan: free
     autoDeploy: true
-
-
-
 # ng build --configuration production --output-hashing=all 
