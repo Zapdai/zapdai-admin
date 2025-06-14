@@ -25,7 +25,7 @@
     "strictTemplates": true
   },
   "files": [
-    "src/main.ts q",
+    "src/main.ts",
     "src/main.server.ts"
   ],
   "include": [
