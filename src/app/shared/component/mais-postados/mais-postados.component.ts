@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class MaisPostadosComponent {
   @Input() titulo?:string;
   @ViewChild("scrollContainer",{static:false}) fer?:ElementRef;
+  @Input() produto:any;
   rolarDireita(){
       this.fer?.nativeElement.scrollBy({
           left:-200,

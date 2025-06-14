@@ -16,10 +16,9 @@
                 </div>
             </section>
             <div class="propaganda">
-                <app-mais-postados titulo="Em destaque"></app-mais-postados>
-                <app-mais-postados titulo="Mais procurados"></app-mais-postados>
-                <app-mais-postados titulo="Promocão"></app-mais-postados>
-                <app-mais-postados titulo="Esgotado"></app-mais-postados>
+               @for (empresa of produtos; track $index) {
+                    <app-mais-postados [produto]="empresa.produtos" [titulo]="empresa.nomeCompania"></app-mais-postados>
+               }               
             </div>
         </div>
         <app-footer [footerActive]="true"></app-footer>

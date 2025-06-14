@@ -24,8 +24,10 @@ import { Router } from '@angular/router';
 export class CategoriasComponent implements OnInit{
   constructor(private apiCategosrias:ApiCategorias,public router:Router){}
   categorias:any;
+  produtos:any
   ngOnInit(): void {
    this.getAllCategorias()
+   this.getAllProdutos()
   }
   getAllCategorias(){
    this.apiCategosrias.findAllCategorias().subscribe((item:any)=>{
@@ -34,6 +36,14 @@ export class CategoriasComponent implements OnInit{
      }
    })
   }
+   getAllProdutos(){
+   this.apiCategosrias.findAllProdutos().subscribe((item:any)=>{
+     if(item!==null){
+         this.produtos = item;
+     }
+   })
+  }
+
 
 
   navigate(name:any){

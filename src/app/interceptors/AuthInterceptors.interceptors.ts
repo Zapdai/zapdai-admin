@@ -24,7 +24,8 @@ export class AuthInterceptors implements HttpInterceptor {
       '/zapdai/v1/usuario/verification',
       '/zapdai/v1/usuario/code',
       '/zapdai/v1/usuario/newpasswd ',
-      '/categorias/lista'
+      '/categorias/lista',
+      '/zapdai/v1/empresas/lista'
 
     ];
 

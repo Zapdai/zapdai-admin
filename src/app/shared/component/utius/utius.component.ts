@@ -9,9 +9,9 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class UtiusComponent {
   @Input() imagem?:string;
-  @Input() imagem2?:string;
-  @Input() imagem3?:string;
    @Input() titulo?:string;
+  @Input() price?:number;
+
    detalhes(){
     alert("deu certo")
    }

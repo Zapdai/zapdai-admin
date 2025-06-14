@@ -12,4 +12,7 @@ export class ApiCategorias{
     findAllCategorias():Observable<any>{
         return this.http.get<any>(`${this.environment.apiUrl}/categorias/lista`).pipe()
     }
+     findAllProdutos():Observable<any>{
+        return this.http.get<any>(`${this.environment.apiUrl}/zapdai/v1/empresas/lista`).pipe()
+    }
 }
