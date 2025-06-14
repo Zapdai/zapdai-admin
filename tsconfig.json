@@ -23,5 +23,12 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "files": [
+    "src/main.ts q",
+    "src/main.server.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ]
 }

@@ -4,10 +4,7 @@ import { CategoriasComponent } from './features/pages/categorias/categorias.comp
 import { CategoriaServiceNome } from './features/pages/categorias/categoria.service';
 
 export const serverRoutes: ServerRoute[] = [
-  {
-    path: '**',
-    renderMode: RenderMode.Prerender
-  },
+
   {
     path: 'home/categoria/:nome',
     renderMode: RenderMode.Prerender,
@@ -16,5 +13,9 @@ export const serverRoutes: ServerRoute[] = [
       const ids = await dataService.getNomesCategorias(); 
       return ids.map((categoria: any) => ({ nome:categoria.nome })); 
     },
+  },
+    {
+    path: '**',
+    renderMode: RenderMode.Server
   }
 ];
