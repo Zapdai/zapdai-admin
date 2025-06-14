@@ -18,16 +18,16 @@
     "target": "ES2022",
     "module": "ES2022"
   },
+  "files": [
+   "src/main.server.ts"
+  ],
   "angularCompilerOptions": {
+      "entryModule": "./src/app/app.server.module#AppServerModule",
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "files": [
-    "src/main.ts",
-    "src/main.server.ts"
-  ],
   "include": [
     "src/**/*.d.ts"
   ]
