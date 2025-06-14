@@ -20,6 +20,7 @@
             "outputPath": "dist/zapdai",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "allowedCommonJsDependencies": ["faye-websocket"],
             "polyfills": [
               "zone.js"
             ],
