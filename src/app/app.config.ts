@@ -3,12 +3,10 @@ import { provideRouter } from '@angular/router';
 import { provideNgxMask  } from 'ngx-mask';
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { AuthInterceptors } from './interceptors/AuthInterceptors.interceptors';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import * as QRCode from 'qrcode';
-
 export const appConfig: ApplicationConfig = {
   providers: [
     {
