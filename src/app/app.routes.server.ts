@@ -6,7 +6,7 @@ import { CategoriaServiceNome } from './features/pages/categorias/categoria.serv
 export const serverRoutes: ServerRoute[] = [
   {
     path: '**',
-    renderMode: RenderMode.Server
+    renderMode: RenderMode.Client
   },
   {
     path: 'home/categoria/:nome',
