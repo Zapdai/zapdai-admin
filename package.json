@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build ",
+    "build:ssr": "ng build && ng run zapdai:server",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:zapdai": "node dist/zapdai/server/server.mjs"
