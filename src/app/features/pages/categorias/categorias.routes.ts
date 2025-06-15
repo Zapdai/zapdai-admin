@@ -1,7 +1,6 @@
 import { Routes } from "@angular/router";
 import { CategoriasComponent } from "./categorias.component";
-import { AppLojaComponent } from "../loja/loja.component";
-import { RenderMode } from "@angular/ssr";
+import { buscaProdutos } from "../buscaProdutos/buscaProdutos.component";
 
 export const routes:Routes = [
    
@@ -9,7 +8,7 @@ export const routes:Routes = [
         path:"",component:CategoriasComponent, 
     },
     {
-        path:"categoria/:nome",component:AppLojaComponent
+        path:"categoria/:nome",component:buscaProdutos
     },
     // {
     //     path:"detalhes/produto/:nome",component:AppLojaComponent

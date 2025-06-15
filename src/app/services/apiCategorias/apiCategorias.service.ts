@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { environment } from "../../../environments/environment";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 
 @Injectable({
@@ -14,5 +14,10 @@ export class ApiCategorias{
     }
      findAllProdutos():Observable<any>{
         return this.http.get<any>(`${this.environment.apiUrl}/zapdai/v1/empresas/lista`).pipe()
+    }
+      findOneProdutoCategoria(nome:string):Observable<any>{
+        const params = new HttpParams()
+        .set("nome",nome)
+        return this.http.get<any>(`${this.environment.apiUrl}/zapdai/v1/empresas/categorias`,{params}).pipe()
     }
 }
