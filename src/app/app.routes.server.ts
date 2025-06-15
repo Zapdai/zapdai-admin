@@ -20,7 +20,7 @@ export const serverRoutes: ServerRoute[] = [
     async getPrerenderParams() {
       const dataService = inject(CategoriaServiceNome);
       const ids = await dataService.getNomesProduto(); 
-      return ids.map((id:any)=>id); 
+      return ids.map((id:any)=>({id})); 
     },
   },
     {
