@@ -19,13 +19,10 @@ export class CategoriaServiceNome{
     const response = await firstValueFrom(this.apiCategosrias.findAllProdutos());
     const empresas =  Array.isArray(response) ? response : [];
   
-    const idsProdutos = empresas.flatMap(empresa => 
-    (empresa.produtos ?? []).map((produto:any) => produto.idProduto)
-  );
+    const produto = empresas.flatMap(empresa => empresa.produtos);
 
-  const idsUnicos = Array.from(new Set(idsProdutos));
 
-  console.log(idsUnicos)
-  return empresas;
+     return produto;
+
    }
 }
