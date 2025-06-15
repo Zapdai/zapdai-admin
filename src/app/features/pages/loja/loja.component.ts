@@ -14,6 +14,7 @@ import { MatInputModule } from "@angular/material/input";
    styleUrl: './loja.component.scss'
 })
 export class AppLojaComponent implements OnInit {
+[x: string]: any;
    idProduto: any;
    produto:any
    quantidade: number = 1;
@@ -27,9 +28,8 @@ export class AppLojaComponent implements OnInit {
 
    async rodaFuncaoApi() {
       try {
-         this.idProduto = this.route.snapshot.paramMap.get("nome") as any
+         this.idProduto = this.route.snapshot.paramMap.get("id") as any
          const resposta = await firstValueFrom(this.api.findOneProduto(this.idProduto));
-         console.log("data"+resposta.idProduto)
          this.produto = resposta;
 
       } catch (error) {

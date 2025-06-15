@@ -15,13 +15,11 @@ export const serverRoutes: ServerRoute[] = [
     },
   },
    {
-    path: 'home/detalhes/produto/:nome',
+    path: 'home/detalhes/produto/:id',
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
       const dataService = inject(CategoriaServiceNome);
       const ids = await dataService.getNomesProduto(); 
-        console.log(ids)
-
       return ids.map((id:any)=>id); 
     },
   },

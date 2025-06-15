@@ -11,6 +11,6 @@ export const routes:Routes = [
         path:"categoria/:nome",component:buscaProdutos
     },
     {
-        path:"detalhes/produto/:nome",component:AppLojaComponent
+        path:"detalhes/produto/:id",component:AppLojaComponent
     }
 ]
