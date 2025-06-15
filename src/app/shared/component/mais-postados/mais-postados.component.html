@@ -21,7 +21,7 @@
 
     <div class="scroll-container" #scrollContainer>
       @for (item of produto; track $index) {
-          <app-utius [titulo]="item.productName" [price]="item.price" [imagem]="item.imgUrl"></app-utius >
+          <app-utius (emiter)="rodaFunc(item.idProduto)"  [titulo]="item.productName"  [price]="item.price" [imagem]="item.imgUrl"></app-utius >
       }      
     </div>
   </div>

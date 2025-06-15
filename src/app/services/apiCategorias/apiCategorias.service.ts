@@ -20,4 +20,7 @@ export class ApiCategorias{
         .set("nome",nome)
         return this.http.get<any>(`${this.environment.apiUrl}/zapdai/v1/empresas/categorias`,{params}).pipe()
     }
+     findOneProduto(idProduto:number):Observable<any>{
+        return this.http.get<any>(`${this.environment.apiUrl}/zapdai/v1/produtos/unit/${idProduto}`).pipe()
+    }
 }

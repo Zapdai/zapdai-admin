@@ -2,6 +2,7 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { UtiusComponent } from '../utius/utius.component';
 import { ModalComponent } from '../modal/modal.component';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mais-postados',
@@ -13,6 +14,7 @@ export class MaisPostadosComponent {
   @Input() titulo?:string;
   @ViewChild("scrollContainer",{static:false}) fer?:ElementRef;
   @Input() produto:any;
+  constructor(private rotas:Router){}
   rolarDireita(){
       this.fer?.nativeElement.scrollBy({
           left:-200,
@@ -25,18 +27,10 @@ export class MaisPostadosComponent {
           behavior: 'smooth'
       })
   }
-  imagem = "https://cdn.casaeculinaria.com/wp-content/uploads/2023/04/05163949/Hamburguer-artesanal.webp"
-  imagem2 = "https://www.mundoboaforma.com.br/wp-content/uploads/2020/10/Hamburguer.jpg"
+  rodaFunc(event:any){
 
-  imagem3 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9A5I3P4rt1kftXxVds7cQWs306znK9nrmdA&s"
-
-  imagem4 = "https://static.itdg.com.br/images/640-440/49687a8a7a7110c7f560b9c7e96a9d0e/254679-shutterstock-364110890-1-.jpg"
-  titulo2 = "Humburguer caseiro simples "
-  titulo3 = "Humburguer Mexicano "
-  titulo4 = " Hambúrguer com queijo prato "
-  titulo5 = "Hambúrguer com cebola caramelizada e bacon" 
-
-  titulo6 = "Hambúrguer Angus com Fatias Redondas de Bacon" 
+   this.rotas.navigateByUrl(`home/detalhes/produto/${event}`)
+  }
 
 
 } 

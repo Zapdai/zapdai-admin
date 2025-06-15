@@ -14,6 +14,17 @@ export const serverRoutes: ServerRoute[] = [
       return ids.map((categoria: any) => ({ nome:categoria.nome })); 
     },
   },
+   {
+    path: 'home/detalhes/produto/:nome',
+    renderMode: RenderMode.Prerender,
+    async getPrerenderParams() {
+      const dataService = inject(CategoriaServiceNome);
+      const ids = await dataService.getNomesProduto(); 
+        console.log(ids)
+
+      return ids.map((id:any)=>id); 
+    },
+  },
     {
     path: '**',
     renderMode: RenderMode.Server
