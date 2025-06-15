@@ -26,6 +26,6 @@ export class CategoriaServiceNome{
   const idsUnicos = Array.from(new Set(idsProdutos));
 
   console.log(idsUnicos)
-  return idsUnicos;
+  return empresas;
    }
 }

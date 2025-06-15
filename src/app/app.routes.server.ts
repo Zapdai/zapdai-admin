@@ -17,8 +17,8 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
       const dataService = inject(CategoriaServiceNome);
-      const ids = await dataService.getNomesProduto(); 
-      return ids.map((idProduto:any)=>({id:idProduto})); 
+      const p = await dataService.getNomesProduto(); 
+      return p.map((item:any)=>({id:item.produtos})); 
     },
   },
     {
