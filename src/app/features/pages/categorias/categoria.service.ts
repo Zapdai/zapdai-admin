@@ -15,14 +15,11 @@ export class CategoriaServiceNome{
     // Garante que response.categorias seja um array
     return Array.isArray(response?.categorias) ? response.categorias : [];
   }
-   async getNomesProduto(): Promise<string[]> {
+   async getNomesProduto(): Promise<any[]> {
     const response = await firstValueFrom(this.apiCategosrias.findAllProdutos());
     const empresas =  Array.isArray(response) ? response : [];
-  
-    const produto = empresas.flatMap(empresa => empresa.produtos);
-
-
-     return produto;
+     const produtos = empresas.flatMap(e => e.produtos || []);
+     return produtos;
 
    }
 }
