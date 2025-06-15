@@ -25,12 +25,17 @@
 
                 .ng-itens {
                     display: flex;
-                    flex-wrap: nowrap;
-                    width: 100%;
                     margin-top: 10px;
-                    padding: 2px 156px;
+                    margin-bottom: 5px;
+                    padding: 2px 0;
+                    gap: 10px;
                     align-items: center;
                     justify-content: space-between;
+                    border-radius: 3px;
+                    flex: 1;
+                    overflow-x: auto;
+                    scroll-behavior: smooth;
+                    scrollbar-width: none;
                 }
 
                 .carrossel {
@@ -39,11 +44,12 @@
 
                 }
 
-                margin: auto 56px;
+                margin: auto 10px;
+
             }
 
             .propaganda {
-                margin: auto 56px;
+                margin: auto 10px;
                 gap: 10px 0;
 
             }
@@ -52,24 +58,28 @@
     }
 }
 
-@media screen and (min-width: 768px) {
-    .main {
+@media screen and (min-width: 728px) {
+    .area-loja {
 
-        .ng-categoria {
-            .container-area {
-                margin-bottom: 20px;
+        .main {
 
-                .ng-itens {
-                    padding: 2px 156px;
+
+            .ng-categoria {
+                .container-area {
+                    margin: auto 56px;
+                    margin-bottom: 20px;
+
+                    .ng-itens {
+                        padding: 2px 156px;
+                    }
                 }
+
+                .propaganda {
+                    margin: auto 56px;
+
+                }
+
             }
-
-            .propaganda {
-                margin: auto 56px;
-
-            }
-
         }
     }
-
 }
