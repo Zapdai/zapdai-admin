@@ -1,10 +1,8 @@
 import { inject } from '@angular/core';
 import { RenderMode, ServerRoute } from '@angular/ssr';
-import { CategoriasComponent } from './features/pages/categorias/categorias.component';
 import { CategoriaServiceNome } from './features/pages/categorias/categoria.service';
 
 export const serverRoutes: ServerRoute[] = [
-
   {
     path: 'home/categoria/:nome',
     renderMode: RenderMode.Prerender,
