@@ -1,6 +1,6 @@
 <div class="area-loja">
     <div class="header">
-        <app-header [carrinho]="true" class="s" [admin]="false"></app-header>
+        <app-header (emitCarrinho)="ativaCarrinho()" [carrinho]="true" class="s" [admin]="false"></app-header>
     </div>
     <div class="main">
         <app-mobile-navbar></app-mobile-navbar>
@@ -24,3 +24,7 @@
         <app-footer [footerActive]="true"></app-footer>
     </div>
 </div>
+
+@if (ativaCar) {
+    <app-carrinho (desbiledCarEmit)="ativaCarrinho()"></app-carrinho>
+}

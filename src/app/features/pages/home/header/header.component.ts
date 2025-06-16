@@ -16,9 +16,6 @@ import { AuthService } from "../../../../services/auth.service";
 import { isPlatformBrowser } from '@angular/common';
 import { apiAuthService } from "../../../../services/apiAuth.service";
 import { Usuario } from "../../../../shared/core/types/usuario";
-type usuario = {
-    avatar: string
-}
 @Component({
     selector: "app-header",
     templateUrl: "./header.component.html",
@@ -47,6 +44,7 @@ export class headerComponent implements OnInit {
     isVisible = false;
     imagem: any;
     usuario!: Usuario
+    @Output() emitCarrinho = new EventEmitter();
     constructor(
         @Inject(PLATFORM_ID) private platformId: any,
         private router: Router,
@@ -109,7 +107,7 @@ export class headerComponent implements OnInit {
         alert("valor digitado " + name)
     }
     light() {
-        alert("Clicou")
+       this.emitCarrinho.emit();
     }
     exibir() {
         this.ativaMenu.emit()

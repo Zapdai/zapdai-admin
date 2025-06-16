@@ -19,9 +19,13 @@
     @if (carrinho) {
     <section class="ng-checkout">
         <div class="ng-btn-empresas" (click)="pagePlanos()">Zapdai Empresas</div>
-        <mat-icon (click)="light()">
+        <div class="carrinho">
+            <!-- aqui vamos adiconar o valor adicionando ao carrinho -->
+            <div class="toggle-ico">{{2}}</div> <!--badge-->
+            <mat-icon (click)="light() ">
             shopping_cart
         </mat-icon>
+        </div>
         @if (!auth.PossuiToken()) {
         <button ngClass="btn1" (click)="pageSignin()">
             Login

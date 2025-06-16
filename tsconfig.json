@@ -29,6 +29,6 @@
     "strictTemplates": true
   },
   "include": [
-    "src/**/*.d.ts"
+    "src/**/*.ts"
   ]
 }
