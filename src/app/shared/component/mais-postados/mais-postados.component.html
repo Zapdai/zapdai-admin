@@ -1,28 +1,30 @@
-<app-modal >
+<app-modal>
   <div class="titulo">
-    <span>{{titulo}}</span>
+    <span>Fornecido por:</span>
+    <small>{{titulo}}</small>
   </div>
   <div class="carrossel-container">
- <div class="botoes bn">
+    <div class="botoes bn">
       <button (click)="rolarDireita()">
         <mat-icon (click)="rolarDireita()">
           chevron_left
 
-      </mat-icon>
-        </button>
-         <button class="btn" (click)="rolarEsquerda()">
-         <mat-icon (click)="rolarDireita()">
+        </mat-icon>
+      </button>
+      <button class="btn" (click)="rolarEsquerda()">
+        <mat-icon (click)="rolarDireita()">
           chevron_right
 
-      </mat-icon>
+        </mat-icon>
       </button>
     </div>
-   
+
 
     <div class="scroll-container" #scrollContainer>
       @for (item of produto; track $index) {
-          <app-utius (emiter)="rodaFunc(item.idProduto)"  [titulo]="item.productName"  [price]="item.price" [imagem]="item.imgUrl"></app-utius >
-      }      
+      <app-utius (emiter)="rodaFunc(item.idProduto)" [titulo]="item.productName" [price]="item.price"
+        [imagem]="item.imgUrl"></app-utius>
+      }
     </div>
   </div>
 </app-modal>

@@ -1,7 +1,17 @@
 .titulo{
+  padding: 0 5px;
+  gap: 5px;
+  display: flex;
+  align-items: center;
     span{
+        font-size:15px;
+        color:  #c8c9ca;
+    }
+    small{
         padding: 0;
-        font-size:14px;
+        font-size:12px;
+        color:  #0d1d3f;
+        margin-left: 5px;
     }
 }
 .carrossel-container {
@@ -22,6 +32,9 @@
     scroll-behavior: smooth;
     padding: 6px;
     scrollbar-width: none; /* Firefox */
+   
+
+    
   }
   
   .scroll-container::-webkit-scrollbar {

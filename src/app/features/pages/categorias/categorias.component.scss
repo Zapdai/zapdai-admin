@@ -1,5 +1,4 @@
 .area-loja {
-    background-color: #F2F2F2;
 
     .header {
         width: 100%;
@@ -22,12 +21,13 @@
 
             .container-area {
                 margin-bottom: 20px;
+                padding: 0 5px;
 
                 .ng-itens {
                     display: flex;
                     margin-top: 10px;
                     margin-bottom: 5px;
-                    padding: 2px 0;
+                    padding: 20px 2px;
                     gap: 10px;
                     align-items: center;
                     justify-content: space-between;
@@ -36,6 +36,9 @@
                     overflow-x: auto;
                     scroll-behavior: smooth;
                     scrollbar-width: none;
+                    background-color: #fff;
+                    box-shadow: 0 0  5px rgba(0, 0, 0, 0.08);
+
                 }
 
                 .carrossel {
@@ -51,6 +54,8 @@
             .propaganda {
                 margin: auto 10px;
                 gap: 10px 0;
+                padding: 0 5px;
+
 
             }
 
