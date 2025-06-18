@@ -16,7 +16,7 @@ import { AuthService } from "../../../../services/auth.service";
 import { isPlatformBrowser } from '@angular/common';
 import { apiAuthService } from "../../../../services/apiAuth.service";
 import { Usuario } from "../../../../shared/core/types/usuario";
-import { AppLojaComponent } from "../../loja/loja.component";
+
 @Component({
     selector: "app-header",
     templateUrl: "./header.component.html",
@@ -139,7 +139,7 @@ export class headerComponent implements OnInit {
         setTimeout(() => {
             this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
                 setTimeout(() => {
-                    this.router.navigate(['/home'])
+                    this.router.navigate(['/'])
                 }, 1000);
             })
 

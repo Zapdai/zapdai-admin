@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { ApiCategorias } from "../../../services/apiCategorias/apiCategorias.service"
 import { ActivatedRoute } from "@angular/router";
 import { firstValueFrom } from "rxjs";
-import { UtiusComponent } from "../../../shared/component/utius/utius.component";
-import { headerComponent } from "../home/header/header.component";
+import { headerComponent } from "../../home/header/header.component";
+import { UtiusComponent } from "../../../../shared/component/utius/utius.component";
+import { ApiV1Loja } from "../../../../services/apiCategorias/apiV1Loja.service";
 @Component({
     selector: "app-BuscaProdutos",
     imports: [UtiusComponent,headerComponent],
@@ -12,7 +12,7 @@ import { headerComponent } from "../home/header/header.component";
     styleUrl: "./buscaProdutos.component.scss"
 })
 export class buscaProdutos implements OnInit {
-    constructor(public api: ApiCategorias, private router: ActivatedRoute) { }
+    constructor(public api: ApiV1Loja, private router: ActivatedRoute) { }
     name: any;
     produtos: any;
     ngOnInit(): void {

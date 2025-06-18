@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
-import { ApiCategorias } from "../../../services/apiCategorias/apiCategorias.service";
+import { ApiV1Loja } from "../../../services/apiCategorias/apiV1Loja.service";
 import { firstValueFrom } from "rxjs";
 
 @Injectable({
     providedIn:"root"
 })
-export class CategoriaServiceNome{
-    constructor(private apiCategosrias:ApiCategorias){
+export class LojaZapdaiService {
+    constructor(private apiCategosrias:ApiV1Loja){
 
     }
     

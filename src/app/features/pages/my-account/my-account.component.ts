@@ -85,7 +85,7 @@ export class MyAccountComponent implements OnInit {
     this.router.navigate(['/my-account'])
   }
   pageHome() {
-    this.router.navigate(['/home'])
+    this.router.navigate(['/'])
   }
 
 

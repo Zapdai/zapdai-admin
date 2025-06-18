@@ -3,16 +3,16 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
-import { SnackService } from '../../../../services/snackBar/snack.service';
 import { NgxMaskDirective } from 'ngx-mask';
-import { cepApiBrasilService } from '../../../../services/cepApiBrasil/cep.service';
 import { MatIconModule } from '@angular/material/icon';
 import { TabsModule } from 'primeng/tabs';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { apiAuthService } from '../../../../services/apiAuth.service';
-import { AuthDecodeService } from '../../../../services/AuthUser.service';
-import { Usuario } from '../../../../shared/core/types/usuario';
-import { cpfOuCnpjValidator, validarCep, validarEmail } from '../../../../../validators';
+import { Usuario } from '../../../../../shared/core/types/usuario';
+import { SnackService } from '../../../../../services/snackBar/snack.service';
+import { cepApiBrasilService } from '../../../../../services/cepApiBrasil/cep.service';
+import { apiAuthService } from '../../../../../services/apiAuth.service';
+import { AuthDecodeService } from '../../../../../services/AuthUser.service';
+import { cpfOuCnpjValidator, validarCep, validarEmail } from '../../../../../../validators';
 
 @Component({
   selector: 'app-form-ProfileEdition',
@@ -40,7 +40,7 @@ export class FormProfileEditionComponent implements AfterViewInit, OnInit {
   latitude: number | null = null;
   longitude: number | null = null;
   error: string | null = null;
-   groupform!:FormGroup;
+  groupform!: FormGroup;
 
   @ViewChild('primeiroInput') primeiroInput!: ElementRef;
 
@@ -58,50 +58,52 @@ export class FormProfileEditionComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-      this.getUser()
-     this.groupform.get('cep')?.valueChanges.subscribe((cep:any) => {
-      if (cep && cep.length === 8) {
-        this.buscarEnderecoPorCep(cep);
+    this.getUser()
+    this.pegaLatLog()
+
+  }
+
+  CarregaFormGroup(usuario: Usuario) {
+    this.groupform = new FormGroup({
+      nome: new FormControl(usuario!.nome, Validators.required),
+      telefone: new FormControl(usuario.phoneNumer, Validators.required),
+      sexo: new FormControl(usuario.sexo, Validators.required),
+      email: new FormControl(usuario.email, [Validators.required, Validators.email, validarEmail]),
+      cpf: new FormControl(usuario.cpf, [Validators.required, Validators.minLength(11), cpfOuCnpjValidator]),
+
+      cep: new FormControl(usuario.endereco?.cep, [Validators.required, validarCep]),
+      estado_sigla: new FormControl(usuario.endereco?.estado_sigla, Validators.required),
+      cidade: new FormControl(usuario.endereco?.cidade, Validators.required),
+      bairro: new FormControl(usuario.endereco?.bairro, Validators.required),
+      rua: new FormControl(usuario.endereco?.logradouro, Validators.required),
+      numeroEndereco: new FormControl(usuario.endereco?.numeroEndereco, Validators.required),
+      dataNascimento: new FormControl(`${usuario.dataNascimento}`)
+    })
+
+    this.groupform.get('cep')?.valueChanges.subscribe((cep: any) => {
+      const onlyDigits = cep?.replace(/\D/g, '');
+      if (onlyDigits?.length === 8) {
+        this.buscarEnderecoPorCep(onlyDigits);
       }
     });
-    this.pegaLatLog()
-   
   }
-  
-CarregaFormGroup(usuario:Usuario){
-  this.groupform =  new FormGroup({
-            nome: new FormControl(usuario!.nome, Validators.required),
-            telefone: new FormControl(usuario.phoneNumer, Validators.required),
-            sexo: new FormControl(usuario.sexo, Validators.required),
-            email: new FormControl(usuario.email, [Validators.required, Validators.email, validarEmail]),
-            cpf: new FormControl(usuario.cpf, [Validators.required, Validators.minLength(11), cpfOuCnpjValidator]),
-    
-            cep: new FormControl(usuario.endereco?.cep, [Validators.required, validarCep]),
-            estado_sigla: new FormControl(usuario.endereco?.estado_sigla, Validators.required),
-            cidade: new FormControl(usuario.endereco?.cidade, Validators.required),
-            bairro: new FormControl(usuario.endereco?.bairro, Validators.required),
-            logradouro: new FormControl(usuario.endereco?.logradouro, Validators.required),
-            numeroEndereco: new FormControl(usuario.endereco?.numeroEndereco, Validators.required),
-            dataNascimento:new FormControl(`${usuario.dataNascimento}`)
-     })
-}
 
 
   getUser() {
-        this.apiAuth.buscaUsuario(this.authDecodeUser.getSub()).subscribe((usuario: any) => {
-          this.valida = usuario;
-          if (usuario !== null) {
-            this.usuario = usuario;
-            this.CarregaFormGroup(usuario)
-          }
-        
+    this.apiAuth.buscaUsuario(this.authDecodeUser.getSub()).subscribe((usuario: any) => {
+      this.valida = usuario;
+      if (usuario !== null) {
+        this.usuario = usuario;
+        this.CarregaFormGroup(usuario)
+      }
+
     })
   }
 
 
   setTab(tab: string) {
     this.activeTab = tab;
-     this.getUser()
+    this.getUser()
   }
 
   focarPrimeiroCampo() {
@@ -141,15 +143,15 @@ CarregaFormGroup(usuario:Usuario){
   }
 
   dataUser(): any {
-    const data =  {
-      id:this.authDecodeUser.getusuarioId(),
+    const data = {
+      id: this.authDecodeUser.getusuarioId(),
       nome: this.select("nome").value || this.usuario.nome,
       numero: this.select("telefone").value || this.usuario.phoneNumer,
       sexo: this.select("sexo").value || this.usuario.sexo,
       endereco: {
         numeroEndereco: this.select("numeroEndereco").value,
         latLong: `${this.latitude}, ${this.longitude}`,
-        logradouro: this.select("logradouro").value,
+        logradouro: this.select("rua").value,
         estado_sigla: this.select("estado_sigla").value,
         cep: this.select("cep").value,
         bairro: this.select("bairro").value,
@@ -160,13 +162,13 @@ CarregaFormGroup(usuario:Usuario){
   }
 
   AtualizarUsuario() {
-    this.apiAuth.updateUsuario(this.dataUser()).subscribe((res:any)=>{
-      if(res){
+    this.apiAuth.updateUsuario(this.dataUser()).subscribe((res: any) => {
+      if (res) {
         this.snak.success(res.msg);
       }
     }
     )
-    
+
   }
 
 
@@ -206,8 +208,9 @@ CarregaFormGroup(usuario:Usuario){
           estado_sigla: res.state,
           cidade: res.city,
           bairro: res.neighborhood,
-          logradouro: res.street
+          rua: res.street
         });
+        console.log(res)
       }
     });
   }

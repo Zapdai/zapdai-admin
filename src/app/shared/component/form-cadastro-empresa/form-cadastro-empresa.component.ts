@@ -248,7 +248,7 @@ export class FormCadastroEmpresaComponent implements OnInit, AfterViewInit {
       nomeCompania: formData.nomeCompania,
       email: formData.email?.toLowerCase(),
       cpfCnpj: formData.cpfCnpj,
-      numeroDeTelefone: formData.numeroEndereco,
+      numeroDeTelefone: formData.numeroDeTelefone,
       planoId: this.planoSelecionado.planoId,
       endereco: {
         numeroEndereco: formData.numeroEndereco,

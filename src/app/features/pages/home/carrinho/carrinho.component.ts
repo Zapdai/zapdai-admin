@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output, output } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { AppLojaComponent } from "./loja/loja.component";
-import { ApiCategorias } from "../../../../services/apiCategorias/apiCategorias.service";
+import { ApiV1Loja } from "../../../../services/apiCategorias/apiV1Loja.service";
 import { firstValueFrom } from "rxjs";
 
 @Component({
@@ -14,7 +14,7 @@ import { firstValueFrom } from "rxjs";
 })
 export class CarrinhoComponent implements OnInit{
     produto:any
-       constructor( private api: ApiCategorias) {}
+       constructor( private api: ApiV1Loja) {}
     ngOnInit(): void {
       this.rodaFuncaoApi()
    }

@@ -29,7 +29,7 @@ export class MaisPostadosComponent {
   }
   rodaFunc(event:any){
 
-   this.rotas.navigateByUrl(`home/detalhes/produto/${event}`)
+   this.rotas.navigateByUrl(`v1/produto/detalhes/${event}`)
   }
 
 

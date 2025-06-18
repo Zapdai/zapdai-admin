@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { headerComponent } from '../home/header/header.component';
-import { CarrosselComponent } from '../../../shared/component/carrossel/carrossel.component';
-import { OpcoesCategoriaComponent } from '../../../shared/component/opcoes-categoria/opcoes-categoria.component';
-import { MaisPostadosComponent } from '../../../shared/component/mais-postados/mais-postados.component';
-import { footerComponent } from "../home/foother/footer.component";
-import { MobileNavbarComponent } from "../home/mobile-navbar/mobile-navbar.component";
-import { MatTabsModule } from '@angular/material/tabs';
-import { ApiCategorias } from '../../../services/apiCategorias/apiCategorias.service';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { CarrinhoComponent } from '../home/carrinho/carrinho.component';
+import { OpcoesCategoriaComponent } from '../../../../shared/component/opcoes-categoria/opcoes-categoria.component';
+import { headerComponent } from '../../home/header/header.component';
+import { CarrosselComponent } from '../../../../shared/component/carrossel/carrossel.component';
+import { MobileNavbarComponent } from '../../home/mobile-navbar/mobile-navbar.component';
+import { MaisPostadosComponent } from '../../../../shared/component/mais-postados/mais-postados.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { footerComponent } from '../../home/foother/footer.component';
+import { ApiV1Loja } from '../../../../services/apiCategorias/apiV1Loja.service';
+import { CarrinhoComponent } from '../../home/carrinho/carrinho.component';
 
 @Component({
-  selector: 'app-categorias',
+  selector: 'app-homeZapdai',
   imports: [headerComponent, OpcoesCategoriaComponent,
     CarrosselComponent, MaisPostadosComponent, footerComponent,
     MobileNavbarComponent, MatTabsModule,CarrinhoComponent],
-  templateUrl: './categorias.component.html',
-  styleUrl: './categorias.component.scss'
+  templateUrl: './homeZapdai.component.html',
+  styleUrl: './homeZapdai.component.scss'
 })
-export class CategoriasComponent implements OnInit {
-  constructor(private apiCategosrias: ApiCategorias, public router: Router) { }
+export class HomeZapdaiComponent implements OnInit {
+  constructor(private apiCategosrias: ApiV1Loja, public router: Router) { }
   categorias: any;
   produtos: any
   ativaCar = false;
@@ -49,7 +49,7 @@ export class CategoriasComponent implements OnInit {
 
 
   navigate(name: any) {
-    this.router.navigateByUrl(`/home/categoria/${name}`)
+    this.router.navigateByUrl(`/v1/categoria/${name}`)
   }
   navigateDetalhesProdutos(name: any) {
     this.router.navigateByUrl(`/detalhes/produto/${name}`)

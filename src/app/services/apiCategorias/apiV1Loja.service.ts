@@ -6,7 +6,7 @@ import { Observable } from "rxjs";
 @Injectable({
     providedIn:"root"
 })
-export class ApiCategorias{
+export class ApiV1Loja{
     environment = environment;
     constructor(private http:HttpClient){}
     findAllCategorias():Observable<any>{

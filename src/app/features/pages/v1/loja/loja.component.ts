@@ -1,25 +1,25 @@
 import { Component, OnInit } from "@angular/core";
 import { MatTabsModule } from "@angular/material/tabs";
 import { ActivatedRoute } from "@angular/router";
-import { ApiCategorias } from "../../../services/apiCategorias/apiCategorias.service";
 import { firstValueFrom } from "rxjs";
 import { ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { MatInputModule } from "@angular/material/input";
+import { ApiV1Loja } from "../../../../services/apiCategorias/apiV1Loja.service";
 
 @Component({
    selector: 'app-loja',
-   imports: [MatTabsModule,ReactiveFormsModule,CommonModule,MatInputModule],
+   imports: [MatTabsModule, ReactiveFormsModule, CommonModule, MatInputModule],
    templateUrl: './loja.component.html',
    styleUrl: './loja.component.scss'
 })
 export class AppLojaComponent implements OnInit {
-[x: string]: any;
+   [x: string]: any;
    idProduto: any;
-   produto:any
+   produto: any
    quantidade: number = 1;
 
-   constructor(public route: ActivatedRoute, private api: ApiCategorias) {
+   constructor(public route: ActivatedRoute, private api: ApiV1Loja) {
 
    }
    ngOnInit(): void {
@@ -37,11 +37,11 @@ export class AppLojaComponent implements OnInit {
       }
 
    }
-imagemSelecionada: string | null = null;
-adicionarAoCarrinho(produto: any): void {
-  const item = {
-    ...produto,
-    quantidade: this.quantidade
-  };
-}
+   imagemSelecionada: string | null = null;
+   adicionarAoCarrinho(produto: any): void {
+      const item = {
+         ...produto,
+         quantidade: this.quantidade
+      };
+   }
 }

@@ -1,22 +1,22 @@
 import { inject } from '@angular/core';
 import { RenderMode, ServerRoute } from '@angular/ssr';
-import { CategoriaServiceNome } from './features/pages/categorias/categoria.service';
+import { LojaZapdaiService } from './features/pages/v1/lojaZapdai.service';
 
 export const serverRoutes: ServerRoute[] = [
   {
-    path: 'home/categoria/:nome',
+    path: 'v1/categoria/:nome',
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
-      const dataService = inject(CategoriaServiceNome);
+      const dataService = inject(LojaZapdaiService);
       const ids = await dataService.getNomesCategorias(); 
       return ids.map((categoria: any) => ({ nome:categoria.nome })); 
     },
   },
    {
-    path: 'home/detalhes/produto/:id',
+    path: 'v1/produto/detalhes/:id',
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
-      const dataService = inject(CategoriaServiceNome);
+      const dataService = inject(LojaZapdaiService);
       const produtos = await dataService.getNomesProduto(); 
       return produtos.map((item:any)=>({id:String(item.idProduto)})); 
     },

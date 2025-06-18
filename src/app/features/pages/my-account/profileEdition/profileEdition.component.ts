@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormProfileEditionComponent } from "./form-ProfileEdition/form-ProfileEdition.component";
-import { headerComponent } from "../home/header/header.component";
-import { MobileNavbarComponent } from "../home/mobile-navbar/mobile-navbar.component";
+import { MobileNavbarComponent } from '../../home/mobile-navbar/mobile-navbar.component';
+import { FormProfileEditionComponent } from './form-ProfileEdition/form-ProfileEdition.component';
 
 @Component({
   selector: 'app-profileEdition',
