@@ -1,7 +1,7 @@
 import { Component, Input } from "@angular/core";
-import { loadingService } from "../../../../services/loading/loading.service";
 import { Router, RouterLink } from "@angular/router";
 import { CommonModule } from "@angular/common";
+import { loadingService } from "../../../services/loading/loading.service";
 
 @Component({
     selector:"app-footer",

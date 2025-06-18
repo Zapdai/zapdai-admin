@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MobileNavbarComponent } from '../../home/mobile-navbar/mobile-navbar.component';
 import { FormProfileEditionComponent } from './form-ProfileEdition/form-ProfileEdition.component';
+import { MobileNavbarComponent } from '../../../../shared/component/mobile-navbar/mobile-navbar.component';
 
 @Component({
   selector: 'app-profileEdition',

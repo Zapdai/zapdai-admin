@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { PageContainerComponent } from '../../../../shared/component/page-container/page-container.component';
-import { footerComponent } from '../../home/foother/footer.component';
 import { Router } from '@angular/router';
+import { footerComponent } from '../../../../shared/component/foother/footer.component';
 
 @Component({
   selector: 'app-posCheckout',

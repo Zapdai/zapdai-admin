@@ -4,18 +4,18 @@ import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from "@angular/router";
-import { loadingService } from "../../../../services/loading/loading.service";
-import { SnackService } from "../../../../services/snackBar/snack.service";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ChangeDetectorRef } from '@angular/core';
 import { Popover } from 'primeng/popover';
 import { PopoverModule } from 'primeng/popover';
 import { ButtonModule } from 'primeng/button';
-import { AuthDecodeService } from "../../../../services/AuthUser.service";
-import { AuthService } from "../../../../services/auth.service";
 import { isPlatformBrowser } from '@angular/common';
-import { apiAuthService } from "../../../../services/apiAuth.service";
-import { Usuario } from "../../../../shared/core/types/usuario";
+import { Usuario } from "../../core/types/usuario";
+import { loadingService } from "../../../services/loading/loading.service";
+import { SnackService } from "../../../services/snackBar/snack.service";
+import { AuthService } from "../../../services/auth.service";
+import { AuthDecodeService } from "../../../services/AuthUser.service";
+import { apiAuthService } from "../../../services/apiAuth.service";
 
 @Component({
     selector: "app-header",

@@ -3,10 +3,10 @@ import { CommonModule } from "@angular/common";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormLoginComponent } from "../../../../shared/component/form-login/form-login.component";
-import { formModalComponent } from "../../../../shared/component/formModel/formModal.component";
 import { Router } from "@angular/router";
 import { loadingService } from "../../../../services/loading/loading.service";
 import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
+import { formModalComponent } from "../../../../shared/component/formModal/formModal.component";
 
 @Component ({
     selector:'',

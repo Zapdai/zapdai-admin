@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { formModalComponent } from '../formModel/formModal.component';
 import { MatButtonModule } from '@angular/material/button';
 import { registroForm } from '../../../services/singNupForm/registroForm.servide';
 import { cadastro } from '../../core/types/cadastroUpdateUser';
@@ -10,6 +9,7 @@ import { SnackService } from '../../../services/snackBar/snack.service';
 import { NgxMaskDirective } from 'ngx-mask';
 import { Router } from '@angular/router';
 import { loadingService } from '../../../services/loading/loading.service';
+import { formModalComponent } from '../formModal/formModal.component';
 
 @Component({
   selector: 'app-form-signup',

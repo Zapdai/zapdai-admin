@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { footerComponent } from "../home/foother/footer.component";
 
 @Component({
     selector:"",

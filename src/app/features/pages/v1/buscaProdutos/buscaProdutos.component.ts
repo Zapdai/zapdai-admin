@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { firstValueFrom } from "rxjs";
-import { headerComponent } from "../../home/header/header.component";
 import { UtiusComponent } from "../../../../shared/component/utius/utius.component";
 import { ApiV1Loja } from "../../../../services/apiCategorias/apiV1Loja.service";
+import { headerComponent } from "../../../../shared/component/header/header.component";
 @Component({
     selector: "app-BuscaProdutos",
     imports: [UtiusComponent,headerComponent],

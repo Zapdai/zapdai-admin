@@ -1,7 +1,5 @@
 import { Component, ElementRef, EventEmitter, HostListener, Inject, OnInit, Output, PLATFORM_ID, ViewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { headerComponent } from "../../home/header/header.component";
-import { MobileNavbarComponent } from "../../home/mobile-navbar/mobile-navbar.component";
 import { MatTabsModule } from '@angular/material/tabs';
 import { AuthDecodeService } from '../../../../services/AuthUser.service';
 import { AuthService } from '../../../../services/auth.service';

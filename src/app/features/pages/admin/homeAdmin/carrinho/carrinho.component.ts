@@ -2,8 +2,8 @@ import { Component, EventEmitter, OnInit, Output, output } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { AppLojaComponent } from "./loja/loja.component";
-import { ApiV1Loja } from "../../../../services/apiCategorias/apiV1Loja.service";
 import { firstValueFrom } from "rxjs";
+import { ApiV1Loja } from "../../../../../services/apiCategorias/apiV1Loja.service";
 
 @Component({
     selector:"app-carrinho",

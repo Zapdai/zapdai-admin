@@ -1,11 +1,9 @@
 import { Component, Input } from "@angular/core";
-import { headerComponent } from "./header/header.component";
 import { menuDropComponent } from "./menuDropDown/menudrop.component";
 import { RouterOutlet } from "@angular/router";
-import { footerComponent } from "./foother/footer.component";
-import { MobileNavbarComponent } from "./mobile-navbar/mobile-navbar.component";
-import { PageContainerComponent } from "../../../shared/component/page-container/page-container.component";
-import { CobrancaComponent } from "../../../shared/component/cobranca/cobranca.component";
+import { headerComponent } from "../../../../shared/component/header/header.component";
+import { MobileNavbarComponent } from "../../../../shared/component/mobile-navbar/mobile-navbar.component";
+import { CobrancaComponent } from "../../../../shared/component/cobranca/cobranca.component";
 
 @Component({
     selector:"app-home",

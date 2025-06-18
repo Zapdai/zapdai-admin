@@ -1,7 +1,5 @@
 import { Component, HostListener, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { headerComponent } from "../../home/header/header.component";
-import { MobileNavbarComponent } from "../../home/mobile-navbar/mobile-navbar.component";
 import { MatTabsModule } from '@angular/material/tabs';
 import { AuthDecodeService } from '../../../../services/AuthUser.service';
 import { AuthService } from '../../../../services/auth.service';
@@ -10,6 +8,7 @@ import { PageContainerComponent } from "../../../../shared/component/page-contai
 import { loadingService } from '../../../../services/loading/loading.service';
 import { isPlatformBrowser } from '@angular/common';
 import { Location } from '@angular/common';
+import { MobileNavbarComponent } from '../../../../shared/component/mobile-navbar/mobile-navbar.component';
 
 @Component({
   selector: 'app-home-my-account',

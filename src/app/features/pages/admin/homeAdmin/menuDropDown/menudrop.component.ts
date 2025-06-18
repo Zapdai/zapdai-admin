@@ -2,8 +2,8 @@ import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { Router, RouterLink, RouterLinkActive } from "@angular/router";
-import { functionList, funcoes } from "../../../../shared/core/functionList/functionList";
-import { functionListService } from "../../../../services/routesApiZapdai/functionList.service";
+import { funcoes, functionList } from "../../../../../shared/core/functionList/functionList";
+import { functionListService } from "../../../../../services/routesApiZapdai/functionList.service";
 
 @Component({
     selector: "app-menu-dropdown",

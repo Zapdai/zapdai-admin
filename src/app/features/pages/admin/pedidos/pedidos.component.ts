@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-import { searchComponent } from "../../../shared/component/search/search.component";
-import { tableComponent } from "../../../shared/component/table/table.component";
+import { searchComponent } from "../../../../shared/component/search/search.component";
+import { tableComponent } from "../../../../shared/component/table/table.component";
 
 
 @Component ({

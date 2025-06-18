@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { DestaqueComponent } from "../../../features/pages/destaque/destaque.component";
 
 @Component({
   selector: 'app-formModal',

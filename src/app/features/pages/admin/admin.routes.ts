@@ -1,11 +1,11 @@
 import { Routes } from "@angular/router"
-import { homeComponent } from "./pages/home/home.component"
-import { ClientesComponentes } from "./pages/clientes/clientes.componentes";
-import { DestaqueComponent } from "./pages/destaque/destaque.component";
-import { pedidosComponent } from "./pages/pedidos/pedidos.component";
-import { authGuardian } from "../services/auth.guard";
-import { ProdutosAdminComponent } from "./pages/produtos/produtosAdmin/produtosAdmin.component";
-import { dashBoard } from "./pages/dashboard/dashboard.component";
+import { homeComponent } from "./homeAdmin/home.component";
+import { DestaqueComponent } from "./destaque/destaque.component";
+import { dashBoard } from "./dashboard/dashboard.component";
+import { ClientesComponentes } from "./clientes/clientes.componentes";
+import { ProdutosAdminComponent } from "./produtos/produtosAdmin/produtosAdmin.component";
+import { pedidosComponent } from "./pedidos/pedidos.component";
+import { authGuardian } from "../../../services/auth.guard";
 
 export const routes:Routes = [
     {
