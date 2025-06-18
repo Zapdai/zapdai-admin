@@ -1,1 +1,24 @@
-<div>Pagina de Produtos</div>
+<div class="app-content">
+
+    <div class="ng-header-content">
+        <section class="ng-form">
+            <form action="" [formGroup]="groupSearh" (submit)="pegarvalor()">
+                <div class="search">
+                    <input type="search" class="ng-input" formControlName="name" placeholder="Buscar...">
+                    <mat-icon class="icone">search</mat-icon>
+                </div>
+            </form>
+        </section>
+
+        <section class="header-buttons">
+            <button class="ng-btn">
+                <mat-icon class="ng-menu-icon">manage_accounts</mat-icon>
+                <small class="ng-menu-name">Configurações do Usuário</small>
+            </button>
+            <button class="ng-btn">
+                <mat-icon class="ng-menu-icon">key</mat-icon>
+                <small class="ng-menu-name">Alterar Senha</small>
+            </button>
+        </section>
+    </div>
+</div>

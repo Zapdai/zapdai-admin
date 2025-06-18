@@ -1,0 +1,46 @@
+.app-content {
+    width: 100%;
+    padding: 11px;
+
+    .ng-header-content {
+        display: flex;
+        justify-content: space-between;
+
+        .ng-form form {
+            display: flex;
+
+            .search {
+                width: 400px;
+                display: flex;
+                align-items: center;
+                background-color: #ffffff;
+                padding: 0 10px;
+                border-radius: 5px;
+                border: 1px solid #cac9c9;
+
+                .ng-input {
+                    flex: 1;
+                    padding: 5px;
+                    outline: none;
+                    border: none;
+
+
+                }
+
+                mat-icon {
+                    padding: 0 2px;
+                    cursor: pointer;
+                    color: #000;
+                }
+            }
+
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 0 15px;
+        }
+
+    }
+
+}
