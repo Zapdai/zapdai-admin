@@ -4,6 +4,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { firstValueFrom } from "rxjs";
 import { ApiV1Loja } from "../../../../../services/apiCategorias/apiV1Loja.service";
 import { DropComponent } from "../../../../../shared/component/drop/drop.component";
+import { ProdutosApiService } from "../../../../../services/produtoService/produtosApi.service";
 
 @Component({
    selector: "app-create-product",
@@ -15,8 +16,9 @@ import { DropComponent } from "../../../../../shared/component/drop/drop.compone
 export class CreateProductComponent implements OnInit {
    produto: any
    files: File[] = [];
+   
 
-   constructor(private api: ApiV1Loja) { }
+   constructor(private api: ApiV1Loja,private apiCadastroProdutos:ProdutosApiService) { }
    ngOnInit(): void {
    }
    @Output() desbiledCarEmit = new EventEmitter();
@@ -32,5 +34,21 @@ export class CreateProductComponent implements OnInit {
      this.files = event;
      console.log("Imagems vindo do drop "+event)
    }
+  async saveProduct(){
+   const data:any = {
+	"idEmpresa": "empresa-key1749865350179-96879",
+  "productName": "Porções",
+  "price": 21.80,
+  "peso": 5.1,
+  "categoria": {
+		"id":7
+	}
+		,
+  "description": "Carne com calabresa  e arroz",
+  "amountQTD": 5
+};
+   const response = await firstValueFrom(this.apiCadastroProdutos.cadastroDeProduto(data,this.files));
+   console.log(response)
+}
 
 }

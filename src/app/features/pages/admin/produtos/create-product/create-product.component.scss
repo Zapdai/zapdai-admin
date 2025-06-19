@@ -18,6 +18,7 @@
         height: 100dvh;
 
         .container-header {
+            flex-direction: column;
             display: flex;
             padding: 5px 2px;
             align-items: center;
@@ -43,6 +44,9 @@
         }
 
         .container-infor-produto {
+            display: flex;
+                        flex-direction: column;
+
             flex: 1;
             overflow-y: auto;
             background-color: #FFF;
