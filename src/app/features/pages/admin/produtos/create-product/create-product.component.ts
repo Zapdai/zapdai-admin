@@ -14,6 +14,8 @@ import { DropComponent } from "../../../../../shared/component/drop/drop.compone
 })
 export class CreateProductComponent implements OnInit {
    produto: any
+   files: File[] = [];
+
    constructor(private api: ApiV1Loja) { }
    ngOnInit(): void {
    }
@@ -27,7 +29,7 @@ export class CreateProductComponent implements OnInit {
 
    }
    select(event:any){
-      console.log("imagens "+event)
+     this.files = event;
    }
 
 }
