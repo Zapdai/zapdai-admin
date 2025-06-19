@@ -30,6 +30,7 @@ export class CreateProductComponent implements OnInit {
    }
    select(event:any){
      this.files = event;
+     console.log("Imagems vindo do drop "+event)
    }
 
 }
