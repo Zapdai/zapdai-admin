@@ -1,24 +1,38 @@
-import { Component, EventEmitter, Input, input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-utius',
-  imports: [MatButtonModule],
+  imports: [MatButtonModule, CommonModule],
   templateUrl: './utius.component.html',
   styleUrl: './utius.component.scss'
 })
-export class UtiusComponent {
+export class UtiusComponent implements OnInit {
+  @Input() id?: number;
+  @Input() imagem?: string;
+  @Output() emiter = new EventEmitter();
+  @Input() titulo?: string;
+  @Input() price?: number;
+  nome: any
+  isAdmin: boolean = false;
 
-  @Input() imagem?:string;
-    @Output() emiter = new EventEmitter();
+  constructor(private router: Router) { }
 
-   @Input() titulo?:string;
-  @Input() price?:number;
-  nome:any
-   constructor(private router:ActivatedRoute){}
-   detalhes(){
-     this.emiter.emit()
-   }
+  ngOnInit(): void {
+    this.isAdmin = this.router.url.startsWith('/admin');
+
+    // Escuta mudanças de rota subsequentes
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.isAdmin = this.router.url.startsWith('/admin');
+      }
+    });
+  }
+  detalhes() {
+    this.emiter.emit()
+  }
 
 }

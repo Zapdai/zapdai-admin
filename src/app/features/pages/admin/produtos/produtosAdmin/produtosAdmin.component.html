@@ -4,21 +4,31 @@
         <section class="ng-form">
             <form action="" [formGroup]="groupSearh" (submit)="pegarvalor()">
                 <div class="search">
-                    <input type="search" class="ng-input" formControlName="name" placeholder="Buscar...">
+                    <input type="search" class="ng-input" formControlName="name" placeholder="Buscar por ID do Produto">
                     <mat-icon class="icone">search</mat-icon>
                 </div>
             </form>
         </section>
 
         <section class="header-buttons">
-            <button class="ng-btn">
-                <mat-icon class="ng-menu-icon">manage_accounts</mat-icon>
-                <small class="ng-menu-name">Configurações do Usuário</small>
+            <button class="ng-btn" (click)="ativaProduct()">
+                <mat-icon class="ng-menu-icon">add</mat-icon>
+                <small class="ng-menu-name">Cadastrar Produto</small>
             </button>
             <button class="ng-btn">
-                <mat-icon class="ng-menu-icon">key</mat-icon>
-                <small class="ng-menu-name">Alterar Senha</small>
+                <mat-icon class="ng-menu-icon">bookmark_add</mat-icon>
+                <small class="ng-menu-name">Categorias</small>
             </button>
         </section>
     </div>
+    <div class="ng-todosProdutos">
+        @for (item of todosProdutos; track $index) {
+        <app-utius (emiter)="rodaFunc(item.idProduto)" [id]="item.idProduto" [titulo]="item.productName" [price]="item.price"
+            [imagem]="item.imgUrl"></app-utius>
+        }
+    </div>
 </div>
+
+@if (ativaCreatProduct) {
+    <app-create-product (desbiledCarEmit)="ativaProduct()"></app-create-product>
+}

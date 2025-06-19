@@ -2,15 +2,18 @@
     <figure class="img">
         <img [src]="imagem" alt="">
     </figure>
-    <div class="ng-infor"></div>
+    @if (isAdmin) {
+    <div class="ng-infor-id">
+        <small>ID: {{ id }}</small>
+    </div>
+    }
     <span class="ng-descricao">{{titulo}}</span>
     <div class="ng-infor">
         <div class="ng-infor-price">
-            <span>R$</span>
-            <small>{{price}} no pix </small>
+            <small>{{price | currency:'BRL':'symbol':'1.2-2' }}</small>
         </div>
         <div class="ng-infor-cred">
-            <small>Ou até 3x no cartão </small>
+            <small>Até 3x no cartão </small>
         </div>
     </div>
     <!-- <div class="ng-btn">

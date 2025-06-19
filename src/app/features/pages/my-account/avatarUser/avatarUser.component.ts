@@ -93,7 +93,6 @@ export class AvatarUserComponent implements OnInit {
       reader.readAsDataURL(this.selectedFile);
     }
 
-    // 🔁 Limpar o valor após seleção
     this.fileInput.nativeElement.value = '';
   }
 

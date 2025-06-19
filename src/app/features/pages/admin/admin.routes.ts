@@ -20,7 +20,7 @@ export const routes:Routes = [
                 path:"clientes",component:ClientesComponentes,title:"Clientes - Zapdai"
             },
             {
-                path:"produtos/novo",component:ProdutosAdminComponent,title:"Produtos - Zapdai"
+                path:"produtos",component:ProdutosAdminComponent,title:"Produtos - Zapdai"
             },
             {
                 path:"pedidos",component:pedidosComponent,title:"Pedidos - Zapdai"

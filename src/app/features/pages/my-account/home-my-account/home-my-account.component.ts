@@ -87,17 +87,17 @@ export class HomeMyAccountComponent implements OnInit {
     {
       title: "Meu Negócio",
       icon: "apartment",
-      router: ""
+      router: "../admin"
     },
     {
       title: "Criar Meu Negóxio",
       icon: "add_business",
-      router: ""
+      router: "../planos"
     },
     {
       title: "Configuraões Da conta",
       icon: "manage_accounts",
-      router: ""
+      router: "manager-profile"
     },
     {
       title: "Suporte Técnico",
