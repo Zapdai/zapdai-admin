@@ -5,6 +5,8 @@ import { firstValueFrom } from "rxjs";
 import { ApiV1Loja } from "../../../../../services/apiCategorias/apiV1Loja.service";
 import { DropComponent } from "../../../../../shared/component/drop/drop.component";
 import { ProdutosApiService } from "../../../../../services/produtoService/produtosApi.service";
+import { SnackService } from "../../../../../services/snackBar/snack.service";
+import { Router } from "@angular/router";
 
 @Component({
    selector: "app-create-product",
@@ -18,7 +20,7 @@ export class CreateProductComponent implements OnInit {
    files: File[] = [];
    
 
-   constructor(private api: ApiV1Loja,private apiCadastroProdutos:ProdutosApiService) { }
+   constructor(private api: ApiV1Loja,private apiCadastroProdutos:ProdutosApiService,private snack:SnackService,private router:Router) { }
    ngOnInit(): void {
    }
    @Output() desbiledCarEmit = new EventEmitter();
@@ -37,8 +39,8 @@ export class CreateProductComponent implements OnInit {
   async saveProduct(){
    const data:any = {
 	"idEmpresa": "empresa-key1749865350179-96879",
-  "productName": "Porções",
-  "price": 21.80,
+  "productName": "franco com arroz",
+  "price": 15.80,
   "peso": 5.1,
   "categoria": {
 		"id":7
@@ -48,7 +50,18 @@ export class CreateProductComponent implements OnInit {
   "amountQTD": 5
 };
    const response = await firstValueFrom(this.apiCadastroProdutos.cadastroDeProduto(data,this.files));
-   console.log(response)
+   if(response){
+      this.snack.openSnackBar(response);
+       setTimeout(() => {
+            this.router.navigateByUrl('/loading', { skipLocationChange: true}).then(()=>{
+                setTimeout(() => {
+                    this.router.navigate(['/admin/produtos'])
+                }, 2000);
+            })
+            
+        }, 0);
+
+   }
 }
 
 }

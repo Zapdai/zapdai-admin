@@ -1,4 +1,4 @@
-import { HttpClient, HttpRequest } from "@angular/common/http";
+import { HttpClient, HttpEventType, HttpRequest, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "../../../environments/environment";
@@ -19,9 +19,11 @@ export class ProdutosApiService {
                 }
             }
         }
-                    formData.append("data", data);
+                    formData.append("data", JSON.stringify(data));
 
-     const resquest = new HttpRequest('POST', `${this.api}/zapdai/v1/produtos`, formData, { reportProgress: true, responseType: "json" });
-    return this.http.request<any>(resquest).pipe();
+
+
+        return this.http.post<any>(`${this.api}/zapdai/v1/produtos`,formData, { responseType: 'text' as any } ).pipe();
+
     }
  }
