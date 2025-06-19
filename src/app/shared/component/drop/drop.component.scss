@@ -1,0 +1,16 @@
+.my-dropzone {
+    cursor: pointer;
+    text-align: center;
+    padding: 40px;
+    background: platinum;
+    border: 1px solid black;
+  }
+  .uploads{
+    display: flex;
+    align-items: center;
+   gap: 5px;
+  }
+  
+  .dragover  .my-dropzone {
+    border-width: 2px;
+  }

@@ -1,0 +1,24 @@
+<ngx-dropzone (change)="onSelect($event)" style="border: 1px dotted #a7a1a1;" [ngClass]="drop">
+    <ngx-dropzone-label><div class="uploads"><mat-icon>cloud_upload</mat-icon><small>Drop files arraste a imagem</small> <small style="color: blue;">browser</small></div></ngx-dropzone-label>
+    <ngx-dropzone-preview *ngFor="let f of filis;let i = index" [removable]="true"
+        (removed)="onRemove(i)">
+
+        <ngx-dropzone-label>
+            <ng-container *ngIf="f.type.startsWith('image/')">
+                <img [src]="f.dataURL" alt="Imagem" style="max-width:100px; max-height: 100px;"
+                    (load)="onTimeLoad(i)">
+            </ng-container>
+            @if (!f.loaded) {
+            <ng-container>
+                {{ f.name }} ({{ f.type }})
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </ng-container>
+            }@else {
+              
+            {{ f.name }}  {{f.date}} ({{ f.type }})
+            
+            }
+        </ngx-dropzone-label>
+
+    </ngx-dropzone-preview>
+</ngx-dropzone>

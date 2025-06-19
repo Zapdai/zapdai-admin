@@ -3,11 +3,12 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { firstValueFrom } from "rxjs";
 import { ApiV1Loja } from "../../../../../services/apiCategorias/apiV1Loja.service";
+import { DropComponent } from "../../../../../shared/component/drop/drop.component";
 
 @Component({
    selector: "app-create-product",
    standalone: true,
-   imports: [MatIconModule, MatButtonModule],
+   imports: [MatIconModule, MatButtonModule,DropComponent],
    templateUrl: "./create-product.component.html",
    styleUrl: "./create-product.component.scss"
 })
@@ -24,6 +25,9 @@ export class CreateProductComponent implements OnInit {
       event.stopPropagation();
 
 
+   }
+   select(event:any){
+      console.log("imagens "+event)
    }
 
 }
