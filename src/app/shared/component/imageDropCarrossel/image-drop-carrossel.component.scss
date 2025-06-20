@@ -1,0 +1,177 @@
+.carousel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  background: transparent;
+}
+
+.carousel-header {
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+  height: auto;
+  cursor: grab;
+  user-select: none;
+}
+
+.image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-container img {
+  width: 250px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.ng-btn-prev-next {
+  padding: 8px;
+  border-radius: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  user-select: none;
+}
+
+.ng-btn-prev-next:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.ng-btn-prev-next:active {
+  background: rgba(0, 0, 0, 0.2);
+  transform: scale(0.90);
+}
+
+.delete-button {
+  margin-top: 8px;
+  background: rgba(201, 201, 201, 0.6);
+  color: rgb(190, 0, 0);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.delete-button:active {
+  background: rgb(214, 214, 214);
+  transform: scale(0.90);
+}
+
+.drop-area {
+  border: 2px dashed #ccc;
+  text-align: center;
+  border-radius: 10px;
+  width: 250px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.drop-area input[type='file'] {
+  margin-top: 10px;
+}
+
+
+
+
+// -----------------------------------------------------------------------------------------------------------//
+@media screen and (min-width:769px) {
+  .carousel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 8px;
+    background: transparent;
+    max-width: 350px;
+  }
+
+  .carousel-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  .carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+    height: auto;
+    cursor: grab;
+    user-select: none;
+  }
+
+  .image-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .image-container img {
+    width: 250px;
+    height: 210px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .ng-btn-prev-next {
+    padding: 8px;
+    border-radius: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border: none;
+    user-select: none;
+  }
+
+  .ng-btn-prev-next:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .ng-btn-prev-next:active {
+    background: rgba(0, 0, 0, 0.2);
+    transform: scale(0.90);
+  }
+
+
+  .drop-area {
+    border: 2px dashed #ccc;
+    text-align: center;
+    border-radius: 10px;
+    width: 250px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    cursor: pointer;
+  }
+
+  .drop-area input[type='file'] {
+    margin-top: 10px;
+  }
+}

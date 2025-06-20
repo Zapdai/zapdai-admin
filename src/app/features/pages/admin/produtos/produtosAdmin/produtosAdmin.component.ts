@@ -6,6 +6,7 @@ import { ApiV1Loja } from "../../../../../services/apiCategorias/apiV1Loja.servi
 import { UtiusComponent } from "../../../../../shared/component/utius/utius.component";
 import { Router } from "@angular/router";
 import { CreateProductComponent } from "../create-product/create-product.component";
+import { AuthDecodeService } from "../../../../../services/AuthUser.service";
 
 @Component({
     selector: "app-produtos",
@@ -27,6 +28,7 @@ export class ProdutosAdminComponent implements OnInit {
     constructor(
         private ApiV1Loja: ApiV1Loja,
         public router: Router,
+        public authDecodeUser: AuthDecodeService,
     ) { }
 
 
@@ -37,9 +39,8 @@ export class ProdutosAdminComponent implements OnInit {
 
     async getAllProdutosEmpresa() {
         try {
-            const response = await firstValueFrom(this.ApiV1Loja.findAllProdutosEmpresa("empresa-key1749865350179-96879"));
+            const response = await firstValueFrom(this.ApiV1Loja.findAllProdutosEmpresa(this.authDecodeUser.getEmpresaId()));
             this.todosProdutos = response.content[0]?.produtos || [];
-            console.log(this.todosProdutos)
         } catch (error) {
             console.error("Erro ao buscar produtos da empresa:", error);
             this.todosProdutos = []; // Evita produtos indefinidos em caso de erro

@@ -60,6 +60,12 @@ export class AuthDecodeService {
     return user?.usuarioId ?? null;
   }
 
-
+  getEmpresaId() {
+    const user = this.userSubject.getValue();
+    if (user?.company && Array.isArray(user.company) && user.company.length > 0) {
+      return user.company[0].id;
+    }
+    return null;
+  }
 
 }

@@ -64,6 +64,7 @@ export class AvatarUserComponent implements OnInit {
           this.valida = usuario;
           if (usuario !== null) {
             this.usuario = usuario;
+            console.log(usuario)
           }
         })
       )

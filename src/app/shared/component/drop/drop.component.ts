@@ -51,7 +51,7 @@ export class DropComponent{
         const files: FileWithPreview[] = event.addedFiles.map((file: File) => {
           const fileWithPreview = file as FileWithPreview;
           if (fileWithPreview.type.startsWith('image/')) {
-            fileWithPreview.dataURL = URL.createObjectURL(fileWithPreview);
+            fileWithPreview.dataURL = URL.createObjectURL(fileWithPreview as any);
             fileWithPreview.loaded = false;
             fileWithPreview.date = this.DateForter();
           }

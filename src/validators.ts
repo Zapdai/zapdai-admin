@@ -161,3 +161,54 @@ export const senhaIguaisValidator: ValidatorFn = (group: AbstractControl): Valid
 
     return senha === repetirSenha ? null : { senhasDiferentes: true };
 };
+
+
+export function precoValidator(control: AbstractControl): ValidationErrors | null {
+  const valor = control.value;
+
+  if (!valor) return null;
+
+  // Aceita valor com vírgula ou ponto como separador decimal
+  const num = parseFloat(String(valor).replace(',', '.'));
+
+  if (isNaN(num)) {
+    return { precoInvalido: 'Preço inválido' };
+  }
+
+  if (num <= 0) {
+    return { precoInvalido: 'Preço deve ser maior que zero' };
+  }
+
+  if (num > 99999.99) {
+    return { precoInvalido: 'Preço muito alto' };
+  }
+
+  return null;
+}
+
+
+export function pesoValidator(control: AbstractControl): ValidationErrors | null {
+  const valor = control.value;
+
+  if (valor == null || valor === '') {
+    return null; // aceita vazio, use Validators.required para obrigatório
+  }
+
+  // Aceita string com vírgula ou ponto, ou número
+  let num = typeof valor === 'number' ? valor : parseFloat(String(valor).replace(',', '.'));
+
+  if (isNaN(num)) {
+    return { pesoInvalido: 'Peso não é um número válido' };
+  }
+
+  // Exemplo de limites aceitáveis para peso
+  if (num <= 0) {
+    return { pesoInvalido: 'Peso deve ser maior que zero' };
+  }
+  if (num > 999.99) {
+    return { pesoInvalido: 'Peso deve ser menor ou igual a 999,99' };
+  }
+
+  return null; // válido
+}
+
