@@ -138,7 +138,7 @@ export class CreateProductComponent implements OnInit {
          productName: this.groupform.get('productName')?.value,
          price: this.groupform.get('price')?.value,
          peso: this.groupform.get('peso')?.value,
-         categoria: { id: Number(this.groupform.get('categoriaId')?.value) },
+         categoria: { nome: this.groupform.get('categoriaId')?.value },
          description: this.groupform.get('description')?.value,
          amountQTD: this.groupform.get('amountQTD')?.value,
       };
