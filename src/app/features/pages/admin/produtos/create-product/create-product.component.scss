@@ -1,7 +1,7 @@
 .container {
     position: absolute;
     z-index: 1000;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: #fff;
     top: 0;
     left: 0;
     width: 100%;
@@ -119,16 +119,17 @@
                             border-radius: 4px;
                             width: 100%;
                             outline: none;
-                            border:0;
+                            border: 0;
                             background-color: transparent;
                             // mat-option{
                             //     margin-top: 20px;
                             // }
-                           
+
                         }
-                         .btn{
-                                background-color: #FF8401;
-                            }
+
+                        .btn {
+                            background-color: #FF8401;
+                        }
                     }
 
                     .ng-listForm {
@@ -249,6 +250,7 @@
         object-fit: contain;
     }
 }
+
 // .mdc-list-item{
 //             background: #cba1e6;
 // }

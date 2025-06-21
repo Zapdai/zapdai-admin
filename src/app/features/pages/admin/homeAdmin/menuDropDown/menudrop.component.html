@@ -10,7 +10,7 @@
             <ul>
                 @for (item of functionList?.funcoes ?? []; track item.id) {
                 <li [routerLink]="item.router" routerLinkActive="active-page" class="item" ariaCurrentWhenActive="page"
-                    [routerLinkActiveOptions]="{ exact: false }" (click)="[setAtivo(item.id), desabledMenu()]">
+                    [routerLinkActiveOptions]="{ exact: false }" (click)="handleItemClick(item)">
                     <mat-icon class="icon">{{ item.icone }}</mat-icon>
                     @if (dropOpen) {
                     <div class="icone-name">

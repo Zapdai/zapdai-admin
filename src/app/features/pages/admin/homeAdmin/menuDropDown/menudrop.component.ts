@@ -18,7 +18,7 @@ export class menuDropComponent implements OnInit {
     @Input() desabled?: boolean;  // manter 'desabled' para consistência com seu código
     functionList?: functionList;
     dropOpen: boolean = true;
-    @Input() rotaAtiva?:boolean;
+    @Input() rotaAtiva?: boolean;
 
     constructor(private router: Router, private functionService: functionListService) { }
 
@@ -50,6 +50,14 @@ export class menuDropComponent implements OnInit {
                 // Toggle do clicado
                 item.ativo = !item.ativo;
             }
+        }
+    }
+
+    handleItemClick(item: any) {
+        this.setAtivo(item.id);
+
+        if (!item.children || item.children.length === 0) {
+            this.desabled = false;
         }
     }
 
