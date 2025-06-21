@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
-import { firstValueFrom } from "rxjs";
+import { firstValueFrom, map, of, startWith } from "rxjs";
 import { ApiV1Loja } from "../../../../../services/apiCategorias/apiV1Loja.service";
 import { ProdutosApiService } from "../../../../../services/produtoService/produtosApi.service";
 import { SnackService } from "../../../../../services/snackBar/snack.service";
@@ -11,19 +11,24 @@ import { CommonModule } from '@angular/common';
 import { pesoValidator, precoValidator } from "../../../../../../validators";
 import { AuthDecodeService } from "../../../../../services/AuthUser.service";
 import { ImageDropCarrosselComponent } from "../imageDropCarrossel/image-drop-carrossel.component";
-
-
+import {Observable} from 'rxjs';
+import {AsyncPipe} from '@angular/common';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 @Component({
    selector: "app-create-product",
    standalone: true,
    imports: [
       MatIconModule,
       MatButtonModule,
+      AsyncPipe,
       ImageDropCarrosselComponent,
       ReactiveFormsModule,
       CommonModule,
       FormsModule,
+      MatAutocompleteModule,
    ],
+
    templateUrl: "./create-product.component.html",
    styleUrls: ["./create-product.component.scss"],
 
@@ -33,8 +38,11 @@ export class CreateProductComponent implements OnInit {
    produto: any;
    categorias: any[] = [];
    selectedValue: string = '';
+   filteredStreets!: Observable<any> | undefined;
+
    files: File[] = [];
    preco: number = 0;
+     control = new FormControl('');
 
    groupform!: FormGroup;
    @ViewChild('primeiroInput') primeiroInput!: ElementRef;
@@ -52,8 +60,24 @@ export class CreateProductComponent implements OnInit {
       this.CarregaFormGroup();
       this.getAllProdutosEmpresa();
       this.getAllCategorias();
+      this.filteredStreets = this.groupform.get("categoriaId")?.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '' ) ),
+    );
    }
 
+ private _filter(value: any): string[] {
+     const nome = typeof value === 'string' ? value : value?.nome || '';
+       const filterValue = this._normalizeValue(nome);
+    return this.categorias.filter(street => this._normalizeValue(street.nome).includes(filterValue));
+  }
+
+  private _normalizeValue(value: string): string {
+    return value.toLowerCase().replace(/\s/g, '');
+  }
+  displayCategoriaNome = (categoria: any): string => {
+  return categoria && categoria.nome ? categoria.nome : '';
+};
 
 
 
@@ -106,8 +130,10 @@ export class CreateProductComponent implements OnInit {
          this.snack.error("Adicione pelo menos uma imagem do produto.");
          return;
       }
+      
 
       const data: any = {
+         
          idEmpresa: this.authDecodeUser.getEmpresaId(),
          productName: this.groupform.get('productName')?.value,
          price: this.groupform.get('price')?.value,
@@ -196,5 +222,15 @@ export class CreateProductComponent implements OnInit {
          this.router.navigate([currentUrl]);
       });
    }
+   @ViewChild(MatAutocompleteTrigger) trigger!: MatAutocompleteTrigger;
+   abrirAutocomplete(){
+ this.filteredStreets = of(this.categorias); 
+
+  // Espera o DOM estabilizar e abre o autocomplete
+  setTimeout(() => {
+    this.trigger.openPanel();
+  });
+   }
+  
 
 }
