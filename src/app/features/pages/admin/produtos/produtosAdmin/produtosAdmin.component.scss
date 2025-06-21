@@ -3,7 +3,6 @@
     padding: 11px;
     display: flex;
     flex-direction: column;
-    height: auto;
     gap: 30px;
 
 
@@ -20,7 +19,7 @@
                 display: flex;
                 align-items: center;
                 background-color: #ffffff;
-                height: 35px;
+                height: 45px;
                 border-radius: 5px;
                 border: 1px solid #cac9c9;
 
@@ -52,11 +51,17 @@
                 align-items: center;
                 background: var(--background-color-container);
                 color: #ddd;
-                height: 35px;
-                padding: 0 8px;
+                height: 45px;
+                padding: 0 10px;
                 gap: 0 5px;
                 border-radius: 5px;
                 border: 1px solid #ccc;
+            }
+
+
+            .ng-btn:active {
+                transform: scale(0.97);
+
             }
         }
 
@@ -95,7 +100,7 @@
                     display: flex;
                     align-items: center;
                     background-color: #ffffff;
-                    height: 35px;
+                    height: 45px;
                     border-radius: 5px;
                     border: 1px solid #cac9c9;
 

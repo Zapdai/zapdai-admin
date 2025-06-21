@@ -6,11 +6,11 @@ import { ApiV1Loja } from "../../../../../services/apiCategorias/apiV1Loja.servi
 import { ProdutosApiService } from "../../../../../services/produtoService/produtosApi.service";
 import { SnackService } from "../../../../../services/snackBar/snack.service";
 import { Router } from "@angular/router";
-import { ImageDropCarrosselComponent } from "../../../../../shared/component/imageDropCarrossel/image-drop-carrossel.component";
 import { FormControl, FormGroup, ReactiveFormsModule, FormsModule, Validators } from "@angular/forms";
 import { CommonModule } from '@angular/common';
 import { pesoValidator, precoValidator } from "../../../../../../validators";
 import { AuthDecodeService } from "../../../../../services/AuthUser.service";
+import { ImageDropCarrosselComponent } from "../imageDropCarrossel/image-drop-carrossel.component";
 
 
 @Component({
