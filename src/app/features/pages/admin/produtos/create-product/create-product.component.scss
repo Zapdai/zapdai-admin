@@ -5,7 +5,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100dvh;
+    height: 100%;
     overflow: auto;
 
     .container-int {
@@ -113,10 +113,22 @@
                         gap: 5px 0;
                         color: #555;
 
-                        select {
+
+                        input {
                             padding: 5px;
                             border-radius: 4px;
+                            width: 100%;
+                            outline: none;
+                            border:0;
+                            background-color: transparent;
+                            // mat-option{
+                            //     margin-top: 20px;
+                            // }
+                           
                         }
+                         .btn{
+                                background-color: #FF8401;
+                            }
                     }
 
                     .ng-listForm {
@@ -187,13 +199,12 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: 100dvh;
+        height: 100%;
 
         .container-int {
             display: flex;
             flex-direction: column;
             width: 680px;
-            background-color: #fff;
             border-radius: 10px;
             height: auto;
             padding: 0 30px;
@@ -203,7 +214,6 @@
                 position: relative;
                 box-shadow: none;
                 border: none;
-                border-bottom: 2px solid #e6e6e6;
             }
 
             .container-infor-produto {
@@ -227,3 +237,22 @@
         }
     }
 }
+
+.ng-con {
+    display: flex;
+    align-items: center;
+    gap: 0 20px;
+
+    .icone {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+    }
+}
+// .mdc-list-item{
+//             background: #cba1e6;
+// }
+// .mdc-list-item:hover{
+//             background-color: #6d4386;
+
+// }

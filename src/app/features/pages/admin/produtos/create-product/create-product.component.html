@@ -1,87 +1,104 @@
 <section class="container" (click)="desabiledCar()">
-    <div class="container-int" (click)="filhoClicado($event)">
-        <div class="container-header">
-            <button class="btn" mat-flat-button (click)="desabiledCar()">
-                <mat-icon>close</mat-icon>
-            </button>
-            <div>
-                <h1>Cadastrar Produto</h1>
-            </div>
-        </div>
-        <div class="container-infor-produto">
-            <section class="th">
-                <app-image-drop-carrossel (enviarImagens)="select($event)"></app-image-drop-carrossel>
-            </section>
-            <section class="th">
-                <form [formGroup]="groupform">
-                    <div class="form-step">
-                        <fieldset class="ng-fieldset">
-                            <legend>Nome do Produto</legend>
-                            <input #primeiroInput type="text" class="ng-input" placeholder="Nome do Produto"
-                                formControlName="productName" (keydown.enter)="focarProximoCampo('categoriaId')">
-                        </fieldset>
-                        @if (isRequired('productName')) {
-                        <small class="ng-error">Informe o Nome do Produto</small>
-                        }
-                        <div class="ng-select">
-                            <label for="categoriaId">Categoria do Produto: </label>
-                            <select id="categoriaId" formControlName="categoriaId">
+  <div class="container-int" (click)="filhoClicado($event)">
+    <div class="container-header">
+      <button class="btn" mat-flat-button (click)="desabiledCar()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <div>
+        <h1>Cadastrar Produto</h1>
+      </div>
+    </div>
+    <div class="container-infor-produto">
+      <section class="th">
+        <app-image-drop-carrossel (enviarImagens)="select($event)"></app-image-drop-carrossel>
+      </section>
+      <section class="th">
+        <form [formGroup]="groupform">
+           <div class="ng-select">
+             
+              <!-- <select id="categoriaId" formControlName="categoriaId">
                                 <option value="" disabled selected>Selecione uma categoria</option>
 
                                 @for (categoria of categorias; track $index) {
                                 <option [value]="categoria.id">{{ categoria.nome }}</option>
                                 }
-                            </select>
-                            @if (isRequired('categoriaId')) {
-                            <small class="ng-error">Selecione uma categoria</small>
-                            }
-                        </div>
+                            </select> -->
+                            <fieldset class="ng-fieldset">
+                               <legend for="categoriaId">Categoria do Produto: </legend>
+              <input type="text" placeholder="Selecione uma categoria"        (focus)="getAllCategorias()" formControlName="categoriaId"  [matAutocomplete]="auto"  
+                class="example-input">
+              <mat-autocomplete class="btn" #auto="matAutocomplete" [disableRipple]="displayCategoriaNome" >
+                @for (street of filteredStreets | async; track street) {
+                <mat-option [value]="street.nome">
+                      <div class="ng-con">
+                        <img class="icone" [src]="street.icone" /> 
+                        <span>{{street.nome}} </span>
+                      </div>
+                  </mat-option>
+                }
+              </mat-autocomplete>
+              </fieldset>
+              @if (isRequired('categoriaId')) {
+              <small class="ng-error">Selecione uma categoria</small>
+              }
+            </div>
+          
+          <div class="form-step">
+            <fieldset class="ng-fieldset">
+              <legend>Nome do Produto</legend>
+              <input #primeiroInput type="text" class="ng-input" placeholder="Nome do Produto"
+                formControlName="productName" (keydown.enter)="focarProximoCampo('categoriaId')">
+            </fieldset>
+            @if (isRequired('productName')) {
+            <small class="ng-error">Informe o Nome do Produto</small>
+            }
 
-                        <fieldset class="ng-fieldset">
-                            <legend>Preço</legend>
-                            <input type="number" class="ng-input"
-                                maxlength="15" placeholder="0.00" formControlName="price" (keydown.enter)="focarProximoCampo('peso')" />
-                        </fieldset>
-                        @if (isRequired('price')) {
-                        <small class="ng-error">Informe o Preço do Produto!</small>
-                        }
-                        @if (groupform.get('price')?.errors?.['precoInvalido']) {
-                        <small class="ng-error">{{ groupform.get('price')?.errors?.['precoInvalido'] }}</small>
-                        }
+            <fieldset class="ng-fieldset">
+              <legend>Preço</legend>
+              <input type="number" class="ng-input" maxlength="15" placeholder="0.00" formControlName="price"
+                (keydown.enter)="focarProximoCampo('peso')" />
+            </fieldset>
+            @if (isRequired('price')) {
+            <small class="ng-error">Informe o Preço do Produto!</small>
+            }
+            @if (groupform.get('price')?.errors?.['precoInvalido']) {
+            <small class="ng-error">{{ groupform.get('price')?.errors?.['precoInvalido'] }}</small>
+            }
 
-                        <fieldset class="ng-fieldset">
-                            <legend>Peso (kg)</legend>
-                            <input  type="number" class="ng-input" placeholder="0.00"
-                                formControlName="peso" (keydown.enter)="focarProximoCampo('amountQTD')">
-                        </fieldset>
-                        @if (isRequired('peso')) {
-                        <small class="ng-error">Peso é obrigatório.</small>
-                        }
-                        @if (groupform.get('peso')?.errors?.['pesoInvalido']) {
-                        <small class="ng-error">{{ groupform.get('peso')?.errors?.['pesoInvalido'] }}</small>
-                        }
+            <fieldset class="ng-fieldset">
+              <legend>Peso (kg)</legend>
+              <input type="number" class="ng-input" placeholder="0.00" formControlName="peso"
+                (keydown.enter)="focarProximoCampo('amountQTD')">
+            </fieldset>
+            @if (isRequired('peso')) {
+            <small class="ng-error">Peso é obrigatório.</small>
+            }
+            @if (groupform.get('peso')?.errors?.['pesoInvalido']) {
+            <small class="ng-error">{{ groupform.get('peso')?.errors?.['pesoInvalido'] }}</small>
+            }
 
-                        <fieldset class="ng-fieldset">
-                            <legend>Quantidade</legend>
-                            <input  type="number" class="ng-input" placeholder="QTD"
-                                formControlName="amountQTD" (keydown.enter)="focarProximoCampo('description')">
-                        </fieldset>
-                        @if (isRequired('amountQTD')) {
-                        <small class="ng-error">Quantidade é obrigatório.</small>
-                        }
+            <fieldset class="ng-fieldset">
+              <legend>Quantidade</legend>
+              <input type="number" class="ng-input" placeholder="QTD" formControlName="amountQTD"
+                (keydown.enter)="focarProximoCampo('description')">
+            </fieldset>
+            @if (isRequired('amountQTD')) {
+            <small class="ng-error">Quantidade é obrigatório.</small>
+            }
 
-                        <fieldset class="ng-fieldset">
-                            <legend>Descrição</legend>
-                            <textarea rows="5" class="ng-input textarea" placeholder="Digite a descrição do produto..."
-                                formControlName="description"></textarea>
-                        </fieldset>
-                        @if (isRequired('description')) {
-                        <small class="ng-error">Descrição é obrigatória.</small>
-                        }
-                    </div>
-                </form>
-            </section>
-        </div>
-        <button mat-flat-button class="ng-btn" [disabled]="!isFormPreenchido()" (click)="saveProduct()">Cadastrar Produto</button>
+            <fieldset class="ng-fieldset">
+              <legend>Descrição</legend>
+              <textarea rows="5" class="ng-input textarea" placeholder="Digite a descrição do produto..."
+                formControlName="description"></textarea>
+            </fieldset>
+            @if (isRequired('description')) {
+            <small class="ng-error">Descrição é obrigatória.</small>
+            }
+          </div>
+        </form>
+      </section>
     </div>
+    <button mat-flat-button class="ng-btn" [disabled]="!isFormPreenchido()" (click)="saveProduct()">Cadastrar
+      Produto</button>
+  </div>
 </section>
