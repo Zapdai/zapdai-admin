@@ -9,6 +9,9 @@ import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../services/auth.service';
+import { Usuario } from '../../core/types/usuario';
+import { AuthDecodeService } from '../../../services/AuthUser.service';
+import { apiAuthService } from '../../../services/apiAuth.service';
 
 @Component({
   selector: 'app-mobile-navbar',
@@ -20,12 +23,15 @@ import { AuthService } from '../../../services/auth.service';
 export class MobileNavbarComponent implements OnInit {
   isVisible = false;
   token: any;
-    isAdmin: boolean = false;
+  isAdmin: boolean = false;
+  usuario!: Usuario
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     public router: Router,
     private auth: AuthService,
+    public authDecodeUser: AuthDecodeService,
+    private apiAuth: apiAuthService,
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +48,11 @@ export class MobileNavbarComponent implements OnInit {
 
     this.token = this.auth.returnToken();
 
+
+    if (this.auth.PossuiToken()) {
+      this.buscaUsuario();
+    }
+
     if (isPlatformBrowser(this.platformId)) {
       this.checkWindowSize();
     }
@@ -56,6 +67,14 @@ export class MobileNavbarComponent implements OnInit {
 
   checkWindowSize() {
     this.isVisible = window.innerWidth <= 768;
+  }
+
+  buscaUsuario() {
+    this.apiAuth.buscaUsuario(this.authDecodeUser.getSub()).subscribe((usuario: Usuario) => {
+      if (usuario !== null) {
+        this.usuario = usuario;
+      }
+    })
   }
 
   navegar(rota: string): void {

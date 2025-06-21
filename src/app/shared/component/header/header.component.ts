@@ -16,6 +16,7 @@ import { SnackService } from "../../../services/snackBar/snack.service";
 import { AuthService } from "../../../services/auth.service";
 import { AuthDecodeService } from "../../../services/AuthUser.service";
 import { apiAuthService } from "../../../services/apiAuth.service";
+import { CobrancaComponent } from "../cobranca/cobranca.component";
 
 @Component({
     selector: "app-header",
@@ -23,10 +24,9 @@ import { apiAuthService } from "../../../services/apiAuth.service";
     styleUrl: "./header.component.scss",
     standalone: true,
     imports: [MatIconModule, CommonModule,
-        MatIconModule, ReactiveFormsModule,
-        MatMenuModule, MatSnackBarModule,
-        PopoverModule, ButtonModule
-    ]
+    MatIconModule, ReactiveFormsModule,
+    MatMenuModule, MatSnackBarModule,
+    PopoverModule, ButtonModule, CobrancaComponent]
 })
 export class headerComponent implements OnInit {
     @ViewChild('op') op!: Popover;

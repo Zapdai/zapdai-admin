@@ -1,9 +1,7 @@
+<app-header (emitCarrinho)="ativaCarrinho()" [carrinho]="true" class="s" [admin]="false"></app-header>
+<app-mobile-navbar></app-mobile-navbar>
 <div class="area-loja">
-    <div class="header">
-        <app-header (emitCarrinho)="ativaCarrinho()" [carrinho]="true" class="s" [admin]="false"></app-header>
-    </div>
     <div class="main">
-        <app-mobile-navbar></app-mobile-navbar>
         <div class="ng-categoria">
             <section class="container-area">
                 <div class="carrossel">
@@ -11,14 +9,15 @@
                 </div>
                 <div class="ng-itens">
                     @for (categoria of categorias; track $index) {
-                    <app-opcoes-categoria (idevent)="navigate(categoria.nome)" [url]="categoria.icone" [name]="categoria.nome"></app-opcoes-categoria>
+                    <app-opcoes-categoria (idevent)="navigate(categoria.nome)" [url]="categoria.icone"
+                        [name]="categoria.nome"></app-opcoes-categoria>
                     }
                 </div>
             </section>
             <div class="propaganda">
-               @for (empresa of produtos; track $index) {
-                    <app-mais-postados [produto]="empresa.produtos" [titulo]="empresa.nomeCompania"></app-mais-postados>
-               }               
+                @for (empresa of produtos; track $index) {
+                <app-mais-postados [produto]="empresa.produtos" [titulo]="empresa.nomeCompania"></app-mais-postados>
+                }
             </div>
         </div>
         <app-footer [footerActive]="true"></app-footer>
@@ -26,5 +25,5 @@
 </div>
 
 @if (ativaCar) {
-    <app-carrinho (desbiledCarEmit)="ativaCarrinho()"></app-carrinho>
+<app-carrinho (desbiledCarEmit)="ativaCarrinho()"></app-carrinho>
 }

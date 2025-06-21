@@ -64,7 +64,7 @@ export class menuDropComponent implements OnInit {
         this.router.navigateByUrl(rotas);
     }
 
-    btn() {
+    desabledMenu() {
         this.desabled = !this.desabled;
     }
 

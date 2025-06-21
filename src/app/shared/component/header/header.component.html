@@ -1,103 +1,116 @@
-@if (isVisible) {
-<header class="ng-header" [ngClass]="[admin ? 'admin' : '']">
-    @if (!admin) {
-    <section class="ng-logo" (click)="pageHome()">
-    </section>
+<div class="main">
 
-    }
     @if (admin) {
-    <mat-icon (click)="exibir()" class="icon">menu</mat-icon>
+    <app-cobrabca></app-cobrabca>
     }
-    <section class="ng-form">
-        <form action="" [formGroup]="grupo" (submit)="pegarvalor()">
-            <div class="search">
-                <input type="search" class="ng-input" formControlName="name" placeholder="Buscar...">
-                <mat-icon class="icone">search</mat-icon>
-            </div>
-        </form>
-    </section>
-    @if (carrinho) {
-    <section class="ng-checkout">
-        <div class="ng-btn-empresas" (click)="pagePlanos()">Zapdai Empresas</div>
-        <div class="carrinho">
-            <!-- aqui vamos adiconar o valor adicionando ao carrinho -->
-            <div class="toggle-ico">{{2}}</div> <!--badge-->
-            <mat-icon (click)="light() ">
-            shopping_cart
-        </mat-icon>
-        </div>
-        @if (!auth.PossuiToken()) {
-        <button ngClass="btn1" (click)="pageSignin()">
-            Login
-        </button>
-        <button ngClass="btn2" (click)="pageSignup()">
-            Signin
-        </button>
-        }
-    </section>
-    }
-
-    <div class="card flex justify-center">
-        @if (auth.PossuiToken()) {
-        <section class="ng-perfil">
-            <mat-icon  (click)="light()">
-                light_mode
-            </mat-icon>
-
-            @if (usuario && usuario.nome) {
-            <section class="ng-perfil ng-perfil02" (click)="Tmenu()">
-                <small class="ng-perfil-name">Olá, {{usuario.nome?.split(" ")[0]}}</small>
-                @if (usuario.avatar && usuario.nome) {
-                <div class="avatar">
-                    <img [src]="usuario.avatar" width="32" height="32" />
-                </div>
-                }@else {
-                <mat-icon class="ng-avatar-icon">
-                    person
-                </mat-icon>
-                }
-            </section>
-
-            }@else{
-            <ng-template class="usuario">
-                <p>Carregando dados de usuário...</p>
-            </ng-template>
+    
+    @if (admin || isVisible) {
+    <header class="ng-header" [ngClass]="[admin ? 'admin' : '']">
+        <div class="menu-logo" [ngClass]="[!isVisible ? 'menu-logo-mobile' : '']">
+            @if (admin) {
+            <mat-icon (click)="exibir()" class="icon">menu</mat-icon>
             }
-            
+            <section class="ng-logo" (click)="pageHome()"></section>
+        </div>
+
+
+        @if (!admin) {
+        <section class="ng-form">
+            <form action="" [formGroup]="grupo" (submit)="pegarvalor()">
+                <div class="search">
+                    <input type="search" class="ng-input" formControlName="name" placeholder="Buscar...">
+                    <mat-icon class="icone">search</mat-icon>
+                </div>
+            </form>
         </section>
         }
-        @if (exibimenu) {
-        <div class="menu">
-            <div class="menu_drop">
-                <div class="detalhes">
-                    <p>{{ authDecodeUser.getSub() }}</p>
-                </div>
-                <div class="linha"></div>
-                <div class="menu_area">
 
-                    <nav>
-                        <ul>
-                            <li (click)="pageManagerProfile()">Editar Perfil</li>
-                            <li>Minhas Compras</li>
-                            <li (click)="pageMyAccount()">Minha Conta</li>
-                            <!-- so aparecer quando o usuario estiver logado e o perfil for admin -->
-                            @if (authDecodeUser.getRole().includes("ROLE_ADMIN")) {
-                            <li (click)="adminrouter()" [class.disabled]="isAdminRoute()">zapdai
-                                admin</li>
-                            }
-                            <li (click)="pageResetPassword()">Alterar Senha</li>
 
-                        </ul>
-                    </nav>
-                </div>
-                <div class="linha"></div>
-                <div class="a">
-                    <button class="btn-logOut" (click)="deslogar()">Sair</button>
+        @if (isVisible) {
+        @if (carrinho) {
+        <section class="ng-checkout">
+            <div class="ng-btn-empresas" (click)="pagePlanos()">Zapdai Empresas</div>
+            <div class="carrinho">
+                <!-- aqui vamos adiconar o valor adicionando ao carrinho -->
+                <div class="toggle-ico">{{2}}</div> <!--badge-->
+                <mat-icon (click)="light() ">
+                    shopping_cart
+                </mat-icon>
+            </div>
+            @if (!auth.PossuiToken()) {
+            <button ngClass="btn1" (click)="pageSignin()">
+                Login
+            </button>
+            <button ngClass="btn2" (click)="pageSignup()">
+                Signin
+            </button>
+            }
+        </section>
+        }
+
+        <div class="card flex justify-center">
+            @if (auth.PossuiToken()) {
+            <section class="ng-perfil">
+                <mat-icon (click)="light()">
+                    light_mode
+                </mat-icon>
+
+                @if (usuario && usuario.nome) {
+                <section class="ng-perfil ng-perfil02" (click)="Tmenu()">
+                    <small class="ng-perfil-name">Olá, {{usuario.nome?.split(" ")[0]}}</small>
+                    @if (usuario.avatar && usuario.nome) {
+                    <div class="avatar">
+                        <img [src]="usuario.avatar" width="32" height="32" />
+                    </div>
+                    }@else {
+                    <mat-icon class="ng-avatar-icon">
+                        person
+                    </mat-icon>
+                    }
+                </section>
+
+                }@else{
+                <ng-template class="usuario">
+                    <p>Carregando dados de usuário...</p>
+                </ng-template>
+                }
+
+            </section>
+            }
+            @if (exibimenu) {
+            <div class="menu">
+                <div class="menu_drop">
+                    <div class="detalhes">
+                        <p>{{ authDecodeUser.getSub() }}</p>
+                    </div>
+                    <div class="linha"></div>
+                    <div class="menu_area">
+
+                        <nav>
+                            <ul>
+                                <li (click)="pageManagerProfile()">Editar Perfil</li>
+                                <li>Minhas Compras</li>
+                                <li (click)="pageMyAccount()">Minha Conta</li>
+                                <!-- so aparecer quando o usuario estiver logado e o perfil for admin -->
+                                @if (authDecodeUser.getRole().includes("ROLE_ADMIN")) {
+                                <li (click)="adminrouter()" [class.disabled]="isAdminRoute()">zapdai
+                                    admin</li>
+                                }
+                                <li (click)="pageResetPassword()">Alterar Senha</li>
+
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="linha"></div>
+                    <div class="a">
+                        <button class="btn-logOut" (click)="deslogar()">Sair</button>
+                    </div>
                 </div>
             </div>
+            }
         </div>
         }
-    </div>
 
-</header>
+    </header>
 }
+</div>

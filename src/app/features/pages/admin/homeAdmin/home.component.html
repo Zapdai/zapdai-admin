@@ -1,23 +1,20 @@
-<app-cobrabca></app-cobrabca>
 <div class="ng-body">
-    @if (ativa) {
-    <aside class="log">
-        <div class="ng-logo">
-        </div>
-        <app-menu-dropdown [desabled]="ativa"></app-menu-dropdown>
-    </aside>
-    }
     <main class="main">
-        <app-mobile-navbar ></app-mobile-navbar>
+        <app-mobile-navbar></app-mobile-navbar>
         <div class="header">
+            <div class="ng-logo">
+            </div>
             <app-header [admin]="true" (ativaMenu)="ativo()"></app-header>
         </div>
         <div class="ng-container">
+            @if (ativa) {
+            <app-menu-dropdown [desabled]="ativa"></app-menu-dropdown>
+            }
             <section class="ng-main">
                 <div class="area-main">
                     <router-outlet></router-outlet>
+                    <footer class="footer">Developed by Zapdai</footer>
                 </div>
-                <footer class="footer">Developed by Zapdai</footer>
             </section>
         </div>
 

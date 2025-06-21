@@ -1,3 +1,4 @@
+@if (desabled) {
 <div class="area-menu">
     <section class="menu">
         <section class="ng-logo" >
@@ -9,7 +10,7 @@
             <ul>
                 @for (item of functionList?.funcoes ?? []; track item.id) {
                 <li [routerLink]="item.router" routerLinkActive="active-page" class="item" ariaCurrentWhenActive="page"
-                    [routerLinkActiveOptions]="{ exact: false }" (click)="setAtivo(item.id)">
+                    [routerLinkActiveOptions]="{ exact: false }" (click)="[setAtivo(item.id), desabledMenu()]">
                     <mat-icon class="icon">{{ item.icone }}</mat-icon>
                     @if (dropOpen) {
                     <div class="icone-name">
@@ -27,7 +28,7 @@
 
                 @for (child of item.children; track child.id) {
                 @if (item.ativo) {
-                <div class="sub-menu" [routerLink]="child.router" routerLinkActive="active-page">
+                <div class="sub-menu" [routerLink]="child.router" routerLinkActive="active-page" (click)="desabledMenu()">
                     <mat-icon class="icone-sub">check_box_outline_blank</mat-icon>
                     <span>{{ child.name }}</span>
                 </div>
@@ -38,3 +39,4 @@
         </nav>
     </section>
 </div>
+}

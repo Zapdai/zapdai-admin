@@ -1,16 +1,12 @@
 .area-loja {
-
-    .header {
-        width: 100%;
-    }
-
     .main {
-        height: calc(100vh - 58px);
+        height: 100vh;
         width: 100%;
         overflow-y: auto;
         position: relative;
         scrollbar-width: thin;
         scrollbar-color: #d2d2;
+        padding-bottom: 50px;
 
         .ng-categoria {
             margin-top: 12px;
@@ -20,7 +16,6 @@
             flex: 1;
 
             .container-area {
-                margin-bottom: 20px;
                 padding: 0 5px;
 
                 .ng-itens {
@@ -37,7 +32,7 @@
                     scroll-behavior: smooth;
                     scrollbar-width: none;
                     background-color: #fff;
-                    box-shadow: 0 0  5px rgba(0, 0, 0, 0.08);
+                    box-shadow: 0 0 5px rgba(0, 0, 0, 0.08);
 
                 }
 
@@ -67,6 +62,7 @@
     .area-loja {
 
         .main {
+            margin-top: 50px;
 
 
             .ng-categoria {
