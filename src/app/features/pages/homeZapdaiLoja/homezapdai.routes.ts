@@ -13,7 +13,7 @@ export const routes: Routes = [
         path: "produto/detalhes/:id", component: AppLojaComponent,
     },
           {
-        path: "produto/empresa/:id", component: AppLojaComponent,
+        path: "produto/empresa/:nome", component: AppLojaComponent,
     }
                             
 ]
