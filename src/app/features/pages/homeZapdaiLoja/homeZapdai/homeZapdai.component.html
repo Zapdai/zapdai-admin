@@ -17,7 +17,7 @@
             </section>
             <div class="propaganda">
                @for (empresa of produtos; track $index) {
-                    <app-mais-postados [produto]="empresa.produtos" [titulo]="empresa.nomeCompania"></app-mais-postados>
+                    <app-mais-postados [produto]="empresa.produtos" [empresa]="empresa"></app-mais-postados>
                }               
             </div>
         </div>

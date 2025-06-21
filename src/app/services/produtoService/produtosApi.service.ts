@@ -1,4 +1,4 @@
-import { HttpClient, HttpEventType, HttpRequest, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpEventType, HttpParams, HttpRequest, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "../../../environments/environment";
@@ -26,4 +26,10 @@ export class ProdutosApiService {
         return this.http.post<any>(`${this.api}/zapdai/v1/produtos`,formData, { responseType: 'text' as any } ).pipe();
 
     }
- }
+    ProdutoEmpresa(idEmpresa:any):Observable<any> {
+        const params = new HttpParams()
+        .set("id",idEmpresa);
+    
+        return this.http.get<any>(`${this.api}/zapdai/v1/empresas/produtos`,{params}).pipe();
+    }
+    }

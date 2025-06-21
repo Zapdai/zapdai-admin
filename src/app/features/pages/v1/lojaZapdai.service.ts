@@ -22,6 +22,10 @@ export class LojaZapdaiService {
      return produtos;
 
    }
+  async retonrIdEmpres(): Promise<any[]>{
+     const response = await firstValueFrom(this.apiCategosrias.findAllProdutos());
+    return Array.isArray(response) ? response : [];
+   }
 
 
 

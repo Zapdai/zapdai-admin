@@ -1,8 +1,10 @@
 <app-modal>
-  <div class="titulo">
-    <span>Fornecido por:</span>
-    <small>{{titulo}}</small>
+@if (ativo) {
+    <div class="titulo" (click)="produtoEmpres(empresa)">
+    <img [src]="empresa.avatar" width="38px" height="28px" alt="">
+    <small>{{empresa.nomeCompania}}</small>
   </div>
+}
   <div class="carrossel-container">
     <div class="botoes bn">
       <button (click)="rolarDireita()">

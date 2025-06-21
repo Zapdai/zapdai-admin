@@ -11,9 +11,10 @@ import { Router } from '@angular/router';
   styleUrl: './mais-postados.component.scss'
 })
 export class MaisPostadosComponent {
-  @Input() titulo?:string;
+  @Input() empresa?:any;
   @ViewChild("scrollContainer",{static:false}) fer?:ElementRef;
   @Input() produto:any;
+  @Input() ativo?:boolean
   constructor(private rotas:Router){}
   rolarDireita(){
       this.fer?.nativeElement.scrollBy({
@@ -31,6 +32,11 @@ export class MaisPostadosComponent {
 
    this.rotas.navigateByUrl(`v1/produto/detalhes/${event}`)
   }
+  produtoEmpres(event:any){
+       this.rotas.navigate([`v1/empresa/produto/${event.nomeCompania}`],{
+        state:{id:event.idEmpresa}
+       });
 
+  }
 
 } 
