@@ -3,7 +3,7 @@
     @if (admin) {
     <app-cobrabca></app-cobrabca>
     }
-    
+
     @if (admin || isVisible) {
     <header class="ng-header" [ngClass]="[admin ? 'admin' : '']">
         <div class="menu-logo" [ngClass]="[!isVisible ? 'menu-logo-mobile' : '']">
@@ -80,30 +80,44 @@
             @if (exibimenu) {
             <div class="menu">
                 <div class="menu_drop">
-                    <div class="detalhes">
+                    <!-- <div class="detalhes">
                         <p>{{ authDecodeUser.getSub() }}</p>
-                    </div>
+                    </div> -->
                     <div class="linha"></div>
                     <div class="menu_area">
 
                         <nav>
                             <ul>
-                                <li (click)="pageManagerProfile()">Editar Perfil</li>
-                                <li>Minhas Compras</li>
-                                <li (click)="pageMyAccount()">Minha Conta</li>
+                                <li>
+                                    <mat-icon>shopping_cart</mat-icon>
+                                    Minhas Compras</li>
+                                <li (click)="pageMyAccount()">
+                                    <mat-icon>account_circle</mat-icon>
+                                    Minha Conta</li>
                                 <!-- so aparecer quando o usuario estiver logado e o perfil for admin -->
                                 @if (authDecodeUser.getRole().includes("ROLE_ADMIN")) {
-                                <li (click)="adminrouter()" [class.disabled]="isAdminRoute()">zapdai
+                                <li (click)="adminrouter()" [class.disabled]="isAdminRoute()">
+
+                                    <mat-icon>admin_panel_settings</mat-icon>
                                     admin</li>
                                 }
-                                <li (click)="pageResetPassword()">Alterar Senha</li>
+                                <li (click)="pageResetPassword()">
+                                    <mat-icon>lock</mat-icon>
+                                    Alterar Senha</li>
 
                             </ul>
                         </nav>
                     </div>
                     <div class="linha"></div>
                     <div class="a">
-                        <button class="btn-logOut" (click)="deslogar()">Sair</button>
+                        <button class="btn-logOut" (click)="deslogar()">
+                            <mat-icon>
+                           <span class="material-symbols-outlined">
+                            logout
+                        </span>
+                        </mat-icon>
+                            <p>Sair</p>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -112,5 +126,5 @@
         }
 
     </header>
-}
+    }
 </div>

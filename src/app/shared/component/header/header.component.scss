@@ -263,8 +263,11 @@
             margin-top: 5px;
 
             li {
+                display: flex;
+                align-items: center;
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
                 padding: 10px 25px;
+                gap: 10px;
                 font-size: 15px;
                 color: #BBB;
                 cursor: pointer;
@@ -296,21 +299,25 @@
             margin-bottom: 10px;
 
             .btn-logOut {
+                display: flex;
+                align-items: center;
+                gap: 10px;
                 background-color: #FF9933;
                 font-weight: 600;
                 width: 90%;
+                color: #fff;
                 border-radius: 5px;
                 padding: 10px 25px;
                 border: 0;
-                transition: all 1s ease-in;
-                transform: scale(0.97);
+                transition: all 0.1s ease-in;
                 cursor: pointer;
             }
 
-            .btn:hover {
+            .btn-logOut:hover {
+                transform: scale(0.97);
                 background-color: #ac5f13;
-                transition: all 0.5s ease;
                 color: #f2f2f2;
+
             }
 
         }

@@ -90,7 +90,15 @@ export class MyAccountComponent implements OnInit {
 
 
   pageManagerProfile() {
-    this.router.navigate(['/my-account/manager-profile'], { skipLocationChange: false });
+    // this.router.navigate(['/my-account/manager-profile'], { skipLocationChange: false });
+     this.activeRouter.activeLoading()
+        setTimeout(() => {
+            this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+                setTimeout(() => {
+                    this.router.navigate(['/my-account/manager-profile'], { skipLocationChange: false });
+                }, 1000);
+            });
+        }, 0);
   }
 
   pageResetPassword() {

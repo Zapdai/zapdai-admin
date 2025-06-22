@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { OpcoesCategoriaComponent } from '../../../../shared/component/opcoes-categoria/opcoes-categoria.component';
@@ -10,21 +10,34 @@ import { footerComponent } from '../../../../shared/component/foother/footer.com
 import { CarrinhoComponent } from '../../admin/homeAdmin/carrinho/carrinho.component';
 import { headerComponent } from '../../../../shared/component/header/header.component';
 import { MobileNavbarComponent } from '../../../../shared/component/mobile-navbar/mobile-navbar.component';
+import { isPlatformBrowser } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-homeZapdai',
   imports: [headerComponent, OpcoesCategoriaComponent,
     CarrosselComponent, MaisPostadosComponent, footerComponent,
-    MobileNavbarComponent, MatTabsModule,CarrinhoComponent],
+    MobileNavbarComponent, MatTabsModule,CarrinhoComponent,MatIconModule],
   templateUrl: './homeZapdai.component.html',
   styleUrl: './homeZapdai.component.scss'
 })
-export class HomeZapdaiComponent implements OnInit {
-  constructor(private apiCategosrias: ApiV1Loja, public router: Router) { }
+export class HomeZapdaiComponent implements OnInit,AfterViewInit {
+    @ViewChild("element") elemnt!: ElementRef;
+  ativo?:boolean;
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private apiCategosrias: ApiV1Loja, public router: Router) { }
   categorias: any;
   produtos: any
   ativaCar = false;
-  ngOnInit(): void {
+
+   ngAfterViewInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      const element = this.elemnt.nativeElement;
+      element.addEventListener('scroll', this.setTop.bind(this));
+    } else {
+      console.log("Não está no navegador.");
+    }
+  }
+  async ngOnInit() {
     this.getAllCategorias()
     this.getAllProdutos()
   }
@@ -34,6 +47,18 @@ export class HomeZapdaiComponent implements OnInit {
       this.categorias = response.categorias;
     } catch (erro) {
       console.log("Erro ao carregar dados!");
+    }
+  }
+  @HostListener('scroll', ['$event'])
+  setTop() {
+    const scrollHeight = this.elemnt.nativeElement.scrollHeight;
+    const clientHeight = this.elemnt.nativeElement.clientHeight;
+    const scrollTop = this.elemnt.nativeElement.scrollTop;
+    if (scrollTop + clientHeight > scrollHeight - 10) {
+      this.ativo = true;
+
+    } else {
+      this.ativo = false;
     }
   }
   async getAllProdutos() {
@@ -47,7 +72,14 @@ export class HomeZapdaiComponent implements OnInit {
   }
 
 
-
+onWindows() {
+    this.elemnt.nativeElement.scroll(
+      {
+        top: 0,
+        behavior: "smooth"
+      }
+    )
+  }
   navigate(name: any) {
     this.router.navigateByUrl(`/v1/categoria/${name}`)
   }
