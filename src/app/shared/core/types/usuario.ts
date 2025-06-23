@@ -16,11 +16,11 @@ export type Usuario = {
 };
 
 type endereco = {
-		numeroEndereco:string
-		latLong:string ,
-		logradouro:string,
-		estado_sigla: string,
-		cep: string,
-		bairro: string,
-		cidade:string
+		numeroEndereco?:string
+		latLong?:string ,
+		logradouro?:string,
+		estado_sigla?: string,
+		cep?: string,
+		bairro?: string,
+		cidade?:string
 	}

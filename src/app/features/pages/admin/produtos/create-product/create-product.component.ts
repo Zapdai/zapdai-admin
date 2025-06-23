@@ -11,10 +11,10 @@ import { CommonModule } from '@angular/common';
 import { pesoValidator, precoValidator } from "../../../../../../validators";
 import { AuthDecodeService } from "../../../../../services/AuthUser.service";
 import { ImageDropCarrosselComponent } from "../imageDropCarrossel/image-drop-carrossel.component";
-import {Observable} from 'rxjs';
-import {AsyncPipe} from '@angular/common';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 @Component({
    selector: "app-create-product",
    standalone: true,
@@ -42,7 +42,7 @@ export class CreateProductComponent implements OnInit {
 
    files: File[] = [];
    preco: number = 0;
-     control = new FormControl('');
+   control = new FormControl('');
 
    groupform!: FormGroup;
    @ViewChild('primeiroInput') primeiroInput!: ElementRef;
@@ -61,23 +61,23 @@ export class CreateProductComponent implements OnInit {
       this.getAllProdutosEmpresa();
       this.getAllCategorias();
       this.filteredStreets = this.groupform.get("categoriaId")?.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value || '' ) ),
-    );
+         startWith(''),
+         map(value => this._filter(value || '')),
+      );
    }
 
- private _filter(value: any): string[] {
-     const nome = typeof value === 'string' ? value : value?.nome || '';
-       const filterValue = this._normalizeValue(nome);
-    return this.categorias.filter(street => this._normalizeValue(street.nome).includes(filterValue));
-  }
+   private _filter(value: any): string[] {
+      const nome = typeof value === 'string' ? value : value?.nome || '';
+      const filterValue = this._normalizeValue(nome);
+      return this.categorias.filter(street => this._normalizeValue(street.nome).includes(filterValue));
+   }
 
-  private _normalizeValue(value: string): string {
-    return value.toLowerCase().replace(/\s/g, '');
-  }
-  displayCategoriaNome = (categoria: any): string => {
-  return categoria && categoria.nome ? categoria.nome : '';
-};
+   private _normalizeValue(value: string): string {
+      return value.toLowerCase().replace(/\s/g, '');
+   }
+   displayCategoriaNome = (categoria: any): string => {
+      return categoria && categoria.nome ? categoria.nome : '';
+   };
 
 
 
@@ -130,10 +130,10 @@ export class CreateProductComponent implements OnInit {
          this.snack.error("Adicione pelo menos uma imagem do produto.");
          return;
       }
-      
+
 
       const data: any = {
-         
+
          idEmpresa: this.authDecodeUser.getEmpresaId(),
          productName: this.groupform.get('productName')?.value,
          price: this.groupform.get('price')?.value,
@@ -222,15 +222,17 @@ export class CreateProductComponent implements OnInit {
          this.router.navigate([currentUrl]);
       });
    }
-   @ViewChild(MatAutocompleteTrigger) trigger!: MatAutocompleteTrigger;
-   abrirAutocomplete(){
- this.filteredStreets = of(this.categorias); 
 
-  // Espera o DOM estabilizar e abre o autocomplete
-  setTimeout(() => {
-    this.trigger.openPanel();
-  });
+
+   @ViewChild(MatAutocompleteTrigger) trigger!: MatAutocompleteTrigger;
+   abrirAutocomplete() {
+      this.filteredStreets = of(this.categorias);
+
+      // Espera o DOM estabilizar e abre o autocomplete
+      setTimeout(() => {
+         this.trigger.openPanel();
+      });
    }
-  
+
 
 }

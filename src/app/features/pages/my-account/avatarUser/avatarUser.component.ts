@@ -113,7 +113,7 @@ export class AvatarUserComponent implements OnInit {
           this.snack.success(res.msg);
           this.previewUrl = `${this.usuario.avatar}?t=${Date.now()}`;
           this.selectedFile = null;
-          this.fechar();
+          this.reloadRoute()
         },
         error: (err) => {
           this.snack.error("Erro ao atualizar avatar. " +err);
@@ -122,6 +122,12 @@ export class AvatarUserComponent implements OnInit {
   }
 
 
+   reloadRoute() {
+      const currentUrl = this.router.url;
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+         this.router.navigate([currentUrl]);
+      });
+   }
 
 
   fechar() {

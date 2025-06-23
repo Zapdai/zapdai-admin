@@ -1,35 +1,53 @@
 @if (isVisible) {
 <nav class="mobile-tab-bar" [ngClass]="[isAdmin ? 'ng-isAdmin' : '']">
-  <button (click)="navegar('/')" [class.active]="router.url === '/home'">
+  <button class="btn-nav" (click)="navegar('/')" [class.active]="router.url === '/home'">
     <mat-icon>home</mat-icon>
     <span>Home</span>
   </button>
 
-  <button (click)="navegar('/')" [class.active]="router.url === '/compras'">
+  <button class="btn-nav" (click)="navegar('/')" [class.active]="router.url === '/compras'">
     <mat-icon>shopping_cart</mat-icon>
     <span>Compras</span>
   </button>
 
-  <button (click)="navegar('/')" [class.active]="router.url === '/lojas'">
+  <button class="btn-nav" (click)="navegar('/')" [class.active]="router.url === '/lojas'">
     <mat-icon>store</mat-icon>
     <span>Lojas</span>
   </button>
 
-  <button (click)="navegar('/')" [class.active]="router.url === '/notificacoes'">
+  <button class="btn-nav" (click)="navegar('/')" [class.active]="router.url === '/notificacoes'">
     <mat-icon>notifications</mat-icon>
     <span>Notificações</span>
   </button>
 
-  @if (usuario.avatar && usuario.nome) {
-  <div class="avatar" (click)="navegar('/my-account')" [class.active]="router.url === '/my-account'">
-    <img [src]="usuario.avatar" width="32" height="32" />
-  </div>
+
+  @if (usuario && usuario.nome) {
+  @if (usuario.avatar) {
+  <button (click)="navegar('/my-account')" [class.active]="router.url === '/my-account'">
+    <img class="avatar" [src]="usuario.avatar" width="32" height="32" />
+    <span>Minha Conta</span>
+  </button>
+  } @else {
+  <button (click)="navegar('/my-account')" [class.active]="router.url === '/my-account'">
+    <mat-icon class="ng-avatar-icon">person</mat-icon>
+    <span>Minha Conta</span>
+  </button>
+  }
+
   }@else {
   <ng-template>
-    <mat-icon class="ng-avatar-icon" (click)="navegar('/my-account')" [class.active]="router.url === '/my-account'">
-      person
-    </mat-icon>
+    <button class="avatar" (click)="navegar('/my-account')" [class.active]="router.url === '/my-account'">
+      <mat-icon class="ng-avatar-icon">person</mat-icon>
+    </button>
   </ng-template>
+  }
+
+
+  @if (!auth.PossuiToken()) {
+  <button (click)="navegar('/my-account')" [class.active]="router.url === '/my-account'">
+    <mat-icon class="ng-avatar-icon">person</mat-icon>
+    <span>Fazer Login</span>
+  </button>
   }
 
 </nav>

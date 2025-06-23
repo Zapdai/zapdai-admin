@@ -29,7 +29,7 @@ export class MobileNavbarComponent implements OnInit {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     public router: Router,
-    private auth: AuthService,
+    public auth: AuthService,
     public authDecodeUser: AuthDecodeService,
     private apiAuth: apiAuthService,
   ) { }

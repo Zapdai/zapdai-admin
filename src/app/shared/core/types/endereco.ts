@@ -1,10 +1,10 @@
 export interface endereco {
-    numeroEndereco: string,
+    numeroEndereco?: string,
     latLong?: string,
-    logradouro: string,
+    logradouro?: string,
     complemento?: string,
-    estado: string,
-    cep: string,
-    bairro: string,
-    cidade: string
+    estado?: string,
+    cep?: string,
+    bairro?: string,
+    cidade?: string
 }
