@@ -26,7 +26,7 @@ export class SigninComponent {
         setTimeout(() => {
             this.router.navigateByUrl('/loading', { skipLocationChange: true}).then(()=>{
                 setTimeout(() => {
-                    this.router.navigate(['/home'])
+                    this.router.navigate(['/'])
                 }, 1000);
             })
             

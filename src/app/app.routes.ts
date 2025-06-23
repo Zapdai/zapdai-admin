@@ -4,13 +4,14 @@ import { NotFoundComponent } from './features/pages/404/notFound.component';
 import { LoadingComponent } from './features/pages/loading/loading.component';
 import { loadingGuard } from './services/loading/loading.guard';
 import { UnauthorizedComponent } from './features/pages/unauthorized/unauthorized.component';
+import { HomeZapdaiComponent } from './features/pages/homeZapdaiLoja/homeZapdai/homeZapdai.component';
 
 export const routes: Routes = [
     {
-        path: "", redirectTo: "/v1", pathMatch: "full",
+        path: "", component: HomeZapdaiComponent, pathMatch: "full",
     },
     {
-        path: "admin", loadChildren: () => import("./features/pages/admin/admin.routes").then(rota => rota.routes), data: { acess: ["ROLE_USER", "ROLE_ADMIN", "ROLE_MODERATOR"] }, canActivateChild: [authGuardian],
+        path: "admin", loadChildren: () => import("./features/pages/admin/admin.routes").then(rota => rota.routes), data: { acess: ["ROLE_ADMIN", "ROLE_MODERATOR"] }, canActivateChild: [authGuardian],
     },
     {
         path: "auth", loadChildren: () => import("./features/pages/auth/auth.routes").then(e => e.routes)

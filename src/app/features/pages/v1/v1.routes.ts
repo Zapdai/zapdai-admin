@@ -7,9 +7,6 @@ export const routes: Routes = [
 
 
     {
-        path: "", component: HomeZapdaiComponent,
-    },
-    {
         path: "categoria/:nome", component: buscaProdutos,
     },
     {
