@@ -245,6 +245,18 @@ export class CreateProductComponent implements OnInit, AfterViewInit {
       }
    }
 
+   resetarCampoCategoria() {
+   const control = this.groupform.get('categoriaId');
+   if (control) {
+      control.setValue('');
+      // Garante que o painel autocomplete reabra com tudo
+      setTimeout(() => {
+         this.trigger.openPanel();
+      });
+   }
+}
+
+
 
 
 

@@ -27,7 +27,7 @@
             <div class="ng-select">
               <fieldset class="ng-fieldset">
                 <legend for="categoriaId">Categoria do Produto: </legend>
-                <input type="text" placeholder="Selecione uma categoria" (focus)="abrirAutocomplete()"
+                <input type="text" placeholder="Selecione uma categoria" (click)="resetarCampoCategoria()" (focus)="abrirAutocomplete()"
                   formControlName="categoriaId" [matAutocomplete]="auto" matAutocompletePosition="below"
                   class="example-input">
               </fieldset>
