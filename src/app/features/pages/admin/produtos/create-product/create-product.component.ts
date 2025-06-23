@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { firstValueFrom, map, of, startWith } from "rxjs";
@@ -15,6 +15,8 @@ import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 @Component({
    selector: "app-create-product",
    standalone: true,
@@ -28,12 +30,13 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
       FormsModule,
       MatAutocompleteModule,
    ],
+   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
    templateUrl: "./create-product.component.html",
    styleUrls: ["./create-product.component.scss"],
 
 })
-export class CreateProductComponent implements OnInit {
+export class CreateProductComponent implements OnInit, AfterViewInit {
    todosProdutos: any;
    produto: any;
    categorias: any[] = [];
@@ -56,10 +59,21 @@ export class CreateProductComponent implements OnInit {
       public authDecodeUser: AuthDecodeService,
    ) { }
 
-   ngOnInit(): void {
+   ngAfterViewInit() {
+      const container = document.querySelector('.container');
+      if (container) {
+         container.addEventListener('scroll', () => {
+            this.trigger.updatePosition(); // força o overlay a reposicionar
+         });
+      }
+   }
+
+
+   async ngOnInit(): Promise<void> {
       this.CarregaFormGroup();
       this.getAllProdutosEmpresa();
-      this.getAllCategorias();
+      await this.getAllCategorias(); // Garante que as categorias estejam carregadas
+
       this.filteredStreets = this.groupform.get("categoriaId")?.valueChanges.pipe(
          startWith(''),
          map(value => this._filter(value || '')),
@@ -226,13 +240,13 @@ export class CreateProductComponent implements OnInit {
 
    @ViewChild(MatAutocompleteTrigger) trigger!: MatAutocompleteTrigger;
    abrirAutocomplete() {
-      this.filteredStreets = of(this.categorias);
-
-      // Espera o DOM estabilizar e abre o autocomplete
-      setTimeout(() => {
+      if (!this.trigger.panelOpen) {
          this.trigger.openPanel();
-      });
+      }
    }
+
+
+
 
 
 }

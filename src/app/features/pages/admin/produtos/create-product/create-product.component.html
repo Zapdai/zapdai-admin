@@ -14,35 +14,6 @@
       </section>
       <section class="th">
         <form [formGroup]="groupform">
-           <div class="ng-select">
-             
-              <!-- <select id="categoriaId" formControlName="categoriaId">
-                                <option value="" disabled selected>Selecione uma categoria</option>
-
-                                @for (categoria of categorias; track $index) {
-                                <option [value]="categoria.id">{{ categoria.nome }}</option>
-                                }
-                            </select> -->
-                            <fieldset class="ng-fieldset">
-                               <legend for="categoriaId">Categoria do Produto: </legend>
-              <input type="text" placeholder="Selecione uma categoria"        (focus)="getAllCategorias()" formControlName="categoriaId"  [matAutocomplete]="auto"  
-                class="example-input">
-              <mat-autocomplete class="btn" #auto="matAutocomplete" [disableRipple]="displayCategoriaNome" >
-                @for (street of filteredStreets | async; track street) {
-                <mat-option [value]="street.nome">
-                      <div class="ng-con">
-                        <img class="icone" [src]="street.icone" /> 
-                        <span>{{street.nome}} </span>
-                      </div>
-                  </mat-option>
-                }
-              </mat-autocomplete>
-              </fieldset>
-              @if (isRequired('categoriaId')) {
-              <small class="ng-error">Selecione uma categoria</small>
-              }
-            </div>
-          
           <div class="form-step">
             <fieldset class="ng-fieldset">
               <legend>Nome do Produto</legend>
@@ -52,6 +23,29 @@
             @if (isRequired('productName')) {
             <small class="ng-error">Informe o Nome do Produto</small>
             }
+
+            <div class="ng-select">
+              <fieldset class="ng-fieldset">
+                <legend for="categoriaId">Categoria do Produto: </legend>
+                <input type="text" placeholder="Selecione uma categoria" (focus)="abrirAutocomplete()"
+                  formControlName="categoriaId" [matAutocomplete]="auto" matAutocompletePosition="below"
+                  class="example-input">
+              </fieldset>
+              <mat-autocomplete class="custom-autocomplete-panel" [panelClass]="'custom-autocomplete-panel'"
+                #auto="matAutocomplete" [disableRipple]="displayCategoriaNome">
+                @for (street of filteredStreets | async; track street) {
+                <mat-option [value]="street.nome">
+                  <div class="ng-con">
+                    <img class="icone" [src]="street.icone" />
+                    <span>{{street.nome}} </span>
+                  </div>
+                </mat-option>
+                }
+              </mat-autocomplete>
+              @if (isRequired('categoriaId')) {
+              <small class="ng-error">Selecione uma categoria</small>
+              }
+            </div>
 
             <fieldset class="ng-fieldset">
               <legend>Preço</legend>

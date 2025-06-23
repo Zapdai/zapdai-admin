@@ -109,26 +109,37 @@
                         display: flex;
                         flex-direction: column;
                         font-size: 12px;
-                        margin-top: 10px;
-                        gap: 5px 0;
                         color: #555;
 
+                        .ng-fieldset {
+                            padding: 2px;
+                            border-radius: 5px;
+                            border-color: #bbb;
 
-                        input {
-                            padding: 5px;
-                            border-radius: 4px;
-                            width: 100%;
-                            outline: none;
-                            border: 0;
-                            background-color: transparent;
-                            // mat-option{
-                            //     margin-top: 20px;
-                            // }
+                            legend {
+                                font-size: 12px;
+                                font-weight: 500;
+                                color: #555;
+                                padding: 0 4px;
+                            }
 
-                        }
 
-                        .btn {
-                            background-color: #FF8401;
+                            input {
+                                padding: 5px;
+                                border-radius: 4px;
+                                width: 100%;
+                                outline: none;
+                                border: 0;
+                                background-color: transparent;
+                                // mat-option{
+                                //     margin-top: 20px;
+                                // }
+
+                            }
+
+                            .btn {
+                                background-color: #FF8401;
+                            }
                         }
                     }
 
@@ -185,6 +196,21 @@
 
 }
 
+::ng-deep .mat-mdc-autocomplete-panel.custom-autocomplete-panel {
+    background-color: #FFF !important;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    margin: 3px;
+
+    mat-option {
+        border-bottom: 1px solid #bbb;
+    }
+}
+
+::ng-deep .custom-autocomplete-panel {
+    transform-origin: top center !important;
+}
 
 
 
