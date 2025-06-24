@@ -4,9 +4,9 @@
     <app-cobrabca></app-cobrabca>
     }
 
-    @if (admin || isVisible) {
+
     <header class="ng-header" [ngClass]="[admin ? 'admin' : '']">
-        <div class="menu-logo" [ngClass]="[!isVisible ? 'menu-logo-mobile' : '']">
+        <div class="menu-logo">
             @if (admin) {
             <mat-icon (click)="exibir()" class="icon">menu</mat-icon>
             }
@@ -26,7 +26,7 @@
         }
 
 
-        @if (isVisible) {
+     
         @if (carrinho) {
         <section class="ng-checkout">
             <div class="ng-btn-empresas" (click)="pagePlanos()">Zapdai Empresas</div>
@@ -55,12 +55,12 @@
                     light_mode
                 </mat-icon>
 
-                @if (usuario && usuario.nome) {
+                @if (usuario && usuario!.nome) {
                 <section class="ng-perfil ng-perfil02" (click)="Tmenu()">
-                    <small class="ng-perfil-name">Olá, {{usuario.nome?.split(" ")[0]}}</small>
-                    @if (usuario.avatar && usuario.nome) {
+                    <small class="ng-perfil-name">Olá, {{usuario!.nome?.split(" ")[0]}}</small>
+                    @if (usuario.avatar && usuario!.nome) {
                     <div class="avatar">
-                        <img [src]="usuario.avatar" width="32" height="32" />
+                        <img [src]="usuario!.avatar" width="32" height="32" />
                     </div>
                     }@else {
                     <mat-icon class="ng-avatar-icon">
@@ -123,8 +123,8 @@
             </div>
             }
         </div>
-        }
+        
 
     </header>
-    }
+    
 </div>
