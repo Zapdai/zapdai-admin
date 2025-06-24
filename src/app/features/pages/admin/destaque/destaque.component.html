@@ -1,17 +1,34 @@
-<br>
-<app-carrossel></app-carrossel>
-<br>
-<app-modal>
-  <div class="ng-itens">
-    <app-opcoes-categoria></app-opcoes-categoria>
-    <app-opcoes-categoria></app-opcoes-categoria>
-    <app-opcoes-categoria></app-opcoes-categoria>
-    <app-opcoes-categoria></app-opcoes-categoria>
-    <app-opcoes-categoria></app-opcoes-categoria>
-  </div>
-</app-modal>
+<div class="app-content">
+  @for (item of empresa; track $index) {
+  <figure class="img">
+    <div class="header">
+      <h1 class="empresa">{{item.nomeCompania}}</h1>
+    </div>
+    @if (item.avatar!==null ) {
+    <img [src]="item.avatar" alt="">
+    }@else {
+    <!-- <img src="./banner.png" alt=""> -->
+    }
+  </figure>
+  <section class="itens-produtos">
+    <span>Mais vendidos</span>
+    <div class="propaganda">
+      <app-mais-postados [ativo]="false" [produto]="item.produtos" [empresa]="item"></app-mais-postados>
 
-<app-mais-postados title="Mais procurados"></app-mais-postados>
-<app-mais-postados title="Mais procurados"></app-mais-postados>
-<app-mais-postados title="Mais procurados"></app-mais-postados>
-<app-mais-postados title="Mais procurados"></app-mais-postados>
+    </div>
+  </section>
+
+  <section class="itens-produtos">
+    <span>Todos os produtos</span>
+
+    <div class="area-main">
+      @for (produto of item.produtos; track $index) {
+      <app-utius [imagem]="produto.imgUrl" [titulo]="produto.productName" [price]="produto.idProduto"></app-utius>
+      }
+    </div>
+  </section>
+
+
+
+  }
+</div>

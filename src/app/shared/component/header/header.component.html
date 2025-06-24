@@ -4,9 +4,9 @@
     <app-cobrabca></app-cobrabca>
     }
 
-    @if (admin && isVisible) {
+    @if (admin || isVisible) {
     <header class="ng-header" [ngClass]="[admin ? 'admin' : '']">
-        <div class="menu-logo" [ngClass]="[!isVisible ? 'menu-logo-mobile' : '']">
+        <div class="menu-logo"  [ngClass]="[!isVisible ? 'menu-logo-mobile' : '']">
             @if (admin) {
             <mat-icon (click)="exibir()" class="icon">menu</mat-icon>
             }
@@ -55,12 +55,12 @@
                     light_mode
                 </mat-icon>
 
-                @if (usuario && usuario.nome) {
+                @if (usuario && usuario!.nome) {
                 <section class="ng-perfil ng-perfil02" (click)="Tmenu()">
-                    <small class="ng-perfil-name">Olá, {{usuario.nome?.split(" ")[0]}}</small>
-                    @if (usuario.avatar && usuario.nome) {
+                    <small class="ng-perfil-name">Olá, {{usuario!.nome?.split(" ")[0]}}</small>
+                    @if (usuario.avatar && usuario!.nome) {
                     <div class="avatar">
-                        <img [src]="usuario.avatar" width="32" height="32" />
+                        <img [src]="usuario!.avatar" width="32" height="32" />
                     </div>
                     }@else {
                     <mat-icon class="ng-avatar-icon">
@@ -90,20 +90,24 @@
                             <ul>
                                 <li>
                                     <mat-icon>shopping_cart</mat-icon>
-                                    Minhas Compras</li>
+                                    Minhas Compras
+                                </li>
                                 <li (click)="pageMyAccount()">
                                     <mat-icon>account_circle</mat-icon>
-                                    Minha Conta</li>
+                                    Minha Conta
+                                </li>
                                 <!-- so aparecer quando o usuario estiver logado e o perfil for admin -->
                                 @if (authDecodeUser.getRole().includes("ROLE_ADMIN")) {
                                 <li (click)="adminrouter()" [class.disabled]="isAdminRoute()">
 
                                     <mat-icon>admin_panel_settings</mat-icon>
-                                    admin</li>
+                                    admin
+                                </li>
                                 }
                                 <li (click)="pageResetPassword()">
                                     <mat-icon>lock</mat-icon>
-                                    Alterar Senha</li>
+                                    Alterar Senha
+                                </li>
 
                             </ul>
                         </nav>
@@ -112,10 +116,10 @@
                     <div class="a">
                         <button class="btn-logOut" (click)="deslogar()">
                             <mat-icon>
-                           <span class="material-symbols-outlined">
-                            logout
-                        </span>
-                        </mat-icon>
+                                <span class="material-symbols-outlined">
+                                    logout
+                                </span>
+                            </mat-icon>
                             <p>Sair</p>
                         </button>
                     </div>
@@ -123,8 +127,9 @@
             </div>
             }
         </div>
-        }
 
+        }
     </header>
     }
+
 </div>

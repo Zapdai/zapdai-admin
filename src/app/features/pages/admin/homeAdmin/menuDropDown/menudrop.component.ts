@@ -1,5 +1,5 @@
-import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { CommonModule, isPlatformBrowser } from "@angular/common";
+import { Component, EventEmitter, HostListener, Inject, Input, OnInit, Output, PLATFORM_ID } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 import { funcoes, functionList } from "../../../../../shared/core/functionList/functionList";
@@ -19,8 +19,11 @@ export class menuDropComponent implements OnInit {
     functionList?: functionList;
     dropOpen: boolean = true;
     @Input() rotaAtiva?: boolean;
+    isVisible = false;
 
-    constructor(private router: Router, private functionService: functionListService) { }
+    constructor(
+        @Inject(PLATFORM_ID) private platformId: any,
+        private router: Router, private functionService: functionListService) { }
 
     ngOnInit() {
         this.functionService.BuscarFunctionList().subscribe({
@@ -37,8 +40,28 @@ export class menuDropComponent implements OnInit {
             },
             error: (err) => console.error(err),
         });
+
+        
+        if (isPlatformBrowser(this.platformId)) {
+            this.checkWindowSize();
+        }
+        
     }
 
+
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event: any) {
+        if (isPlatformBrowser(this.platformId)) {
+            this.checkWindowSize();
+        }
+    }
+
+    checkWindowSize() {
+        if (isPlatformBrowser(this.platformId)) {
+            this.isVisible = window.innerWidth > 768;
+        }
+    }
 
     setAtivo(id: any) {
         const itens = this.functionList?.funcoes;
@@ -56,7 +79,7 @@ export class menuDropComponent implements OnInit {
     handleItemClick(item: any) {
         this.setAtivo(item.id);
 
-        if (!item.children || item.children.length === 0) {
+        if (!item.children || item.children.length === 0 && !this.isVisible) {
             this.desabled = false;
         }
     }

@@ -5,7 +5,7 @@ import { AppLojaComponent } from "./loja/loja.component";
 import { ProdutoEmpresaComponent } from "../empresa/ItensEmpresasUnit/produto-empresa.component";
 export const routes: Routes = [
     {
-     path:"", pathMatch:"full", component:HomeZapdaiComponent
+     path:"", component:HomeZapdaiComponent
     },
     {
         path: "categoria/:nome", component: buscaProdutos,
