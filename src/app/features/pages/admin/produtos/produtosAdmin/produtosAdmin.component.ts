@@ -54,7 +54,7 @@ export class ProdutosAdminComponent implements OnInit {
 
     rodaFunc(event: any) {
 
-        this.router.navigateByUrl(`v1/produto/detalhes/${event}`)
+        this.router.navigateByUrl(`produto/detalhes/${event}`)
     }
 
     emitProduct() {

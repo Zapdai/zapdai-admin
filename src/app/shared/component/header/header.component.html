@@ -1,10 +1,10 @@
 <div class="main">
 
-    @if (admin) {
+    @if (isAdmin) {
     <app-cobrabca></app-cobrabca>
     }
 
-    @if (admin || isVisible) {
+    @if (isAdmin || isVisible) {
     <header class="ng-header" [ngClass]="[admin ? 'admin' : '']">
         <div class="menu-logo"  [ngClass]="[!isVisible ? 'menu-logo-mobile' : '']">
             @if (admin) {
@@ -14,7 +14,7 @@
         </div>
 
 
-        @if (!admin) {
+        @if (!isAdmin) {
         <section class="ng-form">
             <form action="" [formGroup]="grupo" (submit)="pegarvalor()">
                 <div class="search">

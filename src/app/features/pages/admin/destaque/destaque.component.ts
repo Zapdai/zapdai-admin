@@ -62,4 +62,10 @@ export class DestaqueComponent {
         }
 
     }
+
+
+    rodaFunc(event: any) {
+
+        this.router.navigateByUrl(`produto/detalhes/${event}`)
+    }
 }

@@ -23,7 +23,8 @@
 
     <div class="area-main">
       @for (produto of item.produtos; track $index) {
-      <app-utius [imagem]="produto.imgUrl" [titulo]="produto.productName" [price]="produto.idProduto"></app-utius>
+      <app-utius (emiter)="rodaFunc(produto.idProduto)" [id]="produto.idProduto" [titulo]="produto.productName"
+        [price]="produto.price" [imagem]="produto.imgUrl"></app-utius>
       }
     </div>
   </section>
