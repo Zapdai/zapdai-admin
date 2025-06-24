@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-homeZapdai',
+  standalone:true,
   imports: [headerComponent, OpcoesCategoriaComponent,
     CarrosselComponent, MaisPostadosComponent, footerComponent,
     MobileNavbarComponent, MatTabsModule,CarrinhoComponent,MatIconModule],
@@ -27,7 +28,7 @@ export class HomeZapdaiComponent implements OnInit,AfterViewInit {
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private apiCategosrias: ApiV1Loja, public router: Router) { }
   categorias: any;
   produtos: any
-  ativaCar = false;
+  ativaCar?:boolean;
 
    ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -54,8 +55,10 @@ export class HomeZapdaiComponent implements OnInit,AfterViewInit {
     const scrollHeight = this.elemnt.nativeElement.scrollHeight;
     const clientHeight = this.elemnt.nativeElement.clientHeight;
     const scrollTop = this.elemnt.nativeElement.scrollTop;
+          console.log(scrollTop + clientHeight > scrollHeight - 10)
     if (scrollTop + clientHeight > scrollHeight - 10) {
       this.ativo = true;
+     
 
     } else {
       this.ativo = false;
@@ -81,7 +84,7 @@ onWindows() {
     )
   }
   navigate(name: any) {
-    this.router.navigateByUrl(`/v1/categoria/${name}`)
+    this.router.navigateByUrl(`/categoria/${name}`)
   }
   navigateDetalhesProdutos(name: any) {
     this.router.navigateByUrl(`/detalhes/produto/${name}`)
@@ -93,4 +96,5 @@ onWindows() {
   ativaCarrinho(){
    this.ativaCar = !this.ativaCar;
   }
+  
 }

@@ -8,16 +8,14 @@ import { HomeZapdaiComponent } from './features/pages/homeZapdaiLoja/homeZapdai/
 
 export const routes: Routes = [
     {
-        path: "", component: HomeZapdaiComponent, pathMatch: "full",
+        path: "",loadChildren:()=>import("./features/pages/v1/v1.routes").then(e=>e.routes)
     },
+   
     {
         path: "admin", loadChildren: () => import("./features/pages/admin/admin.routes").then(rota => rota.routes), data: { acess: ["ROLE_ADMIN", "ROLE_MODERATOR"] }, canActivateChild: [authGuardian],
     },
     {
         path: "auth", loadChildren: () => import("./features/pages/auth/auth.routes").then(e => e.routes)
-    },
-    {
-        path: "v1", loadChildren:()=>import("./features/pages/v1/v1.routes").then(e=>e.routes)
     },
     {
         path: "loading", component: LoadingComponent, canActivate: [loadingGuard]

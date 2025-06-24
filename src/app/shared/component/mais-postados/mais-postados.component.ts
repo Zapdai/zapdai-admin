@@ -30,10 +30,10 @@ export class MaisPostadosComponent {
   }
   rodaFunc(event:any){
 
-   this.rotas.navigateByUrl(`v1/produto/detalhes/${event}`)
+   this.rotas.navigateByUrl(`produto/detalhes/${event}`)
   }
   produtoEmpres(event:any){
-       this.rotas.navigate([`v1/empresa/produto/${event.nomeCompania}`],{
+       this.rotas.navigate([`empresa/produto/${event.nomeCompania}`],{
         state:{id:event.idEmpresa}
        });
 

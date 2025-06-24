@@ -4,7 +4,7 @@ import { LojaZapdaiService } from './features/pages/v1/lojaZapdai.service';
 
 export const serverRoutes: ServerRoute[] = [
   {
-    path: 'v1/categoria/:nome',
+    path: 'categoria/:nome',
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
       const dataService = inject(LojaZapdaiService);
@@ -13,7 +13,7 @@ export const serverRoutes: ServerRoute[] = [
     },
   },
    {
-    path: 'v1/produto/detalhes/:id',
+    path: 'produto/detalhes/:id',
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
       const dataService = inject(LojaZapdaiService);
@@ -22,7 +22,7 @@ export const serverRoutes: ServerRoute[] = [
     },
   },
   {
-    path: 'v1/empresa/produto/:nome',
+    path: 'empresa/produto/:nome',
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
       const dataService = inject(LojaZapdaiService);

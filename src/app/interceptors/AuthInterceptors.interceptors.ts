@@ -47,33 +47,22 @@ export class AuthInterceptors implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        let mensagemErro = 'Erro inesperado. Tente novamente mais tarde.';
+        const status = error.status;
+    const mensagemErro = error?.error?.erro || status + " Bad Gateway";
+         const mensagensExtras: Record<number, string> = {
+      403: 'Acesso negado. Você não tem permissão para executar esta ação.'
+    };
 
-        // Tenta extrair mensagem personalizada
-        if (error.error) {
-          try {
-            // Caso error.error seja um objeto
-            if (typeof error.error === 'object' && error.error.erro) {
-              mensagemErro = error.error.erro;
-            }
-            // Caso error.error seja uma string JSON
-            else if (typeof error.error === 'string') {
-              const erroObj = JSON.parse(error.error);
-              if (erroObj.erro) {
-                mensagemErro = erroObj.erro;
-              } else {
-                mensagemErro = error.error;
-              }
-            }
-          } catch (_) {
-            // Se o JSON estiver malformado, mostra como string pura
-            mensagemErro = typeof error.error === 'string' ? error.error : mensagemErro;
-          }
-        }
+    // Status que devem abrir snackbar
+    const handledStatuses = [400, 401, 403, 501, 502, 503, 504];
 
-        if ([400, 401, 403, 501, 502, 503, 504].includes(error.status)) {
-          this.dialog.error(mensagemErro);
-        }
+    if (handledStatuses.includes(status)) {
+      this.dialog.openSnackBar(mensagemErro);
+
+      if (mensagensExtras[status]) {
+        this.dialog.openSnackBar(mensagensExtras[status]);
+      }
+    }
 
         return throwError(() => new Error(error.message));
       })

@@ -1,6 +1,6 @@
 <app-header (emitCarrinho)="ativaCarrinho()" [carrinho]="true" class="s" [admin]="false"></app-header>
 <app-mobile-navbar></app-mobile-navbar>
-<div   class="area-loja">
+<div class="area-loja">
     <div #element class="main">
         <div class="ng-categoria">
             <section class="container-area">
@@ -27,7 +27,7 @@
 @if (ativaCar) {
 <app-carrinho (desbiledCarEmit)="ativaCarrinho()"></app-carrinho>
 }
- @if (ativo) {
-        <div class="btn"><button (click)="onWindows()"><mat-icon>arrow_upward</mat-icon></button></div>
+@if (ativo) {
+<div class="btn"><button (click)="onWindows()"><mat-icon>arrow_upward</mat-icon></button></div>
 
-        }
+}
