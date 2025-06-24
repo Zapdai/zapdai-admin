@@ -4,7 +4,6 @@
     <app-cobrabca></app-cobrabca>
     }
 
-    @if (admin || isVisible) {
     <header class="ng-header" [ngClass]="[admin ? 'admin' : '']">
         <div class="menu-logo"  [ngClass]="[!isVisible ? 'menu-logo-mobile' : '']">
             @if (admin) {
@@ -130,6 +129,5 @@
 
         }
     </header>
-    }
 
 </div>
