@@ -51,7 +51,6 @@ export class DestaqueComponent {
     }
     async itensEmpresa() {
         try {
-            const id = history.state.id;
             const response = await firstValueFrom(this.produtosApi.ProdutoEmpresa(this.authDecodeUser.getEmpresaId()));
             const data = Array.isArray(response.content) ? response.content : [];
             this.empresa = data;

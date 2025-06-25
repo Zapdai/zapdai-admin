@@ -13,6 +13,6 @@ export const routes: Routes = [
     {
         path: "produto/detalhes/:id", component: AppLojaComponent,
     },{
-        path:"empresa/produto/:nome",component:ProdutoEmpresaComponent
+        path:"empresa/produto/:idEmpresa",component:ProdutoEmpresaComponent
     }
 ]

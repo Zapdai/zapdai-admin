@@ -7,24 +7,24 @@ import { firstValueFrom } from 'rxjs';
 import { UtiusComponent } from '../../../../shared/component/utius/utius.component';
 import { MaisPostadosComponent } from "../../../../shared/component/mais-postados/mais-postados.component";
 type produtos = {
-amountQTD:number
-categoria: 
-{id: number, nome: string}
-description:string
-idProduto:number
-imgUrl:string
-peso:number
-price:never
-productName:string
+  amountQTD: number
+  categoria:
+  { id: number, nome: string }
+  description: string
+  idProduto: number
+  imgUrl: string
+  peso: number
+  price: never
+  productName: string
 
 }
 type empresa = {
-avatar:string, 
-email:string 
-idEmpresa: string,
-nomeCompania:string,
-numeroDeTelefone:string,
-produtos:produtos[]
+  avatar: string,
+  email: string
+  idEmpresa: string,
+  nomeCompania: string,
+  numeroDeTelefone: string,
+  produtos: produtos[]
 }
 @Component({
   selector: 'produto-cadastro-empresa',
@@ -33,27 +33,28 @@ produtos:produtos[]
   templateUrl: './produto-empresa.component.html',
   styleUrls: ['./produto-empresa.component.scss']
 })
-export class ProdutoEmpresaComponent implements OnInit{
-  imagem:any;
-  id:any
-  empresa?:empresa[];
+export class ProdutoEmpresaComponent implements OnInit {
+  imagem: any;
+  idEmpresaRota: any
+  empresa?: empresa[];
 
-  constructor (private router: Router,private activeRouter:ActivatedRoute,private produtosApi:ProdutosApiService){}
+  constructor(private router: Router, private activeRouter: ActivatedRoute, private produtosApi: ProdutosApiService) { }
   ngOnInit(): void {
     this.itensEmpresa();
 
   }
- async itensEmpresa(){
-  try {
-    const id = history.state.id;
-   const response = await firstValueFrom(this.produtosApi.ProdutoEmpresa(id));
-   const data = Array.isArray(response.content) ? response.content : [];
-   this.empresa = data;
-   
-    
-  } catch (error) {
-    
-  }
-    
+  async itensEmpresa() {
+    try {
+      const idEmpresaRota = this.activeRouter.snapshot.paramMap.get('idEmpresa') as any;
+
+      const response = await firstValueFrom(this.produtosApi.ProdutoEmpresa(idEmpresaRota));
+      const data = Array.isArray(response.content) ? response.content : [];
+      this.empresa = data;
+
+
+    } catch (error) {
+
+    }
+
   }
 }
