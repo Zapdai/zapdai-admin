@@ -22,12 +22,12 @@ export const serverRoutes: ServerRoute[] = [
     },
   },
   {
-    path: 'empresa/produto/:nome',
+    path: 'empresa/produto/:idEmpresa',
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
       const dataService = inject(LojaZapdaiService);
       const produtos = await dataService.retonrIdEmpres(); 
-      return produtos.map((item:any)=>({nome:String(item.nomeCompania)})); 
+      return produtos.map((item:any)=>({idEmpresa:String(item.idEmpresa)})); 
     },
   },
     {
