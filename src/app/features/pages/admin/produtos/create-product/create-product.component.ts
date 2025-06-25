@@ -125,8 +125,27 @@ export class CreateProductComponent implements OnInit, AfterViewInit {
 
    // Recebe as imagens do componente filho
    select(files: File[]) {
-      this.files = files;
+      const MAX_MB = 10;
+      const arquivosValidos: File[] = [];
+      const erros: string[] = [];
+
+      for (const file of files) {
+         const tamanhoMB = file.size / (1024 * 1024);
+         if (tamanhoMB > MAX_MB) {
+            erros.push(`"${file.name}" (${tamanhoMB.toFixed(2)} MB)`);
+         } else {
+            arquivosValidos.push(file);
+         }
+      }
+
+      if (erros.length) {
+         this.snack.error(`As seguintes imagens ultrapassam 10MB:\n${erros.join('\n')}`);
+      }
+
+      this.files = arquivosValidos;
    }
+
+
 
 
    async saveProduct() {
@@ -246,15 +265,15 @@ export class CreateProductComponent implements OnInit, AfterViewInit {
    }
 
    resetarCampoCategoria() {
-   const control = this.groupform.get('categoriaId');
-   if (control) {
-      control.setValue('');
-      // Garante que o painel autocomplete reabra com tudo
-      setTimeout(() => {
-         this.trigger.openPanel();
-      });
+      const control = this.groupform.get('categoriaId');
+      if (control) {
+         control.setValue('');
+         // Garante que o painel autocomplete reabra com tudo
+         setTimeout(() => {
+            this.trigger.openPanel();
+         });
+      }
    }
-}
 
 
 

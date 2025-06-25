@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { MatIconModule } from "@angular/material/icon";
+import { SnackService } from '../../../../../services/snackBar/snack.service';
 
 type DomFile = globalThis.File;
 
@@ -19,6 +20,10 @@ export class ImageDropCarrosselComponent implements OnInit, OnDestroy {
   private touchStartX = 0;
   private mouseStartX = 0;
   private isMouseDown = false;
+
+  constructor(
+    private snack: SnackService,
+  ) { }
 
   ngOnInit() {
     document.addEventListener('mouseup', this.globalMouseUp.bind(this));
@@ -47,34 +52,93 @@ export class ImageDropCarrosselComponent implements OnInit, OnDestroy {
   }
 
   async handleFiles(files: FileList) {
-    const promises = Array.from(files).map(file => {
-      return new Promise<{ url: string; file: File }>((resolve, reject) => {
-        if (!file.type.startsWith('image/')) return;
+    const MAX_FILE_SIZE_MB = 1;  // limite máximo de MB
 
+    const MAX_WIDTH = 1024;
+    const MAX_HEIGHT = 1024;
+
+    const compressImage = (file: File): Promise<{ url: string, file: File }> => {
+      return new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.onload = () => {
-          const extensao = file.name.split('.').pop() || 'jpg';
-          const numerosAleatorios = this.gerar7DigitosNumericos();
-          const nomeAleatorio = `img_${numerosAleatorios}.${extensao}`;
 
-          const novoFile = new File([file], nomeAleatorio, { type: file.type });
+        reader.onload = (event) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
 
-          resolve({ url: reader.result as string, file: novoFile });
+            let width = img.width;
+            let height = img.height;
+
+            if (width > MAX_WIDTH || height > MAX_HEIGHT) {
+              const aspect = width / height;
+              if (aspect > 1) {
+                width = MAX_WIDTH;
+                height = MAX_WIDTH / aspect;
+              } else {
+                height = MAX_HEIGHT;
+                width = MAX_HEIGHT * aspect;
+              }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return reject("Erro ao obter contexto do canvas");
+
+            ctx.drawImage(img, 0, 0, width, height);
+
+            canvas.toBlob(blob => {
+              if (!blob) return reject("Erro ao gerar blob");
+
+              const tamanhoMB = blob.size / (1024 * 1024);
+
+              if (tamanhoMB > MAX_FILE_SIZE_MB) {
+                reject(`Imagem comprimida ainda tem ${tamanhoMB.toFixed(2)} MB, que ultrapassa o limite de ${MAX_FILE_SIZE_MB} MB`);
+              } else {
+                const extensao = file.name.split('.').pop() || 'jpg';
+                const nomeAleatorio = `img_${this.gerar7DigitosNumericos()}.${extensao}`;
+                const novoArquivo = new File([blob], nomeAleatorio, { type: 'image/jpeg' });
+                const url = URL.createObjectURL(blob);
+                resolve({ url, file: novoArquivo });
+              }
+            }, 'image/jpeg', 1);
+          };
+
+          img.onerror = () => reject("Erro ao carregar imagem");
+          img.src = event.target?.result as string;
         };
-        reader.onerror = reject;
+
+        reader.onerror = () => reject("Erro ao ler imagem");
         reader.readAsDataURL(file);
       });
-    });
+    };
 
-    try {
-      const imagensLidas = await Promise.all(promises);
-      this.images.push(...imagensLidas);
+    const imagens: { url: string, file: File }[] = [];
+    const erros: string[] = [];
+
+    for (const file of Array.from(files)) {
+      try {
+        const comprimida = await compressImage(file);
+        imagens.push(comprimida);
+      } catch (e: any) {
+        erros.push(typeof e === 'string' ? e : `Erro com ${file.name}`);
+      }
+    }
+
+    if (imagens.length > 0) {
+      this.images.push(...imagens);
       this.currentIndex = this.images.length - 1;
       this.emitirImagensParaPai();
-    } catch (err) {
-      console.error("Erro ao ler imagens", err);
+    }
+
+    if (erros.length > 0) {
+      this.snack.error("Erros ao processar imagem");
     }
   }
+
+
+
   deleteImage(index: number) {
     this.images.splice(index, 1);
     if (this.currentIndex > this.images.length - 1) {
