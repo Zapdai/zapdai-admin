@@ -29,7 +29,7 @@ type empresa = {
 @Component({
   selector: 'produto-cadastro-empresa',
   standalone: true,
-  imports: [PageContainerComponent, UtiusComponent, MaisPostadosComponent],
+  imports: [UtiusComponent, MaisPostadosComponent],
   templateUrl: './produto-empresa.component.html',
   styleUrls: ['./produto-empresa.component.scss']
 })

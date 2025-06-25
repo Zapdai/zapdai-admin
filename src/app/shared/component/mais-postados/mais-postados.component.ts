@@ -33,7 +33,7 @@ export class MaisPostadosComponent {
    this.rotas.navigateByUrl(`produto/detalhes/${event}`)
   }
   produtoEmpres(event:any){
-       this.rotas.navigate([`empresa/produto`, event])
+       this.rotas.navigate([`empresa/produto/${event}`])
 
   }
 
