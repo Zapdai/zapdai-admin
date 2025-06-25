@@ -1,19 +1,20 @@
 <div class="produto-detalhes-container">
   <!-- Galeria lateral -->
-  <!-- <div class="galeria-imagens">
-    <img *ngFor="let img of produto.imagens" 
-         [src]="img" 
-         (click)="imagemSelecionada = img"
-         [class.selecionada]="imagemSelecionada === img"
+  <div class="galeria-imagens">
+    @for (img of produto.imagens; track $index) {
+    <img 
+         [src]="img.url" 
+         (click)="imagemSelecionadaItem(img.url)"
+         [class.selecionada]="imagemSelecionada?.includes(img.url)"
          alt="Imagem produto" />
-  </div> -->
+    }
+  </div>
 
   <div class="imagem-principal">
-    <img [src]=" produto?.imgProduct" alt="Imagem principal" />
+    <img [src]="imagemSelecionada || produto.imgProduct" alt="Imagem principal" />
   </div>
 
   <div class="informacoes">
-    <span class="marca">{{ produto.marca }}</span>
     <h1>{{ produto.productName }}</h1>
     <p class="codigo">Cód.: {{ produto.codigo }}</p>
 

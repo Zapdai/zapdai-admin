@@ -25,7 +25,9 @@ export class AppLojaComponent implements OnInit {
    ngOnInit(): void {
       this.rodaFuncaoApi()
    }
-
+    imagemSelecionadaItem(imagem:any){
+      this.imagemSelecionada =  imagem;
+    }
    async rodaFuncaoApi() {
       try {
          this.idProduto = this.route.snapshot.paramMap.get("id") as any

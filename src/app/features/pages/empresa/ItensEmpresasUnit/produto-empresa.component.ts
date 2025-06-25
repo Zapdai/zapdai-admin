@@ -6,6 +6,9 @@ import { ProdutosApiService } from '../../../../services/produtoService/produtos
 import { firstValueFrom } from 'rxjs';
 import { UtiusComponent } from '../../../../shared/component/utius/utius.component';
 import { MaisPostadosComponent } from "../../../../shared/component/mais-postados/mais-postados.component";
+type imagens = {
+  url:string
+}
 type produtos = {
   amountQTD: number
   categoria:
@@ -15,9 +18,12 @@ type produtos = {
   imgUrl: string
   peso: number
   price: never
-  productName: string
+  productName: string,
+  imagens:imagens[]
+  
 
 }
+
 type empresa = {
   avatar: string,
   email: string
