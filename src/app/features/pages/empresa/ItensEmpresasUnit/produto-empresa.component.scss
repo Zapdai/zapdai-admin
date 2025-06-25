@@ -1,58 +1,74 @@
-.img {
+.ng-main {
     width: 100%;
-    height: 250px;
-    position: relative;
-    .header {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        gap: 180px;
-        position: absolute;
-        z-index: 999;
-        margin-left: 25px;
+    height: 100dvh;
+    overflow-y: auto;
+    position: fixed;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(21, 9, 185, 0.133);
 
-        .ancora {
-            text-decoration: none;
 
-        }
-        .empresa {
-             color: #ffffff;
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8); // destaca sobre fundo claro ou escuro
-  font-size: 2.5rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+    .img {
+        width: 100%;
+        height: 250px;
+        position: relative;
+        margin-bottom: 30px;
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 180px;
+            position: absolute;
+            z-index: 999;
+            margin-left: 25px;
+
+            .ancora {
+                text-decoration: none;
 
             }
+
+            .empresa {
+                color: #ffffff;
+                text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8); // destaca sobre fundo claro ou escuro
+                font-size: 2.5rem;
+                font-weight: bold;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+
+            }
+        }
+
+
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+
+        }
     }
 
+    .itens-produtos {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        padding: 10px;
+        gap: 15px 0;
+
+        .propaganda {
+            width: 100%;
+            margin-right: 2px;
+        }
 
 
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+        .area-main {
 
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0 32px;
+            margin: 0;
+            padding: 0;
+        }
     }
-}
-.itens-produtos{
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    padding: 10px;
-    .propaganda{
-        width: 100%;
-        margin-right: 2px;
-    }
-
-
-.area-main{
-
-      display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0 32px;
-    margin: 0;
-    padding: 0;
-}
 }

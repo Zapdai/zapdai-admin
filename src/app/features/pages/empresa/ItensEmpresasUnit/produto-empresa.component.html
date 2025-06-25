@@ -1,4 +1,4 @@
-<app-page-container>
+<div class="ng-main">
     @for (item of empresa; track $index) {
     <figure class="img">
         <div class="header">
@@ -6,9 +6,9 @@
             <h1 class="empresa">{{item.nomeCompania}}</h1>
         </div>
         @if (item.avatar!==null ) {
-            <img [src]="item.avatar" alt="">
+        <img [src]="item.avatar" alt="">
         }@else {
-            <!-- <img src="./banner.png" alt=""> -->
+        <!-- <img src="./banner.png" alt=""> -->
         }
     </figure>
     <section class="itens-produtos">
@@ -19,18 +19,17 @@
         </div>
     </section>
 
-        <section class="itens-produtos">
-            <span>Todos os produtos</span>
+    <section class="itens-produtos">
+        <span>Todos os produtos</span>
 
-            <div class="area-main">
-                @for (produto of item.produtos; track $index) {
-                <app-utius [imagem]="produto.imgUrl" [titulo]="produto.productName"
-                    [price]="produto.idProduto"></app-utius>
-                }
-            </div>
-        </section>
-
+        <div class="area-main">
+            @for (produto of item.produtos; track $index) {
+            <app-utius [imagem]="produto.imgUrl" [titulo]="produto.productName" [price]="produto.idProduto"></app-utius>
+            }
+        </div>
+    </section>
 
 
-        }
-</app-page-container>
+
+    }
+</div>
