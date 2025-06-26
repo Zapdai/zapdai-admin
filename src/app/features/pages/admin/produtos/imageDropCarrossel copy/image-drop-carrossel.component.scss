@@ -1,0 +1,118 @@
+.carousel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  background: transparent;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+  height: 260px;
+  cursor: grab;
+  user-select: none;
+}
+
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 8px 0;
+  width: 100%;
+  height: 100%;
+  scrollbar-width: none;
+  align-items: flex-start; /* CORREÇÃO: garantir alinhamento vertical */
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.image-container {
+  position: relative;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.image-container img {
+  width: 250px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+}
+
+.ng-btn-prev-next {
+  padding: 8px;
+  border-radius: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  user-select: none;
+}
+
+.ng-btn-prev-next:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.ng-btn-prev-next:active {
+  background: rgba(0, 0, 0, 0.2);
+  transform: scale(0.90);
+}
+
+.delete-button {
+  margin-top: 8px;
+  background: rgba(201, 201, 201, 0.6);
+  color: rgb(190, 0, 0);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.delete-button:active {
+  background: rgb(214, 214, 214);
+  transform: scale(0.90);
+}
+
+.drop-area {
+  flex-shrink: 0; /* impede que encolha */
+  min-width: 250px;
+  min-height: 200px;
+  border: 2px dashed #ccc;
+  text-align: center;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+  cursor: pointer;
+  margin-left: 10px; /* separação das imagens */
+}
+
+.drop-area.limit {
+  background-color: #f8d7da;
+  border-color: #d32f2f;
+  color: #a94442;
+  cursor: not-allowed;
+}
+
+.drop-area.limit .limit-message {
+  color: #d32f2f;
+  font-weight: bold;
+  text-align: center;
+  font-size: 14px;
+}

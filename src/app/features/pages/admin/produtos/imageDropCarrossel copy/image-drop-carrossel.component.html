@@ -1,0 +1,43 @@
+<div class="carousel-container">
+  <div class="carousel">
+    <button class="ng-btn-prev-next" (click)="rolarEsquerda()">⟨</button>
+
+    <div class="scroll-container" #scrollContainer>
+
+      @for (img of images; track $index) {
+        <div class="image-container">
+          <img [src]="img.url" [alt]="img.file.name" />
+          <button class="delete-button" (click)="deleteImage($index)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      }
+
+      <!-- drop-area sempre visível -->
+      <div
+        class="drop-area"
+        (click)="images.length < MAX_IMAGENS && fileInput.click()"
+        (drop)="onDrop($event)"
+        (dragover)="preventDefault($event)"
+        [class.limit]="images.length >= MAX_IMAGENS"
+      >
+        @if (images.length < MAX_IMAGENS) {
+          <p>Arraste e solte imagens aqui ou clique para selecionar</p>
+        } @else {
+          <p class="limit-message">Limite de 3 imagens atingido</p>
+        }
+
+        <input
+          #fileInput
+          type="file"
+          (change)="onFileChange($event)"
+          multiple
+          accept="image/*"
+          hidden
+        />
+      </div>
+    </div>
+
+    <button class="ng-btn-prev-next" (click)="rolarDireita()">⟩</button>
+  </div>
+</div>
