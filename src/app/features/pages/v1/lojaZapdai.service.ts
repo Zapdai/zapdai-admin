@@ -26,6 +26,7 @@ export class LojaZapdaiService {
      const response = await firstValueFrom(this.apiCategosrias.findAllProdutos());
     return Array.isArray(response) ? response : [];
    }
+   
 
 
 

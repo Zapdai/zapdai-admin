@@ -4,7 +4,7 @@
     @for (img of produto.imagens; track $index) {
     <img 
          [src]="img.url" 
-         (click)="imagemSelecionadaItem(img.url)"
+         (mousemove)="imagemSelecionadaItem(img.url)"
          [class.selecionada]="imagemSelecionada?.includes(img.url)"
          alt="Imagem produto" />
     }

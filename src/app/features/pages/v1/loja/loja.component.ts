@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { MatTabsModule } from "@angular/material/tabs";
 import { ActivatedRoute } from "@angular/router";
 import { firstValueFrom } from "rxjs";
@@ -6,10 +6,11 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { MatInputModule } from "@angular/material/input";
 import { ApiV1Loja } from "../../../../services/apiCategorias/apiV1Loja.service";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
    selector: 'app-loja',
-   imports: [MatTabsModule, ReactiveFormsModule, CommonModule, MatInputModule],
+   imports: [MatTabsModule, ReactiveFormsModule, CommonModule, MatInputModule,MatIconModule],
    templateUrl: './loja.component.html',
    styleUrl: './loja.component.scss'
 })
@@ -18,6 +19,8 @@ export class AppLojaComponent implements OnInit {
    idProduto: any;
    produto: any
    quantidade: number = 1;
+       @ViewChild("scrollContainer",{static:false}) fer?:ElementRef;
+
 
    constructor(public route: ActivatedRoute, private api: ApiV1Loja) {
 
@@ -46,4 +49,17 @@ export class AppLojaComponent implements OnInit {
          quantidade: this.quantidade
       };
    }
+   rolarDireita(event:any){
+      console.log(event)
+      this.fer?.nativeElement.scrollBy({
+          left:-20,
+          behavior: 'smooth'
+      })
+  }
+  rolarEsquerda(){
+      this.fer?.nativeElement.scrollBy({
+          left:20,
+          behavior: 'smooth'
+      })
+  }
 }
