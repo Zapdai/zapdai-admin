@@ -2,9 +2,11 @@
 
     <div class="ng-header-content">
         <section class="ng-form">
-            <form action="" [formGroup]="groupSearh" (submit)="pegarvalor()">
+            <form action="" [formGroup]="groupSearh">
                 <div class="search">
-                    <input type="search" class="ng-input" formControlName="name" placeholder="Buscar por ID do Produto">
+                    <input type="search" class="ng-input" formControlName="productName"
+                        placeholder="Buscar por ID ou Nome do Produto" (focus)="getAllProdutosEmpresa()"
+                        matAutocompletePosition="below">
                     <mat-icon class="icone">search</mat-icon>
                 </div>
             </form>
@@ -22,17 +24,35 @@
         </section>
     </div>
     <div class="ng-todosProdutos">
-        @for (item of todosProdutos; track $index) {
-        <app-utius (emiter)="rodaFunc(item.idProduto)" [id]="item.idProduto" [titulo]="item.productName" [price]="item.price"
-            [imagem]="item.imgUrl"></app-utius>
+        <!-- Sempre mostra todos os produtos na tela -->
+        @if (!hasSearchValue) {
+        @for (item of todosProdutos; track item) {
+        <app-utius (emiter)="rodaFunc(item.idProduto)" [id]="item.idProduto" [titulo]="item.productName"
+            [price]="item.price" [imagem]="item.imgUrl">
+        </app-utius>
         }
+        }
+
+        <!-- Lista filtrada (autocomplete personalizado) -->
+        @if (hasSearchValue) {
+        <ul class="custom-autocomplete-panel">
+            @for (item of filteredProdutos | async; track item) {
+            <li [value]="item.productName">
+                <app-utius (emiter)="rodaFunc(item.idProduto)" [id]="item.idProduto" [titulo]="item.productName"
+                    [price]="item.price" [imagem]="item.imgUrl">
+                </app-utius>
+            </li>
+            }
+        </ul>
+        }
+
     </div>
 </div>
 
 @if (ativaCreatProduct) {
-    <app-create-product (desbiledCarEmit)="ativaProduct()"></app-create-product>
+<app-create-product (desbiledCarEmit)="ativaProduct()"></app-create-product>
 }
 
 @if (openCategory) {
-    <app-categorias (CategoriaEmit)="ativaCategory()"></app-categorias>
+<app-categorias (CategoriaEmit)="ativaCategory()"></app-categorias>
 }
