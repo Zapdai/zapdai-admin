@@ -1,25 +1,49 @@
 <div class="carousel-container">
   <div class="carousel-header">
-    @if (currentIndex < images.length) { {{ currentIndex + 1 }}/{{ images.length }} } @else { Adicionar imagem } </div>
+    @if (currentIndex < images.length) {
+      <span>{{ currentIndex + 1 }}/{{ images.length }}</span>
+    } @else if (images.length < 3) {
+      <span>Adicionar imagem</span>
+    } @else {
+      <span>Limite de 3 imagens atingido</span>
+    }
+  </div>
 
-      <div class="carousel" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)"
-        (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)">
-        <button class="ng-btn-prev-next" (click)="prev()" [disabled]="currentIndex === 0">⟨</button>
+  <div class="carousel"
+       (touchstart)="onTouchStart($event)"
+       (touchend)="onTouchEnd($event)"
+       (mousedown)="onMouseDown($event)"
+       (mousemove)="onMouseMove($event)"
+       (mouseup)="onMouseUp($event)">
 
-        @if (currentIndex < images.length) { <div class="image-container">
-          <img [src]="images[currentIndex].url" [alt]="images[currentIndex].file.name" />
-          <button class="delete-button" (click)="deleteImage(currentIndex)">
-            <mat-icon>delete</mat-icon>
-          </button>
+    <button class="ng-btn-prev-next" (click)="prev()" [disabled]="currentIndex === 0">⟨</button>
+
+    @if (currentIndex < images.length) {
+      <div class="image-container">
+        <img [src]="images[currentIndex].url" [alt]="images[currentIndex].file.name" />
+        <button class="delete-button" (click)="deleteImage(currentIndex)">
+          <mat-icon>delete</mat-icon>
+        </button>
       </div>
-      } @else {
-      <div class="drop-area" (click)="fileInput.click()" (drop)="onDrop($event)" (dragover)="preventDefault($event)"
-        (dragenter)="preventDefault($event)">
+    } @else if (images.length < 3) {
+      <div class="drop-area"
+           (click)="fileInput.click()"
+           (drop)="onDrop($event)"
+           (dragover)="preventDefault($event)"
+           (dragenter)="preventDefault($event)">
         <p>Arraste e solte imagens aqui ou clique para selecionar</p>
-        <input #fileInput type="file" (change)="onFileChange($event)" multiple accept="image/*" hidden />
+        <input #fileInput type="file"
+               (change)="onFileChange($event)"
+               multiple
+               accept="image/*"
+               hidden />
       </div>
-      }
+    } @else {
+      <div class="limit-reached-message">
+        <p>Você atingiu o limite de 3 imagens.</p>
+      </div>
+    }
 
-      <button class="ng-btn-prev-next" (click)="next()" [disabled]="currentIndex === images.length">⟩</button>
+    <button class="ng-btn-prev-next" (click)="next()" [disabled]="currentIndex === images.length">⟩</button>
   </div>
 </div>

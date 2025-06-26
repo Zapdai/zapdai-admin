@@ -1,0 +1,69 @@
+<section class="container" (click)="desabiledCar()">
+  <div class="container-int" (click)="filhoClicado($event)">
+    <div class="container-header">
+      <button class="btn" mat-flat-button (click)="desabiledCar()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <div>
+        <h1>Categorias</h1>
+      </div>
+    </div>
+    <div class="container-infor-produto">
+      <section class="th">
+        <form [formGroup]="groupform">
+          <div class="tab-container">
+            <div class="tab-header">
+              <button [class.active]="activeTab === 'category'" (click)="setTab('category')">
+                Todas Categorias
+              </button>
+              <button [class.active]="activeTab === 'newCategory'" (click)="setTab('newCategory')">
+                Nova Categoria
+              </button>
+            </div>
+
+            <div class="tab-body">
+              @if (activeTab === 'category') {
+              <div [@fadeInOut]>
+                <fieldset class="ng-fieldset">
+                  <legend for="categoriaId">Categoria do Produto: </legend>
+                  <input class="ng-input" type="text" placeholder="Pesquise a categoria" (click)="resetarCampoCategoria()"
+                    (focus)="abrirAutocomplete()" formControlName="categoriaId"
+                    matAutocompletePosition="below" >
+                </fieldset>
+                <ul class="custom-autocomplete-panel">
+                  @for (street of filteredStreets | async; track street) {
+                  <li [value]="street.nome">
+                    <div class="ng-con">
+                      <img class="icone" [src]="street.icone" />
+                      <span>{{street.nome}} </span>
+                    </div>
+                  </li>
+                  }
+                </ul>
+              </div>
+              }
+
+              <!---------------------------------------------------------------------------------------------------- -->
+
+              @if (activeTab === 'newCategory') {
+              <div [@fadeInOut]>
+                <fieldset class="ng-fieldset">
+                  <legend>Nome Categoria</legend>
+                  <input #primeiroInput type="text" class="ng-input" formControlName="categoryName"
+                    (keydown.enter)="focarProximoCampo('categoryName')">
+                </fieldset>
+                @if (isRequired('categoryName')) {
+                <small class="ng-error">Informe o Nome da Categoria</small>
+                }
+
+
+                <button mat-flat-button type="button" class="ng-btn">Cadastrar Categoria</button>
+              </div>
+              }
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</section>

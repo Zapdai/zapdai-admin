@@ -52,90 +52,96 @@ export class ImageDropCarrosselComponent implements OnInit, OnDestroy {
   }
 
   async handleFiles(files: FileList) {
-    const MAX_FILE_SIZE_MB = 1;  // limite máximo de MB
+  const MAX_IMAGENS = 3;
+  const MAX_FILE_SIZE_MB = 1;
+  const MAX_WIDTH = 1024;
+  const MAX_HEIGHT = 1024;
 
-    const MAX_WIDTH = 1024;
-    const MAX_HEIGHT = 1024;
+  if (this.images.length >= MAX_IMAGENS) {
+    this.snack.error("Você só pode adicionar até 3 imagens.");
+    return;
+  }
 
-    const compressImage = (file: File): Promise<{ url: string, file: File }> => {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
+  const compressImage = (file: File): Promise<{ url: string, file: File }> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
 
-        reader.onload = (event) => {
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
 
-            let width = img.width;
-            let height = img.height;
-
-            if (width > MAX_WIDTH || height > MAX_HEIGHT) {
-              const aspect = width / height;
-              if (aspect > 1) {
-                width = MAX_WIDTH;
-                height = MAX_WIDTH / aspect;
-              } else {
-                height = MAX_HEIGHT;
-                width = MAX_HEIGHT * aspect;
-              }
+          if (width > MAX_WIDTH || height > MAX_HEIGHT) {
+            const aspect = width / height;
+            if (aspect > 1) {
+              width = MAX_WIDTH;
+              height = MAX_WIDTH / aspect;
+            } else {
+              height = MAX_HEIGHT;
+              width = MAX_HEIGHT * aspect;
             }
+          }
 
-            canvas.width = width;
-            canvas.height = height;
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) return reject("Erro ao obter contexto do canvas");
 
-            const ctx = canvas.getContext('2d');
-            if (!ctx) return reject("Erro ao obter contexto do canvas");
+          ctx.drawImage(img, 0, 0, width, height);
 
-            ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob(blob => {
+            if (!blob) return reject("Erro ao gerar blob");
 
-            canvas.toBlob(blob => {
-              if (!blob) return reject("Erro ao gerar blob");
-
-              const tamanhoMB = blob.size / (1024 * 1024);
-
-              if (tamanhoMB > MAX_FILE_SIZE_MB) {
-                reject(`Imagem comprimida ainda tem ${tamanhoMB.toFixed(2)} MB, que ultrapassa o limite de ${MAX_FILE_SIZE_MB} MB`);
-              } else {
-                const extensao = file.name.split('.').pop() || 'jpg';
-                const nomeAleatorio = `img_${this.gerar7DigitosNumericos()}.${extensao}`;
-                const novoArquivo = new File([blob], nomeAleatorio, { type: 'image/jpeg' });
-                const url = URL.createObjectURL(blob);
-                resolve({ url, file: novoArquivo });
-              }
-            }, 'image/jpeg', 1);
-          };
-
-          img.onerror = () => reject("Erro ao carregar imagem");
-          img.src = event.target?.result as string;
+            const tamanhoMB = blob.size / (1024 * 1024);
+            if (tamanhoMB > MAX_FILE_SIZE_MB) {
+              reject(`Imagem comprimida ainda tem ${tamanhoMB.toFixed(2)} MB, que ultrapassa o limite de ${MAX_FILE_SIZE_MB} MB`);
+            } else {
+              const extensao = file.name.split('.').pop() || 'jpg';
+              const nomeAleatorio = `img_${this.gerar7DigitosNumericos()}.${extensao}`;
+              const novoArquivo = new File([blob], nomeAleatorio, { type: 'image/jpeg' });
+              const url = URL.createObjectURL(blob);
+              resolve({ url, file: novoArquivo });
+            }
+          }, 'image/jpeg', 1);
         };
 
-        reader.onerror = () => reject("Erro ao ler imagem");
-        reader.readAsDataURL(file);
-      });
-    };
+        img.onerror = () => reject("Erro ao carregar imagem");
+        img.src = event.target?.result as string;
+      };
 
-    const imagens: { url: string, file: File }[] = [];
-    const erros: string[] = [];
+      reader.onerror = () => reject("Erro ao ler imagem");
+      reader.readAsDataURL(file);
+    });
+  };
 
-    for (const file of Array.from(files)) {
-      try {
-        const comprimida = await compressImage(file);
-        imagens.push(comprimida);
-      } catch (e: any) {
-        erros.push(typeof e === 'string' ? e : `Erro com ${file.name}`);
-      }
-    }
+  const imagens: { url: string, file: File }[] = [];
+  const erros: string[] = [];
 
-    if (imagens.length > 0) {
-      this.images.push(...imagens);
-      this.currentIndex = this.images.length - 1;
-      this.emitirImagensParaPai();
-    }
+  for (const file of Array.from(files)) {
+    if (this.images.length + imagens.length >= MAX_IMAGENS) break;
 
-    if (erros.length > 0) {
-      this.snack.error("Erros ao processar imagem");
+    try {
+      const comprimida = await compressImage(file);
+      imagens.push(comprimida);
+    } catch (e: any) {
+      erros.push(typeof e === 'string' ? e : `Erro com ${file.name}`);
     }
   }
+
+  if (imagens.length > 0) {
+    this.images.push(...imagens);
+    this.currentIndex = this.images.length - 1;
+    this.emitirImagensParaPai();
+  }
+
+  if (erros.length > 0) {
+    this.snack.error("Algumas imagens não puderam ser processadas.");
+    console.error("Erros ao processar imagens:", erros);
+  }
+}
+
 
 
 

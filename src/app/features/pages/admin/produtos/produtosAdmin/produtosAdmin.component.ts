@@ -7,10 +7,11 @@ import { UtiusComponent } from "../../../../../shared/component/utius/utius.comp
 import { Router } from "@angular/router";
 import { CreateProductComponent } from "../create-product/create-product.component";
 import { AuthDecodeService } from "../../../../../services/AuthUser.service";
+import { CategoriasComponent } from "../categorias/categorias.component";
 
 @Component({
     selector: "app-produtos",
-    imports: [MatIconModule, ReactiveFormsModule, UtiusComponent, CreateProductComponent],
+    imports: [MatIconModule, ReactiveFormsModule, UtiusComponent, CreateProductComponent, CategoriasComponent],
     standalone: true,
     templateUrl: "./produtosAdmin.component.html",
     styleUrl: "./produtosAdmin.component.scss"
@@ -22,6 +23,7 @@ export class ProdutosAdminComponent implements OnInit {
         name: new FormControl("")
     })
     ativaCreatProduct = false;
+    openCategory = false;
     @Output() emitCreatProduct = new EventEmitter();
 
 
@@ -63,5 +65,9 @@ export class ProdutosAdminComponent implements OnInit {
 
     ativaProduct() {
         this.ativaCreatProduct = !this.ativaCreatProduct;
+    }
+
+    ativaCategory() {
+        this.openCategory = !this.openCategory;
     }
 }

@@ -15,7 +15,7 @@
                 <mat-icon class="ng-menu-icon">add</mat-icon>
                 <small class="ng-menu-name">Cadastrar Produto</small>
             </button>
-            <button class="ng-btn">
+            <button class="ng-btn" (click)="ativaCategory()">
                 <mat-icon class="ng-menu-icon">bookmark_add</mat-icon>
                 <small class="ng-menu-name">Categorias</small>
             </button>
@@ -31,4 +31,8 @@
 
 @if (ativaCreatProduct) {
     <app-create-product (desbiledCarEmit)="ativaProduct()"></app-create-product>
+}
+
+@if (openCategory) {
+    <app-categorias (CategoriaEmit)="ativaCategory()"></app-categorias>
 }

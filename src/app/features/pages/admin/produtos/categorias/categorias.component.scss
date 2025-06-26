@@ -29,6 +29,10 @@
             border-bottom: 2px solid #e6e6e6;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 
+            button {
+                padding: 5px;
+            }
+
             div {
                 width: 100%;
             }
@@ -51,97 +55,79 @@
             gap: 20px;
             margin-top: 70px;
 
-            section {
+            .th {
                 display: flex;
                 flex-direction: column;
+                margin: 10px 0;
+                width: 100%;
 
-                .th {
-                    margin: 10px 0;
-                    width: 100%;
-                }
 
                 form {
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
                     width: 100%;
-                    gap: 20px 0;
+                    gap: 10px 0;
 
-                    .form-step .ng-fieldset {
+                    .ng-fieldset {
                         width: 100%;
                         padding: 2px;
                         border-radius: 5px;
                         margin-top: 15px;
-                        border-color: #bbb;
+                        border-color: #888;
 
                         legend {
                             font-size: 12px;
                             font-weight: 500;
-                            color: #555;
+                            color: #333;
                             padding: 0 4px;
                         }
 
                         .ng-input {
                             background-color: transparent;
                             outline: none;
-                            border: 0;
+                            border: none;
                             width: 100%;
                             height: 30px;
                             font-size: 16px;
-                            color: #333;
+                            color: #444;
                         }
 
                         .ng-input::placeholder {
-                            color: #999;
+                            color: #888;
                             font-size: 14px;
                             padding-left: 10px;
                         }
 
-                        .textarea {
-                            height: auto;
-                        }
-
-
-
-                    }
-
-                    .ng-select {
-                        display: flex;
-                        flex-direction: column;
-                        font-size: 12px;
-                        color: #555;
-
-                        .ng-fieldset {
+                        .ng-password-btn {
+                            display: flex;
                             padding: 2px;
-                            border-radius: 5px;
-                            border-color: #bbb;
 
-                            legend {
-                                font-size: 12px;
-                                font-weight: 500;
-                                color: #555;
-                                padding: 0 4px;
-                            }
-
-
-                            input {
-                                padding: 5px;
-                                border-radius: 4px;
-                                width: 100%;
-                                outline: none;
-                                border: 0;
-                                background-color: transparent;
-                                // mat-option{
-                                //     margin-top: 20px;
-                                // }
-
-                            }
-
-                            .btn {
-                                background-color: #FF8401;
+                            mat-icon {
+                                cursor: pointer;
+                                transform: scale(0.0.97);
                             }
                         }
+
                     }
+
+
+                    .fieldset-disabled {
+                        border-color: #eee;
+
+                        legend {
+                            color: #999;
+                        }
+
+                        .ng-input[readonly] {
+                            border: none !important;
+                            color: #777 !important;
+                            background-color: transparent !important;
+                            caret-color: transparent;
+                            pointer-events: none;
+                        }
+                    }
+
 
                     .ng-listForm {
                         display: flex;
@@ -159,8 +145,100 @@
                         color: #FF8401;
                         padding: 2px 5px;
                     }
+
+
+
+                    .tab-container {
+                        font-family: Arial, sans-serif;
+                    }
+
+                    .tab-header {
+                        display: flex;
+                        gap: 0 10px;
+
+                        button {
+                            flex: 1;
+                            padding: 4px 8px;
+                            border: none;
+                            background: transparent;
+                            color: white;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 6px;
+                            background-color: #468ed6;
+                            border-radius: 100px;
+                            font-size: 12px;
+
+                            &.active {
+                                background-color: #0d59af;
+                                font-weight: bold;
+                            }
+
+                            mat-icon {
+                                font-size: 20px;
+                            }
+
+                            &:hover {
+                                background-color: #0d47a1;
+                            }
+                        }
+                    }
+
+                    .tab-body {
+                        padding: 15px 0;
+                        background-color: #fff;
+
+                        h3 {
+                            margin-top: 0;
+                        }
+
+                        label {
+                            display: block;
+                            margin-bottom: 12px;
+
+                            input {
+                                width: 100%;
+                                padding: 6px;
+                                border: 1px solid #ccc;
+                                border-radius: 4px;
+                            }
+                        }
+                    }
+
+
+
+                }
+
+                .ng-btn {
+                    width: 100%;
+                    height: 35px;
+                    border-radius: 5px;
+                    border: 1px solid #c8c8c8;
+                    cursor: pointer;
+                    font-family: var(--font-family);
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: #fff;
+                    margin-top: 20px;
+                    background-color: #112855;
+                }
+
+                .ng-btn:hover {
+                    background-color: #22438a;
+                }
+
+                .ng-btn:active {
+                    transform: scale(0.97);
+
+                }
+
+                .ng-btn:disabled {
+                    color: #888;
                 }
             }
+
 
         }
 
@@ -196,22 +274,15 @@
 
 }
 
-::ng-deep .mat-mdc-autocomplete-panel.custom-autocomplete-panel {
+.custom-autocomplete-panel {
     background-color: #FFF !important;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    margin: 3px;
+    margin-top: 15px;
+    transform-origin: top center !important;
 
-    mat-option {
-        border-bottom: 1px solid #bbb;
+    li {
+        border-bottom: 1px solid #eee;
     }
 }
-
-::ng-deep .custom-autocomplete-panel {
-    transform-origin: top center !important;
-}
-
 
 
 // -----------------------------------------------------------------------------------------------------------//
@@ -231,7 +302,7 @@
         .container-int {
             display: flex;
             flex-direction: column;
-            width: 680px;
+            width: 380px;
             border-radius: 10px;
             height: auto;
             padding: 0 30px;
@@ -247,6 +318,7 @@
                 display: flex;
                 flex-direction: row;
                 justify-content: space-around;
+                height: 350px;
                 gap: 0 50px;
                 margin-top: 0;
 
@@ -261,6 +333,16 @@
             .ng-btn {
                 margin-bottom: 20px;
             }
+
+        }
+    }
+
+    .custom-autocomplete-panel {
+        max-height: 250px;
+        overflow-y: auto;
+
+        li {
+            border-bottom: 1px solid #eee;
         }
     }
 }
@@ -276,11 +358,3 @@
         object-fit: contain;
     }
 }
-
-// .mdc-list-item{
-//             background: #cba1e6;
-// }
-// .mdc-list-item:hover{
-//             background-color: #6d4386;
-
-// }
