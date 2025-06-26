@@ -14,7 +14,7 @@ type DomFile = globalThis.File;
 export class ImageDropCarrosselComponent implements OnInit, OnDestroy {
   currentIndex = 0;
   images: { url: string; file: DomFile }[] = [];
-
+  MAX_IMAGENS = 3;
   @Output() enviarImagens = new EventEmitter<File[]>();
 
   private touchStartX = 0;
@@ -52,12 +52,11 @@ export class ImageDropCarrosselComponent implements OnInit, OnDestroy {
   }
 
   async handleFiles(files: FileList) {
-  const MAX_IMAGENS = 3;
   const MAX_FILE_SIZE_MB = 1;
   const MAX_WIDTH = 1024;
   const MAX_HEIGHT = 1024;
 
-  if (this.images.length >= MAX_IMAGENS) {
+  if (this.images.length >= this.MAX_IMAGENS) {
     this.snack.error("Você só pode adicionar até 3 imagens.");
     return;
   }
@@ -120,7 +119,7 @@ export class ImageDropCarrosselComponent implements OnInit, OnDestroy {
   const erros: string[] = [];
 
   for (const file of Array.from(files)) {
-    if (this.images.length + imagens.length >= MAX_IMAGENS) break;
+    if (this.images.length + imagens.length >= this.MAX_IMAGENS) break;
 
     try {
       const comprimida = await compressImage(file);

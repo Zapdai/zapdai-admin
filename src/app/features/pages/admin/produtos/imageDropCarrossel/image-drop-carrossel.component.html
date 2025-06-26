@@ -25,7 +25,7 @@
           <mat-icon>delete</mat-icon>
         </button>
       </div>
-    } @else if (images.length < 3) {
+    } @else if (images.length < MAX_IMAGENS) {
       <div class="drop-area"
            (click)="fileInput.click()"
            (drop)="onDrop($event)"
