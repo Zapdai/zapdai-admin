@@ -9,11 +9,23 @@ import { CreateProductComponent } from "../create-product/create-product.compone
 import { AuthDecodeService } from "../../../../../services/AuthUser.service";
 import { CategoriasComponent } from "../categorias/categorias.component";
 import { CommonModule } from '@angular/common';
+import { UtiusAdminComponent } from "../utiusAdmin/utiusAdmin.component";
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
     selector: "app-produtos",
-    imports: [CommonModule, MatIconModule, ReactiveFormsModule, UtiusComponent, CreateProductComponent, CategoriasComponent],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatMenuModule,
+        ReactiveFormsModule,
+        CreateProductComponent,
+        CategoriasComponent,
+        UtiusAdminComponent,
+        MatButtonModule
+    ],
     standalone: true,
     templateUrl: "./produtosAdmin.component.html",
     styleUrl: "./produtosAdmin.component.scss"

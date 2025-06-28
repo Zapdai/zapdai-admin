@@ -1,0 +1,40 @@
+<div class="banner" (click)="detalhes()">
+    <figure class="img">
+        <img [src]="imagem" alt="">
+    </figure>
+
+    @if (isAdmin) {
+    <div class="ng-infor-id">
+        <small>ID: {{ id }}</small>
+
+        <!-- Ícone de menu (evita propagação para não chamar detalhes) -->
+        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <!-- Menu com opções -->
+        <mat-menu #menu="matMenu">
+            <button class="btn-matMenu" mat-menu-item (click)="editar(id); $event.stopPropagation()">
+                <mat-icon>edit</mat-icon>
+                <span>Editar</span>
+            </button>
+            <button class="btn-matMenu" mat-menu-item (click)="deletar(id); $event.stopPropagation()">
+                <mat-icon>delete</mat-icon>
+                <span>Deletar</span>
+            </button>
+        </mat-menu>
+
+    </div>
+    }
+
+    <span class="ng-descricao">{{ titulo }}</span>
+
+    <div class="ng-infor">
+        <div class="ng-infor-price">
+            <small>{{ price | currency:'BRL':'symbol':'1.2-2' }}</small>
+        </div>
+        <div class="ng-infor-cred">
+            <small>Até 3x no cartão</small>
+        </div>
+    </div>
+</div>

@@ -5,6 +5,7 @@ import { ProdutosApiService } from "../../../../services/produtoService/produtos
 import { firstValueFrom } from "rxjs";
 import { UtiusComponent } from "../../../../shared/component/utius/utius.component";
 import { AuthDecodeService } from "../../../../services/AuthUser.service";
+import { UtiusAdminComponent } from "../produtos/utiusAdmin/utiusAdmin.component";
 
 type produtos = {
     amountQTD: number
@@ -32,7 +33,7 @@ type empresa = {
 @Component({
     selector: "app-destaque",
     standalone: true,
-    imports: [MaisPostadosComponent, UtiusComponent],
+    imports: [MaisPostadosComponent, UtiusAdminComponent],
     templateUrl: "./destaque.component.html",
     styleUrl: "./destaque.component.scss"
 })
