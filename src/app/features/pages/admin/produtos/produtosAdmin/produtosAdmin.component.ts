@@ -68,8 +68,6 @@ export class ProdutosAdminComponent implements OnInit {
             const response = await firstValueFrom(this.ApiV1Loja.findAllProdutosEmpresa(this.authDecodeUser.getEmpresaId()));
             this.todosProdutos = response.content[0]?.produtos || [];
 
-            // Limpa o campo de busca
-            this.groupSearh.get('searchProduct')?.setValue('');
         } catch (error) {
             console.error("Erro ao buscar produtos da empresa:", error);
             this.todosProdutos = [];

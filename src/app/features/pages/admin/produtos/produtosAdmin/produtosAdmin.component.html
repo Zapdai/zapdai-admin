@@ -27,7 +27,7 @@
         <!-- Sempre mostra todos os produtos na tela -->
         @if (!hasSearchValue) {
         @for (item of todosProdutos; track item) {
-        <app-utiusAdmin (editarProdutoEmit)="abrirEdicao(item.idProduto)" [id]="item.idProduto" [titulo]="item.productName"
+        <app-utiusAdmin (emiter)="rodaFunc(item.idProduto)" (editarProdutoEmit)="abrirEdicao(item.idProduto)" [id]="item.idProduto" [titulo]="item.productName"
             [price]="item.price" [imagem]="item.imgUrl">
         </app-utiusAdmin>
         }
@@ -38,7 +38,7 @@
         <ul class="custom-autocomplete-panel">
             @for (item of filteredProdutos | async; track item) {
             <li [value]="item.productName">
-                <app-utiusAdmin (editarProdutoEmit)="abrirEdicao(item.idProduto)"
+                <app-utiusAdmin (emiter)="rodaFunc(item.idProduto)" (editarProdutoEmit)="abrirEdicao(item.idProduto)"
                     [id]="item.idProduto" [titulo]="item.productName" [price]="item.price" [imagem]="item.imgUrl">
                 </app-utiusAdmin>
             </li>
