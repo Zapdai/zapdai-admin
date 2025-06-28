@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { UtiusAdminComponent } from "../utiusAdmin/utiusAdmin.component";
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import { UpdateProductComponent } from "../update-product/update-product.component";
 
 
 @Component({
@@ -24,7 +25,8 @@ import { MatButtonModule } from '@angular/material/button';
         CreateProductComponent,
         CategoriasComponent,
         UtiusAdminComponent,
-        MatButtonModule
+        MatButtonModule,
+        UpdateProductComponent
     ],
     standalone: true,
     templateUrl: "./produtosAdmin.component.html",
@@ -35,12 +37,13 @@ export class ProdutosAdminComponent implements OnInit {
     filteredProdutos!: Observable<any> | undefined;
     @Input() produto: any;
     groupSearh = new FormGroup({
-        productName: new FormControl("")
+        searchProduct: new FormControl("")
     })
     ativaCreatProduct = false;
+    ativaUpdateProduct = false;
     openCategory = false;
-    @Output() emitCreatProduct = new EventEmitter();
-
+    @Output() emitUpdateProduct = new EventEmitter();
+    idProdutoEditando: number | null = null;
 
     constructor(
         private ApiV1Loja: ApiV1Loja,
@@ -50,14 +53,14 @@ export class ProdutosAdminComponent implements OnInit {
 
 
     async ngOnInit(): Promise<void> {
-        this.getAllProdutosEmpresa();
+        await this.getAllProdutosEmpresa();
 
-
-        this.filteredProdutos = this.groupSearh.get("productName")!.valueChanges.pipe(
+        this.filteredProdutos = this.groupSearh.get("searchProduct")!.valueChanges.pipe(
             startWith(''),
             map(value => this._filter(value || ''))
         );
     }
+
 
 
     async getAllProdutosEmpresa() {
@@ -66,7 +69,7 @@ export class ProdutosAdminComponent implements OnInit {
             this.todosProdutos = response.content[0]?.produtos || [];
 
             // Limpa o campo de busca
-            this.groupSearh.get('productName')?.setValue('');
+            this.groupSearh.get('searchProduct')?.setValue('');
         } catch (error) {
             console.error("Erro ao buscar produtos da empresa:", error);
             this.todosProdutos = [];
@@ -89,12 +92,12 @@ export class ProdutosAdminComponent implements OnInit {
     }
 
     get hasSearchValue(): boolean {
-        return !!this.groupSearh.get('productName')?.value?.trim();
+        return !!this.groupSearh.get('searchProduct')?.value?.trim();
     }
 
 
     pegarvalor() {
-        const name = this.groupSearh.get("productName")?.value;
+        const name = this.groupSearh.get("searchProduct")?.value;
         alert("valor digitado " + name)
     }
 
@@ -104,11 +107,19 @@ export class ProdutosAdminComponent implements OnInit {
     }
 
     emitProduct() {
-        this.emitCreatProduct.emit();
+        this.emitUpdateProduct.emit();
     }
 
     ativaProduct() {
         this.ativaCreatProduct = !this.ativaCreatProduct;
+    }
+
+    abrirEdicao(id: number) {
+        this.idProdutoEditando = id;
+    }
+
+    fecharEdicao() {
+        this.idProdutoEditando = null;
     }
 
     ativaCategory() {

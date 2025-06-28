@@ -4,7 +4,7 @@
         <section class="ng-form">
             <form action="" [formGroup]="groupSearh">
                 <div class="search">
-                    <input type="search" class="ng-input" formControlName="productName"
+                    <input type="search" class="ng-input" formControlName="searchProduct"
                         placeholder="Buscar por ID ou Nome do Produto" (focus)="getAllProdutosEmpresa()"
                         matAutocompletePosition="below">
                     <mat-icon class="icone">search</mat-icon>
@@ -27,7 +27,7 @@
         <!-- Sempre mostra todos os produtos na tela -->
         @if (!hasSearchValue) {
         @for (item of todosProdutos; track item) {
-        <app-utiusAdmin (emiter)="rodaFunc(item.idProduto)" [id]="item.idProduto" [titulo]="item.productName"
+        <app-utiusAdmin (editarProdutoEmit)="abrirEdicao(item.idProduto)" [id]="item.idProduto" [titulo]="item.productName"
             [price]="item.price" [imagem]="item.imgUrl">
         </app-utiusAdmin>
         }
@@ -38,8 +38,8 @@
         <ul class="custom-autocomplete-panel">
             @for (item of filteredProdutos | async; track item) {
             <li [value]="item.productName">
-                <app-utiusAdmin (emiter)="rodaFunc(item.idProduto)" [id]="item.idProduto" [titulo]="item.productName"
-                    [price]="item.price" [imagem]="item.imgUrl">
+                <app-utiusAdmin (editarProdutoEmit)="abrirEdicao(item.idProduto)"
+                    [id]="item.idProduto" [titulo]="item.productName" [price]="item.price" [imagem]="item.imgUrl">
                 </app-utiusAdmin>
             </li>
             }
@@ -53,6 +53,9 @@
 <app-create-product (desbiledCarEmit)="ativaProduct()"></app-create-product>
 }
 
+@if (idProdutoEditando) {
+<app-update-product [idProduto]="idProdutoEditando" (desbiledCarEmit)="fecharEdicao()"></app-update-product>
+}
 
 @if (openCategory) {
 <app-categorias (CategoriaEmit)="ativaCategory()"></app-categorias>

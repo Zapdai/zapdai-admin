@@ -3,7 +3,8 @@ import {
   Output,
   EventEmitter,
   ElementRef,
-  ViewChild
+  ViewChild,
+  Input
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { SnackService } from '../../../../../services/snackBar/snack.service';
@@ -19,13 +20,15 @@ type DomFile = globalThis.File;
   imports: [MatIconModule, CommonModule]
 })
 export class ImageDropCarrossel02Component {
-  images: { url: string; file: DomFile }[] = [];
   MAX_IMAGENS = 3;
+  @Input() images: { url: string; file?: File }[] = [];
+
+
 
   @Output() enviarImagens = new EventEmitter<File[]>();
   @ViewChild('scrollContainer', { static: false }) fer?: ElementRef;
 
-  constructor(private snack: SnackService) {}
+  constructor(private snack: SnackService) { }
 
   gerar7DigitosNumericos() {
     return Math.floor(1000000 + Math.random() * 9000000).toString();
@@ -142,20 +145,23 @@ export class ImageDropCarrossel02Component {
   }
 
   emitirImagensParaPai() {
-    const arquivos = this.images.map((img) => img.file);
+    const arquivos = this.images
+      .map(img => img.file)
+      .filter((file): file is File => file !== undefined);
     this.enviarImagens.emit(arquivos);
   }
 
+
   rolarDireita() {
     this.fer?.nativeElement.scrollBy({
-      left: 250,
+      left: 272,
       behavior: 'smooth'
     });
   }
 
   rolarEsquerda() {
     this.fer?.nativeElement.scrollBy({
-      left: -250,
+      left: -272,
       behavior: 'smooth'
     });
   }

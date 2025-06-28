@@ -8,17 +8,17 @@
         <small>ID: {{ id }}</small>
 
         <!-- Ícone de menu (evita propagação para não chamar detalhes) -->
-        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+        <button #trigger="matMenuTrigger" mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
             <mat-icon>more_vert</mat-icon>
         </button>
 
         <!-- Menu com opções -->
-        <mat-menu #menu="matMenu">
-            <button class="btn-matMenu" mat-menu-item (click)="editar(id); $event.stopPropagation()">
+        <mat-menu #menu="matMenu" (click)="$event.stopPropagation()">
+            <button class="btn-matMenu" mat-menu-item (click)="editar(id, trigger)">
                 <mat-icon>edit</mat-icon>
                 <span>Editar</span>
             </button>
-            <button class="btn-matMenu" mat-menu-item (click)="deletar(id); $event.stopPropagation()">
+            <button class="btn-matMenu" mat-menu-item (click)="editar(id, trigger)">
                 <mat-icon>delete</mat-icon>
                 <span>Deletar</span>
             </button>

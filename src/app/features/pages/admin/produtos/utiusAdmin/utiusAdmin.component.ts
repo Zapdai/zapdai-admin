@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -18,10 +18,11 @@ export class UtiusAdminComponent implements OnInit {
   @Input() titulo?: string;
   @Input() price?: number;
   @Output() emiter = new EventEmitter();
+  @Output() editarProdutoEmit = new EventEmitter<number>();
 
   isAdmin = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.verificarAdmin(this.router.url);
@@ -40,11 +41,13 @@ export class UtiusAdminComponent implements OnInit {
     this.emiter.emit();
   }
 
-  editar(id?: number) {
-    alert('Editar:' + id);
+  editar(id?: number, trigger?: MatMenuTrigger) {
+    if (id) this.editarProdutoEmit.emit(id);
+    trigger?.closeMenu(); // fecha o menu após ação
   }
 
-  deletar(id?: number) {
-    alert('Deletar:' + id);
+  deletar(id?: number, trigger?: MatMenuTrigger) {
+    alert('Deletar: ' + id);
+    trigger?.closeMenu(); // fecha o menu após ação
   }
 }
