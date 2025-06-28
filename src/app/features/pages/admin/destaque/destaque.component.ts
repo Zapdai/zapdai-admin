@@ -6,6 +6,7 @@ import { firstValueFrom } from "rxjs";
 import { UtiusComponent } from "../../../../shared/component/utius/utius.component";
 import { AuthDecodeService } from "../../../../services/AuthUser.service";
 import { UtiusAdminComponent } from "../produtos/utiusAdmin/utiusAdmin.component";
+import { UpdateProductComponent } from "../produtos/update-product/update-product.component";
 
 type produtos = {
     amountQTD: number
@@ -33,7 +34,7 @@ type empresa = {
 @Component({
     selector: "app-destaque",
     standalone: true,
-    imports: [MaisPostadosComponent, UtiusAdminComponent],
+    imports: [MaisPostadosComponent, UtiusAdminComponent, UpdateProductComponent],
     templateUrl: "./destaque.component.html",
     styleUrl: "./destaque.component.scss"
 })
@@ -41,6 +42,7 @@ export class DestaqueComponent {
     imagem: any;
     id: any
     empresa?: empresa[];
+    idProdutoEditando: number | null = null;
 
     constructor(private router: Router, private activeRouter: ActivatedRoute, private produtosApi: ProdutosApiService,
 
@@ -67,5 +69,13 @@ export class DestaqueComponent {
     rodaFunc(event: any) {
 
         this.router.navigateByUrl(`produto/detalhes/${event}`)
+    }
+
+    abrirEdicao(id: number) {
+        this.idProdutoEditando = id;
+    }
+
+    fecharEdicao() {
+        this.idProdutoEditando = null;
     }
 }
