@@ -3,8 +3,8 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 0 50px;
-    height: 400px;
+    padding: 20px 50px;
+    height: auto;
     margin-bottom: 20px;
 
     .ng-title {
@@ -13,7 +13,7 @@
         margin-bottom: 20px;
 
     }
-    
+
     .ng-title span {
         font-size: 15px;
         margin-bottom: 20px;
@@ -21,11 +21,11 @@
 
     .ng-fieldset {
         width: 245px;
-        padding: 2px;
+        padding: 0 10px;
         border-radius: 5px;
         margin-top: 20px;
-        
-        
+
+
         legend {
             font-size: 12px;
             font-weight: 500;
@@ -37,16 +37,19 @@
             outline: none;
             border: 0;
             width: 100%;
-            height: 20px;
+            height: 30px;
             font-size: 16px;
             color: #eee;
         }
-        .ng-password-btn{
+
+        .ng-password-btn {
             display: flex;
-            padding: 2px;
-            mat-icon{
-            cursor: pointer;
-            transform: scale(0.0.97);
+            margin-right: 10px;
+
+            mat-icon {
+                cursor: pointer;
+                transform: scale(0.0.97);
+                color: #cecece;
             }
         }
 
@@ -61,7 +64,7 @@
         padding: 2px 5px;
     }
 
-    
+
     .ng-btn {
         width: 100%;
         height: 35px;
@@ -72,55 +75,71 @@
         font-size: 14px;
         font-weight: 500;
         color: #592d74;
-        margin-top: 20px;
 
     }
+
+    .btn-login {
+        margin-top: 20px;
+    }
+
     .ng-btn:hover {
         background-color: #c8c8c8;
     }
+
     .ng-btn:active {
         transform: scale(0.97);
     }
 
-    .ng-text {
-        color: #bbb;
-        font-size: 13px;
-        text-decoration: underline;
-        margin-top: 20px;
-        cursor: pointer;
-    }
-     .ng-text:hover {
-        color: #c5d1fa;
-        
-    }
 
-    .ng-btn-signup {
-        height: 28px;
-        border-radius: 5px;
-        background-color: #ccc;
-        margin-top: 20px;
-    }
-    .ng-btn-signup:hover {
-        background-color: #ccc;
+    .btn-auth {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        gap: 10px;
+        margin-top: 60px;
+
+        .ng-text {
+            color: #bbb;
+            font-size: 13px;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .ng-text:hover {
+            color: #c5d1fa;
+
+        }
+
+        .ng-btn-signup {
+            height: 28px;
+            border-radius: 5px;
+            background-color: #ccc;
+        }
+
+        .ng-btn-signup:hover {
+            background-color: #ccc;
+        }
     }
 }
-@media screen and (min-width:475px){
+
+@media screen and (min-width:475px) {
     .ng-form {
         .ng-fieldset {
             width: 350px;
-            padding: 7px;
             border-radius: 5px;
             margin-top: 20px;
-            
-    
+
+
             .ng-input {
                 width: 100%;
                 font-size: 16px;
             }
-            
+
 
 
         }
-    
+
     }
 }

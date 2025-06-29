@@ -1,0 +1,56 @@
+<div class="ng-main">
+    @if(isVisible) {
+    <button class="btn-voltar" (click)="voltarPaginaAnterior()">
+        <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+    }
+    <div class="container">
+        <div class="ng-cont1">
+            <h2>Login com Telefone</h2>
+            <div class="steps-indicator"></div>
+        </div>
+
+        <form [formGroup]="groupform">
+            <!-- Step 1 -->
+            <div *ngIf="currentStep === 1" class="form-step">
+                <p></p>
+
+                <fieldset class="ng-fieldset">
+                    <legend>Número de Whatsapp</legend>
+                    <input #primeiroInput type="text" class="ng-input" placeholder="Seu WhatsApp"
+                        formControlName="numeroWhatsapp" mask="(00) 00000-0000" (keydown.enter)="next()">
+                </fieldset>
+                @if (isRequired('numeroWhatsapp')) {
+                <small class="ng-error">Informe um Número de Whatsapp válido!</small>
+                }
+            </div>
+
+            <!-- Step 2 -->
+            <div *ngIf="currentStep === 2" class="form-step step-2">
+                <div class="card flex justify-center custom-otp">
+                    <p-inputotp #primeiroInput autofocus [length]="6" formControlName="code" />
+                </div>
+                @if (isRequired('code')) {
+                <small class="ng-error">Informe o código de verificação!</small>
+                }
+
+                <button mat-flat-button type="button" (click)="enviarCodigoWhatsAppp()">Reenviar código</button>
+
+            </div>
+
+
+            <div class="buttons">
+                <button mat-flat-button type="button" (click)="enviarCodigoWhatsAppp()" *ngIf="currentStep === 1"
+                    class="ng-btn" [disabled]="!isCurrentStepValid()">Enviar código</button>
+                <button mat-flat-button *ngIf="currentStep === 2" class="ng-btn" [disabled]="!isCurrentStepValid()"
+                    (click)="validarCodigo()">Confirmar código de verificação</button>
+            </div>
+        </form>
+        <div class="btn-auth">
+            <button mat-flat-button class="ng-btn ng-btn-signup" (click)="pageSignin()">Login com Email/Senha</button>
+            <span class="ng-text" (click)="pageResetPassword()">Esqueceu sua senha?</span>
+            <button class="ng-btn ng-btn-signup" mat-flat-button color="secundary" (click)="pageSignup()">Criar
+                conta</button>
+        </div>
+    </div>
+</div>

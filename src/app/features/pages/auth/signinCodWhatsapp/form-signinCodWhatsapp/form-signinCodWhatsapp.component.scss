@@ -1,0 +1,283 @@
+.ng-main {
+    width: 100%;
+    height: auto;
+    background: var(--background-color-container);
+    margin: 0;
+    padding: 50px;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        gap: 1rem;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+        .ng-cont1 {
+            display: flex;
+            flex-direction: column;
+
+            h2 {
+                text-align: center;
+                font-size: 18px;
+                margin-bottom: 20px;
+                color: #ddd;
+            }
+
+            .steps-indicator {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                width: 100%;
+            }
+        }
+
+
+
+
+
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            gap: 10px 0;
+
+
+            .form-step .ng-fieldset {
+                width: 100%;
+                padding: 0 10px;
+                border-radius: 5px;
+                margin-top: 15px;
+                border-color: #bbb;
+
+                legend {
+                    font-size: 12px;
+                    font-weight: 500;
+                    color: #bbb;
+                    padding: 0 4px;
+                }
+
+                .ng-input {
+                    background-color: transparent;
+                    outline: none;
+                    border: 0;
+                    width: 100%;
+                    height: 30px;
+                    font-size: 16px;
+                    color: #eee;
+                }
+
+                .ng-input::placeholder {
+                    color: #999;
+                    font-size: 14px;
+                    padding-left: 10px;
+                }
+
+
+
+            }
+
+            .ng-listForm {
+                display: flex;
+                justify-content: space-between;
+                gap: 0 15px;
+
+                div {
+                    flex: 1;
+                }
+            }
+
+            .ng-error {
+                width: 100%;
+                font-size: 12px;
+                color: #FF8401;
+                padding: 2px 5px;
+            }
+        }
+
+
+
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 0 15px;
+
+
+            .ng-btn {
+                width: 100%;
+                height: 35px;
+                border-radius: 5px;
+                border: 1px solid #c8c8c8;
+                cursor: pointer;
+                font-family: var(--font-family);
+                font-size: 14px;
+                font-weight: 500;
+                color: #592d74;
+                margin-top: 20px;
+            }
+
+            .ng-btn:hover {
+                background-color: #eee;
+            }
+
+            .ng-btn:active {
+                transform: scale(0.97);
+
+            }
+
+            .ng-btn:disabled {
+                color: #888;
+            }
+        }
+    }
+}
+
+.custom-otp {
+    display: flex;
+    justify-content: center;
+}
+
+.custom-otp ::ng-deep input {
+    background-color: transparent;
+    /* cor de fundo */
+    border: 2px solid #bbb;
+    /* borda */
+    color: #fff;
+    /* cor do texto */
+    border-radius: 8px;
+    /* bordas arredondadas */
+    width: 35px;
+    height: 45px;
+    font-size: 16px;
+}
+
+/* Adiciona efeito ao focar */
+.custom-otp ::ng-deep input:focus {
+    border-color: #68bd7b;
+    /* verde ao focar */
+    box-shadow: 0 0 5px #68bd7b;
+}
+
+.btn-auth {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    margin-top: 40px;
+
+    .ng-btn-signup {
+        width: 100%;
+        height: 28px;
+        border-radius: 5px;
+        background-color: #ccc;
+    }
+
+    .ng-btn-signup:hover {
+        background-color: #ccc;
+    }
+
+
+    .ng-text {
+        color: #bbb;
+        font-size: 13px;
+        text-decoration: underline;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .ng-text:hover {
+        color: #c5d1fa;
+
+    }
+}
+
+.btn-voltar {
+    position: fixed;
+    top: 20px;
+    left: 15px;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
+
+    mat-icon {
+        color: #fff;
+    }
+}
+
+.ng-input.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+
+
+.step-2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+// ----------------------------------------------------------------------------- ///
+@media screen and (min-width:730px) {
+    .ng-main {
+        display: flex;
+        flex-direction: column;
+        width: 400px;
+        height: auto;
+        padding: 15px 20px;
+        background: var(--background-color-container);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        box-shadow: 0 1px 15px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 30px;
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 50px 10px;
+            gap: 1rem;
+
+            .ng-cont1 {
+                display: flex;
+                flex-direction: column;
+
+                h2 {
+                    text-align: center;
+                    font-size: 18px;
+                    margin-bottom: 20px;
+                    color: #ddd;
+                }
+
+                .steps-indicator {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    width: 100%;
+                }
+
+
+            }
+
+            .ng-btn-signup {
+                height: 28px;
+                border-radius: 5px;
+                background-color: #ccc;
+                margin-top: 10px;
+            }
+
+            .ng-btn-signup:hover {
+                background-color: #ccc;
+            }
+        }
+
+        .custom-otp ::ng-deep input {
+            width: 100%;
+            height: 50px;
+        }
+    }
+
+}

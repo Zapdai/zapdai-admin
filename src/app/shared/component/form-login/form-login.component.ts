@@ -91,6 +91,16 @@ export class FormLoginComponent {
     }
   }
 
+  pageLoginWhatsapp() {
+    this.activeRoute.activeLoading()
+    setTimeout(() => {
+      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+        setTimeout(() => {
+          this.router.navigate(['/auth/signincodwhatsapp']);
+        }, 1000);
+      });
+    }, 0);
+  }
   pageSignup() {
     this.activeRoute.activeLoading()
     setTimeout(() => {
