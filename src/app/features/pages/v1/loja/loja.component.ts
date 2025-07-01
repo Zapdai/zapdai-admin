@@ -10,7 +10,7 @@ import { MatIconModule } from "@angular/material/icon";
 
 @Component({
    selector: 'app-loja',
-   imports: [MatTabsModule, ReactiveFormsModule, CommonModule, MatInputModule,MatIconModule],
+   imports: [MatTabsModule, ReactiveFormsModule, CommonModule, MatInputModule, MatIconModule],
    templateUrl: './loja.component.html',
    styleUrl: './loja.component.scss'
 })
@@ -19,7 +19,7 @@ export class AppLojaComponent implements OnInit {
    idProduto: any;
    produto: any
    quantidade: number = 1;
-       @ViewChild("scrollContainer",{static:false}) fer?:ElementRef;
+   @ViewChild("scrollContainer", { static: false }) fer?: ElementRef;
 
 
    constructor(public route: ActivatedRoute, private api: ApiV1Loja) {
@@ -28,24 +28,21 @@ export class AppLojaComponent implements OnInit {
    ngOnInit(): void {
       this.rodaFuncaoApi()
    }
-    imagemSelecionadaItem(imagem:any){
-      this.imagemSelecionada =  imagem;
-    }
+   imagemSelecionadaItem(imagem: any) {
+      this.imagemSelecionada = imagem;
+   }
    async rodaFuncaoApi() {
-  try {
-    this.idProduto = this.route.snapshot.paramMap.get("id");
-    const resposta = await firstValueFrom(this.api.findOneProduto(this.idProduto));
-    
-    if (resposta) {
-      this.produto = resposta;
-    } else {
-      this.produto = {}; // evita que produto fique null
-    }
+      try {
+         this.idProduto = this.route.snapshot.paramMap.get("id");
+         const resposta = await firstValueFrom(this.api.findOneProduto(this.idProduto));
 
-  } catch (error) {
-    this.produto = {}; // fallback para evitar erro de template
-  }
-}
+
+         this.produto = resposta || {}; // previne erro
+      } catch (error) {
+         this.produto = {}; // fallback seguro
+      }
+   }
+
 
    imagemSelecionada: string | null = null;
    adicionarAoCarrinho(produto: any): void {
@@ -54,17 +51,17 @@ export class AppLojaComponent implements OnInit {
          quantidade: this.quantidade
       };
    }
-   rolarDireita(event:any){
+   rolarDireita(event: any) {
       console.log(event)
       this.fer?.nativeElement.scrollBy({
-          left:-20,
-          behavior: 'smooth'
+         left: -20,
+         behavior: 'smooth'
       })
-  }
-  rolarEsquerda(){
+   }
+   rolarEsquerda() {
       this.fer?.nativeElement.scrollBy({
-          left:20,
-          behavior: 'smooth'
+         left: 20,
+         behavior: 'smooth'
       })
-  }
+   }
 }
