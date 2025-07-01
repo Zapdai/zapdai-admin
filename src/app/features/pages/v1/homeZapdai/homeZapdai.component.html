@@ -16,7 +16,9 @@
             </section>
             <div class="propaganda">
                 @for (empresa of produtos; track $index) {
+                @if (empresa?.produtos?.length) {
                 <app-mais-postados [ativo]="true" [produto]="empresa?.produtos" [empresa]="empresa"></app-mais-postados>
+                }
                 }
             </div>
         </div>
