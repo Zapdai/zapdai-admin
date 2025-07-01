@@ -72,11 +72,11 @@ export class AuthInterceptors implements HttpInterceptor {
 
         if ([400, 401, 403, 501, 502, 503, 504].includes(status)) {
           if (isBrowser) {
-            if (status === 400 && error?.error?.message) {
-              this.dialog.error(error.error.message);
-            } else {
-              this.dialog.error(mensagemErro);
-            }
+            // if (status === 400 && error?.error?.message) {
+            //   this.dialog.error(error.error.message);
+            // } else {
+            //   this.dialog.error(mensagemErro);
+            // }
 
             if (mensagensExtras[status]) {
               this.dialog.error(mensagensExtras[status]);
