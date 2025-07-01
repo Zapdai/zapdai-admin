@@ -4,7 +4,6 @@ import { NotFoundComponent } from './features/pages/404/notFound.component';
 import { LoadingComponent } from './features/pages/loading/loading.component';
 import { loadingGuard } from './services/loading/loading.guard';
 import { UnauthorizedComponent } from './features/pages/unauthorized/unauthorized.component';
-import { HomeZapdaiComponent } from './features/pages/homeZapdaiLoja/homeZapdai/homeZapdai.component';
 
 export const routes: Routes = [
     {
