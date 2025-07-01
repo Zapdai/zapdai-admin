@@ -2,47 +2,41 @@
 <app-mobile-navbar></app-mobile-navbar>
 
 <div class="area-loja">
-  <div #element class="main">
-    <div class="ng-categoria">
-      <section class="container-area">
-        <div class="carrossel">
-          <app-carrossel></app-carrossel>
+    <div #element class="main">
+        <div class="ng-categoria">
+            <section class="container-area">
+                <div class="carrossel">
+                    <app-carrossel></app-carrossel>
+                </div>
+
+                <div class="ng-itens">
+                    @for (categoria of categorias; track $index) {
+                    <app-opcoes-categoria (idevent)="navigate(categoria.nome)" [url]="categoria.icone"
+                        [name]="categoria.nome"></app-opcoes-categoria>
+                    }
+                </div>
+            </section>
+
+            <div class="propaganda">
+                @for (empresa of produtos; track $index) {
+                @if (empresa && empresa.produtos?.length > 0) {
+                <app-mais-postados [ativo]="true" [produto]="empresa.produtos" [empresa]="empresa"></app-mais-postados>
+                }
+                }
+
+            </div>
         </div>
 
-        <div class="ng-itens">
-          @for (categoria of categorias; track $index) {
-            <app-opcoes-categoria
-              (idevent)="navigate(categoria.nome)"
-              [url]="categoria.icone"
-              [name]="categoria.nome"
-            ></app-opcoes-categoria>
-          }
-        </div>
-      </section>
-
-      <div class="propaganda">
-        @for (empresa of produtos; track $index) {
-          @if (empresa?.produtos?.length) {
-            <app-mais-postados
-              [ativo]="true"
-              [produto]="empresa.produtos"
-              [empresa]="empresa"
-            ></app-mais-postados>
-          }
-        }
-      </div>
+        <app-footer [footerActive]="true"></app-footer>
     </div>
-
-    <app-footer [footerActive]="true"></app-footer>
-  </div>
 </div>
 
 @if (ativaCar) {
-  <app-carrinho (desbiledCarEmit)="ativaCarrinho()"></app-carrinho>
+<app-carrinho (desbiledCarEmit)="ativaCarrinho()"></app-carrinho>
 }
 
 @if (ativo) {
-  <div class="btn">
+<div class="btn">
     <button (click)="onWindows()"><mat-icon>arrow_upward</mat-icon></button>
-  </div>
+</div>
 }

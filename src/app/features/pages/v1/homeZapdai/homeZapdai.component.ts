@@ -15,22 +15,22 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-homeZapdai',
-  standalone:true,
+  standalone: true,
   imports: [headerComponent, OpcoesCategoriaComponent,
     CarrosselComponent, MaisPostadosComponent, footerComponent,
-    MobileNavbarComponent, MatTabsModule,CarrinhoComponent,MatIconModule],
+    MobileNavbarComponent, MatTabsModule, CarrinhoComponent, MatIconModule],
   templateUrl: './homeZapdai.component.html',
   styleUrl: './homeZapdai.component.scss'
 })
-export class HomeZapdaiComponent implements OnInit,AfterViewInit {
-    @ViewChild("element") elemnt!: ElementRef;
-  ativo?:boolean;
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,private apiCategosrias: ApiV1Loja, public router: Router) { }
+export class HomeZapdaiComponent implements OnInit, AfterViewInit {
+  @ViewChild("element") elemnt!: ElementRef;
+  ativo?: boolean;
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private apiCategosrias: ApiV1Loja, public router: Router) { }
   categorias: any;
   produtos: any
-  ativaCar?:boolean;
+  ativaCar?: boolean;
 
-   ngAfterViewInit() {
+  ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       const element = this.elemnt.nativeElement;
       element.addEventListener('scroll', this.setTop.bind(this));
@@ -55,27 +55,38 @@ export class HomeZapdaiComponent implements OnInit,AfterViewInit {
     const scrollHeight = this.elemnt.nativeElement.scrollHeight;
     const clientHeight = this.elemnt.nativeElement.clientHeight;
     const scrollTop = this.elemnt.nativeElement.scrollTop;
-          console.log(scrollTop + clientHeight > scrollHeight - 10)
+    console.log(scrollTop + clientHeight > scrollHeight - 10)
     if (scrollTop + clientHeight > scrollHeight - 10) {
       this.ativo = true;
-     
+
 
     } else {
       this.ativo = false;
     }
   }
+
   async getAllProdutos() {
     try {
       const response = await firstValueFrom(this.apiCategosrias.findAllProdutos());
-      this.produtos = response;
-    } catch (error) {
-        console.log("Erro ao carregar dados!");
+      console.log("Produtos recebidos:", response);
 
+      const listaFiltrada = response?.filter((empresa: any) => empresa != null) ?? [];
+
+      this.produtos = listaFiltrada.map((empresa: any) => ({
+        ...empresa,
+        produtos: Array.isArray(empresa.produtos) ? empresa.produtos : []
+      }));
+    } catch (error) {
+      console.error("Erro ao carregar produtos:", error);
+      this.produtos = [];
     }
   }
 
 
-onWindows() {
+
+
+
+  onWindows() {
     this.elemnt.nativeElement.scroll(
       {
         top: 0,
@@ -93,8 +104,8 @@ onWindows() {
   async getNomesCategorias(): Promise<any[]> {
     return this.categorias;
   }
-  ativaCarrinho(){
-   this.ativaCar = !this.ativaCar;
+  ativaCarrinho() {
+    this.ativaCar = !this.ativaCar;
   }
-  
+
 }
