@@ -9,7 +9,7 @@
                 </div>
                 <div class="ng-itens">
                     @for (categoria of categorias; track $index) {
-                    <app-opcoes-categoria (idevent)="navigate(categoria?.nome)" [url]="categoria?.icone"
+                    <app-opcoes-categoria (idevent)="navigate(categoria.nome)" [url]="categoria.icone"
                         [name]="categoria.nome"></app-opcoes-categoria>
                     }
                 </div>

@@ -15,7 +15,7 @@
   </div>
 
   <div class="informacoes">
-    <h1>{{ produto?.productName }}</h1>
+    <h1>{{ produto.productName }}</h1>
     <p class="codigo">Cód.: {{ produto.codigo }}</p>
 
     <div class="precos">
@@ -38,7 +38,7 @@
       <button class="btn branco">Comprar agora</button>
     </div>
 
-    @if (produto?.empresaDTO.nomeCompania) {
+    @if (produto.empresaDTO.nomeCompania) {
     <p class="empresa">Vendido por <strong>{{ produto.empresaDTO.nomeCompania }}</strong></p>
     }
   </div>
