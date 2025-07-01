@@ -1,14 +1,13 @@
 <div class="produto-detalhes-container">
   <!-- Galeria lateral -->
+  @if (produto?.imagens?.length) {
   <div class="galeria-imagens">
     @for (img of produto.imagens; track $index) {
-    <img 
-         [src]="img.url" 
-         (mousemove)="imagemSelecionadaItem(img.url)"
-         [class.selecionada]="imagemSelecionada?.includes(img.url)"
-         alt="Imagem produto" />
+    <img [src]="img.url" (mousemove)="imagemSelecionadaItem(img.url)"
+      [class.selecionada]="imagemSelecionada?.includes(img.url)" alt="Imagem produto" />
     }
   </div>
+  }
 
   <div class="imagem-principal">
     <img [src]="imagemSelecionada || produto.imgProduct" alt="Imagem principal" />
@@ -19,7 +18,7 @@
     <p class="codigo">Cód.: {{ produto.codigo }}</p>
 
     <div class="precos">
-      <span class="preco-antigo">R$ {{ produto.price  }}</span>
+      <span class="preco-antigo">R$ {{ produto.price }}</span>
       <span class="desconto">Baixou {{ produto.desconto }}%</span>
       <span class="preco-final">R$ {{ produto.price }} <small>no pix</small></span>
       <span class="parcelamento">ou {{ produto.parcelas }}</span>
@@ -30,8 +29,8 @@
     </div>
 
     <div class="quantidade-carrinho">
-      <button >-</button>
-      <input type="number"  [value]="quantidade"/>
+      <button>-</button>
+      <input type="number" [value]="quantidade" />
       <button (click)="quantidade = quantidade + 1">+</button>
 
       <button class="btn azul" (click)="adicionarAoCarrinho($event)">Adicionar ao carrinho</button>
