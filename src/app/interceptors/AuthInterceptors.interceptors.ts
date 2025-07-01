@@ -36,7 +36,8 @@ export class AuthInterceptors implements HttpInterceptor {
       '/zapdai/v1/empresas/lista',
       '/zapdai/v1/produtos/unit/',
       '/zapdai/v1/usuario/usuario-code',
-      '/zapdai/v1/usuario/envio-code'
+      '/zapdai/v1/usuario/envio-code',
+      '/produto/detalhes/:id'
     ];
 
     const isPublicRoute = rotasPublicas.some((rota) =>
