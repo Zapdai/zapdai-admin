@@ -10,22 +10,22 @@
   }
 
   <div class="imagem-principal">
-    <img [src]="imagemSelecionada || produto.imgProduct" alt="Imagem principal" />
+    <img [src]="imagemSelecionada || produto?.imgProduct" alt="Imagem principal" />
   </div>
 
   <div class="informacoes">
-    <h1>{{ produto.productName }}</h1>
-    <p class="codigo">Cód.: {{ produto.codigo }}</p>
+    <h1>{{ produto?.productName }}</h1>
+    <p class="codigo">Cód.: {{ produto?.codigo }}</p>
 
     <div class="precos">
-      <span class="preco-antigo">R$ {{ produto.price }}</span>
-      <span class="desconto">Baixou {{ produto.desconto }}%</span>
-      <span class="preco-final">R$ {{ produto.price }} <small>no pix</small></span>
-      <span class="parcelamento">ou {{ produto.parcelas }}</span>
+      <span class="preco-antigo">R$ {{ produto?.price }}</span>
+      <span class="desconto">Baixou {{ produto?.desconto }}%</span>
+      <span class="preco-final">R$ {{ produto?.price }} <small>no pix</small></span>
+      <span class="parcelamento">ou {{ produto?.parcelas }}</span>
     </div>
 
     <div class="variacoes">
-      <p><strong>Cor:</strong> <span class="tag">{{ produto.cor }}</span></p>
+      <p><strong>Cor:</strong> <span class="tag">{{ produto?.cor }}</span></p>
     </div>
 
     <div class="quantidade-carrinho">
@@ -37,6 +37,8 @@
       <button class="btn branco">Comprar agora</button>
     </div>
 
+    @if (produto?.empresaDTO?.nomeCompania) {
     <p class="empresa">Vendido por <strong>{{ produto.empresaDTO.nomeCompania }}</strong></p>
+    }
   </div>
 </div>

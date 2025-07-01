@@ -17,7 +17,7 @@ import { MatIconModule } from "@angular/material/icon";
 export class AppLojaComponent implements OnInit {
    [x: string]: any;
    idProduto: any;
-   produto: any
+   produto: any = {};
    quantidade: number = 1;
    @ViewChild("scrollContainer", { static: false }) fer?: ElementRef;
 
