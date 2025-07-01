@@ -13,6 +13,8 @@ import { Location } from '@angular/common';
 import { loadingService } from '../../../../../services/loading/loading.service';
 import { SnackService } from '../../../../../services/snackBar/snack.service';
 import { AuthDecodeService } from '../../../../../services/AuthUser.service';
+import { apiAuthService } from '../../../../../services/apiAuth.service';
+import { AuthService } from '../../../../../services/auth.service';
 
 type verificationOPT = {
   numeroWhatsapp: number;
@@ -42,6 +44,7 @@ export class FormSigninCodWhatsappComponent implements OnInit, AfterViewInit {
   icon: "visibility" | "visibility_off" = "visibility"
   isVisible = false;
   groupform!: FormGroup;
+  usuarioId: any;
 
   @ViewChild('primeiroInput', { static: false }) primeiroInput!: ElementRef;
 
@@ -54,6 +57,8 @@ export class FormSigninCodWhatsappComponent implements OnInit, AfterViewInit {
     private snack: SnackService,
     public authDecodeUser: AuthDecodeService,
     private location: Location,
+    private apiAuth: apiAuthService,
+    private authService: AuthService,
   ) { }
 
 
@@ -160,15 +165,56 @@ export class FormSigninCodWhatsappComponent implements OnInit, AfterViewInit {
 
   enviarCodigoWhatsAppp() {
     const numeroWhatsapp = this.groupform.value.numeroWhatsapp;
+
+
+    if (!numeroWhatsapp) {
+      this.groupform.controls['numeroWhatsapp'].markAsTouched();
+      return;
+    }
+
+    const payload = { number: numeroWhatsapp };
+    console.log(payload)
+
+    this.apiAuth.sendCodeWhatsapp(payload).subscribe((e: any) => {
+      this.usuarioId = e.usuarioId
+      this.currentStep = 2; // Avança para o passo de verificação
+      this.snack.success(e.message)
+    });
+
   }
 
 
-  validarCodigo() {
-    const numeroWhatsapp = this.groupform.value.numeroWhatsapp;
-    const code = this.groupform.value.code;
+  AuthUserCodeWhatsapp() {
+    const code = this.groupform.value.code?.trim();;
+
+    const payload = {
+      usuario: {
+        usuarioId: this.usuarioId,
+      },
+      code: code
+    };
+
+    this.apiAuth.signinCodeWhatsapp(payload).subscribe(item => {
+      this.groupform.reset()
+      if (item.authToken !== null) {
+        this.authService.saveToken(item.authToken);
+
+
+        // Recupera a URL salva (ou define '/' como padrão)
+        const returnUrl = localStorage.getItem('returnUrl') || '/';
+        localStorage.removeItem('returnUrl'); // limpa após usar
+
+        // Redireciona para a página original
+        setTimeout(() => {
+          this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+            setTimeout(() => {
+              window.location.href = returnUrl;
+            }, 1000);
+          });
+        }, 0);
+      }
+    });
   }
-
-
 
   focarPrimeiroCampo() {
     if (this.primeiroInput && this.primeiroInput.nativeElement) {

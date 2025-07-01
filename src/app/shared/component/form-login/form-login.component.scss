@@ -5,7 +5,6 @@
     flex-direction: column;
     padding: 20px 50px;
     height: auto;
-    margin-bottom: 20px;
 
     .ng-title {
         text-align: center;
@@ -20,16 +19,17 @@
     }
 
     .ng-fieldset {
-        width: 245px;
+        width: 100%;
         padding: 0 10px;
         border-radius: 5px;
-        margin-top: 20px;
-
+        margin-top: 15px;
+        border-color: #bbb;
 
         legend {
             font-size: 12px;
             font-weight: 500;
-            color: #ddd;
+            color: #bbb;
+            padding: 0 4px;
         }
 
         .ng-input {
@@ -42,20 +42,25 @@
             color: #eee;
         }
 
-        .ng-password-btn {
-            display: flex;
-            margin-right: 10px;
-
-            mat-icon {
-                cursor: pointer;
-                transform: scale(0.0.97);
-                color: #cecece;
-            }
+        .ng-input::placeholder {
+            color: #999;
+            font-size: 14px;
         }
-
-
-
     }
+
+    .ng-password-btn {
+        display: flex;
+        margin-right: 10px;
+
+        mat-icon {
+            cursor: pointer;
+            transform: scale(0.0.97);
+            color: #cecece;
+        }
+    }
+
+
+
 
     .ng-error {
         width: 100%;

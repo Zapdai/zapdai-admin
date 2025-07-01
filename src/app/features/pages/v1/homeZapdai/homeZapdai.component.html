@@ -9,14 +9,14 @@
                 </div>
                 <div class="ng-itens">
                     @for (categoria of categorias; track $index) {
-                    <app-opcoes-categoria (idevent)="navigate(categoria.nome)" [url]="categoria.icone"
-                        [name]="categoria.nome"></app-opcoes-categoria>
+                    <app-opcoes-categoria (idevent)="navigate(categoria?.nome)" [url]="categoria?.icone"
+                        [name]="categoria?.nome"></app-opcoes-categoria>
                     }
                 </div>
             </section>
             <div class="propaganda">
                 @for (empresa of produtos; track $index) {
-                <app-mais-postados [ativo]="true" [produto]="empresa.produtos" [empresa]="empresa"></app-mais-postados>
+                <app-mais-postados [ativo]="true" [produto]="empresa?.produtos" [empresa]="empresa"></app-mais-postados>
                 }
             </div>
         </div>
