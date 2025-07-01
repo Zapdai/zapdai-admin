@@ -1,5 +1,6 @@
+@if (produto.idProduto) {
 <div class="produto-detalhes-container">
-  <!-- Galeria lateral -->
+
   @if (produto?.imagens?.length) {
   <div class="galeria-imagens">
     @for (img of produto.imagens; track $index) {
@@ -29,11 +30,11 @@
     </div>
 
     <div class="quantidade-carrinho">
-      <button>-</button>
+      <button (click)="quantidade = (quantidade > 1 ? quantidade - 1 : 1)">-</button>
       <input type="number" [value]="quantidade" />
       <button (click)="quantidade = quantidade + 1">+</button>
 
-      <button class="btn azul" (click)="adicionarAoCarrinho($event)">Adicionar ao carrinho</button>
+      <button class="btn azul" (click)="adicionarAoCarrinho(produto)">Adicionar ao carrinho</button>
       <button class="btn branco">Comprar agora</button>
     </div>
 
@@ -42,3 +43,6 @@
     }
   </div>
 </div>
+} @else {
+<p>Produto não encontrado.</p>
+}

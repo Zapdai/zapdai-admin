@@ -19,6 +19,9 @@ export class AppLojaComponent implements OnInit {
    idProduto: any;
    produto: any = {};
    quantidade: number = 1;
+   isLoading = true;
+
+
    @ViewChild("scrollContainer", { static: false }) fer?: ElementRef;
 
 
@@ -27,21 +30,26 @@ export class AppLojaComponent implements OnInit {
    }
    ngOnInit(): void {
       this.rodaFuncaoApi()
+      console.log(this.produto?.id)
    }
    imagemSelecionadaItem(imagem: any) {
       this.imagemSelecionada = imagem;
    }
+
    async rodaFuncaoApi() {
       try {
          this.idProduto = this.route.snapshot.paramMap.get("id");
          const resposta = await firstValueFrom(this.api.findOneProduto(this.idProduto));
-
-
-         this.produto = resposta || {}; // previne erro
+         this.produto = resposta || {};
+         console.log("Resposta da API:", resposta);
       } catch (error) {
-         this.produto = {}; // fallback seguro
+         this.produto = {};
+         console.error("Erro ao carregar produto", error);
+      } finally {
+         this.isLoading = false;
       }
    }
+
 
 
    imagemSelecionada: string | null = null;
