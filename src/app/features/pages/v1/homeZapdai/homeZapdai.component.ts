@@ -87,7 +87,7 @@ onWindows() {
     this.router.navigateByUrl(`/categoria/${name}`)
   }
   navigateDetalhesProdutos(name: any) {
-    this.router.navigateByUrl(`/detalhes/produto/${name}`)
+    this.router.navigate([`/produto/detalhes/${String(name)}`])
   }
 
   async getNomesCategorias(): Promise<any[]> {
