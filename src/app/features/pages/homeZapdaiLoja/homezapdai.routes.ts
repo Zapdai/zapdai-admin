@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
 import { HomeZapdaiComponent } from "./homeZapdai/homeZapdai.component";
 import { buscaProdutos } from "./buscaProdutos/buscaProdutos.component";
-import { AppLojaComponent } from "./loja/loja.component";
+import { AppLojaComponent } from "../v1/loja/loja.component";
 export const routes: Routes = [
 
     {
@@ -12,9 +12,5 @@ export const routes: Routes = [
     },
     {
         path: "produto/detalhes/:id", component: AppLojaComponent,
-    },
-    {
-        path: "produto/empresa/:idEmpresa", component: AppLojaComponent,
     }
-
 ]
