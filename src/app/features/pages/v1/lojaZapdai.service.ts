@@ -18,7 +18,9 @@ export class LojaZapdaiService {
    async getNomesProduto(): Promise<any[]> {
     const response = await firstValueFrom(this.apiCategosrias.findAllProdutos());
     const empresas =  Array.isArray(response) ? response : [];
-     const produtos = empresas.flatMap(e => e.produtos || []);
+      const produtos = empresas.flatMap(e =>
+      Array.isArray(e?.produtos) ? e.produtos : []
+    );
      return produtos;
 
    }

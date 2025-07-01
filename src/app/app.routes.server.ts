@@ -18,7 +18,7 @@ export const serverRoutes: ServerRoute[] = [
     async getPrerenderParams() {
       const dataService = inject(LojaZapdaiService);
       const produtos = await dataService.getNomesProduto(); 
-      return produtos.map((item:any)=>({id:String(item.idProduto)})); 
+      return produtos.map((item:any)=>({id:String(item?.idProduto)})); 
     },
   },
   {
@@ -27,7 +27,7 @@ export const serverRoutes: ServerRoute[] = [
     async getPrerenderParams() {
       const dataService = inject(LojaZapdaiService);
       const produtos = await dataService.retonrIdEmpres(); 
-      return produtos.map((item:any)=>({idEmpresa:String(item.idEmpresa)})); 
+      return produtos.map((item:any)=>({idEmpresa:String(item?.idEmpresa)})); 
     },
   },
     {
