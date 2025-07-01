@@ -32,16 +32,21 @@ export class AppLojaComponent implements OnInit {
       this.imagemSelecionada =  imagem;
     }
    async rodaFuncaoApi() {
-      try {
-         this.idProduto = this.route.snapshot.paramMap.get("id") as any
-         const resposta = await firstValueFrom(this.api.findOneProduto(this.idProduto));
-         this.produto = resposta;
+  try {
+    this.idProduto = this.route.snapshot.paramMap.get("id");
+    const resposta = await firstValueFrom(this.api.findOneProduto(this.idProduto));
+    
+    if (resposta) {
+      this.produto = resposta;
+    } else {
+      this.produto = {}; // evita que produto fique null
+    }
 
-      } catch (error) {
+  } catch (error) {
+    this.produto = {}; // fallback para evitar erro de template
+  }
+}
 
-      }
-
-   }
    imagemSelecionada: string | null = null;
    adicionarAoCarrinho(produto: any): void {
       const item = {
