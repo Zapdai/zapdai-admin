@@ -40,10 +40,8 @@ export class AppLojaComponent implements OnInit {
          this.idProduto = this.route.snapshot.paramMap.get("id");
          const resposta = await firstValueFrom(this.api.findOneProduto(this.idProduto));
          this.produto = resposta ?? {};
-         console.log("Resposta da API:", this.produto.idProduto);
       } catch (error) {
          this.produto = {};
-         console.error("Erro ao carregar produto", error);
       } finally {
          this.isLoading = false;
       }

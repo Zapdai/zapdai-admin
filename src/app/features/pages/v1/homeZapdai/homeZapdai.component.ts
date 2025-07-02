@@ -34,9 +34,7 @@ export class HomeZapdaiComponent implements OnInit, AfterViewInit {
     if (isPlatformBrowser(this.platformId)) {
       const element = this.elemnt.nativeElement;
       element.addEventListener('scroll', this.setTop.bind(this));
-    } else {
-      console.log("Não está no navegador.");
-    }
+    } 
   }
   async ngOnInit() {
     this.getAllCategorias()
@@ -47,7 +45,6 @@ export class HomeZapdaiComponent implements OnInit, AfterViewInit {
       const response = await await firstValueFrom(this.apiCategosrias.findAllCategorias());
       this.categorias = response.categorias;
     } catch (erro) {
-      console.log("Erro ao carregar dados!");
     }
   }
   @HostListener('scroll', ['$event'])
@@ -68,7 +65,6 @@ export class HomeZapdaiComponent implements OnInit, AfterViewInit {
   async getAllProdutos() {
     try {
       const response = await firstValueFrom(this.apiCategosrias.findAllProdutos());
-      console.log("Produtos recebidos:", response);
 
       const listaFiltrada = response?.filter((empresa: any) => empresa != null) ?? [];
 
@@ -77,7 +73,6 @@ export class HomeZapdaiComponent implements OnInit, AfterViewInit {
         produtos: Array.isArray(empresa.produtos) ? empresa.produtos : []
       }));
     } catch (error) {
-      console.error("Erro ao carregar produtos:", error);
       this.produtos = [];
     }
   }
