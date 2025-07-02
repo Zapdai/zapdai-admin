@@ -4,7 +4,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { NgxMaskDirective } from 'ngx-mask';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { InputOtpModule } from 'primeng/inputotp';
 import { InputOtp } from 'primeng/inputotp';
 import { PasswordModule } from 'primeng/password';
@@ -17,12 +17,11 @@ import { apiAuthService } from '../../../../../services/apiAuth.service';
 import { AuthService } from '../../../../../services/auth.service';
 
 type verificationOPT = {
-  numeroWhatsapp: number;
   code: number;
 }
 
 @Component({
-  selector: 'app-form-signinCodWhatsapp',
+  selector: 'app-authSigninCodeWhatsapp',
   standalone: true,
   imports: [
     CommonModule,
@@ -33,18 +32,17 @@ type verificationOPT = {
     FormsModule,
     InputOtp,
     PasswordModule,
-    NgxMaskDirective,
   ],
-  templateUrl: './form-signinCodWhatsapp.component.html',
-  styleUrls: ['./form-signinCodWhatsapp.component.scss']
+  templateUrl: './authSigninCodeWhatsapp.component.html',
+  styleUrls: ['./authSigninCodeWhatsapp.component.scss']
 })
-export class FormSigninCodWhatsappComponent implements OnInit, AfterViewInit {
+export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
   currentStep = 1;
   ativo = false;
   icon: "visibility" | "visibility_off" = "visibility"
   isVisible = false;
   groupform!: FormGroup;
-  usuarioId: any;
+  tokenkey: any;
 
   @ViewChild('primeiroInput', { static: false }) primeiroInput!: ElementRef;
 
@@ -59,11 +57,11 @@ export class FormSigninCodWhatsappComponent implements OnInit, AfterViewInit {
     private location: Location,
     private apiAuth: apiAuthService,
     private authService: AuthService,
+    private route: ActivatedRoute,
   ) { }
 
 
   stepFields: Record<number, string[]> = {
-    1: ['numeroWhatsapp'],
     2: ['code'],
   };
 
@@ -72,7 +70,10 @@ export class FormSigninCodWhatsappComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.CarregaFormGroup({ numeroWhatsapp: 0, code: 0 }); // apenas para inicializar
+    this.CarregaFormGroup({ code: 0 });
+
+    this.tokenkey = this.route.snapshot.queryParamMap.get('token');
+    console.log(this.tokenkey)
 
     const codeControl = this.groupform.get('code');
     if (codeControl) {
@@ -136,90 +137,59 @@ export class FormSigninCodWhatsappComponent implements OnInit, AfterViewInit {
     });
   }
 
-  isCurrentStepValid(): boolean {
-    const fields = this.stepFields[this.currentStep];
-    return fields.every(field => this.groupform.controls[field].valid);
-  }
-
-  next() {
-    if (this.isCurrentStepValid()) {
-      this.currentStep++;
-      this.cd.detectChanges();
-    } else {
-      this.markCurrentStepTouched();
-    }
-  }
-
-  prev() {
-    if (this.currentStep > 1) {
-      this.currentStep--;
-    }
-  }
-
-  focarProximoCampo(proximoCampo: string) {
-    const proximo = document.querySelector(`[formControlName="${proximoCampo}"]`) as HTMLElement;
-    if (proximo) {
-      proximo.focus();
-    }
-  }
-
-  enviarCodigoWhatsAppp() {
-    const numeroWhatsapp = this.groupform.value.numeroWhatsapp;
-
-
-    if (!numeroWhatsapp) {
-      this.groupform.controls['numeroWhatsapp'].markAsTouched();
-      return;
-    }
-
-    const payload = { number: numeroWhatsapp };
-    console.log(payload)
-
-    this.apiAuth.sendCodeWhatsapp(payload).subscribe((e: any) => {
-      this.usuarioId = e.usuarioId
-      this.currentStep = 2; // Avança para o passo de verificação
-      this.snack.success(e.message)
-    });
-
-  }
-
 
   AuthUserCodeWhatsapp() {
-    const code = this.groupform.value.code?.trim();;
-
     const payload = {
-      usuario: {
-        usuarioId: this.usuarioId,
-      },
-      code: code
+      code: this.groupform.value.code?.trim()
     };
 
-    this.apiAuth.signinCodeWhatsapp(payload).subscribe(item => {
-      this.groupform.reset()
-      if (item.authToken !== null) {
-        this.authService.saveToken(item.authToken);
+    console.log('Enviando payload:', payload);
+    console.log('Tokenkey:', this.tokenkey);
 
+    this.apiAuth.signinCodeWhatsapp(payload, this.tokenkey).subscribe({
+      next: (item) => {
+        this.groupform.reset();
 
-        // Recupera a URL salva (ou define '/' como padrão)
-        const returnUrl = localStorage.getItem('returnUrl') || '/';
-        localStorage.removeItem('returnUrl'); // limpa após usar
+        if (item.authToken !== null) {
+          this.authService.saveToken(item.authToken);
 
-        // Redireciona para a página original
-        setTimeout(() => {
-          this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-            setTimeout(() => {
-              window.location.href = returnUrl;
-            }, 1000);
-          });
-        }, 0);
+          const returnUrl = localStorage.getItem('returnUrl') || '/';
+          localStorage.removeItem('returnUrl');
+
+          setTimeout(() => {
+            this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+              setTimeout(() => {
+                window.location.href = returnUrl;
+              }, 1000);
+            });
+          }, 0);
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao verificar código:', err);
+        this.snack.error('Não foi possível verificar o código. Verifique e tente novamente.');
       }
     });
   }
+
+
+
 
   focarPrimeiroCampo() {
     if (this.primeiroInput && this.primeiroInput.nativeElement) {
       this.primeiroInput.nativeElement.focus();
     }
+  }
+
+  pageLoginWhatsapp() {
+    this.activeRoute.activeLoading()
+    setTimeout(() => {
+      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+        setTimeout(() => {
+          this.router.navigate(['/auth/signincode']);
+        }, 1000);
+      });
+    }, 0);
   }
 
   pageSignin() {
@@ -231,28 +201,6 @@ export class FormSigninCodWhatsappComponent implements OnInit, AfterViewInit {
         }, 1000);
       })
 
-    }, 0);
-  }
-
-  pageSignup() {
-    this.activeRoute.activeLoading()
-    setTimeout(() => {
-      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-        setTimeout(() => {
-          this.router.navigate(['/auth/signup']);
-        }, 1000);
-      });
-    }, 0);
-  }
-
-  pageResetPassword() {
-    this.activeRoute.activeLoading()
-    setTimeout(() => {
-      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-        setTimeout(() => {
-          this.router.navigate(['/auth/resetPassword'], { skipLocationChange: false });
-        }, 1000);
-      });
     }, 0);
   }
 

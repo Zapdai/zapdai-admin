@@ -96,7 +96,7 @@ export class FormLoginComponent {
     setTimeout(() => {
       this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
         setTimeout(() => {
-          this.router.navigate(['/auth/signincodwhatsapp']);
+          this.router.navigate(['/auth/signincode']);
         }, 1000);
       });
     }, 0);

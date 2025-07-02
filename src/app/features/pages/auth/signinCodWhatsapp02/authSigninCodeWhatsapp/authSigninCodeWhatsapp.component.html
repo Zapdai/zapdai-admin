@@ -12,30 +12,6 @@
     </div>
 
     <form [formGroup]="groupform">
-      <!-- Step 1 -->
-      @if (currentStep === 1) {
-        <div class="form-step">
-          <p></p>
-          <fieldset class="ng-fieldset">
-            <legend>Número de Celular</legend>
-            <input
-              #primeiroInput
-              type="text"
-              class="ng-input"
-              placeholder="Seu WhatsApp"
-              formControlName="numeroWhatsapp"
-              mask="(00) 00000-0000"
-              (keydown.enter)="enviarCodigoWhatsAppp()" />
-          </fieldset>
-
-          @if (isRequired('numeroWhatsapp')) {
-            <small class="ng-error">Informe um Número de Celular válido!</small>
-          }
-        </div>
-      }
-
-      <!-- Step 2 -->
-      @if (currentStep === 2) {
         <div class="form-step step-2">
           <div class="card flex justify-center custom-otp">
             <p-inputotp
@@ -50,31 +26,16 @@
             <small class="ng-error">Informe o código de Autenticação!</small>
           }
 
-          <button mat-flat-button type="button" (click)="enviarCodigoWhatsAppp()">Reenviar código</button>
+          <button mat-flat-button type="button" (click)="pageLoginWhatsapp()">Reenviar código</button>
         </div>
-      }
-
       <div class="buttons">
-        @if (currentStep === 1) {
-          <button
-            mat-flat-button
-            type="button"
-            class="ng-btn"
-            (click)="enviarCodigoWhatsAppp()"
-            [disabled]="!isCurrentStepValid()">
-            Enviar código
-          </button>
-        }
-
-        @if (currentStep === 2) {
           <button
             mat-flat-button
             class="ng-btn"
             (click)="AuthUserCodeWhatsapp()"
-            [disabled]="!isCurrentStepValid()">
+            [disabled]="isRequired('code')">
             Confirmar código de Autenticação
           </button>
-        }
       </div>
     </form>
 

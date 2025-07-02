@@ -30,9 +30,19 @@ export class apiAuthService {
         return this.http.put<any>(`${this.apiUrl}/zapdai/v1/usuario/address`, data).pipe()
     }
 
-    signinCodeWhatsapp(data: any): Observable<any> {
-        return this.http.put<any>(`${this.apiUrl}/zapdai/v1/usuario/usuario-code`, data).pipe()
+    signinCodeWhatsapp(data: any, token: string): Observable<any> {
+        const headers = {
+            'tokenkey': token,
+            'Content-Type': 'application/json'
+        };
+
+        return this.http.put<any>(
+            `${this.apiUrl}/zapdai/v1/usuario/usuario-code`,
+            data,
+            { headers }
+        );
     }
+
 
     sendCodeWhatsapp(data: any): Observable<any> {
         return this.http.post<any>(`${this.apiUrl}/zapdai/v1/usuario/envio-code`, data).pipe()

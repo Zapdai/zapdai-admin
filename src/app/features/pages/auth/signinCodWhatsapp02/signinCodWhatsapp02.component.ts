@@ -7,17 +7,17 @@ import { Router } from "@angular/router";
 import { loadingService } from "../../../../services/loading/loading.service";
 import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
 import { formModalComponent } from "../../../../shared/component/formModal/formModal.component";
-import { FormSigninCodWhatsappComponent } from "./form-signinCodWhatsapp/form-signinCodWhatsapp.component";
+import { RouterOutlet } from "@angular/router";
 
 @Component ({
     selector:'',
     standalone: true,
-    templateUrl:'./signinCodWhatsapp.component.html',
-    styleUrl:'./signinCodWhatsapp.component.scss',
-    imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule, formModalComponent, PageContainerComponent, FormSigninCodWhatsappComponent]
+    templateUrl:'./signinCodWhatsapp02.component.html',
+    styleUrl:'./signinCodWhatsapp02.component.scss',
+    imports: [CommonModule, RouterOutlet, ReactiveFormsModule, MatSnackBarModule, formModalComponent, PageContainerComponent]
 })
 
-export class SigninCodWhatsappComponent {
+export class SigninCodWhatsapp02Component {
 
     constructor ( private router:Router, private activeRoute:loadingService){
     }

@@ -22,7 +22,7 @@ type verificationOPT = {
 }
 
 @Component({
-  selector: 'app-form-signinCodWhatsapp',
+  selector: 'app-sendCodeWhatsapp',
   standalone: true,
   imports: [
     CommonModule,
@@ -31,20 +31,18 @@ type verificationOPT = {
     MatIconModule,
     InputOtpModule,
     FormsModule,
-    InputOtp,
     PasswordModule,
     NgxMaskDirective,
   ],
-  templateUrl: './form-signinCodWhatsapp.component.html',
-  styleUrls: ['./form-signinCodWhatsapp.component.scss']
+  templateUrl: './sendCodeWhatsapp.component.html',
+  styleUrls: ['./sendCodeWhatsapp.component.scss']
 })
-export class FormSigninCodWhatsappComponent implements OnInit, AfterViewInit {
+export class SendCodeWhatsappComponent implements OnInit, AfterViewInit {
   currentStep = 1;
   ativo = false;
   icon: "visibility" | "visibility_off" = "visibility"
   isVisible = false;
   groupform!: FormGroup;
-  usuarioId: any;
 
   @ViewChild('primeiroInput', { static: false }) primeiroInput!: ElementRef;
 
@@ -141,28 +139,6 @@ export class FormSigninCodWhatsappComponent implements OnInit, AfterViewInit {
     return fields.every(field => this.groupform.controls[field].valid);
   }
 
-  next() {
-    if (this.isCurrentStepValid()) {
-      this.currentStep++;
-      this.cd.detectChanges();
-    } else {
-      this.markCurrentStepTouched();
-    }
-  }
-
-  prev() {
-    if (this.currentStep > 1) {
-      this.currentStep--;
-    }
-  }
-
-  focarProximoCampo(proximoCampo: string) {
-    const proximo = document.querySelector(`[formControlName="${proximoCampo}"]`) as HTMLElement;
-    if (proximo) {
-      proximo.focus();
-    }
-  }
-
   enviarCodigoWhatsAppp() {
     const numeroWhatsapp = this.groupform.value.numeroWhatsapp;
 
@@ -173,47 +149,17 @@ export class FormSigninCodWhatsappComponent implements OnInit, AfterViewInit {
     }
 
     const payload = { number: numeroWhatsapp };
-    console.log(payload)
 
     this.apiAuth.sendCodeWhatsapp(payload).subscribe((e: any) => {
-      this.usuarioId = e.usuarioId
-      this.currentStep = 2; // Avança para o passo de verificação
       this.snack.success(e.message)
+
+
+      this.router.navigate(['/auth/signincode/autentication'], {
+        queryParams: { token: e.token },
+        skipLocationChange: false
+      });
     });
 
-  }
-
-
-  AuthUserCodeWhatsapp() {
-    const code = this.groupform.value.code?.trim();;
-
-    const payload = {
-      usuario: {
-        usuarioId: this.usuarioId,
-      },
-      code: code
-    };
-
-    this.apiAuth.signinCodeWhatsapp(payload, this.usuarioId).subscribe(item => {
-      this.groupform.reset()
-      if (item.authToken !== null) {
-        this.authService.saveToken(item.authToken);
-
-
-        // Recupera a URL salva (ou define '/' como padrão)
-        const returnUrl = localStorage.getItem('returnUrl') || '/';
-        localStorage.removeItem('returnUrl'); // limpa após usar
-
-        // Redireciona para a página original
-        setTimeout(() => {
-          this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-            setTimeout(() => {
-              window.location.href = returnUrl;
-            }, 1000);
-          });
-        }, 0);
-      }
-    });
   }
 
   focarPrimeiroCampo() {
@@ -231,28 +177,6 @@ export class FormSigninCodWhatsappComponent implements OnInit, AfterViewInit {
         }, 1000);
       })
 
-    }, 0);
-  }
-
-  pageSignup() {
-    this.activeRoute.activeLoading()
-    setTimeout(() => {
-      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-        setTimeout(() => {
-          this.router.navigate(['/auth/signup']);
-        }, 1000);
-      });
-    }, 0);
-  }
-
-  pageResetPassword() {
-    this.activeRoute.activeLoading()
-    setTimeout(() => {
-      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
-        setTimeout(() => {
-          this.router.navigate(['/auth/resetPassword'], { skipLocationChange: false });
-        }, 1000);
-      });
     }, 0);
   }
 
