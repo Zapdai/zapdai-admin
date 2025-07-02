@@ -167,7 +167,6 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
       },
       error: (err) => {
         console.error('Erro ao verificar código:', err);
-        this.snack.error('Não foi possível verificar o código. Verifique e tente novamente.');
       }
     });
   }
