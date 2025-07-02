@@ -46,12 +46,19 @@ export class AuthInterceptors implements HttpInterceptor {
     if (this.auth.PossuiToken() && !isPublicRoute) {
       const token = this.auth.returnToken();
 
+      // if (token) {
+      //   request = request.clone({
+      //     setHeaders: {
+      //       Authorization: `Bearer ${token}`
+      //     }
+      //   });
+      // }
+      
       if (token) {
         request = request.clone({
-          setHeaders: {
-            Authorization: `Bearer ${token}`
+          headers: request.headers.set('Authorization', `Bearer ${token}`)
           }
-        });
+        );
       }
     }
 

@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { cadastro } from "../shared/core/types/cadastroUpdateUser";
@@ -31,15 +31,12 @@ export class apiAuthService {
     }
 
     signinCodeWhatsapp(data: any, token: string): Observable<any> {
-        const headers = {
-            'tokenkey': token,
-            'Content-Type': 'application/json'
-        };
+         const h = new HttpParams().set("tokenkey",token)
 
         return this.http.put<any>(
             `${this.apiUrl}/zapdai/v1/usuario/usuario-code`,
             data,
-            { headers }
+            { params:h }
         );
     }
 

@@ -41,6 +41,7 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
   ativo = false;
   icon: "visibility" | "visibility_off" = "visibility"
   isVisible = false;
+   btnAtivo = false;
   groupform!: FormGroup;
   tokenkey: any;
 
@@ -139,15 +140,18 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
 
 
   AuthUserCodeWhatsapp() {
+    this.btnAtivo = true;
     const payload = {
       code: this.groupform.value.code?.trim()
     };
+
 
     console.log('Enviando payload:', payload);
     console.log('Tokenkey:', this.tokenkey);
 
     this.apiAuth.signinCodeWhatsapp(payload, this.tokenkey).subscribe({
       next: (item) => {
+        
         this.groupform.reset();
 
         if (item.authToken !== null) {
@@ -166,7 +170,8 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
         }
       },
       error: (err) => {
-        console.error('Erro ao verificar código:', err);
+        this.btnAtivo = false;
+        console.error( err);
       }
     });
   }

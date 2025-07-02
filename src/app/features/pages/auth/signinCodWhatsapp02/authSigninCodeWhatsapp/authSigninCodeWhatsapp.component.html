@@ -33,7 +33,7 @@
             mat-flat-button
             class="ng-btn"
             (click)="AuthUserCodeWhatsapp()"
-            [disabled]="isRequired('code')">
+            [disabled]="isRequired('code') || btnAtivo">
             Confirmar código de Autenticação
           </button>
       </div>
