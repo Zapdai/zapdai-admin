@@ -1,8 +1,8 @@
 <div class="ng-main">
   @if (isVisible) {
-    <button class="btn-voltar" (click)="voltarPaginaAnterior()">
-      <mat-icon>arrow_back_ios</mat-icon>
-    </button>
+  <button class="btn-voltar" (click)="voltarPaginaAnterior()">
+    <mat-icon>arrow_back_ios</mat-icon>
+  </button>
   }
 
   <div class="container">
@@ -12,34 +12,32 @@
     </div>
 
     <form [formGroup]="groupform">
-        <div class="form-step">
-          <p></p>
-          <fieldset class="ng-fieldset">
-            <legend>Número de Celular</legend>
-            <input
-              #primeiroInput
-              type="text"
-              class="ng-input"
-              placeholder="Seu WhatsApp"
-              formControlName="numeroWhatsapp"
-              mask="(00) 00000-0000"
-              (keydown.enter)="enviarCodigoWhatsAppp()" />
-          </fieldset>
+      <div class="form-step">
+        <p></p>
+        <fieldset class="ng-fieldset">
+          <legend>Número de Celular</legend>
+          <input #primeiroInput type="text" class="ng-input" placeholder="Seu WhatsApp" formControlName="numeroWhatsapp"
+            mask="(00) 00000-0000" (keydown.enter)="enviarCodigoWhatsAppp()" />
+        </fieldset>
 
-          @if (isRequired('numeroWhatsapp')) {
-            <small class="ng-error">Informe um Número de Celular válido!</small>
-          }
-        </div>
+        @if (isRequired('numeroWhatsapp')) {
+        <small class="ng-error">Informe um Número de Celular válido!</small>
+        }
+      </div>
 
       <div class="buttons">
-          <button
-            mat-flat-button
-            type="button"
-            class="ng-btn"
-            (click)="enviarCodigoWhatsAppp()"
-            [disabled]="!isCurrentStepValid()">
-            Enviar código
-          </button>
+        <button mat-flat-button type="button" class="ng-btn" (click)="enviarCodigoWhatsAppp()"
+          [disabled]="!isCurrentStepValid() || carregando">
+
+          <span class="btn-content">Enviar código</span>
+
+          @if (carregando) {
+          <div class="btn-spinner-container">
+            <mat-spinner [diameter]="20" strokeWidth="2"></mat-spinner>
+          </div>
+          }
+
+        </button>
       </div>
     </form>
 

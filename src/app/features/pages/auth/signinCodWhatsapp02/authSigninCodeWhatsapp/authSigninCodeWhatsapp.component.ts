@@ -15,6 +15,8 @@ import { SnackService } from '../../../../../services/snackBar/snack.service';
 import { AuthDecodeService } from '../../../../../services/AuthUser.service';
 import { apiAuthService } from '../../../../../services/apiAuth.service';
 import { AuthService } from '../../../../../services/auth.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { firstValueFrom } from 'rxjs';
 
 type verificationOPT = {
   code: number;
@@ -32,6 +34,7 @@ type verificationOPT = {
     FormsModule,
     InputOtp,
     PasswordModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './authSigninCodeWhatsapp.component.html',
   styleUrls: ['./authSigninCodeWhatsapp.component.scss']
@@ -41,11 +44,15 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
   ativo = false;
   icon: "visibility" | "visibility_off" = "visibility"
   isVisible = false;
-   btnAtivo = false;
+  carregando = false;
   groupform!: FormGroup;
   tokenkey: any;
+  numeroWhatsapp: any;
+  reenviarDisponivel = true;
+  contador: number = 0;
+  intervalo: any;
 
-  @ViewChild('primeiroInput', { static: false }) primeiroInput!: ElementRef;
+  @ViewChild('primeiroInput', { static: false, read: ElementRef }) primeiroInput!: ElementRef;
 
 
   constructor(
@@ -63,7 +70,7 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
 
 
   stepFields: Record<number, string[]> = {
-    2: ['code'],
+    1: ['code'],
   };
 
   ngAfterViewInit(): void {
@@ -73,8 +80,17 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.CarregaFormGroup({ code: 0 });
 
-    this.tokenkey = this.route.snapshot.queryParamMap.get('token');
-    console.log(this.tokenkey)
+
+    this.route.queryParamMap.subscribe(params => {
+      this.tokenkey = params.get('token');
+      this.numeroWhatsapp = params.get('numeroWhatsapp');
+
+      if (this.numeroWhatsapp) {
+        this.groupform.patchValue({ numeroWhatsapp: this.numeroWhatsapp });
+      } else {
+        this.pageLoginWhatsapp(); // se não tiver número, redireciona
+      }
+    });
 
     const codeControl = this.groupform.get('code');
     if (codeControl) {
@@ -138,20 +154,67 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
     });
   }
 
+  isCurrentStepValid(): boolean {
+    const fields = this.stepFields[this.currentStep];
+    return fields.every(field => this.groupform.controls[field].valid);
+  }
+
+  async renviarCodigoWhatsAppp() {
+    const numeroWhatsapp = this.groupform.value.numeroWhatsapp;
+
+    if (!numeroWhatsapp || numeroWhatsapp === '') {
+      this.pageLoginWhatsapp(); // redireciona se o número estiver vazio
+      return;
+    }
+
+    if (!this.reenviarDisponivel) {
+      return; // evita múltiplos envios durante o tempo de espera
+    }
+
+    this.reenviarDisponivel = false;
+    this.contador = 60; // 60 segundos
+
+    this.intervalo = setInterval(() => {
+      this.contador--;
+      if (this.contador <= 0) {
+        clearInterval(this.intervalo);
+        this.reenviarDisponivel = true;
+      }
+    }, 1000);
+
+    const payload = { number: numeroWhatsapp };
+
+    try {
+      const response: any = await firstValueFrom(this.apiAuth.sendCodeWhatsapp(payload));
+      this.snack.success(response.message);
+    } finally {
+      // se der erro e quiser reabilitar antes dos 60s, pode limpar aqui
+    }
+  }
+
+
 
   AuthUserCodeWhatsapp() {
-    this.btnAtivo = true;
     const payload = {
       code: this.groupform.value.code?.trim()
     };
 
+    if (this.carregando) {
+      return; // evita chamadas múltiplas
+    }
 
-    console.log('Enviando payload:', payload);
-    console.log('Tokenkey:', this.tokenkey);
+    const numeroWhatsapp = this.groupform.value.numeroWhatsapp;
+
+    if (!this.groupform.value.code?.trim()) {
+      this.groupform.controls['numeroWhatsapp'].markAsTouched();
+      return;
+    }
+
+    this.carregando = true;
 
     this.apiAuth.signinCodeWhatsapp(payload, this.tokenkey).subscribe({
       next: (item) => {
-        
+
         this.groupform.reset();
 
         if (item.authToken !== null) {
@@ -170,8 +233,7 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
         }
       },
       error: (err) => {
-        this.btnAtivo = false;
-        console.error( err);
+        this.carregando = false;
       }
     });
   }

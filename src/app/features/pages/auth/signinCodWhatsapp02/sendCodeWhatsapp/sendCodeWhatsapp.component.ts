@@ -15,6 +15,8 @@ import { SnackService } from '../../../../../services/snackBar/snack.service';
 import { AuthDecodeService } from '../../../../../services/AuthUser.service';
 import { apiAuthService } from '../../../../../services/apiAuth.service';
 import { AuthService } from '../../../../../services/auth.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { firstValueFrom } from 'rxjs';
 
 type verificationOPT = {
   numeroWhatsapp: number;
@@ -33,6 +35,7 @@ type verificationOPT = {
     FormsModule,
     PasswordModule,
     NgxMaskDirective,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './sendCodeWhatsapp.component.html',
   styleUrls: ['./sendCodeWhatsapp.component.scss']
@@ -43,6 +46,7 @@ export class SendCodeWhatsappComponent implements OnInit, AfterViewInit {
   icon: "visibility" | "visibility_off" = "visibility"
   isVisible = false;
   groupform!: FormGroup;
+  carregando = false;
 
   @ViewChild('primeiroInput', { static: false }) primeiroInput!: ElementRef;
 
@@ -71,6 +75,12 @@ export class SendCodeWhatsappComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.CarregaFormGroup({ numeroWhatsapp: 0, code: 0 }); // apenas para inicializar
+    if (this.carregando) {
+      this.groupform.get('numeroWhatsapp')?.disable();
+    } else {
+      this.groupform.get('numeroWhatsapp')?.enable();
+    }
+
 
     const codeControl = this.groupform.get('code');
     if (codeControl) {
@@ -139,28 +149,40 @@ export class SendCodeWhatsappComponent implements OnInit, AfterViewInit {
     return fields.every(field => this.groupform.controls[field].valid);
   }
 
-  enviarCodigoWhatsAppp() {
-    const numeroWhatsapp = this.groupform.value.numeroWhatsapp;
+  async enviarCodigoWhatsAppp() {
+    if (this.carregando) {
+      return; // evita chamadas múltiplas
+    }
 
+    const numeroWhatsapp = this.groupform.value.numeroWhatsapp;
 
     if (!numeroWhatsapp) {
       this.groupform.controls['numeroWhatsapp'].markAsTouched();
       return;
     }
 
+    this.carregando = true;
+
     const payload = { number: numeroWhatsapp };
 
-    this.apiAuth.sendCodeWhatsapp(payload).subscribe((e: any) => {
-      this.snack.success(e.message)
-
+    try {
+      const response: any = await firstValueFrom(this.apiAuth.sendCodeWhatsapp(payload));
+      this.snack.success(response.message);
 
       this.router.navigate(['/auth/signincode/autentication'], {
-        queryParams: { token: e.token },
-        skipLocationChange: false
+        queryParams: { 
+          token: response.token,
+          numeroWhatsapp: numeroWhatsapp
+         },
+        skipLocationChange: false,
       });
-    });
 
+    } finally {
+      this.carregando = false;
+    }
   }
+
+
 
   focarPrimeiroCampo() {
     if (this.primeiroInput && this.primeiroInput.nativeElement) {

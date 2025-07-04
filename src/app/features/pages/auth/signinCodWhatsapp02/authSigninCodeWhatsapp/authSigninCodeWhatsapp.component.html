@@ -1,8 +1,8 @@
 <div class="ng-main">
   @if (isVisible) {
-    <button class="btn-voltar" (click)="voltarPaginaAnterior()">
-      <mat-icon>arrow_back_ios</mat-icon>
-    </button>
+  <button class="btn-voltar" (click)="voltarPaginaAnterior()">
+    <mat-icon>arrow_back_ios</mat-icon>
+  </button>
   }
 
   <div class="container">
@@ -12,37 +12,42 @@
     </div>
 
     <form [formGroup]="groupform">
-        <div class="form-step step-2">
-          <div class="card flex justify-center custom-otp">
-            <p-inputotp
-              #primeiroInput
-              autofocus
-              [length]="6"
-              formControlName="code"
-              (keydown.enter)="AuthUserCodeWhatsapp()" />
-          </div>
-
-          @if (isRequired('code')) {
-            <small class="ng-error">Informe o código de Autenticação!</small>
-          }
-
-          <button mat-flat-button type="button" (click)="pageLoginWhatsapp()">Reenviar código</button>
+      <div class="form-step step-2">
+        <div class="card flex justify-center custom-otp">
+          <p-inputotp #primeiroInput autofocus [length]="6" formControlName="code" [integerOnly]="true"
+            (keydown.enter)="AuthUserCodeWhatsapp()" />
         </div>
-      <div class="buttons">
-          <button
-            mat-flat-button
-            class="ng-btn"
-            (click)="AuthUserCodeWhatsapp()"
-            [disabled]="isRequired('code') || btnAtivo">
-            Confirmar código de Autenticação
+
+        @if (isRequired('code')) {
+        <small class="ng-error">Informe o código de Autenticação!</small>
+        }
+
+        <div class="reenviar-corrigir">
+          <button mat-button color="primary" class="botao-reenviar" [disabled]="!reenviarDisponivel"
+            (click)="renviarCodigoWhatsAppp()">
+            {{ reenviarDisponivel ? 'Reenviar Código' : 'Reenviar em (' + contador + 's)' }}
           </button>
+          <span>|</span>
+          <button mat-button color="primary" class="botao-reenviar" (click)="pageLoginWhatsapp()">
+            Corrigir Número
+          </button>
+        </div>
+
+
+      </div>
+      <div class="buttons">
+        <button mat-flat-button class="ng-btn" (click)="AuthUserCodeWhatsapp()"
+          [disabled]="!isCurrentStepValid() || carregando">
+
+          <span class="btn-content">Confirmar código de Autenticação</span>
+
+          @if (carregando) {
+          <div class="btn-spinner-container">
+            <mat-spinner [diameter]="20" strokeWidth="2"></mat-spinner>
+          </div>
+          }
+        </button>
       </div>
     </form>
-
-    <div class="btn-auth">
-      <button mat-flat-button class="ng-btn ng-btn-signup" (click)="pageSignin()">
-        Login com Email/Senha
-      </button>
-    </div>
   </div>
 </div>

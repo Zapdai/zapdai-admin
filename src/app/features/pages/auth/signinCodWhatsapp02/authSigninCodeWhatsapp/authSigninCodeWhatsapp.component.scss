@@ -94,27 +94,59 @@
             }
         }
 
+        .reenviar-corrigir {
+            display: flex;
+            align-items: center;
+            color: #bbb;
 
+            .botao-reenviar {
+                font-size: 10px;
+                color: #bbb !important;
+            }
+        }
 
 
         .buttons {
             display: flex;
             justify-content: space-between;
             gap: 0 15px;
-
+            margin-top: 50px;
 
             .ng-btn {
+                position: relative;
                 width: 100%;
                 height: 35px;
-                border-radius: 5px;
-                border: 1px solid #c8c8c8;
-                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 font-family: var(--font-family);
                 font-size: 14px;
                 font-weight: 500;
                 color: #592d74;
                 margin-top: 20px;
+                border-radius: 5px;
+                border: 1px solid #c8c8c8;
+                overflow: hidden;
+                cursor: pointer;
             }
+
+            .btn-content {
+                z-index: 1;
+            }
+
+            .btn-spinner-container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2;
+                pointer-events: none;
+            }
+
 
             .ng-btn:hover {
                 background-color: #eee;
@@ -126,8 +158,10 @@
             }
 
             .ng-btn:disabled {
+                background: rgba($color: #eee, $alpha: 0.8);
                 color: #888;
             }
+
         }
     }
 }
