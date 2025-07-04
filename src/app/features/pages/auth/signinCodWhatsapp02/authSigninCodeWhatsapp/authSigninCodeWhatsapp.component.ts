@@ -172,7 +172,7 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
     }
 
     this.reenviarDisponivel = false;
-    this.contador = 60; // 60 segundos
+    this.contador = 30; // segundos
 
     this.intervalo = setInterval(() => {
       this.contador--;
