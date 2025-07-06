@@ -18,13 +18,15 @@ import { resetPasswordApi } from '../../../services/resetPassword/resetPasswordA
 import e from 'express';
 import { AuthDecodeService } from '../../../services/AuthUser.service';
 import { Location } from '@angular/common';
-
+import { NgxOtpInputComponent, NgxOtpInputComponentOptions } from 'ngx-otp-input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { firstValueFrom } from 'rxjs';
 type ResetPasswordControls = keyof resetPasswordForm['passwordform']['controls'];
 
 @Component({
   selector: 'app-form-resetPassword',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatIconModule, InputOtpModule, FormsModule, InputOtp, PasswordModule, PasswordStrengthBarComponent],
+  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatIconModule, InputOtpModule, FormsModule, MatProgressSpinnerModule, NgxOtpInputComponent, PasswordModule, PasswordStrengthBarComponent],
   templateUrl: './form-resetPassword.component.html',
   styleUrls: ['./form-resetPassword.component.scss']
 })
@@ -33,8 +35,19 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
   ativo = false;
   icon: "visibility" | "visibility_off" = "visibility"
   isVisible = false;
+  carregando = false;
+
+  otpOptions: NgxOtpInputComponentOptions = {
+    otpLength: 6,
+    autoFocus: true,
+    autoBlur: true,
+    hideInputValues: false,
+    inputMode: 'text',
+    regexp: /^[a-zA-Z0-9]*$/,
+  };
 
   @ViewChild('primeiroInput') primeiroInput!: ElementRef;
+  @ViewChild('otpContainer') otpContainer!: ElementRef;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -57,18 +70,10 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
   };
 
   ngAfterViewInit(): void {
-    this.focarPrimeiroCampo();
+    this.focarPrimeiroCampo()
   }
 
   ngOnInit(): void {
-    const codeControl = this.form.passwordform.get('code');
-    if (codeControl) {
-      codeControl.valueChanges.subscribe(value => {
-        if (value && value !== value.toUpperCase()) {
-          codeControl.setValue(value.toUpperCase(), { emitEvent: false });
-        }
-      });
-    }
 
     if (this.authDecodeUser.getSub()) {
       this.form.passwordform.get('email')?.setValue(this.authDecodeUser.getSub());
@@ -80,8 +85,8 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
     }
   }
 
-  
-  
+
+
 
   @HostListener('window:resize')
   onResize() {
@@ -161,6 +166,31 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
     return fields.every(field => this.form.passwordform.controls[field].valid);
   }
 
+  @HostListener('document:keydown.enter', ['$event'])
+  handleEnterKey(event: KeyboardEvent) {
+    if (this.isCurrentStepValid() && !this.carregando) {
+      this.validarCodigo();
+    }
+  }
+
+  onCodeChange(codeArray: string[]) {
+    const otpValue = codeArray.join('').trim().replace(/\s+/g, '').toUpperCase();
+    const codeControl = this.form.passwordform.get('code');
+    if (codeControl) {
+      codeControl.setValue(otpValue);
+      codeControl.markAsDirty();
+      codeControl.markAsTouched();
+      this.cd.detectChanges();
+    }
+  }
+
+
+  onOtpComplete(code: string) {
+    const cleaned = code.trim().replace(/\s+/g, '').toUpperCase(); // Remove espaços em excesso
+    this.form.passwordform.get('code')?.setValue(cleaned);
+    this.validarCodigo();
+  }
+
   next() {
     if (this.isCurrentStepValid()) {
       this.currentStep++;
@@ -183,7 +213,7 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
     }
   }
 
-  enviarCodigoEmail() {
+  async enviarCodigoEmail() {
     const email = this.form.passwordform.value.email;
 
     if (!email) {
@@ -191,27 +221,53 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
       return;
     }
 
+    if (this.carregando) {
+      return; // evita chamadas múltiplas
+    }
+
+    this.carregando = true;
+
     const payload = { email };
 
-    this.verificationEmailApi.geraCodeEmail(payload).subscribe((e: any) => {
-      this.currentStep = 2; // Avança para o passo de verificação
-      this.snack.success(e.msg)
-    });
+    try {
+      const response: any = await firstValueFrom(this.verificationEmailApi.geraCodeEmail(payload))
+
+      if (response.msg) {
+        this.currentStep = 2; // Avança para o passo de verificação
+        this.snack.success(response.msg)
+        this.carregando = false;
+      }
+    } catch {
+      this.carregando = false;
+    }
   }
 
 
-  validarCodigo() {
+  async validarCodigo() {
     const email = this.form.passwordform.value.email;
     const code = this.form.passwordform.value.code;
+    console.log(code)
+
+    if (this.carregando) {
+      return; // evita chamadas múltiplas
+    }
 
     if (!email || !code) return;
 
-    this.verificationEmailApi.verificationCodeEmail({ email, code }).subscribe((res: any) => {
-      if (res.msg) {
+
+    this.carregando = true;
+    try {
+      const response: any = await firstValueFrom(this.verificationEmailApi.verificationCodeEmail({ email, code }))
+      if (response.msg) {
         this.currentStep++;
+        this.carregando = false;
+      } else {
+        this.carregando = false;
       }
 
-    });
+    } catch {
+      this.carregando = false;
+    }
   }
 
 

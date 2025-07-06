@@ -192,17 +192,6 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
       codeControl.markAsTouched();
       this.cd.detectChanges();
     }
-
-    console.log('Code (limpo):', otpValue);
-  }
-
-  onPaste(event: ClipboardEvent) {
-    event.preventDefault();
-    const clipboardData = event.clipboardData?.getData('text') || '';
-    const cleaned = clipboardData.trim().replace(/\s+/g, '');
-
-    // Atualiza o form control com o código limpo
-    this.groupform.get('code')?.setValue(cleaned);
   }
 
 
@@ -211,8 +200,6 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
     this.groupform.get('code')?.setValue(cleaned);
     this.AuthUserCodeWhatsapp();
   }
-
-
 
 
   async renviarCodigoWhatsAppp() {

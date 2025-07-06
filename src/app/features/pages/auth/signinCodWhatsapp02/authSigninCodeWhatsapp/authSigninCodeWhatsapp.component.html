@@ -14,7 +14,7 @@
     <form [formGroup]="groupform">
       <div class="form-step step-2">
         <div #otpContainer class="card flex justify-center custom-otp">
-          <ngx-otp-input [options]="otpOptions" (paste)="onPaste($event)" (otpChange)="onCodeChange($event)"
+          <ngx-otp-input #otpRef [options]="otpOptions" (otpChange)="onCodeChange($event)"
             (otpComplete)="onOtpComplete($event)">
           </ngx-otp-input>
 
