@@ -13,9 +13,11 @@
 
     <form [formGroup]="groupform">
       <div class="form-step step-2">
-        <div class="card flex justify-center custom-otp">
-          <p-inputotp #primeiroInput autofocus [length]="6" formControlName="code"
-            (keydown.enter)="AuthUserCodeWhatsapp()" />
+        <div #otpContainer class="card flex justify-center custom-otp">
+          <ngx-otp-input [options]="otpOptions" (paste)="onPaste($event)" (otpChange)="onCodeChange($event)"
+            (otpComplete)="onOtpComplete($event)">
+          </ngx-otp-input>
+
         </div>
 
         @if (isRequired('code')) {

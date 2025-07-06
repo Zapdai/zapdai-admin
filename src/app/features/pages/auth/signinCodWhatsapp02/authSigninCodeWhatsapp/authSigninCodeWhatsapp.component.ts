@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, HostListener, Inject, NgModule, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
@@ -17,10 +17,12 @@ import { apiAuthService } from '../../../../../services/apiAuth.service';
 import { AuthService } from '../../../../../services/auth.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { firstValueFrom } from 'rxjs';
+import { NgxOtpInputComponent, NgxOtpInputComponentOptions } from 'ngx-otp-input';
 
 type verificationOPT = {
   code: number;
 }
+
 
 @Component({
   selector: 'app-authSigninCodeWhatsapp',
@@ -32,12 +34,14 @@ type verificationOPT = {
     MatIconModule,
     InputOtpModule,
     FormsModule,
-    InputOtp,
     PasswordModule,
     MatProgressSpinnerModule,
+    NgxOtpInputComponent,
   ],
   templateUrl: './authSigninCodeWhatsapp.component.html',
-  styleUrls: ['./authSigninCodeWhatsapp.component.scss']
+  styleUrls: ['./authSigninCodeWhatsapp.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+
 })
 export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
   currentStep = 1;
@@ -52,8 +56,17 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
   contador: number = 0;
   intervalo: any;
 
-  @ViewChild('primeiroInput', { static: false, read: ElementRef }) primeiroInput!: ElementRef;
+  otpOptions: NgxOtpInputComponentOptions = {
+    otpLength: 6,
+    autoFocus: true,
+    autoBlur: true,
+    hideInputValues: false,
+    inputMode: 'numeric',
+  };
 
+
+  @ViewChild('primeiroInput', { static: false, read: ElementRef }) primeiroInput!: ElementRef;
+  @ViewChild('otpContainer') otpContainer!: ElementRef;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -73,9 +86,10 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
     1: ['code'],
   };
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit() {
     this.focarPrimeiroCampo();
   }
+
 
   ngOnInit(): void {
     this.CarregaFormGroup({ code: 0 });
@@ -121,8 +135,9 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
   CarregaFormGroup(verificationOPT: verificationOPT) {
     this.groupform = new FormGroup({
       numeroWhatsapp: new FormControl('', Validators.required),
-      code: new FormControl('', [Validators.required, Validators.minLength(6)])
+      code: new FormControl('', [Validators.required, Validators.minLength(6),])
     })
+
   }
 
   visible() {
@@ -155,9 +170,50 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
   }
 
   isCurrentStepValid(): boolean {
-    const fields = this.stepFields[this.currentStep];
-    return fields.every(field => this.groupform.controls[field].valid);
+    const control = this.groupform.get('code');
+    return control ? control.valid : false;
   }
+
+  @HostListener('document:keydown.enter', ['$event'])
+  handleEnterKey(event: KeyboardEvent) {
+    if (this.isCurrentStepValid() && !this.carregando) {
+      this.AuthUserCodeWhatsapp();
+    }
+  }
+
+
+  onCodeChange(codeArray: string[]) {
+    const otpValue = codeArray.join('').trim().replace(/\s+/g, '');
+    const codeControl = this.groupform.get('code');
+
+    if (codeControl) {
+      codeControl.setValue(otpValue);
+      codeControl.markAsDirty();
+      codeControl.markAsTouched();
+      this.cd.detectChanges();
+    }
+
+    console.log('Code (limpo):', otpValue);
+  }
+
+  onPaste(event: ClipboardEvent) {
+    event.preventDefault();
+    const clipboardData = event.clipboardData?.getData('text') || '';
+    const cleaned = clipboardData.trim().replace(/\s+/g, '');
+
+    // Atualiza o form control com o código limpo
+    this.groupform.get('code')?.setValue(cleaned);
+  }
+
+
+  onOtpComplete(code: string) {
+    const cleaned = code.trim().replace(/\s+/g, ''); // Remove espaços em excesso
+    this.groupform.get('code')?.setValue(cleaned);
+    this.AuthUserCodeWhatsapp();
+  }
+
+
+
 
   async renviarCodigoWhatsAppp() {
     const numeroWhatsapp = this.groupform.value.numeroWhatsapp;
