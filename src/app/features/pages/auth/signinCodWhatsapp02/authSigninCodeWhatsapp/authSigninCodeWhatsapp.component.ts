@@ -163,16 +163,16 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
     const numeroWhatsapp = this.groupform.value.numeroWhatsapp;
 
     if (!numeroWhatsapp || numeroWhatsapp === '') {
-      this.pageLoginWhatsapp(); // redireciona se o número estiver vazio
+      this.pageLoginWhatsapp();
       return;
     }
 
     if (!this.reenviarDisponivel) {
-      return; // evita múltiplos envios durante o tempo de espera
+      return;
     }
 
     this.reenviarDisponivel = false;
-    this.contador = 30; // segundos
+    this.contador = 30;
 
     this.intervalo = setInterval(() => {
       this.contador--;
@@ -186,11 +186,28 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
 
     try {
       const response: any = await firstValueFrom(this.apiAuth.sendCodeWhatsapp(payload));
+
+      if (response?.token) {
+        this.tokenkey = response.token;
+
+        // 🔁 Atualiza a URL com novo token e mantém o número
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: {
+            token: this.tokenkey,
+            numeroWhatsapp: this.numeroWhatsapp
+          },
+          replaceUrl: true
+        });
+      }
+
       this.snack.success(response.message);
-    } finally {
-      // se der erro e quiser reabilitar antes dos 60s, pode limpar aqui
+    } catch (error) {
+      this.reenviarDisponivel = true;
+      clearInterval(this.intervalo);
     }
   }
+
 
 
 
