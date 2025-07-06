@@ -21,7 +21,7 @@
         </div>
 
         @if (isRequired('code')) {
-        <small class="ng-error">Informe o código de Autenticação!</small>
+        <small class="ng-error code">Informe o código de Autenticação!</small>
         }
 
         <div class="reenviar-corrigir">
@@ -41,7 +41,7 @@
         <button mat-flat-button class="ng-btn" (click)="AuthUserCodeWhatsapp()"
           [disabled]="!isCurrentStepValid() || carregando">
 
-          <span class="btn-content">Confirmar código de Autenticação</span>
+          <span class="btn-content">Confirmar Código</span>
 
           @if (carregando) {
           <div class="btn-spinner-container">

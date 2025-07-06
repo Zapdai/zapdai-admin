@@ -181,7 +181,6 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   onCodeChange(codeArray: string[]) {
     const otpValue = codeArray.join('').trim().replace(/\s+/g, '');
     const codeControl = this.groupform.get('code');
@@ -196,7 +195,7 @@ export class AuthSigninCodeWhatsappComponent implements OnInit, AfterViewInit {
 
 
   onOtpComplete(code: string) {
-    const cleaned = code.trim().replace(/\s+/g, ''); // Remove espaços em excesso
+    const cleaned = code.trim(); // Remove espaços em excesso
     this.groupform.get('code')?.setValue(cleaned);
     this.AuthUserCodeWhatsapp();
   }

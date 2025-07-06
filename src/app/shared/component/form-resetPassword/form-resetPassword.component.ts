@@ -246,7 +246,6 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
   async validarCodigo() {
     const email = this.form.passwordform.value.email;
     const code = this.form.passwordform.value.code;
-    console.log(code)
 
     if (this.carregando) {
       return; // evita chamadas múltiplas
