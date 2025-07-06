@@ -36,6 +36,9 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
   icon: "visibility" | "visibility_off" = "visibility"
   isVisible = false;
   carregando = false;
+  reenviarDisponivel = true;
+  contador: number = 0;
+  intervalo: any;
 
   otpOptions: NgxOtpInputComponentOptions = {
     otpLength: 6,
@@ -242,6 +245,32 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
     }
   }
 
+  async reenviarCodigoEmail() {
+
+    if (!this.reenviarDisponivel) {
+      return;
+    }
+
+    this.reenviarDisponivel = false;
+    this.contador = 30;
+
+    this.intervalo = setInterval(() => {
+      this.contador--;
+      if (this.contador <= 0) {
+        clearInterval(this.intervalo);
+        this.reenviarDisponivel = true;
+      }
+    }, 1000);
+
+    try {
+      this.enviarCodigoEmail()
+    } catch {
+      this.reenviarDisponivel = true;
+      clearInterval(this.intervalo);
+    }
+
+  }
+
 
   async validarCodigo() {
     const email = this.form.passwordform.value.email;
@@ -324,6 +353,17 @@ export class FormResetPasswordComponent implements OnInit, AfterViewInit {
       this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
         setTimeout(() => {
           this.router.navigate(['/auth/signup']);
+        }, 1000);
+      });
+    }, 0);
+  }
+
+  pageResetPassword() {
+    this.activeRoute.activeLoading()
+    setTimeout(() => {
+      this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+        setTimeout(() => {
+          this.router.navigate(['/auth/resetPassword'], { skipLocationChange: false });
         }, 1000);
       });
     }, 0);
