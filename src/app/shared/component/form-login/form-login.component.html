@@ -1,4 +1,4 @@
-<form action="" class="ng-form" [formGroup]="service.groupform" autocomplete="username">
+<form class="ng-form" [formGroup]="service.groupform" autocomplete="username">
     <section class="ng-title">
         <h4>Acessar minha conta </h4>
     </section>
@@ -6,7 +6,6 @@
         <legend>Email</legend>
         <input type="email" autofocus="on" #form1 (keydown.enter)="mudaCompo(form2)" autocomplete="username"
             class="ng-input" placeholder="Email..." formControlName="email">
-
     </fieldset>
     @if (isRequiredEmail()) {
     <small class="ng-error">Informe o email</small>
@@ -18,7 +17,6 @@
             <input [type]="ativo?'text':'password'" #form2 autocomplete="new-password" class="ng-input"
                 placeholder="Senha..." formControlName="password">
             <mat-icon (click)="visible()">{{icon}}</mat-icon>
-
         </div>
     </fieldset>
     @if (isRequiredPassword()) {
