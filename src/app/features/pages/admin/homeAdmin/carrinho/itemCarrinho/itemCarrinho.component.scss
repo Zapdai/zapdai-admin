@@ -22,7 +22,7 @@
 
   .itens {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 0 10px;
 
     .preco-final {
@@ -89,4 +89,35 @@
   font-size: 0.6rem;
   color: #444;
   margin-bottom: 10px;
+}
+
+
+// -----------------------------------------------------------------------------------------------------------//
+@media screen and (min-width:769px) {
+
+
+  .informacoes {
+    flex: 1;
+    max-width: 400px;
+
+    h1 {
+      color: #726969;
+      font-size: 16px;
+    }
+
+    .itens {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      gap: 0 10px;
+
+      .preco-final {
+        font-size: 14px;
+        font-weight: bold;
+        color: #050644;
+        display: block;
+      }
+    }
+  }
+
 }

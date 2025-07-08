@@ -12,7 +12,7 @@
 
         @if (itensCarrinho.length > 0) {
           @for (item of itensCarrinho; track item.idProduto) {
-            <app-item-carrinho [produto]="item"></app-item-carrinho>
+            <app-item-carrinho [produto]="item" (quantidadeChange)="atualizarQuantidadeProduto($event)"></app-item-carrinho>
           }
         } @else {
           <p>Carrinho vazio.</p>
@@ -27,7 +27,18 @@
         <small>Valor R$ {{ subtotal | number: '1.2-2' }}</small>
       </div>
 
-      <button>Finalizar compras</button>
+      <button mat-flat-button class="ng-btn" (click)="finalizarPedido()"
+          [disabled]="itensCarrinho.length === 0 || carregando"
+>
+
+          <span class="btn-content">Finalizar Compra</span>
+
+          @if (carregando) {
+          <div class="btn-spinner-container">
+            <mat-spinner [diameter]="20" strokeWidth="2"></mat-spinner>
+          </div>
+          }
+        </button>
     </div>
   </div>
 </section>

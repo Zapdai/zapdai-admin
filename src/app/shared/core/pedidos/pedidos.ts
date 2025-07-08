@@ -1,3 +1,15 @@
+export type PedidoType = {
+    IdUsuario: number,
+    itens: {
+        quantidade: number,
+        id: number
+    }[],
+    pagamento: {
+        formaDePagament: string
+    }
+}
+
+
 
 export type listItensPedido = {
     itensPedido: itensPedido[]

@@ -4,9 +4,8 @@
     <app-cobrabca></app-cobrabca>
     }
 
-    @if (isAdmin || isVisible) {
     <header class="ng-header" [ngClass]="[admin ? 'admin' : '']">
-        <div class="menu-logo"  [ngClass]="[!isVisible ? 'menu-logo-mobile' : '']">
+        <div class="menu-logo" [ngClass]="[!isVisible ? 'menu-logo-mobile' : '']">
             @if (admin) {
             <mat-icon (click)="exibir()" class="icon">menu</mat-icon>
             }
@@ -26,10 +25,11 @@
         }
 
 
-        @if (isVisible) {
         @if (carrinho) {
         <section class="ng-checkout">
+            @if (isVisible) {
             <div class="ng-btn-empresas" (click)="pagePlanos()">Zapdai Empresas</div>
+            }
             <div class="carrinho">
                 <!-- aqui vamos adiconar o valor adicionando ao carrinho -->
                 <div class="toggle-ico">{{2}}</div> <!--badge-->
@@ -37,6 +37,8 @@
                     shopping_cart
                 </mat-icon>
             </div>
+
+            @if (isVisible) {
             @if (!auth.PossuiToken()) {
             <button ngClass="btn1" (click)="pageSignin()">
                 Login
@@ -45,9 +47,11 @@
                 Signin
             </button>
             }
+            }
         </section>
-        }
 
+
+        @if (isVisible) {
         <div class="card flex justify-center">
             @if (auth.PossuiToken()) {
             <section class="ng-perfil">
@@ -127,9 +131,10 @@
             </div>
             }
         </div>
-
         }
+        }
+
     </header>
-    }
+
 
 </div>

@@ -1,4 +1,7 @@
 @if (produto != null) {
+  <app-header (emitCarrinho)="ativaCarrinho()" [carrinho]="true" class="s" [admin]="false"></app-header>
+  <app-mobile-navbar></app-mobile-navbar>
+  
 <div class="produto-detalhes-container">
 
   @if (produto?.imagens?.length) {
@@ -9,7 +12,6 @@
     }
   </div>
   }
-
   <div class="imagem-principal">
     <img [src]="imagemSelecionada || produto.imgProduct" alt="Imagem principal" />
   </div>

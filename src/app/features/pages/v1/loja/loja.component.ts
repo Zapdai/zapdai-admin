@@ -9,10 +9,12 @@ import { ApiV1Loja } from "../../../../services/apiCategorias/apiV1Loja.service"
 import { MatIconModule } from "@angular/material/icon";
 import { itensPedido, listItensPedido } from "../../../../shared/core/pedidos/pedidos";
 import { SnackService } from "../../../../services/snackBar/snack.service";
+import { headerComponent } from "../../../../shared/component/header/header.component";
+import { MobileNavbarComponent } from "../../../../shared/component/mobile-navbar/mobile-navbar.component";
 
 @Component({
    selector: 'app-loja',
-   imports: [MatTabsModule, ReactiveFormsModule, CommonModule, MatInputModule, MatIconModule],
+   imports: [MatTabsModule, ReactiveFormsModule, CommonModule, MatInputModule, MatIconModule, headerComponent, MobileNavbarComponent],
    templateUrl: './loja.component.html',
    styleUrl: './loja.component.scss'
 })
@@ -22,6 +24,7 @@ export class AppLojaComponent implements OnInit {
    produto: any = {};
    quantidade: number = 1;
    isLoading = true;
+  ativaCar?: boolean;
 
 
    @ViewChild("scrollContainer", { static: false }) fer?: ElementRef;
@@ -99,6 +102,10 @@ export class AppLojaComponent implements OnInit {
 
       // (Opcional) Mensagem de sucesso ou snack
       this.snack.success('Produto adicionado ao carrinho!');
+   }
+
+   ativaCarrinho() {
+      this.ativaCar = !this.ativaCar;
    }
 
 }
