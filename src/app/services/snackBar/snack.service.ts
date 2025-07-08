@@ -12,7 +12,7 @@ export class SnackService {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   openSnackBar(msg:string) {
     this.snackBar.open(msg,"X",{
-      duration:5000,
+      duration:3000,
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
       panelClass: ['snackbar-multiline'],
@@ -30,7 +30,7 @@ export class SnackService {
 
   error(msg: string) {
     this.snackBar.open(msg, 'X', {
-      duration: 5000,
+      duration: 3000,
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
       panelClass: ['snackbar-error'],
@@ -39,7 +39,7 @@ export class SnackService {
 
   info(msg: string) {
     this.snackBar.open(msg, 'X', {
-      duration: 5000,
+      duration: 3000,
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
       panelClass: ['snackbar-info'],

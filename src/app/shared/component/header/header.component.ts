@@ -24,9 +24,9 @@ import { CobrancaComponent } from "../cobranca/cobranca.component";
     styleUrl: "./header.component.scss",
     standalone: true,
     imports: [MatIconModule, CommonModule,
-    MatIconModule, ReactiveFormsModule,
-    MatMenuModule, MatSnackBarModule,
-    PopoverModule, ButtonModule, CobrancaComponent]
+        MatIconModule, ReactiveFormsModule,
+        MatMenuModule, MatSnackBarModule,
+        PopoverModule, ButtonModule, CobrancaComponent]
 })
 export class headerComponent implements OnInit {
     @ViewChild('op') op!: Popover;
@@ -45,7 +45,11 @@ export class headerComponent implements OnInit {
     isVisible = false;
     imagem: any;
     usuario!: Usuario
+    totalItensCarrinho: number = 0;
+
     @Output() emitCarrinho = new EventEmitter();
+
+
     constructor(
         @Inject(PLATFORM_ID) private platformId: any,
         private router: Router,
@@ -73,11 +77,12 @@ export class headerComponent implements OnInit {
             this.buscaUsuario();
         }
 
+        this.atualizarQuantidadeCarrinho()
 
         if (isPlatformBrowser(this.platformId)) {
             this.checkWindowSize();
         }
-        
+
     }
 
     toggle(event: MouseEvent) {
@@ -109,7 +114,7 @@ export class headerComponent implements OnInit {
         alert("valor digitado " + name)
     }
     light() {
-       this.emitCarrinho.emit();
+        this.emitCarrinho.emit();
     }
     exibir() {
         this.ativaMenu.emit()
@@ -128,6 +133,19 @@ export class headerComponent implements OnInit {
             this.isVisible = window.innerWidth > 768;
         }
     }
+
+    atualizarQuantidadeCarrinho() {
+        if (!isPlatformBrowser(this.platformId)) return;
+
+        const carrinhoStr = localStorage.getItem('carrinho');
+        const carrinho = carrinhoStr ? JSON.parse(carrinhoStr) : { itensPedido: [] };
+
+        this.totalItensCarrinho = carrinho.itensPedido.reduce(
+            (acc: number, item: any) => acc + (item.amountQTD || 0),
+            0
+        );
+    }
+
 
     deslogar() {
         this.auth.RemoveToken()
