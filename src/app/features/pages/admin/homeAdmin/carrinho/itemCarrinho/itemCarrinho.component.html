@@ -1,0 +1,29 @@
+@if (produto !== null) {
+<div class="produto-detalhes-container">
+  <div class="imagem-principal">
+    <img [src]="produto?.imgProduct" alt="Imagem principal" />
+  </div>
+
+  <div class="informacoes">
+    <h1>{{ produto.productName }}</h1>
+    <div class="precos">
+      <span class="preco-antigo">R$ {{ produto.price }}</span>
+    </div>
+
+    <div class="itens">
+      <span class="preco-final">R$ {{ produto.price }} <small>no pix</small></span>
+
+      <div class="quantidade-carrinho">
+        <button (click)="diminuirQuantidade()">-</button>
+        <input type="number" [value]="quantidade" />
+        <button (click)="quantidade = quantidade + 1">+</button>
+
+      </div>
+    </div>
+
+    @if (produto?.empresaDTO?.nomeCompania) {
+    <p class="empresa">Vendido por <strong>{{ produto.empresaDTO.nomeCompania }}</strong></p>
+    }
+  </div>
+</div>
+}

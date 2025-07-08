@@ -27,9 +27,8 @@ export class buscaProdutos implements OnInit {
         } catch (error) {
 
         }
-
-
     }
+    
 
 
 }

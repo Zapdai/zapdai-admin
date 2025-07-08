@@ -7,6 +7,8 @@ import { CommonModule } from "@angular/common";
 import { MatInputModule } from "@angular/material/input";
 import { ApiV1Loja } from "../../../../services/apiCategorias/apiV1Loja.service";
 import { MatIconModule } from "@angular/material/icon";
+import { itensPedido, listItensPedido } from "../../../../shared/core/pedidos/pedidos";
+import { SnackService } from "../../../../services/snackBar/snack.service";
 
 @Component({
    selector: 'app-loja',
@@ -25,7 +27,11 @@ export class AppLojaComponent implements OnInit {
    @ViewChild("scrollContainer", { static: false }) fer?: ElementRef;
 
 
-   constructor(public route: ActivatedRoute, private api: ApiV1Loja) {
+   constructor(
+      public route: ActivatedRoute,
+      private api: ApiV1Loja,
+      private snack: SnackService,
+   ) {
 
    }
    ngOnInit(): void {
@@ -47,15 +53,7 @@ export class AppLojaComponent implements OnInit {
       }
    }
 
-
-
    imagemSelecionada: string | null = null;
-   adicionarAoCarrinho(produto: any): void {
-      const item = {
-         ...produto,
-         quantidade: this.quantidade
-      };
-   }
    rolarDireita(event: any) {
       console.log(event)
       this.fer?.nativeElement.scrollBy({
@@ -69,4 +67,38 @@ export class AppLojaComponent implements OnInit {
          behavior: 'smooth'
       })
    }
+
+
+   adicionarAoCarrinho(produto: any): void {
+      const novoItem: itensPedido = {
+         idProduto: produto.idProduto,
+         imgProduct: produto.imgProduct || produto.imgUrl,
+         productName: produto.productName,
+         price: produto.price,
+         peso: produto.peso,
+         categoriaProduct: produto.categoriaProduct ?? null,
+         description: produto.description || '',
+         amountQTD: this.quantidade
+      };
+
+      // Recupera carrinho do localStorage
+      const carrinhoStr = localStorage.getItem('carrinho');
+      let carrinho: listItensPedido = carrinhoStr ? JSON.parse(carrinhoStr) : { itensPedido: [] };
+
+      // Verifica se produto já existe no carrinho
+      const existente = carrinho.itensPedido.find(p => p.idProduto === novoItem.idProduto);
+
+      if (existente) {
+         existente.amountQTD += this.quantidade;
+      } else {
+         carrinho.itensPedido.push(novoItem);
+      }
+
+      // Salva carrinho atualizado no localStorage
+      localStorage.setItem('carrinho', JSON.stringify(carrinho));
+
+      // (Opcional) Mensagem de sucesso ou snack
+      this.snack.success('Produto adicionado ao carrinho!');
+   }
+
 }
