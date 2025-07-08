@@ -8,6 +8,7 @@ import { firstValueFrom } from "rxjs";
 import { AuthDecodeService } from "../../../../../services/AuthUser.service";
 import { PedidoType } from "../../../../../shared/core/pedidos/pedidos";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { SnackService } from "../../../../../services/snackBar/snack.service";
 
 @Component({
    selector: "app-carrinho",
@@ -24,6 +25,7 @@ export class CarrinhoComponent implements OnInit {
    constructor(
       private pedidosService: PedidosService,
       public authDecodeUser: AuthDecodeService,
+      private snack: SnackService,
    ) { }
 
    ngOnInit(): void {
@@ -57,7 +59,10 @@ export class CarrinhoComponent implements OnInit {
       localStorage.setItem('carrinho', JSON.stringify(carrinho));
    }
 
-
+   removerItemCarrinho(idProduto: number) {
+      this.itensCarrinho = this.itensCarrinho.filter(item => item.idProduto !== idProduto);
+      this.salvarCarrinhoNoLocalStorage();
+   }
 
 
    carregarCarrinhoDoLocalStorage() {

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from "@angular/core";
 import { MatTabsModule } from "@angular/material/tabs";
 import { ActivatedRoute } from "@angular/router";
 import { firstValueFrom } from "rxjs";
@@ -11,10 +11,11 @@ import { itensPedido, listItensPedido } from "../../../../shared/core/pedidos/pe
 import { SnackService } from "../../../../services/snackBar/snack.service";
 import { headerComponent } from "../../../../shared/component/header/header.component";
 import { MobileNavbarComponent } from "../../../../shared/component/mobile-navbar/mobile-navbar.component";
+import { CarrinhoComponent } from "../../admin/homeAdmin/carrinho/carrinho.component";
 
 @Component({
    selector: 'app-loja',
-   imports: [MatTabsModule, ReactiveFormsModule, CommonModule, MatInputModule, MatIconModule, headerComponent, MobileNavbarComponent],
+   imports: [MatTabsModule, ReactiveFormsModule, CommonModule, MatInputModule, MatIconModule, headerComponent, MobileNavbarComponent, CarrinhoComponent],
    templateUrl: './loja.component.html',
    styleUrl: './loja.component.scss'
 })
@@ -24,10 +25,11 @@ export class AppLojaComponent implements OnInit {
    produto: any = {};
    quantidade: number = 1;
    isLoading = true;
-  ativaCar?: boolean;
+   ativaCar?: boolean;
 
 
    @ViewChild("scrollContainer", { static: false }) fer?: ElementRef;
+   @Output() emitCarrinho = new EventEmitter();
 
 
    constructor(

@@ -12,7 +12,7 @@
 
         @if (itensCarrinho.length > 0) {
           @for (item of itensCarrinho; track item.idProduto) {
-            <app-item-carrinho [produto]="item" (quantidadeChange)="atualizarQuantidadeProduto($event)"></app-item-carrinho>
+            <app-item-carrinho [produto]="item" (quantidadeChange)="atualizarQuantidadeProduto($event)" (remover)="removerItemCarrinho($event)"></app-item-carrinho>
           }
         } @else {
           <p>Carrinho vazio.</p>

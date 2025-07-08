@@ -21,7 +21,7 @@ export class SnackService {
 
   success(msg: string) {
     this.snackBar.open(msg, 'X', {
-      duration: 5000,
+      duration: 3000,
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
       panelClass: ['snackbar-success'],

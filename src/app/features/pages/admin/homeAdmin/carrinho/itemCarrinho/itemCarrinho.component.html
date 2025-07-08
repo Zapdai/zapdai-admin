@@ -16,12 +16,19 @@
       <div class="quantidade-carrinho">
         <button (click)="diminuirQuantidade()">-</button>
 
-        <input type="number" [value]="quantidade" (input)="aoDigitarQuantidade($event)" (change)="atualizarManual($event)" />
+        <input type="number" [value]="quantidade" (input)="aoDigitarQuantidade($event)"
+          (change)="atualizarManual($event)" />
 
         <button (click)="aumentarQuantidade()">+</button>
+        <button mat-icon-button (click)="removerItem()" class="btn-deletar">
+          <mat-icon>delete</mat-icon>
+        </button>
       </div>
 
+
     </div>
+
+
 
     @if (produto?.empresaDTO?.nomeCompania) {
     <p class="empresa">Vendido por <strong>{{ produto.empresaDTO.nomeCompania }}</strong></p>

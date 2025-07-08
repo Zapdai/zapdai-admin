@@ -3,11 +3,12 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { MatInputModule } from "@angular/material/input";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
   selector: 'app-item-carrinho',
   standalone: true,
-  imports: [MatTabsModule, ReactiveFormsModule, CommonModule, MatInputModule],
+  imports: [MatTabsModule, ReactiveFormsModule, CommonModule, MatInputModule, MatIconModule],
   templateUrl: './itemCarrinho.component.html',
   styleUrl: './itemCarrinho.component.scss'
 })
@@ -15,6 +16,7 @@ import { MatInputModule } from "@angular/material/input";
 export class ItemCarrinhoComponent implements OnChanges {
   @Input() produto: any;
   @Output() quantidadeChange = new EventEmitter<{ idProduto: number, novaQuantidade: number }>();
+  @Output() remover = new EventEmitter<number>();
   quantidade: number = 1;
 
 
@@ -48,16 +50,22 @@ export class ItemCarrinhoComponent implements OnChanges {
   }
 
   aoDigitarQuantidade(event: Event) {
-  const input = event.target as HTMLInputElement;
-  const valor = Number(input.value);
+    const input = event.target as HTMLInputElement;
+    const valor = Number(input.value);
 
-  if (!isNaN(valor) && valor > 0) {
-    this.quantidade = valor;
-    this.emitirAtualizacao();
-  } else {
-    // Volta para valor anterior se valor for inválido
-    input.value = this.quantidade.toString();
+    if (!isNaN(valor) && valor > 0) {
+      this.quantidade = valor;
+      this.emitirAtualizacao();
+    } else {
+      // Volta para valor anterior se valor for inválido
+      input.value = this.quantidade.toString();
+    }
   }
-}
+
+
+  removerItem() {
+    this.remover.emit(this.produto.idProduto);
+  }
+
 
 }

@@ -31,6 +31,16 @@
       color: #050644;
       display: block;
     }
+
+
+    .btn-deletar {
+      background: transparent;
+      border: none;
+      color: red;
+      cursor: pointer;
+      position: absolute;
+      right: 15px;
+    }
   }
 }
 
@@ -84,6 +94,8 @@
   color: #007bff;
   border: 1px solid #007bff;
 }
+
+
 
 .empresa {
   font-size: 0.6rem;

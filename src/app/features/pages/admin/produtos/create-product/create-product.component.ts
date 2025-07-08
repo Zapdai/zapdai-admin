@@ -181,7 +181,7 @@ export class CreateProductComponent implements OnInit, AfterViewInit {
             this.apiCadastroProdutos.cadastroDeProduto(data, this.files)
          );
          if (response) {
-            this.snack.openSnackBar(response);
+            this.snack.success(response);
             this.reloadRoute()
             this.desabiledCar()
 
