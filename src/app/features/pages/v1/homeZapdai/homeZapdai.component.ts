@@ -52,7 +52,6 @@ export class HomeZapdaiComponent implements OnInit, AfterViewInit {
     const scrollHeight = this.elemnt.nativeElement.scrollHeight;
     const clientHeight = this.elemnt.nativeElement.clientHeight;
     const scrollTop = this.elemnt.nativeElement.scrollTop;
-    console.log(scrollTop + clientHeight > scrollHeight - 10)
     if (scrollTop + clientHeight > scrollHeight - 10) {
       this.ativo = true;
 

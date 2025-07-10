@@ -4,7 +4,7 @@
 
 
     .main {
-        height: calc(100vh - 58px);
+        height: calc(100vh - 50px);
         width: 100%;
         overflow-y: auto;
         position: relative;
@@ -18,13 +18,11 @@
             flex: 1;
 
             .container-area {
-                padding: 0 5px;
-
                 .ng-itens {
                     display: flex;
                     margin-top: 10px;
                     margin-bottom: 5px;
-                    padding: 20px 2px;
+                    padding: 20px 10px;
                     gap: 10px;
                     align-items: center;
                     justify-content: space-between;
@@ -39,12 +37,10 @@
                 }
 
                 .carrossel {
-                    margin-top: 152px 0;
+                    margin-top: 18px;
 
 
                 }
-
-                margin: auto 10px;
 
             }
 
@@ -64,7 +60,7 @@
     .area-loja {
 
         .main {
-            margin-top: 50px;
+            margin-top: 35px;
 
 
             .ng-categoria {
@@ -75,6 +71,13 @@
                     .ng-itens {
                         padding: 2px 156px;
                     }
+
+                    
+                .carrossel {
+                    margin-top: 1px;
+
+
+                }
                 }
 
                 .propaganda {
