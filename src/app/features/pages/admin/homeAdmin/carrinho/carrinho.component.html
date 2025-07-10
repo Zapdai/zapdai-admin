@@ -10,13 +10,22 @@
     <div class="container-infor-produto">
       <section class="th">
 
-        @if (itensCarrinho.length > 0) {
-          @for (item of itensCarrinho; track item.idProduto) {
-            <app-item-carrinho [produto]="item" (quantidadeChange)="atualizarQuantidadeProduto($event)" (remover)="removerItemCarrinho($event)"></app-item-carrinho>
+        @if (carrinhoKeys().length > 0) {
+        @for (empresaId of carrinhoKeys(); track empresaId) {
+        <div class="bloco-empresa">
+          <h3>🛍 {{ carrinhoPorEmpresa[empresaId].nomeCompania }}</h3>
+
+          @for (item of carrinhoPorEmpresa[empresaId].itensPedido; track item.idProduto) {
+          <app-item-carrinho [produto]="item" (quantidadeChange)="atualizarQuantidadeProduto($event)"
+            (remover)="removerItemCarrinho($event)">
+          </app-item-carrinho>
           }
-        } @else {
-          <p>Carrinho vazio.</p>
+        </div>
         }
+        } @else {
+        <p>Carrinho vazio.</p>
+        }
+
 
       </section>
     </div>
@@ -28,17 +37,16 @@
       </div>
 
       <button mat-flat-button class="ng-btn" (click)="finalizarPedido()"
-          [disabled]="itensCarrinho.length === 0 || carregando"
->
+        [disabled]="itensCarrinho.length === 0 || carregando">
 
-          <span class="btn-content">Finalizar Compra</span>
+        <span class="btn-content">Finalizar Compra</span>
 
-          @if (carregando) {
-          <div class="btn-spinner-container">
-            <mat-spinner [diameter]="20" strokeWidth="2"></mat-spinner>
-          </div>
-          }
-        </button>
+        @if (carregando) {
+        <div class="btn-spinner-container">
+          <mat-spinner [diameter]="20" strokeWidth="2"></mat-spinner>
+        </div>
+        }
+      </button>
     </div>
   </div>
 </section>

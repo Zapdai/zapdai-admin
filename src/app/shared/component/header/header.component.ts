@@ -138,13 +138,19 @@ export class headerComponent implements OnInit {
         if (!isPlatformBrowser(this.platformId)) return;
 
         const carrinhoStr = localStorage.getItem('carrinho');
-        const carrinho = carrinhoStr ? JSON.parse(carrinhoStr) : { itensPedido: [] };
+        const carrinho = carrinhoStr ? JSON.parse(carrinhoStr) : {};
 
-        this.totalItensCarrinho = carrinho.itensPedido.reduce(
-            (acc: number, item: any) => acc + (item.amountQTD || 0),
-            0
-        );
+        let total = 0;
+
+        for (const empresaId in carrinho) {
+            if (carrinho[empresaId]?.itensPedido?.length) {
+                total += carrinho[empresaId].itensPedido.reduce((acc: number, item: any) => acc + (item.amountQTD || 0), 0);
+            }
+        }
+
+        this.totalItensCarrinho = total;
     }
+
 
 
     deslogar() {
