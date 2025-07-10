@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection, LOCALE_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideNgxMask  } from 'ngx-mask';
 import { routes } from './app.routes';
@@ -7,8 +7,16 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { AuthInterceptors } from './interceptors/AuthInterceptors.interceptors';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { registerLocaleData } from '@angular/common';
+import ptBr from '@angular/common/locales/pt';
+
+registerLocaleData(ptBr);
+
+
 export const appConfig: ApplicationConfig = {
   providers: [
+    
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
     {
       provide:HTTP_INTERCEPTORS,
       useClass:AuthInterceptors,

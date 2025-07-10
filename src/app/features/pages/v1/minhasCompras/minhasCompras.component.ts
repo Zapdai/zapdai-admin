@@ -41,12 +41,16 @@ export class MinhasComprasComponent implements OnInit {
          }
 
          const resposta = await this.pedidosService.listaPedidosUser(usuarioId).toPromise();
-         this.pedidos = Object.values(resposta).flat();
+         this.pedidos = Object.values(resposta)
+            .flat()
+            .sort((a: any, b: any) => new Date(b.dataDeCriacao).getTime() - new Date(a.dataDeCriacao).getTime());
+
       } catch (erro) {
          console.error('Erro ao buscar pedidos', erro);
       } finally {
          this.carregando = false;
       }
    }
+
 
 }
