@@ -21,9 +21,15 @@ export class AuthService {
     RemoveToken() {
         localStorage.removeItem('acessToken')
     }
+     RemoveRefreshToken() {
+        localStorage.removeItem('refreshToken')
+    }
 
     saveToken(token: string) {
         localStorage.setItem('acessToken', token)
+    }
+    saveRefreshToken(refreshToken: string) {
+        localStorage.setItem('refreshToken', refreshToken)
     }
 
 //     getPerfis(): string[] {

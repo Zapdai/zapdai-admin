@@ -16,8 +16,8 @@ export class AuthDecodeService {
     }
   }
   decode() {
-    const token = this.AuthToken.returnToken();
-    if (token) {
+    const token = this.AuthToken?.returnToken();
+    if (token!=null) {
       const user = jwtDecode(token as any) as any;
       this.userSubject.next(user);
     }

@@ -10,13 +10,18 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthService } from "../services/auth.service";
 import { SnackService } from "../services/snackBar/snack.service";
+import { apiAuthService } from "../services/apiAuth.service";
+import { MatDialog } from "@angular/material/dialog";
+import { ConfirmComponent } from "../shared/component/Confirm/confirm.component";
 
 @Injectable()
 export class AuthInterceptors implements HttpInterceptor {
   constructor(
     private auth: AuthService,
     private router: Router,
-    private dialog: SnackService
+    private dialog: SnackService,
+    private authSigninService:apiAuthService,
+     private dialogs: MatDialog
   ) {}
 
   intercept(
@@ -37,6 +42,7 @@ export class AuthInterceptors implements HttpInterceptor {
       '/zapdai/v1/produtos/unit/',
       '/zapdai/v1/usuario/usuario-code',
       '/zapdai/v1/usuario/envio-code',
+      '/zapdai/v1/usuario/refreshToken',
     ];
 
     const isPublicRoute = rotasPublicas.some((rota) =>
@@ -71,8 +77,23 @@ export class AuthInterceptors implements HttpInterceptor {
         const mensagensExtras: Record<number, string> = {
           403: 'Acesso negado. Você não tem permissão para executar esta ação.'
         };
+        switch(error.status){
+          case 403:
+            
+             this.authSigninService.$refreshtoken.next(true);
+             this.dialog.error(error.error.message);
+             break;
+          case 401:
+            this.dialog.error(error.error.message);
+            this.router.navigate(["/auth/signin"]);
+            this.auth.RemoveToken();
+            this.auth.RemoveRefreshToken();
+            break
 
-        const handledStatuses = [400, 401, 403, 501, 502, 503, 504];
+        }
+      
+
+        const handledStatuses = [400, 501, 502, 503, 504];
 
         if (handledStatuses.includes(status)) {
           // Exibe a mensagem retornada pela API (se for 400 e tiver .message)

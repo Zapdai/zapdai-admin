@@ -63,6 +63,8 @@ export class FormLoginComponent {
       this.service.groupform.reset()
       if (item.acessToken !== null) {
         this.authService.saveToken(item.acessToken);
+          this.authService.saveRefreshToken(item.refreshToken);
+
 
 
         // Recupera a URL salva (ou define '/' como padrão)
