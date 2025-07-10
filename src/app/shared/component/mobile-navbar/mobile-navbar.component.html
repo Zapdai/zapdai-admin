@@ -1,13 +1,13 @@
 @if (isVisible) {
 <nav class="mobile-tab-bar" [ngClass]="[isAdmin ? 'ng-isAdmin' : '']">
-  <button class="btn-nav" (click)="navegar('/')" [class.active]="router.url === '/home'">
+  <button class="btn-nav" (click)="navegar('/')" [class.active]="router.url === '/'">
     <mat-icon>home</mat-icon>
     <span>Home</span>
   </button>
 
-  <button class="btn-nav" (click)="navegar('/')" [class.active]="router.url === '/compras'">
-    <mat-icon>shopping_cart</mat-icon>
-    <span>Compras</span>
+  <button class="btn-nav" (click)="navegar('/minhas-compras')" [class.active]="router.url === '/minhas-compras'">
+    <mat-icon>shopping_bag</mat-icon>
+    <span>Minhas Compras</span>
   </button>
 
   <button class="btn-nav" (click)="navegar('/')" [class.active]="router.url === '/lojas'">
