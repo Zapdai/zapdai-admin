@@ -3,6 +3,7 @@ import { HomeZapdaiComponent } from "./homeZapdai/homeZapdai.component";
 import { buscaProdutos } from "./buscaProdutos/buscaProdutos.component";
 import { AppLojaComponent } from "./loja/loja.component";
 import { ProdutoEmpresaComponent } from "../empresa/ItensEmpresasUnit/produto-empresa.component";
+import { MinhasComprasComponent } from "./minhasCompras/minhasCompras.component";
 export const routes: Routes = [
     {
      path:"", component:HomeZapdaiComponent
@@ -14,5 +15,8 @@ export const routes: Routes = [
         path: "produto/detalhes/:id", component: AppLojaComponent,
     },{
         path:"empresa/produto/:idEmpresa",component:ProdutoEmpresaComponent
+    },
+    {
+        path:"minhas-compras",component:MinhasComprasComponent
     }
 ]

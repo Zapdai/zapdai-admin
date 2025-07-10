@@ -72,7 +72,7 @@ export class HomeMyAccountComponent implements OnInit {
     {
       title: "Minhas Compras",
       icon: "shopping_bag",
-      router: ""
+      router: "../minhas-compras"
     },
     {
       title: "Lojas Próximas",

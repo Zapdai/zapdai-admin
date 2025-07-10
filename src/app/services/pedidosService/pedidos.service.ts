@@ -14,4 +14,10 @@ export class PedidosService {
     criarPedido(data: PedidoType,): Observable<PedidoType> {
         return this.http.post<PedidoType>(`${this.api}/zapdai/v1/pedidos/Current`, data).pipe();
     }
+
+    listaPedidosUser(usuarioId: number): Observable<any> {
+        const params = new HttpParams().set('usuarioId', usuarioId.toString());
+
+        return this.http.get<any>(`${this.api}/zapdai/v1/pedidos`, { params });
+    }
 }

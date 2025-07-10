@@ -52,7 +52,6 @@
         </section>
     }
 
-
         @if (isVisible) {
         <div class="card flex justify-center">
             @if (auth.PossuiToken()) {
@@ -94,7 +93,7 @@
 
                         <nav>
                             <ul>
-                                <li>
+                                <li (click)="pageMinhasCompras()">
                                     <mat-icon>shopping_cart</mat-icon>
                                     Minhas Compras
                                 </li>
@@ -107,7 +106,7 @@
                                 <li (click)="adminrouter()" [class.disabled]="isAdminRoute()">
 
                                     <mat-icon>admin_panel_settings</mat-icon>
-                                    admin
+                                    Admin
                                 </li>
                                 }
                                 <li (click)="pageResetPassword()">

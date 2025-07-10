@@ -163,6 +163,17 @@ export class headerComponent implements OnInit {
 
         }, 0);
     }
+    pageMinhasCompras() {
+        this.activeRouter.activeLoading()
+        setTimeout(() => {
+            this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
+                setTimeout(() => {
+                    this.router.navigate(['/minhas-compras'])
+                }, 1000);
+            })
+
+        }, 0);
+    }
     adminrouter() {
         this.activeRouter.activeLoading()
         setTimeout(() => {
