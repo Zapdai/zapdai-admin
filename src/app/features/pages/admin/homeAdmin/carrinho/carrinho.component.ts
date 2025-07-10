@@ -6,7 +6,7 @@ import { CommonModule } from "@angular/common";
 import { PedidosService } from "../../../../../services/pedidosService/pedidos.service";
 import { firstValueFrom } from "rxjs";
 import { AuthDecodeService } from "../../../../../services/AuthUser.service";
-import { PedidoType } from "../../../../../shared/core/pedidos/pedidos";
+import { carrinhoPorEmpresa, itensPedido, PedidoType } from "../../../../../shared/core/pedidos/pedidos";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { SnackService } from "../../../../../services/snackBar/snack.service";
 
@@ -19,99 +19,118 @@ import { SnackService } from "../../../../../services/snackBar/snack.service";
 })
 
 export class CarrinhoComponent implements OnInit {
-   itensCarrinho: any[] = [];
-   carregando = false;
+  itensCarrinho: itensPedido[] = [];
+  carrinhoPorEmpresa: carrinhoPorEmpresa = {};
+  carregando = false;
 
-   constructor(
-      private pedidosService: PedidosService,
-      public authDecodeUser: AuthDecodeService,
-      private snack: SnackService,
-   ) { }
+  @Output() desbiledCarEmit = new EventEmitter();
 
-   ngOnInit(): void {
-      this.carregarCarrinhoDoLocalStorage();
-   }
+  constructor(
+    private pedidosService: PedidosService,
+    public authDecodeUser: AuthDecodeService,
+    private snack: SnackService,
+  ) { }
 
-   @Output() desbiledCarEmit = new EventEmitter();
+  ngOnInit(): void {
+    this.carregarCarrinhoDoLocalStorage();
+  }
 
-   desabiledCar() {
-      this.desbiledCarEmit.emit();
-   }
+  desabiledCar() {
+    this.desbiledCarEmit.emit();
+  }
 
-   filhoClicado(event: Event) {
-      event.stopPropagation();
-   }
+  filhoClicado(event: Event) {
+    event.stopPropagation();
+  }
 
-   atualizarQuantidadeProduto(event: { idProduto: number, novaQuantidade: number }) {
-      const { idProduto, novaQuantidade } = event;
-      const index = this.itensCarrinho.findIndex(p => p.idProduto === idProduto);
+  atualizarQuantidadeProduto(event: { idProduto: number, novaQuantidade: number }) {
+    const { idProduto, novaQuantidade } = event;
+
+    // Atualiza no carrinho agrupado por empresa
+    for (const empresaId in this.carrinhoPorEmpresa) {
+      const item = this.carrinhoPorEmpresa[empresaId].itensPedido.find(p => p.idProduto === idProduto);
+      if (item) {
+        item.amountQTD = novaQuantidade;
+        break;
+      }
+    }
+
+    this.atualizarItensCarrinhoDeObjeto();
+    this.salvarCarrinhoNoLocalStorage();
+  }
+
+  removerItemCarrinho(idProduto: number) {
+    for (const empresaId in this.carrinhoPorEmpresa) {
+      const itens = this.carrinhoPorEmpresa[empresaId].itensPedido;
+      const index = itens.findIndex(item => item.idProduto === idProduto);
       if (index !== -1) {
-         this.itensCarrinho[index].amountQTD = novaQuantidade;
-         this.salvarCarrinhoNoLocalStorage();
+        itens.splice(index, 1);
+        // Se empresa ficar sem itens, remove empresa
+        if (itens.length === 0) {
+          delete this.carrinhoPorEmpresa[empresaId];
+        }
+        break;
       }
-   }
+    }
 
+    this.atualizarItensCarrinhoDeObjeto();
+    this.salvarCarrinhoNoLocalStorage();
+  }
 
-   salvarCarrinhoNoLocalStorage() {
-      const carrinho = {
-         itensPedido: this.itensCarrinho
+  carregarCarrinhoDoLocalStorage() {
+    const carrinhoStr = localStorage.getItem('carrinho');
+    this.carrinhoPorEmpresa = carrinhoStr ? JSON.parse(carrinhoStr) : {};
+    this.atualizarItensCarrinhoDeObjeto();
+  }
+
+  atualizarItensCarrinhoDeObjeto() {
+    // converte o objeto agrupado para lista simples para renderizar
+    this.itensCarrinho = [];
+    for (const empresaId in this.carrinhoPorEmpresa) {
+      this.itensCarrinho.push(...this.carrinhoPorEmpresa[empresaId].itensPedido);
+    }
+  }
+
+  salvarCarrinhoNoLocalStorage() {
+    localStorage.setItem('carrinho', JSON.stringify(this.carrinhoPorEmpresa));
+  }
+
+  get subtotal(): number {
+    return this.itensCarrinho.reduce((acc, item) => acc + item.price * item.amountQTD, 0);
+  }
+
+  async finalizarPedido() {
+    try {
+      if (this.itensCarrinho.length === 0) {
+        throw new Error('Carrinho vazio.');
+      }
+
+      if (this.carregando) return;
+
+      const pedidoPayload: PedidoType = {
+        IdUsuario: this.authDecodeUser.getusuarioId(),
+        itens: this.itensCarrinho.map(item => ({
+          quantidade: item.amountQTD,
+          id: item.idProduto
+        })),
+        pagamento: {
+          formaDePagament: 'PIX'
+        }
       };
-      localStorage.setItem('carrinho', JSON.stringify(carrinho));
-   }
 
-   removerItemCarrinho(idProduto: number) {
-      this.itensCarrinho = this.itensCarrinho.filter(item => item.idProduto !== idProduto);
-      this.salvarCarrinhoNoLocalStorage();
-   }
+      this.carregando = true;
+      const resposta = await firstValueFrom(this.pedidosService.criarPedido(pedidoPayload));
+      console.log('✅ Pedido criado:', resposta);
 
+      localStorage.removeItem('carrinho'); // limpa carrinho
+      this.itensCarrinho = [];
+      this.carrinhoPorEmpresa = {};
+      // mostrar mensagem ou redirecionar
 
-   carregarCarrinhoDoLocalStorage() {
-      const carrinhoStr = localStorage.getItem('carrinho');
-      const carrinho = carrinhoStr ? JSON.parse(carrinhoStr) : { itensPedido: [] };
-      this.itensCarrinho = carrinho.itensPedido;
-   }
-
-   get subtotal(): number {
-      return this.itensCarrinho.reduce((acc, item) => acc + item.price * item.amountQTD, 0);
-   }
-
-   async finalizarPedido() {
-      try {
-         const carrinhoStr = localStorage.getItem('carrinho');
-         const carrinho = carrinhoStr ? JSON.parse(carrinhoStr) : { itensPedido: [] };
-
-         if (!carrinho.itensPedido || carrinho.itensPedido.length === 0) {
-            throw new Error('Carrinho vazio.');
-         }
-
-         if (this.carregando) {
-            return; // evita chamadas múltiplas
-         }
-
-         const pedidoPayload: PedidoType = {
-            IdUsuario: this.authDecodeUser.getusuarioId(),
-            itens: carrinho.itensPedido.map((item: any) => ({
-               quantidade: item.amountQTD,
-               id: item.idProduto
-            })),
-            pagamento: {
-               formaDePagament: 'PIX'
-            }
-         };
-
-         this.carregando = true;
-         console.log(pedidoPayload)
-         const resposta = await firstValueFrom(this.pedidosService.criarPedido(pedidoPayload));
-
-         console.log('✅ Pedido criado com sucesso:', resposta);
-         localStorage.removeItem('carrinho'); // limpa o carrinho
-         // Ex: redirecionar, abrir modal, ou atualizar tela
-
-      } catch (erro) {
-         this.carregando = false;
-         // Ex: mostrar snackbar ou alert com erro
-      } finally {
-         this.carregando = false;
-      }
-   }
+    } catch (erro) {
+      this.snack.error('Erro ao finalizar pedido.');
+    } finally {
+      this.carregando = false;
+    }
+  }
 }

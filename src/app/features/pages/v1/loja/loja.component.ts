@@ -7,7 +7,7 @@ import { CommonModule } from "@angular/common";
 import { MatInputModule } from "@angular/material/input";
 import { ApiV1Loja } from "../../../../services/apiCategorias/apiV1Loja.service";
 import { MatIconModule } from "@angular/material/icon";
-import { itensPedido, listItensPedido } from "../../../../shared/core/pedidos/pedidos";
+import { carrinhoPorEmpresa, itensPedido, listItensPedido } from "../../../../shared/core/pedidos/pedidos";
 import { SnackService } from "../../../../services/snackBar/snack.service";
 import { headerComponent } from "../../../../shared/component/header/header.component";
 import { MobileNavbarComponent } from "../../../../shared/component/mobile-navbar/mobile-navbar.component";
@@ -19,6 +19,8 @@ import { CarrinhoComponent } from "../../admin/homeAdmin/carrinho/carrinho.compo
    templateUrl: './loja.component.html',
    styleUrl: './loja.component.scss'
 })
+
+
 export class AppLojaComponent implements OnInit {
    [x: string]: any;
    idProduto: any;
@@ -73,6 +75,19 @@ export class AppLojaComponent implements OnInit {
       })
    }
 
+   get carrinhoAgrupadoArray() {
+      const carrinhoStr = localStorage.getItem('carrinho');
+      if (!carrinhoStr) return [];
+      const carrinhoObj: carrinhoPorEmpresa = JSON.parse(carrinhoStr);
+
+      return Object.entries(carrinhoObj).map(([empresaId, empresaData]) => ({
+         empresaId,
+         nomeCompania: empresaData.nomeCompania,
+         itensPedido: empresaData.itensPedido
+      }));
+   }
+
+
 
    adicionarAoCarrinho(produto: any): void {
       const novoItem: itensPedido = {
@@ -83,26 +98,41 @@ export class AppLojaComponent implements OnInit {
          peso: produto.peso,
          categoriaProduct: produto.categoriaProduct ?? null,
          description: produto.description || '',
-         amountQTD: this.quantidade
+         amountQTD: this.quantidade,
+         empresaDTO: {
+            id: produto.empresaDTO.id,
+            nomeCompania: produto.empresaDTO.nomeCompania,
+            // outros campos que desejar
+         }
       };
 
       // Recupera carrinho do localStorage
       const carrinhoStr = localStorage.getItem('carrinho');
-      let carrinho: listItensPedido = carrinhoStr ? JSON.parse(carrinhoStr) : { itensPedido: [] };
+      let carrinho: carrinhoPorEmpresa = carrinhoStr ? JSON.parse(carrinhoStr) : {};
 
-      // Verifica se produto já existe no carrinho
-      const existente = carrinho.itensPedido.find(p => p.idProduto === novoItem.idProduto);
+      // Pega o id da empresa do produto
+      const empresaId = novoItem.empresaDTO.id;
+
+      // Se não existir essa empresa no carrinho, cria o grupo
+      if (!carrinho[empresaId]) {
+         carrinho[empresaId] = {
+            nomeCompania: novoItem.empresaDTO.nomeCompania,
+            itensPedido: []
+         };
+      }
+
+      // Procura se o produto já existe dentro da empresa
+      const existente = carrinho[empresaId].itensPedido.find(p => p.idProduto === novoItem.idProduto);
 
       if (existente) {
-         existente.amountQTD += this.quantidade;
+         existente.amountQTD += this.quantidade; // aumenta a quantidade
       } else {
-         carrinho.itensPedido.push(novoItem);
+         carrinho[empresaId].itensPedido.push(novoItem); // adiciona novo item
       }
 
       // Salva carrinho atualizado no localStorage
       localStorage.setItem('carrinho', JSON.stringify(carrinho));
 
-      // (Opcional) Mensagem de sucesso ou snack
       this.snack.success('Produto adicionado ao carrinho!');
    }
 
