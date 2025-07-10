@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { headerComponent } from "../../../../shared/component/header/header.component";
 import { MobileNavbarComponent } from "../../../../shared/component/mobile-navbar/mobile-navbar.component";
-import { CarrinhoComponent } from "../../admin/homeAdmin/carrinho/carrinho.component";
 import { PedidosService } from '../../../../services/pedidosService/pedidos.service';
 import { AuthDecodeService } from '../../../../services/AuthUser.service';
+import { CarrinhoComponent } from '../carrinho/carrinho.component';
 
 @Component({
    selector: 'app-minhasCompras',
    standalone: true,
-   imports: [CommonModule, headerComponent, MobileNavbarComponent, CarrinhoComponent],
+   imports: [CommonModule, headerComponent, MobileNavbarComponent, CarrinhoComponent,],
    templateUrl: './minhasCompras.component.html',
    styleUrl: './minhasCompras.component.scss'
 })

@@ -1,0 +1,12 @@
+<app-header (emitCarrinho)="ativaCarrinho()" [carrinho]="true" class="s" [admin]="false"></app-header>
+<app-mobile-navbar></app-mobile-navbar>
+
+<div class="main">
+  <h1>Finalizar Pedido</h1>
+
+    
+</div>
+
+@if (ativaCar) {
+<app-carrinho (desbiledCarEmit)="ativaCarrinho()"></app-carrinho>
+}

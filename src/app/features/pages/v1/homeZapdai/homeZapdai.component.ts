@@ -7,11 +7,11 @@ import { MaisPostadosComponent } from '../../../../shared/component/mais-postado
 import { MatTabsModule } from '@angular/material/tabs';
 import { ApiV1Loja } from '../../../../services/apiCategorias/apiV1Loja.service';
 import { footerComponent } from '../../../../shared/component/foother/footer.component';
-import { CarrinhoComponent } from '../../admin/homeAdmin/carrinho/carrinho.component';
 import { headerComponent } from '../../../../shared/component/header/header.component';
 import { MobileNavbarComponent } from '../../../../shared/component/mobile-navbar/mobile-navbar.component';
 import { isPlatformBrowser } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { CarrinhoComponent } from '../carrinho/carrinho.component';
 
 @Component({
   selector: 'app-homeZapdai',

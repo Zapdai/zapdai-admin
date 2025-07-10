@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, output } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
-import { ItemCarrinhoComponent } from "./itemCarrinho/itemCarrinho.component";
 import { CommonModule } from "@angular/common";
 import { PedidosService } from "../../../../../services/pedidosService/pedidos.service";
 import { firstValueFrom } from "rxjs";
@@ -9,20 +8,25 @@ import { AuthDecodeService } from "../../../../../services/AuthUser.service";
 import { carrinhoPorEmpresa, itensPedido, PedidoType } from "../../../../../shared/core/pedidos/pedidos";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { SnackService } from "../../../../../services/snackBar/snack.service";
+import { ItemCarrinhoComponent } from "../itemCarrinho/itemCarrinho.component";
+import { headerComponent } from "../../../../../shared/component/header/header.component";
+import { MobileNavbarComponent } from "../../../../../shared/component/mobile-navbar/mobile-navbar.component";
+import { CarrinhoComponent } from "../carrinho.component";
 
 @Component({
-   selector: "app-carrinho",
+   selector: "app-finalizar-carrinho",
    standalone: true,
-   imports: [MatIconModule, MatButtonModule, ItemCarrinhoComponent, CommonModule, MatProgressSpinnerModule],
-   templateUrl: "./carrinho.component.html",
-   styleUrl: "./carrinho.component.scss"
+   imports: [MatIconModule, MatButtonModule, ItemCarrinhoComponent, CommonModule, MatProgressSpinnerModule, headerComponent, MobileNavbarComponent, CarrinhoComponent],
+   templateUrl: "./finalizar-carrinho.component.html",
+   styleUrl: "./finalizar-carrinho.component.scss"
 })
 
-export class CarrinhoComponent implements OnInit {
+export class FinalizarCarrinhoComponent implements OnInit {
    itensCarrinho: itensPedido[] = [];
    carrinhoPorEmpresa: carrinhoPorEmpresa = {};
    carregando = false;
    totalItensCarrinho: number = 0;
+   ativaCar?: boolean;
 
    @Output() desbiledCarEmit = new EventEmitter();
 
@@ -139,5 +143,10 @@ export class CarrinhoComponent implements OnInit {
       } finally {
          this.carregando = false;
       }
+   }
+
+
+   ativaCarrinho() {
+      this.ativaCar = !this.ativaCar;
    }
 }

@@ -1,7 +1,7 @@
 .produto-detalhes-container {
   display: flex;
   gap: 20px;
-  flex-wrap: wrap;
+  flex-direction: column;
   padding: 20px;
   margin-top: 50px;
 }
@@ -153,4 +153,12 @@
 .pt {
   width: 350px;
   height: 200px;
+}
+
+
+@media screen and (min-width: 769px) {
+  .produto-detalhes-container {
+  flex-direction: row;
+}
+
 }

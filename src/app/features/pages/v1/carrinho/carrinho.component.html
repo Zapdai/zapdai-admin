@@ -36,10 +36,10 @@
         <small>Valor R$ {{ subtotal | number: '1.2-2' }}</small>
       </div>
 
-      <button mat-flat-button class="ng-btn" (click)="finalizarPedido()"
+      <button mat-flat-button class="ng-btn" (click)="pageFinalizarPedido()"
         [disabled]="itensCarrinho.length === 0 || carregando">
 
-        <span class="btn-content">Finalizar Compra</span>
+        <span class="btn-content">Continuar a Compra</span>
 
         @if (carregando) {
         <div class="btn-spinner-container">

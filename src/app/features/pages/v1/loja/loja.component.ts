@@ -11,11 +11,20 @@ import { carrinhoPorEmpresa, itensPedido, listItensPedido } from "../../../../sh
 import { SnackService } from "../../../../services/snackBar/snack.service";
 import { headerComponent } from "../../../../shared/component/header/header.component";
 import { MobileNavbarComponent } from "../../../../shared/component/mobile-navbar/mobile-navbar.component";
-import { CarrinhoComponent } from "../../admin/homeAdmin/carrinho/carrinho.component";
+import { CarrinhoComponent } from "../carrinho/carrinho.component";
 
 @Component({
    selector: 'app-loja',
-   imports: [MatTabsModule, ReactiveFormsModule, CommonModule, MatInputModule, MatIconModule, headerComponent, MobileNavbarComponent, CarrinhoComponent],
+   imports: [
+      MatTabsModule, 
+      ReactiveFormsModule, 
+      CommonModule, 
+      MatInputModule, 
+      MatIconModule, 
+      headerComponent, 
+      MobileNavbarComponent, 
+      CarrinhoComponent,
+   ],
    templateUrl: './loja.component.html',
    styleUrl: './loja.component.scss'
 })
