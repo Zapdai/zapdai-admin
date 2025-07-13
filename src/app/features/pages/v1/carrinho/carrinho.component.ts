@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, output } from "@angular/core";
+import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, OnInit, Output, output } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { ItemCarrinhoComponent } from "./itemCarrinho/itemCarrinho.component";
@@ -16,7 +16,8 @@ import { Router } from "@angular/router";
    standalone: true,
    imports: [MatIconModule, MatButtonModule, ItemCarrinhoComponent, CommonModule, MatProgressSpinnerModule],
    templateUrl: "./carrinho.component.html",
-   styleUrl: "./carrinho.component.scss"
+   styleUrl: "./carrinho.component.scss",
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
 export class CarrinhoComponent implements OnInit {

@@ -12,11 +12,12 @@ import { ItemCarrinhoComponent } from "../itemCarrinho/itemCarrinho.component";
 import { headerComponent } from "../../../../../shared/component/header/header.component";
 import { MobileNavbarComponent } from "../../../../../shared/component/mobile-navbar/mobile-navbar.component";
 import { CarrinhoComponent } from "../carrinho.component";
+import { MapsLeafletComponent } from "../../../../../shared/component/maps-leaflet/maps-leaflet.component";
 
 @Component({
    selector: "app-finalizar-carrinho",
    standalone: true,
-   imports: [MatIconModule, MatButtonModule, ItemCarrinhoComponent, CommonModule, MatProgressSpinnerModule, headerComponent, MobileNavbarComponent, CarrinhoComponent],
+   imports: [MatIconModule, MatButtonModule, CommonModule, MatProgressSpinnerModule, headerComponent, MobileNavbarComponent, CarrinhoComponent, MapsLeafletComponent],
    templateUrl: "./finalizar-carrinho.component.html",
    styleUrl: "./finalizar-carrinho.component.scss"
 })
@@ -27,6 +28,7 @@ export class FinalizarCarrinhoComponent implements OnInit {
    carregando = false;
    totalItensCarrinho: number = 0;
    ativaCar?: boolean;
+   MapsLeaflet = true;
 
    @Output() desbiledCarEmit = new EventEmitter();
 
@@ -40,7 +42,7 @@ export class FinalizarCarrinhoComponent implements OnInit {
       this.carregarCarrinhoDoLocalStorage();
    }
 
-   desabiledCar() {
+   emitdesabiledCar() {
       this.desbiledCarEmit.emit();
    }
 
@@ -149,4 +151,9 @@ export class FinalizarCarrinhoComponent implements OnInit {
    ativaCarrinho() {
       this.ativaCar = !this.ativaCar;
    }
+
+   
+    ativaMapsLeaflet() {
+        this.MapsLeaflet = !this.MapsLeaflet;
+    }
 }

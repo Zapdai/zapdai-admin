@@ -1,0 +1,23 @@
+<section class="container" (click)="desabiledCar()">
+  <div class="container-int" (click)="filhoClicado($event)">
+    <div class="container-header">
+      <button class="btn" mat-flat-button (click)="desabiledCar()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <div>
+        <h1>Endereço</h1>
+      </div>
+    </div>
+    <div class="container-infor-produto">
+      <div #mapRef id="map" style="height: 500px; width: 100%; border-radius: 10px;"></div>
+
+      <div *ngIf="formEndereco.endereco">
+        <p><strong>Endereço selecionado:</strong> {{ formEndereco.endereco }}</p>
+      </div>
+
+    </div>
+    <button mat-flat-button class="ng-btn" (click)="salvarEndereco()">Salvar Endereço</button>
+    <button (click)="this.map.invalidateSize()">Forçar Redesenho</button>
+
+  </div>
+</section>

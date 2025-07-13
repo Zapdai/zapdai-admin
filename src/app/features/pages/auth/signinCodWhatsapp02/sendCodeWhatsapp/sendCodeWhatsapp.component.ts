@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, HostListener, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
@@ -15,8 +15,8 @@ import { SnackService } from '../../../../../services/snackBar/snack.service';
 import { AuthDecodeService } from '../../../../../services/AuthUser.service';
 import { apiAuthService } from '../../../../../services/apiAuth.service';
 import { AuthService } from '../../../../../services/auth.service';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { firstValueFrom } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 type verificationOPT = {
   numeroWhatsapp: number;
@@ -38,7 +38,8 @@ type verificationOPT = {
     MatProgressSpinnerModule,
   ],
   templateUrl: './sendCodeWhatsapp.component.html',
-  styleUrls: ['./sendCodeWhatsapp.component.scss']
+  styleUrls: ['./sendCodeWhatsapp.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SendCodeWhatsappComponent implements OnInit, AfterViewInit {
   currentStep = 1;
