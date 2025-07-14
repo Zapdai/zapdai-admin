@@ -10,12 +10,13 @@
 }
 
 .main {
+    display: flex;
+    flex-direction: column;
     position: fixed;
     width: 100%;
     z-index: 1000;
     top: 0;
     left: 0;
-  overflow: hidden;
 
     .ng-header {
         width: 100%;
@@ -27,7 +28,7 @@
         background-color: #0d1d3f;
         color: #DDD;
         box-shadow: 1px;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 
         .menu-logo {
             display: flex;
@@ -65,7 +66,7 @@
             display: flex;
 
             .search {
-                width: 300px;
+                width: 100%;
                 display: flex;
                 align-items: center;
                 background-color: #ffffff;

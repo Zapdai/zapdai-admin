@@ -1,10 +1,12 @@
 .area-loja {
-    margin-top: 5px;
+    margin-top: 6px;
     padding: 0;
 
 
     .main {
-        height: calc(100vh - 50px);
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 30px);
         width: 100%;
         overflow-y: auto;
         overflow-x: hidden;
@@ -59,9 +61,10 @@
 
 @media screen and (min-width: 728px) {
     .area-loja {
+        
+        margin-top: 35px;
 
         .main {
-            margin-top: 35px;
 
 
             .ng-categoria {
