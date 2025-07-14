@@ -4,14 +4,13 @@
 <div class="main">
   <h1>Finalizar Pedido</h1>
 
-  <button class="ng-btn" (click)="ativaMapsLeaflet()">
+  <button class="ng-btn">
     <mat-icon class="ng-menu-icon">add</mat-icon>
     <small class="ng-menu-name">Endereço</small>
   </button>
 
+  <app-maps-google></app-maps-google>
+
+
 </div>
 
-
-@if (MapsLeaflet) {
-<app-maps-leaflet (emitdesabiledCar)="ativaMapsLeaflet()"></app-maps-leaflet>
-}

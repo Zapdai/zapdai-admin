@@ -1,7 +1,7 @@
-import { Component, EventEmitter, OnInit, Output, output } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnInit, Output, output, PLATFORM_ID, ViewChild } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
-import { CommonModule } from "@angular/common";
+import { CommonModule, isPlatformBrowser } from "@angular/common";
 import { PedidosService } from "../../../../../services/pedidosService/pedidos.service";
 import { firstValueFrom } from "rxjs";
 import { AuthDecodeService } from "../../../../../services/AuthUser.service";
@@ -12,12 +12,20 @@ import { ItemCarrinhoComponent } from "../itemCarrinho/itemCarrinho.component";
 import { headerComponent } from "../../../../../shared/component/header/header.component";
 import { MobileNavbarComponent } from "../../../../../shared/component/mobile-navbar/mobile-navbar.component";
 import { CarrinhoComponent } from "../carrinho.component";
-import { MapsLeafletComponent } from "../../../../../shared/component/maps-leaflet/maps-leaflet.component";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { MapsGoogleComponent } from "../../../../../shared/component/maps-google/maps-google.component";
 
 @Component({
    selector: "app-finalizar-carrinho",
    standalone: true,
-   imports: [MatIconModule, MatButtonModule, CommonModule, MatProgressSpinnerModule, headerComponent, MobileNavbarComponent, CarrinhoComponent, MapsLeafletComponent],
+   imports: [
+      MatIconModule,
+      MatButtonModule,
+      CommonModule,
+      MatProgressSpinnerModule,
+      headerComponent,
+      MobileNavbarComponent,
+      MapsGoogleComponent],
    templateUrl: "./finalizar-carrinho.component.html",
    styleUrl: "./finalizar-carrinho.component.scss"
 })
@@ -28,15 +36,19 @@ export class FinalizarCarrinhoComponent implements OnInit {
    carregando = false;
    totalItensCarrinho: number = 0;
    ativaCar?: boolean;
-   MapsLeaflet = true;
+   @ViewChild('map', { static: false }) mapContainer!: ElementRef;
+
+
 
    @Output() desbiledCarEmit = new EventEmitter();
 
    constructor(
+      @Inject(PLATFORM_ID) private platformId: Object,
       private pedidosService: PedidosService,
       public authDecodeUser: AuthDecodeService,
       private snack: SnackService,
    ) { }
+
 
    ngOnInit(): void {
       this.carregarCarrinhoDoLocalStorage();
@@ -152,8 +164,4 @@ export class FinalizarCarrinhoComponent implements OnInit {
       this.ativaCar = !this.ativaCar;
    }
 
-   
-    ativaMapsLeaflet() {
-        this.MapsLeaflet = !this.MapsLeaflet;
-    }
 }
