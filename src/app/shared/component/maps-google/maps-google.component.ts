@@ -10,7 +10,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import { validarCep } from '../../../../validators';
 import { cepApiBrasilService } from '../../../services/cepApiBrasil/cep.service';
-import { GoogleMapsModule } from '@angular/google-maps';
+import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 
 
 @Component({
@@ -27,10 +27,13 @@ export class MapsGoogleComponent implements OnInit, AfterViewInit {
    @ViewChild('primeiroInput') primeiroInput!: ElementRef;
    @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
 
+   @ViewChild(GoogleMap) map!: GoogleMap;
+
+   center: google.maps.LatLngLiteral = { lat: -23.55052, lng: -46.633308 }; // Ex: SP
+   zoom = 15;
+
    groupform!: FormGroup;
 
-   center: google.maps.LatLngLiteral = { lat: -23.55052, lng: -46.633308 };
-   zoom = 15;
    markerPosition: google.maps.LatLngLiteral = this.center;
    mapOptions: google.maps.MapOptions = { mapTypeId: 'roadmap', zoomControl: true };
    markerOptions: google.maps.MarkerOptions = { draggable: true };
@@ -43,18 +46,20 @@ export class MapsGoogleComponent implements OnInit, AfterViewInit {
       private ngZone: NgZone
    ) { }
 
+
    ngAfterViewInit(): void {
-
-      if (isPlatformBrowser(this.platformId)) {
-         this.geocoder = new google.maps.Geocoder();
-         this.initAutocomplete();
-         this.getCurrentLocation();
-      }
+      setTimeout(() => {
+         if (this.map?.googleMap) {
+            google.maps.event.trigger(this.map.googleMap, 'resize');
+         }
+      }, 1000);
+      this.initAutocomplete()
+      this.geocoder = new google.maps.Geocoder();
    }
-
    ngOnInit(): void {
       this.initForm();
 
+      this.getCurrentLocation()
       this.groupform.get('cep')?.valueChanges.subscribe((cep: string) => {
          const sanitized = cep?.replace(/\D/g, '');
          if (sanitized?.length === 8) {

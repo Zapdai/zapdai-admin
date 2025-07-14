@@ -7,6 +7,7 @@
         height: calc(100vh - 50px);
         width: 100%;
         overflow-y: auto;
+        overflow-x: hidden;
         position: relative;
         scrollbar-width: thin;
         scrollbar-color: rgba(21, 9, 185, 0.133);
@@ -72,12 +73,12 @@
                         padding: 2px 156px;
                     }
 
-                    
-                .carrossel {
-                    margin-top: 1px;
+
+                    .carrossel {
+                        margin-top: 1px;
 
 
-                }
+                    }
                 }
 
                 .propaganda {
