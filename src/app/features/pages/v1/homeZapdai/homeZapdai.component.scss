@@ -6,11 +6,9 @@
     .main {
         display: flex;
         flex-direction: column;
-        height: calc(100vh - 30px);
         width: 100%;
         overflow-x: hidden;
         position: relative;
-        scrollbar-width: thin;
         scrollbar-color: rgba(21, 9, 185, 0.133);
 
         .ng-categoria {
@@ -60,11 +58,13 @@
 
 @media screen and (min-width: 728px) {
     .area-loja {
-        
+
         margin-top: 35px;
 
         .main {
 
+            overflow-y: hidden;
+            overflow-x: hidden;
 
             .ng-categoria {
                 .container-area {
