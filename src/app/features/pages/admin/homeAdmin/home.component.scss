@@ -32,7 +32,8 @@
         display: flex;
         flex-direction: column;
         background-color: #fff;
-        scrollbar-color: #505861 #fff;
+        scrollbar-width: thin;
+        scrollbar-color: #ccc #f7f7f7;
         height: 100vh;
 
         .header {
@@ -42,6 +43,7 @@
         .ng-container {
             display: flex;
             margin-top: 85px;
+            overflow: hidden;
 
             .ng-main {
                 width: 100%;
@@ -68,10 +70,9 @@
     }
 }
 
-@media screen and (max-width: 769px) {
+// -----------------------------------------------------------------------------------------------------------//
+@media screen and (min-width:769px) {
     .log {
         display: none;
     }
-
-
 }
