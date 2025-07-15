@@ -16,30 +16,27 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MapsGoogleComponent } from "../../../../../shared/component/maps-google/maps-google.component";
 
 @Component({
-   selector: "app-finalizar-carrinho",
+   selector: "app-endereco-entrega",
    standalone: true,
    imports: [
       MatIconModule,
       MatButtonModule,
       CommonModule,
       MatProgressSpinnerModule,
-      headerComponent,
-      MobileNavbarComponent,
       MapsGoogleComponent],
-   templateUrl: "./finalizar-carrinho.component.html",
-   styleUrl: "./finalizar-carrinho.component.scss"
+   templateUrl: "./endereco-entrega.component.html",
+   styleUrl: "./endereco-entrega.component.scss"
 })
 
-export class FinalizarCarrinhoComponent implements OnInit {
+export class EnderecoEntregaComponent implements OnInit {
    itensCarrinho: itensPedido[] = [];
    carrinhoPorEmpresa: carrinhoPorEmpresa = {};
    carregando = false;
    totalItensCarrinho: number = 0;
    ativaCar?: boolean;
+   ativaMapsGoogle = true;
+
    @ViewChild('map', { static: false }) mapContainer!: ElementRef;
-
-
-
    @Output() desbiledCarEmit = new EventEmitter();
 
    constructor(
@@ -164,4 +161,7 @@ export class FinalizarCarrinhoComponent implements OnInit {
       this.ativaCar = !this.ativaCar;
    }
 
+   callMapsGoogle() {
+      this.ativaMapsGoogle = !this.ativaMapsGoogle;
+   }
 }

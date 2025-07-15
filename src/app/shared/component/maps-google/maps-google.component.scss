@@ -1,114 +1,198 @@
-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.container {
+    position: absolute;
+    z-index: 1000;
+    background-color: #fff;
+    top: 0;
+    left: 0;
     width: 100%;
-    gap: 10px 0;
+    height: 100%;
+    overflow: auto;
 
-    .form-step .ng-fieldset {
+    .container-int {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         width: 100%;
-        padding: 2px;
-        border-radius: 5px;
-        margin-top: 15px;
-        border-color: #bbb;
+        height: 60vh;
+        background-color: #fff;
+        padding: 0 20px;
+        gap: 20px;
 
-        legend {
-            font-size: 12px;
-            font-weight: 500;
-            color: #bbb;
-            padding: 0 4px;
-        }
-
-        .ng-input {
-            background-color: transparent;
-            outline: none;
-            border: 0;
-            width: 100%;
-            height: 30px;
-            font-size: 16px;
-            color: #444;
-        }
-
-        .ng-input::placeholder {
-            color: #999;
-            font-size: 14px;
-            padding-left: 10px;
-        }
-
-        .ng-password-btn {
+        .container-header {
             display: flex;
-            padding: 2px;
+            width: 100%;
+            justify-content: flex-end;
+            align-items: center;
+            background-color: #fff;
+            position: fixed;
+            padding: 5px 2px;
+            border-bottom: 2px solid #e6e6e6;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 
-            mat-icon {
-                cursor: pointer;
-                transform: scale(0.0.97);
+            div {
+                width: 100%;
+            }
+
+            h1 {
+                text-align: center;
+                font-weight: 700;
+                font-size: 1.5rem;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                color: #222;
             }
         }
 
+        .container-infor-produto {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: auto;
+            gap: 10px;
+            margin-top: 70px;
+            padding: 20px;
+
+            .ng-fieldset {
+                width: 100%;
+                padding: 2px;
+                border-radius: 5px;
+                margin-top: 15px;
+                border-color: #bbb;
+
+                legend {
+                    font-size: 12px;
+                    font-weight: 500;
+                    color: #555;
+                    padding: 0 4px;
+                }
+
+                .ng-input {
+                    background-color: transparent;
+                    outline: none;
+                    border: 0;
+                    width: 100%;
+                    height: 30px;
+                    font-size: 16px;
+                    color: #333;
+                }
+
+                .ng-input::placeholder {
+                    color: #999;
+                    font-size: 14px;
+                    padding-left: 10px;
+                }
 
 
-    }
 
-    .ng-listForm {
-        display: flex;
-        justify-content: space-between;
-        gap: 0 15px;
+            }
 
-        div {
-            flex: 1;
+            .map-wrapper {
+                position: relative;
+                width: 100%;
+                height: 400px;
+                overflow: visible;
+
+                google-map {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    width: 100%;
+                    z-index: 1;
+                }
+
+
+
+                .center-marker {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    z-index: 2;
+                    pointer-events: none;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    height: auto;
+                    width: auto;
+                    padding: 0;
+
+                    .pin-icon {
+                        font-size: 35px;
+                        color: red;
+                        transition: transform 0.5s ease, color 0.2s ease;
+                        height: 40px;
+                        line-height: 40px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 3;
+                    }
+
+                    .pin-shadow {
+                        width: 15px;
+                        height: 6px;
+                        background: rgba(0, 0, 0, 0.4);
+                        border-radius: 50%;
+                        transform: translateY(-10px);
+                        /* puxando a sombra pra cima */
+                        filter: blur(2px);
+                        z-index: 1;
+                        pointer-events: none;
+                    }
+
+                    &.moving .pin-icon {
+                        animation: floatPin 1s ease-in-out infinite alternate;
+                        color: black;
+                    }
+                }
+
+
+
+
+                @keyframes floatPin {
+                    0% {
+                        transform: translateY(0);
+                    }
+
+                    100% {
+                        transform: translateY(-15px);
+                    }
+                }
+            }
+
+
+            .ng-btn {
+                width: 100%;
+                height: 45px;
+                border-radius: 5px;
+                border: 1px solid #c8c8c8;
+                cursor: pointer;
+                font-family: var(--font-family);
+                font-size: 14px;
+                font-weight: 500;
+                background: var(--background-color-container);
+                color: #ddd;
+                margin-bottom: 60px;
+            }
+
+            .ng-btn:hover {
+                background-color: #6d4386;
+            }
+
+            .ng-btn:active {
+                transform: scale(0.97);
+
+            }
+
+            .ng-btn:disabled {
+                color: #888;
+            }
+
         }
     }
 
-    .ng-error {
-        width: 100%;
-        font-size: 12px;
-        color: #FF8401;
-        padding: 2px 5px;
-    }
-
-    .map-container {
-        height: 300px;
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .autocomplete-input {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 15px;
-        font-size: 16px;
-    }
-
-
 }
-
-.ng-btn {
-    width: 100%;
-    height: 35px;
-    border-radius: 5px;
-    border: 1px solid #c8c8c8;
-    cursor: pointer;
-    font-family: var(--font-family);
-    font-size: 14px;
-    font-weight: 500;
-    color: #592d74;
-    margin-top: 20px;
-}
-
-.ng-btn:hover {
-    background-color: #eee;
-}
-
-.ng-btn:active {
-    transform: scale(0.97);
-
-}
-
-.ng-btn:disabled {
-    color: #888;
-}
-
-
 
 
 .btn-voltar {
@@ -126,16 +210,63 @@ form {
     }
 }
 
-google-map {
-    display: block;
-    height: 400px !important;
-    width: 100% !important;
-    border: 1px solid red;
-     background-color: rgba(255, 0, 0, 0.1);
-    /* para visualizar a borda do container */
+// google-map {
+//     display: block;
+//     height: 400px !important;
+//     width: 100% !important;
+//     border: 1px solid red;
+//     background-color: rgba(255, 0, 0, 0.1);
+//     /* para visualizar a borda do container */
 
-}
+// }
 
 
 // 
-@media screen and (min-width:730px) {}
+@media screen and (min-width:730px) {
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        z-index: 1000;
+        background-color: rgba(0, 0, 0, 0.6);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        .container-int {
+            display: flex;
+            flex-direction: column;
+            width: 680px;
+            border-radius: 10px;
+            height: auto;
+            padding: 0 30px;
+
+
+            .container-header {
+                position: relative;
+                border-bottom: 2px solid #e6e6e6;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+            }
+
+            .container-infor-produto {
+                display: flex;
+                flex-direction: column;
+                gap: 40px;
+                margin-top: 0;
+
+                section {
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1;
+                }
+
+            }
+
+            .ng-btn {
+                margin-bottom: 20px;
+            }
+        }
+    }
+}

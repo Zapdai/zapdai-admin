@@ -4,8 +4,8 @@ import { buscaProdutos } from "./buscaProdutos/buscaProdutos.component";
 import { AppLojaComponent } from "./loja/loja.component";
 import { ProdutoEmpresaComponent } from "../empresa/ItensEmpresasUnit/produto-empresa.component";
 import { MinhasComprasComponent } from "./minhasCompras/minhasCompras.component";
-import { FinalizarCarrinhoComponent } from "./carrinho/finalizar-carrinho/finalizar-carrinho.component";
 import { authGuardian } from "../../../services/auth.guard";
+import { EnderecoEntregaComponent } from "./carrinho/endereco-entrega/endereco-entrega.component";
 export const routes: Routes = [
     {
      path:"", component:HomeZapdaiComponent
@@ -22,6 +22,6 @@ export const routes: Routes = [
         path:"minhas-compras",component:MinhasComprasComponent, canActivate:[authGuardian]
     },
     {
-        path:"finalizar-pedido",component:FinalizarCarrinhoComponent, canActivate:[authGuardian]
+        path:"finalizar-pedido",component:EnderecoEntregaComponent, canActivate:[authGuardian]
     }
 ]
