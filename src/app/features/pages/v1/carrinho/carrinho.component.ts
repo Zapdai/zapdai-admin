@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, OnInit, Output, output } from "@angular/core";
+import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, OnDestroy, OnInit, Output, output } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { ItemCarrinhoComponent } from "./itemCarrinho/itemCarrinho.component";
@@ -10,6 +10,7 @@ import { PedidosService } from "../../../../services/pedidosService/pedidos.serv
 import { AuthDecodeService } from "../../../../services/AuthUser.service";
 import { SnackService } from "../../../../services/snackBar/snack.service";
 import { Router } from "@angular/router";
+import { ModalScrollService } from "../../modal-scroll.service";
 
 @Component({
    selector: "app-carrinho",
@@ -17,10 +18,10 @@ import { Router } from "@angular/router";
    imports: [MatIconModule, MatButtonModule, ItemCarrinhoComponent, CommonModule, MatProgressSpinnerModule],
    templateUrl: "./carrinho.component.html",
    styleUrl: "./carrinho.component.scss",
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
-export class CarrinhoComponent implements OnInit {
+export class CarrinhoComponent implements OnInit, OnDestroy {
    itensCarrinho: itensPedido[] = [];
    carrinhoPorEmpresa: carrinhoPorEmpresa = {};
    carregando = false;
@@ -33,9 +34,17 @@ export class CarrinhoComponent implements OnInit {
       public authDecodeUser: AuthDecodeService,
       private snack: SnackService,
       public router: Router,
+      private scrollService: ModalScrollService,
    ) { }
 
+
+   ngOnDestroy(): void {
+      this.scrollService.unlockScroll();
+   }
+
    ngOnInit(): void {
+      this.scrollService.lockScroll();
+
       this.carregarCarrinhoDoLocalStorage();
    }
 

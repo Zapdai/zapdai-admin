@@ -2,12 +2,14 @@
     display: flex;
     width: 100%;
     background-color: #fff;
+    overflow: hidden;
 
     .ng-checkout {
         display: flex;
         flex-direction: column-reverse;
         gap: 20px 0;
         padding: 15px;
+        width: 100%;
 
         .ng-container {
             display: flex;
@@ -21,6 +23,7 @@
                 flex-direction: column;
                 font-size: 14px;
                 gap: 20px 0;
+                width: 100%;
 
                 select {
                     background-color: #fff;
@@ -79,7 +82,7 @@
                             display: flex;
                             justify-content: center;
                             align-items: center;
-                            flex: 1;
+                            width: 100%;
                             text-align: center;
                             font-size: 8;
                             cursor: pointer;
@@ -88,16 +91,27 @@
                             border-radius: 4px;
                             gap: 2px;
 
+                            img {
+                                flex: 1;
+                                width: 80%;
+                                height: 60%;
+                                object-fit: contain;
+                                background-size: contain;
+                            }
                         }
 
                     }
 
+                    .tab {
+                        border: 2px solid #ccc;
+                    }
 
                     .tab.active {
                         background-color: #eee;
                         color: #41b44a;
                         border: 2px solid #41b44a;
                     }
+
 
                     .tab-content {
                         background-color: #fff;
@@ -202,6 +216,7 @@
             gap: 25px 0;
             padding: 15px 0;
             border-radius: 10px;
+            width: 100%;
 
             .ng-subContainer2 {
                 display: flex;
@@ -290,8 +305,6 @@
 
 @media screen and (min-width: 1025px) {
     .main {
-        justify-content: center;
-        align-items: flex-start;
         padding: 8px;
 
         .ng-checkout {
@@ -300,13 +313,13 @@
             justify-content: center;
             flex-direction: row;
             gap: 0 40px;
-            width: 80%;
+            width: 100%;
 
             .ng-container,
             .ng-container2 {
                 display: flex;
                 flex-direction: column;
-                flex: 2;
+                width: 50%;
                 gap: 35px 0;
                 padding: 15px;
                 border: 1px solid #ccc;
@@ -445,7 +458,7 @@
             }
 
             .ng-my-order {
-                flex: 1;
+                width: 25%;
                 border-right: 1px solid #ccc;
             }
         }
