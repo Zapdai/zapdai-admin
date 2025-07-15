@@ -30,6 +30,7 @@
             @if (isVisible) {
             <div class="ng-btn-empresas" (click)="pagePlanos()">Zapdai Empresas</div>
             }
+            @if (auth.PossuiToken()) {
             <div class="carrinho">
                 <!-- aqui vamos adiconar o valor adicionando ao carrinho -->
                 <div class="toggle-ico">{{ totalItensCarrinho }}</div>
@@ -38,6 +39,7 @@
                     shopping_cart
                 </mat-icon>
             </div>
+            }
 
             @if (isVisible) {
             @if (!auth.PossuiToken()) {
@@ -50,7 +52,7 @@
             }
             }
         </section>
-    }
+        }
 
         @if (isVisible) {
         <div class="card flex justify-center">

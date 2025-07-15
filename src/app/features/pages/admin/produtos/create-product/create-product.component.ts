@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { firstValueFrom, map, of, startWith } from "rxjs";
@@ -16,6 +16,7 @@ import { AsyncPipe } from '@angular/common';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ModalScrollService } from "../../../modal-scroll.service";
 
 @Component({
    selector: "app-create-product",
@@ -36,7 +37,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
    styleUrls: ["./create-product.component.scss"],
 
 })
-export class CreateProductComponent implements OnInit, AfterViewInit {
+export class CreateProductComponent implements OnInit, AfterViewInit, OnDestroy {
    todosProdutos: any;
    produto: any;
    categorias: any[] = [];
@@ -57,8 +58,15 @@ export class CreateProductComponent implements OnInit, AfterViewInit {
       private snack: SnackService,
       private router: Router,
       public authDecodeUser: AuthDecodeService,
+      private scrollService: ModalScrollService,
    ) { }
 
+
+   ngOnDestroy(): void {
+      this.scrollService.unlockScroll();
+   }
+
+   
    ngAfterViewInit() {
       const container = document.querySelector('.container');
       if (container) {
@@ -70,6 +78,8 @@ export class CreateProductComponent implements OnInit, AfterViewInit {
 
 
    async ngOnInit(): Promise<void> {
+      this.scrollService.lockScroll();
+
       this.CarregaFormGroup();
       this.getAllProdutosEmpresa();
       await this.getAllCategorias(); // Garante que as categorias estejam carregadas

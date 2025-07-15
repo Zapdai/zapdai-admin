@@ -4,11 +4,14 @@ import {
   EventEmitter,
   ElementRef,
   ViewChild,
-  Input
+  Input,
+  OnInit,
+  OnDestroy
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { SnackService } from '../../../../../services/snackBar/snack.service';
 import { CommonModule } from '@angular/common';
+import { ModalScrollService } from '../../../modal-scroll.service';
 
 type DomFile = globalThis.File;
 
@@ -19,7 +22,7 @@ type DomFile = globalThis.File;
   styleUrls: ['./image-drop-carrossel.component.scss'],
   imports: [MatIconModule, CommonModule]
 })
-export class ImageDropCarrossel02Component {
+export class ImageDropCarrossel02Component implements OnInit, OnDestroy {
   MAX_IMAGENS = 3;
   @Input() images: { url: string; file?: File }[] = [];
 
@@ -28,7 +31,19 @@ export class ImageDropCarrossel02Component {
   @Output() enviarImagens = new EventEmitter<File[]>();
   @ViewChild('scrollContainer', { static: false }) fer?: ElementRef;
 
-  constructor(private snack: SnackService) { }
+  constructor(
+    private snack: SnackService,
+    private scrollService: ModalScrollService,
+  ) { }
+
+
+  ngOnDestroy(): void {
+    this.scrollService.unlockScroll();
+  }
+
+  ngOnInit(): void {
+    this.scrollService.lockScroll();
+  }
 
   gerar7DigitosNumericos() {
     return Math.floor(1000000 + Math.random() * 9000000).toString();

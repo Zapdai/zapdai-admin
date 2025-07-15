@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { firstValueFrom, map, of, startWith } from "rxjs";
@@ -14,6 +14,7 @@ import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { ModalScrollService } from "../../../modal-scroll.service";
 
 @Component({
    selector: "app-categorias",
@@ -31,19 +32,19 @@ import { trigger, transition, style, animate } from '@angular/animations';
    templateUrl: "./categorias.component.html",
    styleUrls: ["./categorias.component.scss"],
    animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('200ms ease-in', style({ opacity: 1 }))
-      ]),
-      transition(':leave', [
-        animate('150ms ease-out', style({ opacity: 0 }))
+      trigger('fadeInOut', [
+         transition(':enter', [
+            style({ opacity: 0 }),
+            animate('200ms ease-in', style({ opacity: 1 }))
+         ]),
+         transition(':leave', [
+            animate('150ms ease-out', style({ opacity: 0 }))
+         ])
       ])
-    ])
-  ]
+   ]
 
 })
-export class CategoriasComponent implements OnInit, AfterViewInit {
+export class CategoriasComponent implements OnInit, AfterViewInit, OnDestroy {
    categorias: any[] = [];
    selectedValue: string = '';
    filteredStreets!: Observable<any> | undefined;
@@ -61,8 +62,15 @@ export class CategoriasComponent implements OnInit, AfterViewInit {
       private snack: SnackService,
       private router: Router,
       public authDecodeUser: AuthDecodeService,
+      private scrollService: ModalScrollService,
    ) { }
 
+
+   ngOnDestroy(): void {
+      this.scrollService.unlockScroll();
+   }
+
+   
    ngAfterViewInit() {
       const container = document.querySelector('.container');
       if (container) {
@@ -74,6 +82,8 @@ export class CategoriasComponent implements OnInit, AfterViewInit {
 
 
    async ngOnInit(): Promise<void> {
+      this.scrollService.lockScroll();
+
       this.CarregaFormGroup();
       await this.getAllCategorias(); // Garante que as categorias estejam carregadas
 

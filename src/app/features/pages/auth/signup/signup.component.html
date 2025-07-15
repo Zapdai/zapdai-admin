@@ -1,6 +1,6 @@
-<app-page-container>
-    <div class="ng-main">
-        <div class="ng-logo" (click)="pageHome()"></div>
+<div class="ng-main">
+    <div class="ng-logo" (click)="pageHome()"></div>
+    <app-formModal>
         <app-form-signup (registroBtn)="enviar($event)"></app-form-signup>
-    </div>
-</app-page-container>
+    </app-formModal>
+</div>

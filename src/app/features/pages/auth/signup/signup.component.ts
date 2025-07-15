@@ -7,13 +7,14 @@ import { cadastro } from "../../../../shared/core/types/cadastroUpdateUser";
 import { SnackService } from "../../../../services/snackBar/snack.service";
 import { registroForm } from "../../../../services/singNupForm/registroForm.servide";
 import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
+import { formModalComponent } from "../../../../shared/component/formModal/formModal.component";
 
 @Component({
     selector:"app-registro",
     standalone:true,
     templateUrl:"./signup.component.html",
     styleUrl:"./signup.component.scss",
-    imports: [FormSignupComponent, PageContainerComponent]
+    imports: [FormSignupComponent, formModalComponent]
 })
 export class SignupComponent{
     
