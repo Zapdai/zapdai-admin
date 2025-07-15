@@ -1,25 +1,23 @@
-<app-page-container>
-    <div class="main">
-                <app-banner [img]="img"></app-banner>
-        <div class="ng-planos">            
-            
-            <section class="ng-section02">
-                <h3 class="ng-title">Conheça Nossos Planos</h3>
-                <p class="ng-sutitulo">Para quem busca uma solução eficiente para  gestão de pedidos e atendimento. Para quem busca uma solução eficiente para <br>gestão de pedidos e atendimento. Para quem busca uma solução eficiente para gestão de pedidos e atendimento.</p>
-                <div class="ng-container-planos" >
-                   @for (item of data?.planos; track $index) {
-                    <app-planos-itens [itens]="item" ></app-planos-itens>
-                   }
-                </div>
-            </section>
-        </div>
+<div class="main">
+    <app-banner [img]="img"></app-banner>
+    <div class="ng-planos">
+
+        <section class="ng-section02">
+            <h3 class="ng-title">Conheça Nossos Planos</h3>
+            <p class="ng-sutitulo">Para quem busca uma solução eficiente para gestão de pedidos e atendimento. Para
+                quem busca uma solução eficiente para <br>gestão de pedidos e atendimento. Para quem busca uma
+                solução eficiente para gestão de pedidos e atendimento.</p>
+            <div class="ng-container-planos">
+                @for (item of data?.planos; track $index) {
+                <app-planos-itens [itens]="item"></app-planos-itens>
+                }
+            </div>
+        </section>
     </div>
-    @if (ativ) {
-        <app-aside-modal (emitModal)="ativaModal()">
-            <app-formModal></app-formModal>
-        </app-aside-modal>
-    }
-    <app-footer [footerActive]="true">
-       
-    </app-footer>
-</app-page-container>
+</div>
+@if (ativ) {
+<app-aside-modal (emitModal)="ativaModal()">
+    <app-formModal></app-formModal>
+</app-aside-modal>
+}
+<app-footer [footerActive]="true"></app-footer>
