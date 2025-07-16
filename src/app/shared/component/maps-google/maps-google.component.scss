@@ -189,14 +189,10 @@
                 cursor: pointer;
                 font-family: var(--font-family);
                 font-size: 14px;
-                font-weight: 500;
                 background: var(--background-color-container);
                 color: #ddd;
             }
 
-            .ng-btn:hover {
-                background-color: #6d4386;
-            }
 
             .ng-btn:active {
                 transform: scale(0.97);
@@ -223,7 +219,7 @@
                 button.btn-confirmar {
                     width: 100%;
                     height: 50px;
-                    background-color: #6d4386;
+                    background: var(--background-color-container);
                     color: white;
                     font-weight: 700;
                     font-size: 16px;
@@ -232,9 +228,6 @@
                     cursor: pointer;
                     transition: background-color 0.3s ease;
 
-                    &:hover {
-                        background-color: #5a3570;
-                    }
 
                     &:active {
                         transform: scale(0.98);
