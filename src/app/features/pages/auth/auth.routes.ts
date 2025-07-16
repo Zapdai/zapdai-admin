@@ -1,5 +1,4 @@
 import { Routes } from "@angular/router";
-import { SignupComponent } from "./signup/signup.component";
 import { SigninComponent } from "./signin/signin.component";
 import { ResetPasswordComponent } from "./resetPassword/resetPassword.component";
 import { SigninCodWhatsappComponent } from "./signinCodWhatsapp/signinCodWhatsapp.component";
@@ -8,9 +7,6 @@ import { SendCodeWhatsappComponent } from "./signinCodWhatsapp02/sendCodeWhatsap
 import { AuthSigninCodeWhatsappComponent } from "./signinCodWhatsapp02/authSigninCodeWhatsapp/authSigninCodeWhatsapp.component";
 
 export const routes: Routes = [
-    {
-        path: "signup", component: SignupComponent, title: "Cadastro de Usuário - Zapdai"
-    },
     {
         path: "signin", component: SigninComponent, title: "Tela de Login - Zapdai"
     },

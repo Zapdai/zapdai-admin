@@ -12,7 +12,7 @@ import { AuthDecodeService } from "../../../services/AuthUser.service";
 @Component({
     selector:"app-confirm",
     standalone:true,
-    imports: [MatDialogModule,MatDialogTitle,MatIconModule, MatDialogContent, MatDialogActions, MatDialogClose, MatButtonModule],
+    imports: [MatDialogModule,MatIconModule, MatButtonModule],
     templateUrl:"./confirm.component.html",
     styleUrl:"./confirm.component.scss"
 })

@@ -4,16 +4,14 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { AuthDecodeService } from '../../../../services/AuthUser.service';
 import { AuthService } from '../../../../services/auth.service';
 import { MatIconModule } from '@angular/material/icon';
-import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
 import { loadingService } from '../../../../services/loading/loading.service';
 import { isPlatformBrowser } from '@angular/common';
 import { Location } from '@angular/common';
-import { MobileNavbarComponent } from '../../../../shared/component/mobile-navbar/mobile-navbar.component';
 
 @Component({
   selector: 'app-home-my-account',
   standalone: true,
-  imports: [ MobileNavbarComponent, MatTabsModule, MatIconModule, RouterLink ],
+  imports: [ MatTabsModule, MatIconModule, RouterLink ],
   templateUrl: './home-my-account.component.html',
   styleUrls: ['./home-my-account.component.scss']
 })

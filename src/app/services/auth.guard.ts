@@ -28,14 +28,14 @@ export const authGuardian: CanActivateChildFn = (
     if (temAcesso) {
       return true;
     } else {
-      if (isBrowser) router.navigate(['/unauthorized']);
+      // if (isBrowser) router.navigate(['/unauthorized']);
       return false;
     }
   } else {
     if (isBrowser) {
-      // Salva a URL que o usuário tentou acessar
-      const returnUrl = state.url;
-      localStorage.setItem('returnUrl', returnUrl);
+      // // Salva a URL que o usuário tentou acessar
+      // const returnUrl = state.url;
+      // localStorage.setItem('returnUrl', returnUrl);
 
       // Redireciona para login
       window.location.href = "/auth/signin";

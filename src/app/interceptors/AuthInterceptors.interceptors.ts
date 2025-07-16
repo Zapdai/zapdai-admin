@@ -29,10 +29,8 @@ export class AuthInterceptors implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     const rotasPublicas = [
-      '/auth/signup',
       '/auth/signin',
       '/auth/resetPassword',
-      '/planos',
       '/home',
       '/zapdai/v1/usuario/verification',
       '/zapdai/v1/usuario/code',

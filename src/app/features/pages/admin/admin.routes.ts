@@ -6,9 +6,6 @@ import { ClientesComponentes } from "./clientes/clientes.componentes";
 import { ProdutosAdminComponent } from "./produtos/produtosAdmin/produtosAdmin.component";
 import { pedidosComponent } from "./pedidos/pedidos.component";
 import { authGuardian } from "../../../services/auth.guard";
-import { ProdutoEmpresaComponent } from "../empresa/ItensEmpresasUnit/produto-empresa.component";
-import { HomeZapdaiComponent } from "../v1/homeZapdai/homeZapdai.component";
-
 export const routes:Routes = [
     {
         path:"", component:homeComponent,title:"Tela admin" ,children:[

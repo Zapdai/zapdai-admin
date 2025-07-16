@@ -4,7 +4,6 @@ import { Router } from "@angular/router";
 import { apiAuthService } from "../../../../services/apiAuth.service";
 import { cadastro } from "../../../../shared/core/types/cadastroUpdateUser";
 import { SnackService } from "../../../../services/snackBar/snack.service";
-import { registroForm } from "../../../../services/singNupForm/registroForm.servide";
 import { FormResetPasswordComponent } from "../../../../shared/component/form-resetPassword/form-resetPassword.component";
 
 @Component({
@@ -16,7 +15,7 @@ import { FormResetPasswordComponent } from "../../../../shared/component/form-re
 })
 export class ResetPasswordComponent{
     
-    constructor ( private router:Router, private activeRoute:loadingService,public auth:apiAuthService,private snack:SnackService,private form:registroForm){
+    constructor ( private router:Router, private activeRoute:loadingService,public auth:apiAuthService,private snack:SnackService){
     }
 
     pageHome(){
@@ -31,18 +30,5 @@ export class ResetPasswordComponent{
         }, 0);
     }
 
-     // precisa ser feito mais um Slider para validaçao de Codigo enviado ao email
-      enviar(event:cadastro){
-        if(event!=null){
-           this.auth.signup(event).subscribe((e:any)=>{
-               const msg:any =JSON.stringify(e)
-             if(e?.OK){
-                this.snack.openSnackBar(e?.OK);
-                this.form.groupform.reset();
-                this.router.navigate(['/auth/signin']);
-             }
-           })
-        }
-
-      }
+     
 }

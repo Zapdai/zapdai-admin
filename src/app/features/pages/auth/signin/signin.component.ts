@@ -5,7 +5,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormLoginComponent } from "../../../../shared/component/form-login/form-login.component";
 import { Router } from "@angular/router";
 import { loadingService } from "../../../../services/loading/loading.service";
-import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
 import { formModalComponent } from "../../../../shared/component/formModal/formModal.component";
 
 @Component ({
@@ -13,7 +12,8 @@ import { formModalComponent } from "../../../../shared/component/formModal/formM
     standalone: true,
     templateUrl:'./signin.component.html',
     styleUrl:'./signin.component.scss',
-    imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule, FormLoginComponent, formModalComponent, PageContainerComponent]
+    imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule,
+         FormLoginComponent, formModalComponent]
 })
 
 export class SigninComponent {

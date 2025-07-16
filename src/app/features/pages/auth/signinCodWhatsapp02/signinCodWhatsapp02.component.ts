@@ -2,10 +2,8 @@ import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { FormLoginComponent } from "../../../../shared/component/form-login/form-login.component";
 import { Router } from "@angular/router";
 import { loadingService } from "../../../../services/loading/loading.service";
-import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
 import { formModalComponent } from "../../../../shared/component/formModal/formModal.component";
 import { RouterOutlet } from "@angular/router";
 
@@ -14,7 +12,7 @@ import { RouterOutlet } from "@angular/router";
     standalone: true,
     templateUrl:'./signinCodWhatsapp02.component.html',
     styleUrl:'./signinCodWhatsapp02.component.scss',
-    imports: [CommonModule, RouterOutlet, ReactiveFormsModule, MatSnackBarModule, formModalComponent, PageContainerComponent]
+    imports: [CommonModule, RouterOutlet, ReactiveFormsModule, MatSnackBarModule, formModalComponent]
 })
 
 export class SigninCodWhatsapp02Component {

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PageContainerComponent } from '../../../../shared/component/page-container/page-container.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormCadastroEmpresaComponent } from "../../../../shared/component/form-cadastro-empresa/form-cadastro-empresa.component";
 import { ProdutosApiService } from '../../../../services/produtoService/produtosApi.service';
 import { firstValueFrom } from 'rxjs';
 import { UtiusComponent } from '../../../../shared/component/utius/utius.component';

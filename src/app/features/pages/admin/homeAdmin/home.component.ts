@@ -2,8 +2,6 @@ import { Component, HostListener, Inject, Input, OnInit, PLATFORM_ID } from "@an
 import { menuDropComponent } from "./menuDropDown/menudrop.component";
 import { RouterOutlet } from "@angular/router";
 import { headerComponent } from "../../../../shared/component/header/header.component";
-import { MobileNavbarComponent } from "../../../../shared/component/mobile-navbar/mobile-navbar.component";
-import { CobrancaComponent } from "../../../../shared/component/cobranca/cobranca.component";
 import { isPlatformBrowser } from "@angular/common";
 
 @Component({
@@ -11,7 +9,7 @@ import { isPlatformBrowser } from "@angular/common";
     templateUrl: "./home.component.html",
     styleUrl: "./home.component.scss",
     standalone: true,
-    imports: [headerComponent, menuDropComponent, RouterOutlet, MobileNavbarComponent]
+    imports: [headerComponent, menuDropComponent, RouterOutlet]
 })
 export class homeComponent implements OnInit {
     @Input() desabled?: boolean;

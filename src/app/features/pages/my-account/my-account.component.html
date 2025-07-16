@@ -1,5 +1,4 @@
 @if (usuario && usuario.nome) {
-<app-page-container>
     <div class="ng-main">
 
         @if(isVisible) {
@@ -67,8 +66,6 @@
             <router-outlet></router-outlet>
         </div>
     </div>
-</app-page-container>
-
 @if (modalAtivo) {
 <app-aside-modal (emitModal)="ativaModal()">
     <app-avatarUser (fecharModal)="[ativaModal(), getUser()]"></app-avatarUser>

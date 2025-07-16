@@ -64,18 +64,11 @@ export class FormLoginComponent {
       if (item.acessToken !== null) {
         this.authService.saveToken(item.acessToken);
           this.authService.saveRefreshToken(item.refreshToken);
-
-
-
-        // Recupera a URL salva (ou define '/' como padrão)
-        const returnUrl = localStorage.getItem('returnUrl') || '/';
-        localStorage.removeItem('returnUrl'); // limpa após usar
-
         // Redireciona para a página original
         setTimeout(() => {
           this.router.navigateByUrl('/loading', { skipLocationChange: true }).then(() => {
             setTimeout(() => {
-              window.location.href = returnUrl;
+              window.location.href = "/";
             }, 1000);
           });
         }, 0);

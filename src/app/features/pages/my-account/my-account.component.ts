@@ -1,5 +1,4 @@
 import { Component, HostListener, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { PageContainerComponent } from '../../../shared/component/page-container/page-container.component';
 import { Router, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthDecodeService } from '../../../services/AuthUser.service';
@@ -14,9 +13,9 @@ import { Usuario } from '../../../shared/core/types/usuario';
 @Component({
   selector: 'app-my-account',
   standalone: true,
-  imports: [RouterOutlet, MatIconModule, PageContainerComponent, AsideComponent, AvatarUserComponent],
+  imports: [RouterOutlet, MatIconModule, AsideComponent, AvatarUserComponent],
   templateUrl: './my-account.component.html',
-  styleUrls: ['./my-account.component.scss'],
+  styleUrl: './my-account.component.scss',
 })
 export class MyAccountComponent implements OnInit {
   token: any;

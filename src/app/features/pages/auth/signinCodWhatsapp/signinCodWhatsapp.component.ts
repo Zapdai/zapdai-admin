@@ -5,7 +5,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormLoginComponent } from "../../../../shared/component/form-login/form-login.component";
 import { Router } from "@angular/router";
 import { loadingService } from "../../../../services/loading/loading.service";
-import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
 import { formModalComponent } from "../../../../shared/component/formModal/formModal.component";
 import { FormSigninCodWhatsappComponent } from "./form-signinCodWhatsapp/form-signinCodWhatsapp.component";
 
@@ -14,7 +13,7 @@ import { FormSigninCodWhatsappComponent } from "./form-signinCodWhatsapp/form-si
     standalone: true,
     templateUrl:'./signinCodWhatsapp.component.html',
     styleUrl:'./signinCodWhatsapp.component.scss',
-    imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule, formModalComponent, PageContainerComponent, FormSigninCodWhatsappComponent]
+    imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule, formModalComponent, FormSigninCodWhatsappComponent]
 })
 
 export class SigninCodWhatsappComponent {
