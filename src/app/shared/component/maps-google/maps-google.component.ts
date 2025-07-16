@@ -2,7 +2,8 @@ import {
    Component, OnInit, ViewChild, ElementRef, Inject, NgZone,
    AfterViewInit,
    EventEmitter,
-   Output
+   Output,
+   OnDestroy
 } from '@angular/core';
 import {
    FormGroup, FormControl, Validators,
@@ -14,6 +15,8 @@ import { validarCep } from '../../../../validators';
 import { cepApiBrasilService } from '../../../services/cepApiBrasil/cep.service';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 import { MatIconModule } from '@angular/material/icon';
+import { SnackService } from '../../../services/snackBar/snack.service';
+import { ModalScrollService } from '../../../features/pages/modal-scroll.service';
 
 
 @Component({
@@ -31,22 +34,23 @@ import { MatIconModule } from '@angular/material/icon';
 
 
 
-export class MapsGoogleComponent implements OnInit, AfterViewInit {
+export class MapsGoogleComponent implements OnInit, AfterViewInit, OnDestroy {
    @ViewChild('primeiroInput') primeiroInput!: ElementRef;
    @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
    @ViewChild(GoogleMap) map!: GoogleMap;
 
    @Output() desbiledCarEmit = new EventEmitter<void>();
+   @Output() enderecoConfirmado = new EventEmitter<any>();
 
    center: google.maps.LatLngLiteral = { lat: -23.55052, lng: -46.633308 };
-   zoom = 15;
+   zoom = 18;
 
    groupform!: FormGroup;
 
    markerPosition: google.maps.LatLngLiteral = this.center;
    mapOptions: google.maps.MapOptions = {
       mapTypeId: 'roadmap',
-      zoomControl: true,
+      zoomControl: false,
       gestureHandling: 'greedy',
       fullscreenControl: false,
       streetViewControl: false,
@@ -62,8 +66,15 @@ export class MapsGoogleComponent implements OnInit, AfterViewInit {
    constructor(
       @Inject(PLATFORM_ID) private platformId: Object,
       private cepApi: cepApiBrasilService,
-      private ngZone: NgZone
+      private ngZone: NgZone,
+      private snack: SnackService,
+      private scrollService: ModalScrollService,
    ) { }
+
+   
+   ngOnDestroy(): void {
+      this.scrollService.unlockScroll();
+   }
 
    ngAfterViewInit(): void {
       setTimeout(() => {
@@ -71,13 +82,18 @@ export class MapsGoogleComponent implements OnInit, AfterViewInit {
             google.maps.event.trigger(this.map.googleMap, 'resize');
             this.addCurrentLocationButton();
             this.obterLocalizacaoAtualCompleta();
+            requestAnimationFrame(() => {
+               this.initAutocomplete();
+            });
          }
       }, 1000);
-      this.initAutocomplete();
       this.geocoder = new google.maps.Geocoder();
+
    }
 
    ngOnInit(): void {
+      this.scrollService.lockScroll();
+
       this.initForm();
       this.getCurrentLocation();
       this.groupform.get('cep')?.valueChanges.subscribe((cep: string) => {
@@ -140,7 +156,6 @@ export class MapsGoogleComponent implements OnInit, AfterViewInit {
 
    onMapIdle() {
       this.isMapMoving = false;
-      console.log('✅ Mapa parou de mover');
 
       const center = this.map?.googleMap?.getCenter();
       if (center) {
@@ -159,22 +174,16 @@ export class MapsGoogleComponent implements OnInit, AfterViewInit {
 
    initAutocomplete() {
       const input = this.searchInput.nativeElement;
-      const autocomplete = new google.maps.places.Autocomplete(input);
-
-      // Define quais campos queremos receber
-      autocomplete.setFields([
-         'place_id',
-         'geometry',
-         'formatted_address',
-         'address_components',
-         'name'
-      ]);
+      const autocomplete = new google.maps.places.Autocomplete(input, {
+         fields: ['geometry', 'formatted_address', 'address_components', 'name'],
+         types: []
+      });
 
       autocomplete.addListener('place_changed', () => {
          const place = autocomplete.getPlace();
 
          if (!place.geometry?.location) {
-            console.warn('❌ Local sem coordenadas.');
+           this.snack.error('❌ Local sem coordenadas.');
             return;
          }
 
@@ -185,18 +194,15 @@ export class MapsGoogleComponent implements OnInit, AfterViewInit {
             this.center = { lat, lng };
             this.markerPosition = { lat, lng };
             this.buscarEnderecoPorLatLng(lat, lng);
-
-            console.log('📍 Nome do lugar:', place.name);
-            console.log('📍 Endereço formatado:', place.formatted_address);
-            console.log('📍 Componentes de endereço:', place.address_components);
          });
       });
    }
 
 
+
    addCurrentLocationButton() {
       const controlDiv = document.createElement('div');
-      controlDiv.style.margin = '10px';
+      controlDiv.style.margin = '40px 10px';
 
       const button = document.createElement('button');
       button.title = 'Minha localização';
@@ -242,27 +248,17 @@ export class MapsGoogleComponent implements OnInit, AfterViewInit {
             const lat = position.coords.latitude;
             const lng = position.coords.longitude;
 
-            console.log('📍 Latitude:', lat);
-            console.log('📍 Longitude:', lng);
-
             this.geocoder.geocode({ location: { lat, lng } }, (results, status) => {
                if (status === 'OK' && results?.[0]) {
                   const endereco = this.extrairCamposEndereco(results[0]);
 
-                  console.log('📍 Estado:', endereco.estado_sigla);
-                  console.log('📍 CEP:', endereco.cep);
-                  console.log('📍 Bairro:', endereco.bairro);
-                  console.log('📍 Cidade:', endereco.cidade);
-                  console.log('📍 Rua:', endereco.rua);
-
-                  console.log('🔍 Resultados brutos do Geocoder:', results);
                } else {
-                  console.warn('❌ Não foi possível obter o endereço completo.');
+                  this.snack.error('❌ Não foi possível obter o endereço completo.');
                }
             });
          },
          (error) => {
-            console.error('Erro ao obter localização:', error.message);
+            this.snack.error('Erro ao obter localização:' + error.message);
          },
          { enableHighAccuracy: true }
       );
@@ -278,7 +274,7 @@ export class MapsGoogleComponent implements OnInit, AfterViewInit {
             this.markerPosition = { lat, lng };
          },
          (error) => {
-            console.warn('Erro ao obter localização:', error.message);
+            this.snack.error('Erro ao obter localização:' + error.message);
          },
          { enableHighAccuracy: true }
       );
@@ -299,29 +295,68 @@ export class MapsGoogleComponent implements OnInit, AfterViewInit {
 
    buscarEnderecoPorLatLng(lat: number, lng: number) {
       this.geocoder.geocode({ location: { lat, lng } }, (results, status) => {
-         if (status === 'OK' && results?.[0]) {
-            const endereco = this.extrairCamposEndereco(results[0]);
+         if (status === 'OK' && results && results.length > 0) {
+            // Ordenar resultados por proximidade e se possui rua
+            const resultadoComRuaMaisProximo = results.find(result =>
+               result.address_components.some(c => c.types.includes('route'))
+            );
+
+            const melhorResultado = resultadoComRuaMaisProximo || results[0];
+
+            const endereco = this.extrairCamposEndereco(melhorResultado);
             this.groupform.patchValue(endereco);
+         } else {
+            this.snack.error('❌ Nenhum resultado do Geocoder.');
          }
       });
    }
 
+
    extrairCamposEndereco(result: google.maps.GeocoderResult) {
       const components = result.address_components;
+
       const get = (types: string[]) =>
          components.find((c) => types.some((t) => c.types.includes(t)))?.long_name || '';
+
+      let rua = get(['route', 'point_of_interest', 'premise']);
+
+      // fallback: tentar extrair rua manualmente do formatted_address
+      if (!rua && result.formatted_address) {
+         const partes = result.formatted_address.split(',');
+         if (partes.length > 0) {
+            rua = partes[0]; // geralmente a primeira parte é a rua
+         }
+      }
 
       return {
          estado_sigla: get(['administrative_area_level_1']),
          cidade: get(['administrative_area_level_2', 'locality']),
          bairro: get(['sublocality', 'neighborhood', 'political']),
-         rua: get(['route', 'street_address', 'point_of_interest']),
+         rua,
          numeroEndereco: get(['street_number']),
          complemento: '',
          cep: get(['postal_code'])
 
       };
    }
+
+
+   confirmarEndereco() {
+      const endereco = this.groupform.value;
+      const coordenadas = this.markerPosition;
+
+      // Aqui você pode enviar para o backend, emitir evento ou salvar localmente
+      const payload = {
+         ...endereco,
+         latitude: coordenadas.lat,
+         longitude: coordenadas.lng,
+      };
+
+      // Exemplo: emitir para componente pai
+      this.enderecoConfirmado.emit(payload);
+      this.desabiledCar()
+   }
+
 
 
 

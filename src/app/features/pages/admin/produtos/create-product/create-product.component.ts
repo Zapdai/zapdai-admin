@@ -56,9 +56,9 @@ export class CreateProductComponent implements OnInit, AfterViewInit, OnDestroy 
       private api: ApiV1Loja,
       private apiCadastroProdutos: ProdutosApiService,
       private snack: SnackService,
+      private scrollService: ModalScrollService,
       private router: Router,
       public authDecodeUser: AuthDecodeService,
-      private scrollService: ModalScrollService,
    ) { }
 
 

@@ -4,18 +4,16 @@
             <button class="btn" mat-flat-button (click)="desabiledCar()">
                 <mat-icon>close</mat-icon>
             </button>
-            <div>
-                <h1>Minha Localização</h1>
+            <div class="header-searh">
+                <fieldset class="ng-fieldset">
+                    <legend>Buscar Endereço</legend>
+                    <input #searchInput type="text" class="ng-input" placeholder="Digite um endereço" autocomplete="off"
+                        class="autocomplete-input" />
+                </fieldset>
             </div>
         </div>
 
         <div class="container-infor-produto">
-            <fieldset class="ng-fieldset">
-              <legend>Buscar Endereço</legend>
-            <input #searchInput type="text" class="ng-input" placeholder="Digite um endereço" autocomplete="off"
-                class="autocomplete-input" />
-            </fieldset>
-
             <div class="map-wrapper">
                 <google-map [center]="center" [zoom]="zoom" [options]="mapOptions" height="100%" width="100%"
                     (centerChanged)="onMapCenterChanged()" (idle)="onMapIdle()">
@@ -26,6 +24,11 @@
                     <mat-icon class="pin-icon">location_on</mat-icon>
                     <div class="pin-shadow"></div> <!-- sombra -->
                 </div>
+
+                <div class="footer-confirmar">
+                    <button class="btn-confirmar" (click)="confirmarEndereco()">Confirmar Endereço</button>
+                </div>
+
             </div>
 
 

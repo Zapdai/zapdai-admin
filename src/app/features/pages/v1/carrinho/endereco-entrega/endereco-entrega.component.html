@@ -10,6 +10,6 @@
 
 </div>
 @if (ativaMapsGoogle) {
-  <app-maps-google (desbiledCarEmit)="callMapsGoogle()"></app-maps-google>
+  <app-maps-google (enderecoConfirmado)="receberEndereco($event)" (desbiledCarEmit)="callMapsGoogle()"></app-maps-google>
 }
 

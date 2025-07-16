@@ -34,7 +34,7 @@ export class EnderecoEntregaComponent implements OnInit {
    carregando = false;
    totalItensCarrinho: number = 0;
    ativaCar?: boolean;
-   ativaMapsGoogle = true;
+   ativaMapsGoogle = false;
 
    @ViewChild('map', { static: false }) mapContainer!: ElementRef;
    @Output() desbiledCarEmit = new EventEmitter();
@@ -154,6 +154,11 @@ export class EnderecoEntregaComponent implements OnInit {
       } finally {
          this.carregando = false;
       }
+   }
+
+   receberEndereco(dados: any) {
+      console.log('✅ Endereço confirmado:', dados);
+      // Aqui você pode salvar, enviar para a API etc.
    }
 
 
