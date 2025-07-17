@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build ",
-    "build:ssr": "ng build && ng run zapdai:server",
+    "build:ssr": "ng build --configuration production && ng run zapdai:server:production",
+    "production": "npm install; ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:zapdai": "node dist/zapdai/server/server.mjs"

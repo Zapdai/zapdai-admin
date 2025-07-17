@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, HostListener, Inject, Input, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
-import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
+import { AfterViewInit, Component, HostListener, Inject, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { AsideComponent } from '../../../../shared/component/aside-modal/aside-modal.component';
 import { MatInputModule } from '@angular/material/input';
@@ -10,18 +9,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { Pagamento } from '../../../../shared/core/types/pagamento';
 import { apiPaymentsService } from '../../../../services/checkoutForm/apiPayments.service';
 import { PixPaymentRespons } from '../../../../shared/core/types/paymentPagamentopix';
-import { CheckoutPixComponent } from '../../../../shared/component/checkout/checkoutPix.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { loadingService } from '../../../../services/loading/loading.service';
 import { PopoverModule, Popover } from 'primeng/popover';
 import { ButtonModule } from 'primeng/button';
-import { itens, itensPlanos } from '../../../../shared/core/Plano/planosItens';
-import { PlanoService } from '../../../../services/routesApiZapdai/planos.service';
+import { itens } from '../../../../shared/core/Plano/planosItens';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackService } from '../../../../services/snackBar/snack.service';
-import { AuthService } from '../../../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { ConfirmPagamentoSocketComponent } from '../../../../services/pagamentosService/pagamentos.service';
 import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
@@ -34,10 +29,8 @@ import { AuthDecodeService } from '../../../../services/AuthUser.service';
   selector: 'app-checkoutPlanos02',
   standalone: true,
   imports: [
-    PageContainerComponent,
     MatListModule,
     AsideComponent,
-    CheckoutPixComponent,
     MatInputModule,
     ReactiveFormsModule,
     CommonModule,
@@ -74,10 +67,7 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
     public payment: apiPaymentsService,
     private rota: ActivatedRoute,
     private router: Router,
-    private activeRoute: loadingService,
-    public apiPlanosService: PlanoService,
     private snack: SnackService,
-    private authService: AuthService,
     private socketService: ConfirmPagamentoSocketComponent,
     private authUser:AuthDecodeService,
     @Inject(PLATFORM_ID) private platformId: Object) {
@@ -105,9 +95,6 @@ export class CheckoutPlanos04Component implements OnInit, AfterViewInit {
 
     this.checkScreenWidth();
 
-    this.apiPlanosService.planosConsumoApi().subscribe(response => {
-      this.itensPlanos = response.planos.filter((plano: any) => plano.price > 0);
-    });
 
     this.rota.queryParams.subscribe(params => {
       const rawData = params['data'];

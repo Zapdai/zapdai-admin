@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
 import {MatListModule} from '@angular/material/list';
 import { AsideComponent } from '../../../../shared/component/aside-modal/aside-modal.component';
 import {MatInputModule} from '@angular/material/input';
@@ -11,7 +10,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { Pagamento } from '../../../../shared/core/types/pagamento';
 import { apiPaymentsService } from '../../../../services/checkoutForm/apiPayments.service';
 import { PixPaymentRespons } from '../../../../shared/core/types/paymentPagamentopix';
-import { CheckoutPixComponent } from '../../../../shared/component/checkout/checkoutPix.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { PaymentMPComponent } from "../../../../shared/component/paymentMP/paymentMP.component";
 
@@ -19,10 +17,8 @@ import { PaymentMPComponent } from "../../../../shared/component/paymentMP/payme
 @Component({
   selector: 'app-checkoutPlanos',
   imports: [
-    PageContainerComponent,
     MatListModule,
     AsideComponent,
-    CheckoutPixComponent,
     MatInputModule,
     ReactiveFormsModule,
     CommonModule,

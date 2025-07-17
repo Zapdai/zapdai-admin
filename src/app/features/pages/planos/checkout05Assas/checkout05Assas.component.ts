@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, HostListener, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { PageContainerComponent } from "../../../../shared/component/page-container/page-container.component";
+import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { AsideComponent } from '../../../../shared/component/aside-modal/aside-modal.component';
 import { MatInputModule } from '@angular/material/input';
@@ -14,10 +13,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { loadingService } from '../../../../services/loading/loading.service';
-import { PopoverModule, Popover } from 'primeng/popover';
+import { PopoverModule } from 'primeng/popover';
 import { ButtonModule } from 'primeng/button';
-import { itens, itensPlanos } from '../../../../shared/core/Plano/planosItens';
-import { PlanoService } from '../../../../services/routesApiZapdai/planos.service';
+import { itens } from '../../../../shared/core/Plano/planosItens';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackService } from '../../../../services/snackBar/snack.service';
 import { AuthService } from '../../../../services/auth.service';
@@ -36,7 +34,6 @@ import { AuthDecodeService } from '../../../../services/AuthUser.service';
   selector: 'app-checkoutPlanos02',
   standalone: true,
   imports: [
-    PageContainerComponent,
     MatListModule,
     AsideComponent,
     CheckoutPixAsaasComponent,
@@ -77,12 +74,9 @@ export class Checkout05AssasComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object,
     public form: CheckoutFormService,
     public payment: apiPaymentsService,
-    private rota: ActivatedRoute,
     private router: Router,
     private activeRoute: loadingService,
-    public apiPlanosService: PlanoService,
     private snack: SnackService,
-    private authService: AuthService,
     private socketService: ConfirmPagamentoSocketComponent,
     public cepApi: cepApiBrasilService,
     private ipClientApi: IpService,
@@ -101,27 +95,11 @@ export class Checkout05AssasComponent implements OnInit {
 
     this.pegaIpClient()
 
-    this.buscaPlanoUrl()
-
     this.form.checkoutForm.get('cep')?.valueChanges.subscribe((cep) => {
       if (cep && cep.length === 8) {
         this.buscarEnderecoPorCep(cep);
       }
     });
-  }
-
-  buscaPlanoUrl() {
-    const planoId = this.route.snapshot.queryParamMap.get('planoId');
-
-
-    if (planoId) {
-      this.apiPlanosService.planosConsumoApi().subscribe(res => {
-        const plano = res.planos.find(p => p.planoId === planoId);
-        if (plano) {
-          this.planoSelecionado = plano;
-        }
-      });
-    }
   }
 
   trackByPlanoId(index: number, item: itens): string {

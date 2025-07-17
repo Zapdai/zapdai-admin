@@ -1,4 +1,3 @@
-<app-page-container>
     <div class="main">
         <form class="main" [formGroup]="form.checkoutForm" (submit)="handlePayment($event)">
             <div class="ng-checkout">
@@ -143,7 +142,5 @@
     </div>
     @if (ativo) {
     <app-aside-modal (emitModal)="ativaModal()">
-        <app-checkoutPix [qr]="response"></app-checkoutPix>
     </app-aside-modal>
     }
-</app-page-container>
