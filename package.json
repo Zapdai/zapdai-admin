@@ -29,6 +29,7 @@
     "@mercadopago/sdk-js": "^0.0.3",
     "@stomp/stompjs": "^7.1.1",
     "@stripe/stripe-js": "^7.3.0",
+    "angular-oauth2-oidc": "^19.0.0",
     "angularx-qrcode": "^19.0.0",
     "asaas-sdk": "^1.2.7",
     "buffer": "^6.0.3",

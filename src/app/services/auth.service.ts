@@ -19,9 +19,11 @@ export class AuthService {
     }
 
     RemoveToken() {
+        sessionStorage.removeItem("provider");
         localStorage.removeItem('acessToken')
     }
      RemoveRefreshToken() {
+        sessionStorage.removeItem("provider");
         localStorage.removeItem('refreshToken')
     }
 

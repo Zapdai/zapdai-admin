@@ -20,7 +20,7 @@ export const routes: Routes = [
         path: "auth", loadChildren: () => import("./features/pages/auth/auth.routes").then(e => e.routes)
     },
     {
-        path: "loading", component: LoadingComponent, canActivate: [loadingGuard]
+        path: "loading", component: LoadingComponent
     },
     {
         path: "my-account", loadChildren: () => import("./features/pages/my-account/account.routes").then(rota => rota.routes), data: { acess: ["ROLE_ADMIN", "ROLE_MODERATOR"] }, canActivateChild: [authGuardian],

@@ -4,6 +4,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 import { funcoes, functionList } from "../../../../../shared/core/functionList/functionList";
 import { functionListService } from "../../../../../services/routesApiZapdai/functionList.service";
+import { firstValueFrom } from "rxjs";
 
 @Component({
     selector: "app-menu-dropdown",
@@ -12,7 +13,7 @@ import { functionListService } from "../../../../../services/routesApiZapdai/fun
     standalone: true,
     imports: [MatIconModule, RouterLink, RouterLinkActive, CommonModule]
 })
-export class menuDropComponent implements OnInit {
+export class menuDropComponent {
     @Output() sm = new EventEmitter<void>();
     @Input() funcoes?: funcoes[];
     @Input() desabled?: boolean;  // manter 'desabled' para consistência com seu código
@@ -23,29 +24,12 @@ export class menuDropComponent implements OnInit {
 
     constructor(
         @Inject(PLATFORM_ID) private platformId: any,
-        private router: Router, private functionService: functionListService) { }
+        private router: Router, private functionService: functionListService) {
+        this.buscaItens()
 
-    ngOnInit() {
-        this.functionService.BuscarFunctionList().subscribe({
-            next: (data) => {
-                this.functionList = data;
-
-                this.functionList.funcoes.forEach(f => {
-                    if (!f.children) {
-                        f.children = [];
-                    }
-                    f.ativo = false;
-                });
-
-            },
-            error: (err) => console.error(err),
-        });
-
-        
         if (isPlatformBrowser(this.platformId)) {
             this.checkWindowSize();
         }
-        
     }
 
 
@@ -55,6 +39,32 @@ export class menuDropComponent implements OnInit {
         if (isPlatformBrowser(this.platformId)) {
             this.checkWindowSize();
         }
+    }
+    async buscaItens() {
+        const itens = sessionStorage.getItem("provider") as any;
+        if(itens!=null){
+            const fun = JSON.parse(itens)
+            this.functionList = fun;
+            this.functionList?.funcoes.forEach(f => {
+                if (!f.children) {
+                    f.children = [];
+                }
+                f.ativo = false;
+            });
+        }else{
+        const resposta = await firstValueFrom(this.functionService.BuscarFunctionList());
+        if (resposta) {
+            const json = JSON.stringify(resposta)
+           sessionStorage.setItem("provider",json);
+           this.functionList = resposta; 
+           this.functionList?.funcoes.forEach(f => {
+                if (!f.children) {
+                    f.children = [];
+                }
+                f.ativo = false;
+            }); 
+        }
+    }
     }
 
     checkWindowSize() {

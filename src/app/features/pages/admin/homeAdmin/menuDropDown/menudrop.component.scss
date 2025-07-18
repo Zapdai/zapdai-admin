@@ -149,8 +149,7 @@
 // -----------------------------------------------------------------------------------------------------------//
 @media screen and (min-width:769px) {
     .area-menu {
-        width: 100%;
-        height: calc(100vh - 100px);
+        width:220px;
         margin-bottom: 200px;
         box-shadow: 0, 8px, 0, 2.3;
         border-right: 1px solid #eee;
@@ -161,7 +160,7 @@
         flex-shrink: 0;
         z-index: 1000;
         z-index: none;
-        top: none;
+        top: 2px;
 
 
 
